@@ -5,95 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e5465343-81b1-4f71-9e9b-696b45d9794a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/google-services.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/proguard-rules.pro" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/androidTest/java/com/iacademy/tulongsulong/ExampleInstrumentedTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/ic_launcher-playstore.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/java/com/iacademy/tulongsulong/activities/LoadScreenActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/java/com/iacademy/tulongsulong/activities/LoginActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/java/com/iacademy/tulongsulong/activities/RegisterActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/java/com/iacademy/tulongsulong/activities/SplashScreenActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/java/com/iacademy/tulongsulong/activities/TabLayoutActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/java/com/iacademy/tulongsulong/adapters/ContactsAdapter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/java/com/iacademy/tulongsulong/adapters/PagerAdapter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/java/com/iacademy/tulongsulong/fragments/Fragment1SOS.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/java/com/iacademy/tulongsulong/fragments/Fragment2Contacts.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/java/com/iacademy/tulongsulong/models/ContactsModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/java/com/iacademy/tulongsulong/utils/Reader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/java/com/iacademy/tulongsulong/utils/RecyclerOnItemClickListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/drawable-v24/ambulance.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/drawable-v24/ambulance_lineal.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/drawable-v24/avatar.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/drawable-v24/avatar_female.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/drawable-v24/avatar_male.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/drawable-v24/avatar_solid.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/drawable-v24/button_add.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/drawable-v24/button_camera.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/drawable-v24/button_close.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/drawable-v24/button_delete.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/drawable-v24/button_gallery.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/drawable-v24/fingerprint.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/drawable-v24/globe.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/drawable-v24/heart.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/drawable-v24/home.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/drawable-v24/loading.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/drawable-v24/location.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/drawable-v24/pin.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/drawable-v24/police.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/drawable-v24/rectangle_button_hollow.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/drawable-v24/rectangle_button_solid.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/drawable-v24/rounded_button_hollow.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/drawable-v24/rounded_button_red.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/drawable-v24/rounded_button_solid.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/drawable-v24/send_mail.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/drawable-v24/trashcan.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/drawable/ic_bg_icons.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/drawable/ic_bg_lines.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/drawable/ic_icon.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/drawable/ic_launcher_background.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/drawable/ic_login.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/drawable/ic_login_white.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/drawable/ic_logo.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/drawable/ic_logout.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/drawable/ic_logout_white.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/layout/activity_contacts.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/layout/activity_load_screen.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/layout/activity_login.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/layout/activity_main.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/layout/activity_register.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/layout/activity_splash_screen.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/layout/activity_tab_layout.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/layout/fragment1_sos.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/layout/fragment2_contacts.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/layout/item_contactlist.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/layout/popup_add_contacts.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/layout/popup_edit_contacts.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/mipmap-hdpi/ic_launcher.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/mipmap-hdpi/ic_launcher_foreground.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/mipmap-hdpi/ic_launcher_round.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/mipmap-mdpi/ic_launcher.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/mipmap-mdpi/ic_launcher_foreground.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/mipmap-mdpi/ic_launcher_round.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/mipmap-xhdpi/ic_launcher.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/mipmap-xhdpi/ic_launcher_foreground.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/mipmap-xxhdpi/ic_launcher_foreground.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/values-night/themes.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/values/colors.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/values/strings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/values/themes.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/xml/backup_rules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/main/res/xml/data_extraction_rules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../[-] 4TH YEAR/TulongSulong/TulongSulong/app/src/test/java/com/iacademy/tulongsulong/ExampleUnitTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,7 +19,7 @@
     </projectState>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="2Yl4I90vhTHnw2IDOfrTUy3hsJf" />
   <component name="ProjectViewState">
@@ -119,7 +31,8 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
-    "cidr.known.project.marker": "true"
+    "cidr.known.project.marker": "true",
+    "last_opened_file_path": "C:/Users/Karl John Punzalan/AndroidStudioProjects/SmartSoilPH/SmartSoilPH"
   }
 }]]></component>
   <component name="RunManager">
