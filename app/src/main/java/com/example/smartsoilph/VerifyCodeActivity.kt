@@ -46,7 +46,7 @@ class VerifyCodeActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Verification successful we will start the profile activity
-                    val intent = Intent(this, MainActivity::class.java)
+                    val intent = Intent(this, HomeActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
                 } else {
