@@ -11,3 +11,5 @@ D
 app/build.gradle.kts,d\2\d2a4383452aad84a18429a5844d31330a012a9e6
 R
 "app/src/main/res/menu/nav_menu.xml,1\9\1928ca19d0bbe0ca4797b6a9c10445b4646ddced
+j
+:app/src/main/java/com/iacademy/smartsoilph/SoilActivity.kt,5\a\5a56d14cf30a07d977feaa4eeda3a092df46edbc
