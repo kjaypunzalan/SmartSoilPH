@@ -5,4 +5,12 @@
 
     <color name="green"> #66A96B </color>
     <color name="darkgreen">#3B5F41</color>
+
+    <color name="lightgreen">#DFFFE9</color>
+    <color name="lightblue">#DEF0FF</color>
+    <color name="lightyellow">#FFFAC7</color>
+    <color name="lightorange">#FFF1DD</color>
+    <color name="lightyellowgreen">#EEFFC7</color>
+    <color name="lightpink">#FFDFFD</color>
+    <color name="lightred">#FFDFDF</color>
 </resources>
