@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">SmartSoilPH</string>
+    <string name="open_nav">Open Navigation Drawer</string>
+    <string name="close_nav">Close Navigation Drawer</string>
+
+    <string name="location">San Juan, \nBatangas City</string>
+    <string name="date">Tues, Jan 02</string>
+    <string name="temperature">24°C</string>
+    <string name="weather">Partially Cloudy</string>
+
+    <string name="humidity">Humidity</string>
+    <string name="value_humidity">%</string>
+
+    <string name="temperature2">Temperature</string>
+    <string name="value_temp">°C</string>
+
+    <string name="wind">Wind Speed</string>
+    <string name="value_wind">km/h</string>
+
+    <string name="day_name">name of day</string>
+    <string name="week_date">date of week</string>
+    <string name="value_temp2">31°C</string>
 </resources>

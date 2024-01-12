@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+<!--Weather Page styles-->
+	<style name="location">
+		<item name="android:textSize">22sp</item>
+		<item name="android:textColor">#B3000000</item>
+		<item name="android:fontFamily">@font/montserrat_bold</item>
+	</style>
+	<style name="date">
+		<item name="android:textSize">12sp</item>
+		<item name="android:textColor">#80000000</item>
+		<item name="android:fontFamily">@font/open_sans</item>
+	</style>
+	<style name="temperature">
+		<item name="android:textSize">48sp</item>
+		<item name="android:textColor">#B3000000</item>
+		<item name="android:fontFamily">@font/montserrat_bold</item>
+	</style>
+	<style name="weather">
+		<item name="android:textSize">14sp</item>
+		<item name="android:textColor">#B3000000</item>
+		<item name="android:fontFamily">@font/open_sans</item>
+	</style>
+
+	<!--Humidity styles-->
+	<style name="humidity">
+		<item name="android:textSize">8sp</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:textColor">#5DC9FE</item>
+		<item name="android:fontFamily">@font/open_sans</item>
+	</style>
+	<style name="value_humidity">
+		<item name="android:textSize">14sp</item>
+		<item name="android:textColor">#B3000000</item>
+		<item name="android:fontFamily">@font/montserrat_bold</item>
+	</style>
+
+	<!--Temperature styles-->
+	<style name="temperature2">
+		<item name="android:textSize">8sp</item>
+		<item name="android:textColor">#5DC9FE</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:fontFamily">@font/open_sans</item>
+	</style>
+	<style name="value_temp">
+		<item name="android:textSize">14sp</item>
+		<item name="android:textColor">#B3000000</item>
+		<item name="android:fontFamily">@font/montserrat_bold</item>
+	</style>
+
+	<!--Wind styles-->
+	<style name="wind">
+		<item name="android:textSize">8sp</item>
+		<item name="android:textColor">#5DC9FE</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:fontFamily">@font/open_sans</item>
+	</style>
+	<style name="value_wind">
+		<item name="android:textSize">14sp</item>
+		<item name="android:textColor">#B3000000</item>
+		<item name="android:fontFamily">@font/montserrat_bold</item>
+	</style>
+
+	<style name="day_name">
+		<item name="android:textSize">13sp</item>
+		<item name="android:textColor">#80000000</item>
+		<item name="android:fontFamily">@font/montserrat_bold</item>
+	</style>
+
+	<style name="week_date">
+		<item name="android:textSize">10sp</item>
+		<item name="android:textColor">#80000000</item>
+		<item name="android:fontFamily">@font/open_sans</item>
+	</style>
+
+	<style name="value_temp2">
+		<item name="android:textSize">22sp</item>
+		<item name="android:textColor">#80000000</item>
+		<item name="android:fontFamily">@font/open_sans</item>
+		<item name="android:textStyle">bold</item>
+	</style>
+
+</resources>
