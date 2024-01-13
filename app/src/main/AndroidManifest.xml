@@ -13,6 +13,7 @@
         android:theme="@style/Theme.SmartSoilPH"
         tools:targetApi="31">
 
+        <!-- LAUNCHER -->
         <activity
             android:name=".activities.LoginActivity"
             android:exported="true"
@@ -25,6 +26,8 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
+        <!-- ACTIVITIES -->
         <activity
             android:name=".activities.SoilActivity"
             android:exported="true" />
