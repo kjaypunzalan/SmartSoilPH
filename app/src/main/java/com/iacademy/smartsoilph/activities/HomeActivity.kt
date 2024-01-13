@@ -13,7 +13,7 @@ class HomeActivity : AppCompatActivity() {
 
         val btnSoil = findViewById<Button>(R.id.btnSoil);
         btnSoil.setOnClickListener {
-            val Intent = Intent(this, SoilMonitoringActivity::class.java);
+            val Intent = Intent(this, SoilActivity::class.java);
             startActivity(Intent);
         }
 
@@ -25,7 +25,7 @@ class HomeActivity : AppCompatActivity() {
 
         val btnReports = findViewById<Button>(R.id.btnReports);
         btnReports.setOnClickListener {
-            val Intent = Intent(this, SoilActivity::class.java);
+            val Intent = Intent(this, SoilMonitoringActivity::class.java);
             startActivity(Intent);
         }
     }
