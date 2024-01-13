@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".SoilActivity">
 
     <!--Background Image -->
@@ -43,7 +44,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/phosphorus_card"
             app:layout_constraintHorizontal_chainStyle="spread"
-            app:cardBackgroundColor="@drawable/opacity"
+            app:cardBackgroundColor="@color/white"
             android:layout_marginTop="20dp">
 
                 <LinearLayout
@@ -86,7 +87,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@id/nitrogen_card"
             app:layout_constraintEnd_toStartOf="@id/potassium_card"
-            app:cardBackgroundColor="@drawable/opacity"
+            app:cardBackgroundColor="@color/white"
             android:layout_marginTop="20dp">
 
             <LinearLayout
@@ -129,7 +130,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@id/phosphorus_card"
             app:layout_constraintEnd_toEndOf="parent"
-            app:cardBackgroundColor="@drawable/opacity"
+            app:cardBackgroundColor="@color/white"
             android:layout_marginTop="20dp">
 
             <LinearLayout
@@ -172,7 +173,7 @@
             app:layout_constraintTop_toBottomOf="@id/nitrogen_card"
             app:layout_constraintStart_toStartOf="@id/nitrogen_card"
             app:layout_constraintEnd_toEndOf="@id/nitrogen_card"
-            app:cardBackgroundColor="@drawable/opacity"
+            app:cardBackgroundColor="@color/white"
             android:layout_marginTop="20dp">
 
             <LinearLayout
@@ -215,7 +216,7 @@
             app:layout_constraintTop_toBottomOf="@id/phosphorus_card"
             app:layout_constraintStart_toStartOf="@id/phosphorus_card"
             app:layout_constraintEnd_toEndOf="@id/phosphorus_card"
-            app:cardBackgroundColor="@drawable/opacity"
+            app:cardBackgroundColor="@color/white"
             android:layout_marginTop="20dp">
 
             <LinearLayout
@@ -258,7 +259,7 @@
             app:layout_constraintTop_toBottomOf="@id/ph_level_card"
             app:layout_constraintStart_toStartOf="@id/ph_level_card"
             app:layout_constraintEnd_toEndOf="@id/ph_level_card"
-            app:cardBackgroundColor="@drawable/opacity"
+            app:cardBackgroundColor="@color/white"
             android:layout_marginTop="20dp">
 
             <LinearLayout
@@ -301,7 +302,7 @@
             app:layout_constraintTop_toBottomOf="@id/humidity_card"
             app:layout_constraintStart_toStartOf="@id/humidity_card"
             app:layout_constraintEnd_toEndOf="@id/humidity_card"
-            app:cardBackgroundColor="@drawable/opacity"
+            app:cardBackgroundColor="@color/white"
             android:layout_marginTop="20dp">
 
             <LinearLayout

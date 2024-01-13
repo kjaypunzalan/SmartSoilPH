@@ -15,5 +15,17 @@ class HomeActivity : AppCompatActivity() {
             val Intent = Intent(this, SoilMonitoringActivity::class.java);
             startActivity(Intent);
         }
+
+        val btnWeather = findViewById<Button>(R.id.btnWeather);
+        btnWeather.setOnClickListener {
+            val Intent = Intent(this, WeatherActivity::class.java);
+            startActivity(Intent);
+        }
+
+        val btnReports = findViewById<Button>(R.id.btnReports);
+        btnReports.setOnClickListener {
+            val Intent = Intent(this, SoilActivity::class.java);
+            startActivity(Intent);
+        }
     }
 }

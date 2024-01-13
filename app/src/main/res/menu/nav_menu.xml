@@ -25,7 +25,7 @@
         <item
             android:id="@+id/nav_reports"
             android:icon="@drawable/nav_reports"
-            android:title="Reports & Statistics"/>
+            android:title="Reports and Statistics"/>
         <item
             android:id="@+id/nav_bluetooth"
             android:icon="@drawable/nav_bluetooth"

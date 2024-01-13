@@ -5,9 +5,9 @@
 
     <color name="light_blue">#5DC9FE</color>
     <color name="fade_blue">#405DC9FE</color>
-    <color name="purple_200">#</color>
-    <color name="teal_200">#</color>
-    <color name="teal_700">#</color>
+    <color name="purple_200">#FFDFFD</color>
+    <color name="teal_200">#81CBC4</color>
+    <color name="teal_700">#00796A</color>
 
     <color name="green"> #66A96B </color>
     <color name="darkgreen">#3B5F41</color>

@@ -65,11 +65,11 @@
         app:layout_constraintVertical_bias="0.613" />
 
     <Button
-        android:id="@+id/btnStatistics"
+        android:id="@+id/btnReports"
         android:layout_width="112dp"
         android:layout_height="89dp"
         android:backgroundTint="@color/lightred"
-        android:text="Statistics"
+        android:text="Reports"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

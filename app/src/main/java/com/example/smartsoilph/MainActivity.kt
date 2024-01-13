@@ -1,4 +1,4 @@
-package com.iacademy.smartsoilph
+package com.example.smartsoilph
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
