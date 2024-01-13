@@ -3,6 +3,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+
+    <color name="light_blue">#5DC9FE</color>
+    <color name="fade_blue">#405DC9FE</color>
+
     <color name="green"> #66A96B </color>
     <color name="darkgreen">#3B5F41</color>
 
@@ -13,4 +17,5 @@
     <color name="lightyellowgreen">#EEFFC7</color>
     <color name="lightpink">#FFDFFD</color>
     <color name="lightred">#FFDFDF</color>
+
 </resources>
