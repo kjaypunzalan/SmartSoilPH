@@ -22,7 +22,6 @@
 <<<<<<< HEAD
 =======
 
-<<<<<<< HEAD
 </androidx.drawerlayout.widget.DrawerLayout>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -49,6 +48,4 @@
 </LinearLayout>
 >>>>>>> parent of 3fd5b12 (bye)
 
-=======
->>>>>>> parent of cc86a00 (Merge branch 'main' into pat-branch)
 </androidx.drawerlayout.widget.DrawerLayout>
