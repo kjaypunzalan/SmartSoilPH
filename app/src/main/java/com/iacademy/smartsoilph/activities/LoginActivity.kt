@@ -1,10 +1,11 @@
-package com.example.smartsoilph
+package com.iacademy.smartsoilph.activities
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.iacademy.smartsoilph.R
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth

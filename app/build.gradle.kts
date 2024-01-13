@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.smartsoilph"
+    namespace = "com.iacademy.smartsoilph"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.smartsoilph"
+        applicationId = "com.iacademy.smartsoilph"
         minSdk = 26
         targetSdk = 34
         versionCode = 1

@@ -9,7 +9,7 @@
     android:fitsSystemWindows="true"
     android:background="@color/white"
     tools:openDrawer="start"
-    tools:context=".WeatherActivity">
+    tools:context="com.iacademy.smartsoilph.activities.WeatherActivity">
 
     <!--Background Image -->
     <androidx.constraintlayout.widget.ConstraintLayout
