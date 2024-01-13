@@ -1,8 +1,8 @@
-package com.example.smartsoilph
+package com.iacademy.smartsoilph.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.smartsoilph.R
+import com.iacademy.smartsoilph.R
 
 class SoilActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

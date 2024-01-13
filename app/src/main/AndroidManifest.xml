@@ -14,7 +14,7 @@
         tools:targetApi="31">
 
         <activity
-            android:name=".LoginActivity"
+            android:name="com.iacademy.smartsoilph.activities.LoginActivity"
             android:exported="true"
             android:theme="@style/Theme.SmartSoilPH">
             <intent-filter>
@@ -26,27 +26,27 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".SoilActivity"
+            android:name="com.iacademy.smartsoilph.activities.SoilActivity"
             android:exported="true" />
         <activity
-            android:name=".WeatherActivity"
+            android:name="com.iacademy.smartsoilph.activities.WeatherActivity"
             android:exported="true" />
         <activity
-            android:name=".MainActivity"
+            android:name="com.iacademy.smartsoilph.activities.MainActivity"
             android:exported="true" />
         <activity
-            android:name=".SoilMonitoringActivity"
+            android:name="com.iacademy.smartsoilph.activities.SoilMonitoringActivity"
             android:exported="true" />
         <activity
-            android:name=".HomeActivity"
+            android:name="com.iacademy.smartsoilph.activities.HomeActivity"
             android:exported="true"
             android:theme="@style/Theme.SmartSoilPH" />
         <activity
-            android:name=".RegisterActivity"
+            android:name="com.iacademy.smartsoilph.activities.RegisterActivity"
             android:exported="true"
             android:theme="@style/Theme.SmartSoilPH" />
         <activity
-            android:name=".VerifyCodeActivity"
+            android:name="com.iacademy.smartsoilph.activities.VerifyCodeActivity"
             android:exported="true"
             android:theme="@style/Theme.SmartSoilPH" />
     </application>
