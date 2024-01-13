@@ -2,7 +2,11 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
 <<<<<<< HEAD
+<<<<<<< HEAD
     <mapping directory="" vcs="Git" />
+=======
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+>>>>>>> parent of cc86a00 (Merge branch 'main' into pat-branch)
 =======
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
 >>>>>>> parent of cc86a00 (Merge branch 'main' into pat-branch)
