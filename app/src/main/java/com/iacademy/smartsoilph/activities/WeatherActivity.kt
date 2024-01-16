@@ -2,12 +2,14 @@ package com.iacademy.smartsoilph.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.iacademy.smartsoilph.R
+import android.util.Log
 import com.iacademy.smartsoilph.databinding.ActivityWeatherBinding
 import com.iacademy.smartsoilph.datamodels.WeatherResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import com.iacademy.smartsoilph.activities.RetrofitClient // Ensure this import is correct
+import com.iacademy.smartsoilph.activities.WeatherbitAPIService
 
 
 class WeatherActivity : AppCompatActivity() {
@@ -16,32 +18,41 @@ class WeatherActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var binding = ActivityWeatherBinding.inflate(layoutInflater) // Inflate the layout
+        binding = ActivityWeatherBinding.inflate(layoutInflater) // Inflate the layout
         setContentView(binding.root) // Set the content view to the root of the binding class
 
-        fetchWeatherData("San Juan, Batangas, PH")
+        fetchWeatherData(13.661158, 121.371904)
     }
 
-    private fun fetchWeatherData(city: String) {
-        val weatherService = RetrofitClient.instance.create(WeatherAPIService::class.java)
-        val call = weatherService.getWeatherByCity(city, "6e52e7a688208004eaeac5d1f95e9bd2")
+    private fun fetchWeatherData(lat: Double, lon: Double) {
+        val weatherService = RetrofitClient.instance.create(WeatherbitAPIService::class.java)
+        val call = weatherService.getDailyForecast(14.4791, 120.8970, "28511079036140e692b429d9ea3f64b9")
 
         call.enqueue(object : Callback<WeatherResponse> {
             override fun onResponse(call: Call<WeatherResponse>, response: Response<WeatherResponse>) {
                 if (response.isSuccessful) {
-                    response.body()?.let {
-                        // Use the binding object to reference the views
-                        binding.tvValueTemp.text = "${it.main.temp} °C"
-                        binding.tvWeather.text = it.weather[0].description
-                        // Update other UI components using binding as needed
+                    val weatherData = response.body()
+                    weatherData?.data?.firstOrNull()?.let { dailyForecast ->
+                        // Use the data
+                        val highTemp = dailyForecast.max_temp
+                        val curTemp = dailyForecast.temp
+                        // Use highTemp and lowTemp as needed, e.g., updating the UI
+                        // Example: Update a TextView with high and low temperatures
+                        runOnUiThread {
+                            binding.tvValueTemp.text = "High: ${highTemp}°C"
+                            binding.tvTemperature.text = "${curTemp}°C"
+                        }
                     }
                 }
+                else {
+                    Log.e("WeatherApp", "Unsuccessful response: ${response.errorBody()?.string()}")
+                }
             }
-
             override fun onFailure(call: Call<WeatherResponse>, t: Throwable) {
-                // Handle network error
+                Log.e("WeatherApp", "Error fetching weather data", t)
             }
         })
+
     }
 
 }

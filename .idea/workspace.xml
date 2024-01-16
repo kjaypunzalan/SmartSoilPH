@@ -36,17 +36,12 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0e7b5df8-fccf-4782-8975-4de3be78d6be" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/iacademy/smartsoilph/activities/RetrofitClient.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/iacademy/smartsoilph/activities/WeatherAPIService.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/iacademy/smartsoilph/datamodels/WeatherResponse.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="0e7b5df8-fccf-4782-8975-4de3be78d6be" name="Changes" comment="Enabled view binding in build.gradle.kts, added Google sign-in and Retrofit dependencies, refactored LoginActivity to use Google sign-in, and implemented weather data fetching in WeatherActivity.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/google-services.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/google-services.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/iacademy/smartsoilph/activities/LoginActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/iacademy/smartsoilph/activities/LoginActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/iacademy/smartsoilph/activities/RetrofitClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/iacademy/smartsoilph/activities/RetrofitClient.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/iacademy/smartsoilph/activities/WeatherAPIService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/iacademy/smartsoilph/activities/WeatherbitAPIService.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/iacademy/smartsoilph/activities/WeatherActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/iacademy/smartsoilph/activities/WeatherActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/libs.versions.toml" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/libs.versions.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/iacademy/smartsoilph/datamodels/WeatherResponse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/iacademy/smartsoilph/datamodels/WeatherResponse.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -233,6 +228,15 @@
       <option name="presentableId" value="Default" />
       <updated>1705125700167</updated>
     </task>
+    <task id="LOCAL-00001" summary="Enabled view binding in build.gradle.kts, added Google sign-in and Retrofit dependencies, refactored LoginActivity to use Google sign-in, and implemented weather data fetching in WeatherActivity.">
+      <option name="closed" value="true" />
+      <created>1705381165925</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1705381165925</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -248,6 +252,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Merge pull request #3 from kjaypunzalan/pat-branch&#10;&#10;test commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="" />
+    <MESSAGE value="Enabled view binding in build.gradle.kts, added Google sign-in and Retrofit dependencies, refactored LoginActivity to use Google sign-in, and implemented weather data fetching in WeatherActivity." />
+    <option name="LAST_COMMIT_MESSAGE" value="Enabled view binding in build.gradle.kts, added Google sign-in and Retrofit dependencies, refactored LoginActivity to use Google sign-in, and implemented weather data fetching in WeatherActivity." />
   </component>
 </project>
