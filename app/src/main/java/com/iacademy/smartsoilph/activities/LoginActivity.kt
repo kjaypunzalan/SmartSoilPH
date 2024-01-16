@@ -2,98 +2,97 @@ package com.iacademy.smartsoilph.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.EditText
+
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.iacademy.smartsoilph.R
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.button.MaterialButton
-import com.google.firebase.FirebaseApp
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.PhoneAuthCredential
-import com.google.firebase.auth.PhoneAuthProvider
-import com.google.firebase.FirebaseException
-import com.google.firebase.auth.PhoneAuthOptions
-import java.util.concurrent.TimeUnit
+import com.google.firebase.auth.GoogleAuthProvider
+import com.google.android.gms.common.api.ApiException
+import com.iacademy.smartsoilph.R
+
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var googleSignInClient: GoogleSignInClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_page)
-        FirebaseApp.initializeApp(this)
-        auth = FirebaseAuth.getInstance()
 
-        val mobileNumberInput = findViewById<EditText>(R.id.editTextMobileNumber)
+        auth = provideFirebaseAuth()
+
+        val gso = provideGoogleSignInOptions()
+        googleSignInClient = provideGoogleSignInClient(gso)
+
         val signInButton = findViewById<MaterialButton>(R.id.buttonSignIn)
-
         signInButton.setOnClickListener {
-            val mobileNumber = mobileNumberInput.text.toString().trim()
+            signIn()
+        }
+    }
 
-            if (mobileNumber.isNotEmpty()) {
-                loginUser(mobileNumber)
-            } else {
-                Toast.makeText(this, "Please enter your mobile number", Toast.LENGTH_SHORT).show()
+    private fun provideFirebaseAuth(): FirebaseAuth {
+        return FirebaseAuth.getInstance()
+    }
+
+    private fun provideGoogleSignInOptions(): GoogleSignInOptions {
+        return GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+    }
+
+    private fun provideGoogleSignInClient(gso: GoogleSignInOptions): GoogleSignInClient {
+        return GoogleSignIn.getClient(this, gso)
+    }
+
+    private fun signIn() {
+        val signInIntent = googleSignInClient.signInIntent
+        startActivityForResult(signInIntent, REQUEST_CODE_SIGN_IN)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == REQUEST_CODE_SIGN_IN) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                val account = task.getResult(ApiException::class.java)!!
+                firebaseAuthWithGoogle(account.idToken!!)
+            } catch (e: ApiException) {
+                showSnackbar("Google sign in failed: ${e.message}")
             }
         }
     }
 
-    private fun loginUser(mobileNumber: String) {
-
-        val formattedNumber = if (!mobileNumber.startsWith("+63")) {
-            "+63$mobileNumber"
-        } else {
-            mobileNumber
-        }
-        
-        val options = PhoneAuthOptions.newBuilder(auth)
-            .setPhoneNumber(formattedNumber)     // Phone number to verify
-            .setTimeout(60L, TimeUnit.SECONDS)   // Timeout and unit
-            .setActivity(this)                   // Activity (for callback binding)
-            .setCallbacks(object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-                override fun onVerificationCompleted(credential: PhoneAuthCredential) {
-                    signInWithPhoneAuthCredential(credential)
-                }
-
-                override fun onVerificationFailed(e: FirebaseException) {
-                    Toast.makeText(baseContext, "Verification failed: ${e.message}",
-                        Toast.LENGTH_SHORT).show()
-                }
-
-                override fun onCodeSent(verificationId: String,
-                                        token: PhoneAuthProvider.ForceResendingToken) {
-                    Toast.makeText(baseContext, "Verification code sent.",
-                        Toast.LENGTH_SHORT).show()
-
-                    // Save verification ID and resending token so we can use them later
-                    val intent = Intent(this@LoginActivity, VerifyCodeActivity::class.java).apply {
-                        putExtra("verificationId", verificationId)
-                    }
-                    startActivity(intent)
-                }
-            })
-            .build()
-
-        PhoneAuthProvider.verifyPhoneNumber(options)
-    }
-
-
-    private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
+    private fun firebaseAuthWithGoogle(idToken: String) {
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Toast.makeText(baseContext, "Authentication successful.",
-                        Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, MainActivity::class.java)
+                    val intent = Intent(this, HomeActivity::class.java)
                     startActivity(intent)
                     finish()
                 } else {
-                    // If sign in fails, display a message to the user.
-                    Toast.makeText(baseContext, "Authentication failed.",
-                        Toast.LENGTH_SHORT).show()
+                    showToast("Authentication Failed.")
                 }
             }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(baseContext, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showSnackbar(message: String) {
+        Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT).show()
+    }
+
+    companion object {
+        private const val REQUEST_CODE_SIGN_IN = 9001
     }
 }
