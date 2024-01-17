@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="#805DC9FE"/> <!-- The `40` is the hex opacity value for 25% opacity -->
-</shape>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Shadow Layer -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#40000000"/> <!-- Shadow color -->
+            <corners android:radius="4dp"/> <!-- Corner radius -->
+            <padding
+                android:left="5dp"
+                android:top="5dp"
+                android:right="5dp"
+                android:bottom="10dp"/> <!-- Shadow size -->
+        </shape>
+    </item>
+    <!-- Image Layer -->
+    <item android:drawable="@drawable/bg_manual" android:top="5dp" android:left="5dp"/>
+</layer-list>

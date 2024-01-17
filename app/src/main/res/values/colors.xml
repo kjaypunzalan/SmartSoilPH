@@ -3,21 +3,21 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="light_blue">#5DC9FE</color>
+    <color name="main_blue">#5DC9FE</color>
     <color name="fade_blue">#405DC9FE</color>
     <color name="purple_200">#FFDFFD</color>
     <color name="teal_200">#81CBC4</color>
     <color name="teal_700">#00796A</color>
 
     <color name="green"> #66A96B </color>
-    <color name="darkgreen">#3B5F41</color>
+    <color name="dark_green">#3B5F41</color>
 
-    <color name="lightgreen">#DFFFE9</color>
-    <color name="lightblue">#DEF0FF</color>
-    <color name="lightyellow">#FFFAC7</color>
-    <color name="lightorange">#FFF1DD</color>
-    <color name="lightyellowgreen">#EEFFC7</color>
-    <color name="lightpink">#FFDFFD</color>
-    <color name="lightred">#FFDFDF</color>
+    <color name="light_green">#DFFFE9</color>
+    <color name="light_blue">#DEF0FF</color>
+    <color name="light_yellow">#FFFAC7</color>
+    <color name="light_orange">#FFF1DD</color>
+    <color name="light_ygreen">#EEFFC7</color>
+    <color name="light_pink">#FFDFFD</color>
+    <color name="light_red">#FFDFDF</color>
 
 </resources>
