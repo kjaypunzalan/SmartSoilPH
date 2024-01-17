@@ -5,7 +5,9 @@
 
     <string name="location">San Juan, \nBatangas City</string>
     <string name="date">Tues, Jan 02</string>
-    <string name="temperature">24°C</string>
+    <string name="temperature">24</string>
+    <string name="tv_temperature_symbol">°C</string>
+
     <string name="weather">Partially Cloudy</string>
 
     <string name="humidity">Humidity</string>
@@ -29,12 +31,13 @@
     <string name="humidity_soil">Humidity</string>
     <string name="temp_soil">Temperature</string>
 
-    <string name="nitrogen_value">0</string>
+    <string name="nitrogen_value">10</string>
     <string name="phosphorus_value">0</string>
     <string name="potassium_value">0</string>
     <string name="ph_level_value">0</string>
     <string name="ec_level_value">0</string>
     <string name="humidity_soil_value">0</string>
     <string name="temp_soil_value">0</string>
+
 
 </resources>
