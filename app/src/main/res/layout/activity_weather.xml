@@ -20,7 +20,7 @@
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"/>
 
 <!--Header-->
         <androidx.appcompat.widget.Toolbar
@@ -29,7 +29,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorOnPrimary"
             android:elevation="8dp"
-            android:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/toolbar_icon"
@@ -235,7 +235,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/value_temp"
-                        android:textAppearance="@style/value_temp"/>
+                        android:textAppearance="@style/value_temp" />
 
                     <TextView
                         android:layout_width="wrap_content"

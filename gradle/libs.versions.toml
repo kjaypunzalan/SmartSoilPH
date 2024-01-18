@@ -15,6 +15,7 @@ googleServices = "4.4.0"
 firebaseAuth = "22.3.0"
 appcompat = "1.6.1"
 constraintlayout = "2.1.4"
+playServicesAuth = "20.7.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -38,6 +39,7 @@ google-services = { group = "com.google.gms", name = "google-services", version.
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "playServicesAuth" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
