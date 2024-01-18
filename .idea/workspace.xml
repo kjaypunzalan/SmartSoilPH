@@ -10,6 +10,21 @@
           <theme>@style/Theme.SmartSoilPH</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+        <config>
+          <theme>@style/Theme.SmartSoilPH</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_soil.xml">
+        <config>
+          <theme>@style/Theme.SmartSoilPH</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_soil_monitoring.xml">
+        <config>
+          <theme>@style/Theme.SmartSoilPH</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_weather.xml">
         <config>
           <theme>@style/Theme.SmartSoilPH</theme>
@@ -30,6 +45,16 @@
           <theme>@style/Theme.SmartSoilPH</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/otp_page.xml">
+        <config>
+          <theme>@style/Theme.SmartSoilPH</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/resetpassword_page.xml">
+        <config>
+          <theme>@style/Theme.SmartSoilPH</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/xml/network_security_config.xml">
         <config>
           <theme>@style/Theme.SmartSoilPH</theme>
@@ -41,15 +66,18 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0e7b5df8-fccf-4782-8975-4de3be78d6be" name="Changes" comment="Enabled view binding in build.gradle.kts, added Google sign-in and Retrofit dependencies, refactored LoginActivity to use Google sign-in, and implemented weather data fetching in WeatherActivity.">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/iacademy/smartsoilph/datamodels/CurrentConditionsResponse.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/xml/network_security_config.xml" afterDir="false" />
+    <list default="true" id="0e7b5df8-fccf-4782-8975-4de3be78d6be" name="Changes" comment="Refactored WeatherActivity and related classes to use AccuWeather API instead of Weatherbit API. Updated AndroidManifest.xml to include internet permission and allow cleartext traffic.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/iacademy/smartsoilph/activities/RetrofitClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/iacademy/smartsoilph/activities/RetrofitClient.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/iacademy/smartsoilph/activities/AccuWeatherAPIService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/iacademy/smartsoilph/activities/AccuWeatherAPIService.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/iacademy/smartsoilph/activities/WeatherActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/iacademy/smartsoilph/activities/WeatherActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/iacademy/smartsoilph/activities/WeatherbitAPIService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/iacademy/smartsoilph/activities/AccuWeatherAPIService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/iacademy/smartsoilph/datamodels/WeatherResponse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/iacademy/smartsoilph/datamodels/WeatherResponse.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_home.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_home.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_soil.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_soil.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_weather.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_weather.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/forgotpassword_page.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/forgotpassword_page.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/login_page.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/login_page.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/otp_page.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/otp_page.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/resetpassword_page.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/resetpassword_page.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,18 +140,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;xav-branch&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/xavie/AndroidStudioProjects/SmartSoilPH/app/src/main/java/com/iacademy/smartsoilph/datamodels&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "xav-branch",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/xavie/AndroidStudioProjects/SmartSoilPH/app/src/main/java/com/iacademy/smartsoilph/datamodels",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.17",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
   }
-}</component>
+}]]></component>
+  <component name="PsdUISettings">
+    <option name="MODULE_TAB" value="Default Config" />
+    <option name="LAST_EDITED_BUILD_TYPE" value="release" />
+  </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\xavie\AndroidStudioProjects\SmartSoilPH\app\src\main\java\com\iacademy\smartsoilph\datamodels" />
@@ -256,7 +292,15 @@
       <option name="project" value="LOCAL" />
       <updated>1705394045346</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Refactored WeatherActivity and related classes to use AccuWeather API instead of Weatherbit API. Updated AndroidManifest.xml to include internet permission and allow cleartext traffic.">
+      <option name="closed" value="true" />
+      <created>1705460250431</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1705460250431</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -270,7 +314,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/xav-branch" />
+                        <option value="origin/main" />
                       </list>
                     </value>
                   </entry>
@@ -285,6 +329,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Merge pull request #3 from kjaypunzalan/pat-branch&#10;&#10;test commit" />
     <MESSAGE value="Enabled view binding in build.gradle.kts, added Google sign-in and Retrofit dependencies, refactored LoginActivity to use Google sign-in, and implemented weather data fetching in WeatherActivity." />
-    <option name="LAST_COMMIT_MESSAGE" value="Enabled view binding in build.gradle.kts, added Google sign-in and Retrofit dependencies, refactored LoginActivity to use Google sign-in, and implemented weather data fetching in WeatherActivity." />
+    <MESSAGE value="Refactored WeatherActivity and related classes to use AccuWeather API instead of Weatherbit API. Updated AndroidManifest.xml to include internet permission and allow cleartext traffic." />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactored WeatherActivity and related classes to use AccuWeather API instead of Weatherbit API. Updated AndroidManifest.xml to include internet permission and allow cleartext traffic." />
   </component>
 </project>

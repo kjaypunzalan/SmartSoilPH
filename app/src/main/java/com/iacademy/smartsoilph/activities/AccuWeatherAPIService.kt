@@ -12,7 +12,8 @@ interface AccuWeatherAPIService {
     @GET("forecasts/v1/daily/1day/{locationKey}")
     fun getDailyForecast(
         @Path("locationKey") locationKey: String,
-        @Query("apikey") apiKey: String
+        @Query("apikey") apiKey: String,
+        @Query("metric") metric: Boolean = true
     ): Call<WeatherResponse>
 
     // New method for current conditions
