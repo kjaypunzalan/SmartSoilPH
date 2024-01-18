@@ -36,7 +36,7 @@ class WeatherActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     response.body()?.firstOrNull()?.let {
                         runOnUiThread {
-                            binding.tvTemperature.text = "${it.Temperature.Metric.Value} ${it.Temperature.Metric.Unit}"
+                            binding.tvTemperatureNumber.text = "${it.Temperature.Metric.Value} ${it.Temperature.Metric.Unit}"
                             binding.tvWeather.text = it.WeatherText
                         }
                     }
