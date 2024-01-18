@@ -16,6 +16,47 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_constraintTop_toTopOf="parent"/>
+
+<!--Header-->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorOnPrimary"
+            android:elevation="8dp"
+            android:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/toolbar_icon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/icon_smartsoil" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/project_title"
+                    android:textAppearance="@style/project_title"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/project_title2"
+                    android:textAppearance="@style/project_title2"/>
+            </LinearLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
         <ImageView
             android:id="@+id/bg_weather"
             android:layout_width="match_parent"
@@ -25,20 +66,21 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+
 <!-- Content Frame -->
     <LinearLayout
         android:id="@+id/main_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:padding="25dp">
 
         <!-- Location -->
         <TextView
             android:id="@+id/tv_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="60dp"
             android:text="@string/location"
             android:textAppearance="@style/location" />
 
@@ -70,13 +112,15 @@
             <!-- Temperature and Weather Texts Container -->
             <LinearLayout
                 android:id="@+id/text_container"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:maxWidth="200dp"
                 app:layout_constraintStart_toEndOf="@id/iv_partial_cloud"
                 app:layout_constraintTop_toTopOf="@id/iv_partial_cloud"
                 app:layout_constraintBottom_toBottomOf="@id/iv_partial_cloud"
-                android:layout_marginStart="50dp">
+                android:layout_marginStart="50dp"
+                android:layout_weight="1">
 
                 <!-- Temperature -->
                 <RelativeLayout
@@ -95,6 +139,8 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="@style/tv_temperature_number"
                         android:text="@string/temperature"
+                        android:ellipsize="end"
+                        android:singleLine="true"
                         android:layout_alignParentStart="true"/>
 
                     <!-- Degree Symbol -->
@@ -107,7 +153,9 @@
                         android:layout_alignTop="@id/tv_temperature_number"
                         android:layout_toRightOf="@id/tv_temperature_number"
                         android:layout_marginStart="1dp"
-                        android:layout_marginTop="5dp"/>
+                        android:layout_marginTop="5dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"/>
 
                 </RelativeLayout>
 

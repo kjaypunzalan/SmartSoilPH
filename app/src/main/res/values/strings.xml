@@ -39,5 +39,9 @@
     <string name="humidity_soil_value">0</string>
     <string name="temp_soil_value">0</string>
 
+    <string name="project_title">Smart</string>
+    <string name="project_title2">SoilPH</string>
+
+    <string name="soil_title">Soil Status</string>
 
 </resources>
