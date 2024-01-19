@@ -57,7 +57,7 @@ class WeatherActivity : AppCompatActivity() {
             override fun onResponse(call: Call<WeatherResponse>, response: Response<WeatherResponse>) {
                 if (response.isSuccessful) {
                     response.body()?.DailyForecasts?.firstOrNull()?.let { forecast ->
-                        runOnUiThread {
+                        runOnUiThread { 
                             binding.tvValueTemp.text = "Max: ${forecast.Temperature.Maximum.Value} ${forecast.Temperature.Maximum.Unit}"
                             // You can add more UI updates here based on the forecast data
                         }

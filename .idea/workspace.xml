@@ -50,6 +50,11 @@
           <theme>@style/Theme.SmartSoilPH</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/register_page.xml">
+        <config>
+          <theme>@style/Theme.SmartSoilPH</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/resetpassword_page.xml">
         <config>
           <theme>@style/Theme.SmartSoilPH</theme>
@@ -67,17 +72,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0e7b5df8-fccf-4782-8975-4de3be78d6be" name="Changes" comment="Refactored WeatherActivity and related classes to use AccuWeather API instead of Weatherbit API. Updated AndroidManifest.xml to include internet permission and allow cleartext traffic.">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/iacademy/smartsoilph/activities/ArduinoConnect.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/iacademy/smartsoilph/activities/RegisterActivity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/iacademy/smartsoilph/activities/SensorDataDbHelper.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/register_page.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/deploymentTargetDropDown.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deploymentTargetDropDown.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/iacademy/smartsoilph/activities/AccuWeatherAPIService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/iacademy/smartsoilph/activities/AccuWeatherAPIService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/iacademy/smartsoilph/activities/LoginActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/iacademy/smartsoilph/activities/LoginActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/iacademy/smartsoilph/activities/RegisterActivity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/iacademy/smartsoilph/activities/RetrofitClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/iacademy/smartsoilph/activities/RetrofitClient.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/iacademy/smartsoilph/activities/WeatherActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/iacademy/smartsoilph/activities/WeatherActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_home.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_home.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_soil.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_soil.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_weather.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_weather.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/forgotpassword_page.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/forgotpassword_page.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/login_page.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/login_page.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/otp_page.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/otp_page.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/resetpassword_page.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/resetpassword_page.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,7 +93,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\xavie\.android\avd\Pixel_3a_API_34_extension_level_7_x86_64.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[adb-RFCRC0206FM-G1Dyus._adb-tls-connect._tcp]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -112,8 +118,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Kotlin Interface" />
-        <option value="Kotlin Class" />
         <option value="resourceFile" />
+        <option value="layoutResourceFile" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -142,18 +149,20 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Logcat.SavePath": "C:\\Users\\xavie\\AndroidStudioProjects\\SmartSoilPH",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
+    "com.google.services.firebase.aqiPopupShown": "true",
     "git-widget-placeholder": "xav-branch",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/xavie/AndroidStudioProjects/SmartSoilPH/app/src/main/java/com/iacademy/smartsoilph/datamodels",
+    "last_opened_file_path": "C:/Users/xavie/AndroidStudioProjects/SmartSoilPH",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.17",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.lookFeel"
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
   <component name="PsdUISettings">
@@ -260,6 +269,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.SmartSoilPH [signingReport]" />
         <item itemvalue="Gradle.SmartSoilPH [signingReport]" />
         <item itemvalue="Gradle.SmartSoilPH [signingReport]" />
         <item itemvalue="Gradle.SmartSoilPH [signingReport]" />
