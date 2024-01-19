@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <!--Header-->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorOnPrimary"
+        android:elevation="8dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/toolbar_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/icon_smartsoil"
+            android:layout_marginRight="5dp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/project_title"
+                android:textAppearance="@style/project_title"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/project_title2"
+                android:textAppearance="@style/project_title2"/>
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <!-- Recommendation Title -->
+    <TextView
+        android:id="@+id/tv_recommend"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/title_recommend"
+        android:textAppearance="@style/title_recommend"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Fertilizer Recommendation Box -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_fertilizer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_recommend"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp">
+
+        <!-- Contents of the CardView for Fertilizer -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+        <!--Greeting Layout-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_greeting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_greeting"
+                    android:textAppearance="@style/sub_title" />
+
+                <TextView
+                    android:id="@+id/tv_user_greeting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_user_greeting"
+                    android:textAppearance="@style/tv_user_greeting" />
+            </LinearLayout>
+
+            <!-- Horizontal LinearLayout for the first part of the sentence -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/fertilizer_sentence1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fertilizer_sentence1"
+                    android:textAppearance="@style/recommend_sentence"/>
+
+                <!-- Separate TextView for the number "8 kg" -->
+                <TextView
+                    android:id="@+id/tv_fertilizer_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_fertilizer_amount"
+                    android:textAppearance="@style/tv_fertilizer_amount"
+                    android:layout_gravity="end"/>
+            </LinearLayout>
+
+            <!-- Horizontal LinearLayout for second part of the sentence -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fertilizer_sentence2"
+                    android:textAppearance="@style/recommend_sentence"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <!-- Floating Fertilizer CardView -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="6dp"
+        app:layout_constraintTop_toTopOf="@id/cv_fertilizer"
+        app:layout_constraintEnd_toEndOf="@id/cv_fertilizer"
+        app:layout_constraintBottom_toBottomOf="@id/cv_fertilizer"
+        android:translationX="-20dp"
+        android:translationY="-60dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:gravity="center"
+            android:background="@color/light_yellow">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fertilizer_title"
+                android:textAppearance="@style/fertilizer_title" />
+            <TextView
+                android:id="@+id/tv_fertilizer_amount1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="8kg"
+                android:textAppearance="@style/tv_fertilizer_amount1"/>
+
+        </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>
+
+    <!-- Lime Recommendation Box -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardLime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="55dp"
+        app:layout_constraintTop_toBottomOf="@id/cv_fertilizer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp">
+
+        <!-- Contents of the CardView for Lime -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/for_acidity"
+                android:textAppearance="@style/sub_title" />
+
+            <!-- Horizontal LinearLayout for the first part of the sentence -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/acidity_sentence1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fertilizer_sentence1"
+                    android:textAppearance="@style/recommend_sentence"/>
+
+                <!-- Separate TextView for the number "2 kg" -->
+                <TextView
+                    android:id="@+id/tv_lime_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_lime_amount"
+                    android:textAppearance="@style/tv_fertilizer_amount"
+                    android:layout_gravity="end"/>
+            </LinearLayout>
+
+            <!-- Horizontal LinearLayout for second part of the sentence -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/acidity_sentence2"
+                    android:textAppearance="@style/recommend_sentence"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <!-- Floating Amount CardView2 -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardAmount2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="6dp"
+        app:layout_constraintTop_toTopOf="@id/cardLime"
+        app:layout_constraintEnd_toEndOf="@id/cardLime"
+        app:layout_constraintBottom_toBottomOf="@id/cardLime"
+        android:translationX="-20dp"
+        android:translationY="-60dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:gravity="center"
+            android:background="@color/light_pink">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/acidity_title"
+                android:textAppearance="@style/fertilizer_title" />
+            <TextView
+                android:id="@+id/tv_lime_amount1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2kg"
+                android:textAppearance="@style/tv_fertilizer_amount1"/>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- View Previous Recommendations Button -->
+    <Button
+        android:id="@+id/btn_previous"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/previous_data"
+        app:layout_constraintTop_toBottomOf="@id/cardLime"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textAllCaps="false"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="30dp"/>
+
+    <Button
+        android:id="@+id/btn_return_soil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/return_soil"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="@id/btn_previous"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="30dp"/>
+
+    <!-- Background Image -->
+    <ImageView
+        android:id="@+id/iv_fertilizer"
+        android:layout_width="0dp"
+        android:layout_height="300dp"
+        android:src="@drawable/bg_fertilizer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
