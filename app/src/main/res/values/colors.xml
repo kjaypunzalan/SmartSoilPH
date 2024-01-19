@@ -9,6 +9,13 @@
     <color name="teal_200">#81CBC4</color>
     <color name="teal_700">#00796A</color>
 
+
+    <color name="non_photo_blue">#92DCE5</color>
+    <color name="space_cadet">#2B2D42</color>
+    <color name="seasalt">#F8F7F9</color>
+    <color name="maize">#F7EC59</color>
+    <color name="rose_pink">#FF66D8</color>
+
     <color name="green"> #66A96B </color>
     <color name="dark_green">#3B5F41</color>
 
