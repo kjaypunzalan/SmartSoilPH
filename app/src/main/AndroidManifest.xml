@@ -62,8 +62,12 @@
             android:name=".activities.VerifyCodeActivity"
             android:exported="true"
             android:theme="@style/Theme.SmartSoilPH" />
+
         <activity
             android:name=".activities.LoadScreenActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activities.SplashScreenActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

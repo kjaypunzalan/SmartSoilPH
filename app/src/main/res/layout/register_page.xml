@@ -80,6 +80,7 @@
                 android:alpha="0.7"/>
             <EditText
                 android:id="@+id/editTextMobileNumber"
+                android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"/>
@@ -99,6 +100,7 @@
                 android:alpha="0.7"/>
             <EditText
                 android:id="@+id/editTextPassword"
+                android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"/>
@@ -119,6 +121,7 @@
             <EditText
                 android:id="@+id/editTextConfirmPassword"
                 android:layout_width="match_parent"
+                android:textColor="@color/black"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"/>
 
@@ -131,6 +134,7 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonSignUp"
                 android:layout_width="match_parent"
+                android:textColor="@color/white"
                 android:layout_height="60dp"
                 android:layout_marginTop="10dp"
                 android:text="Sign Up"
@@ -152,6 +156,7 @@
                     android:id="@+id/tvAlreadyAccount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     android:alpha="0.8"
                     android:text="Already have an account?" />
 
