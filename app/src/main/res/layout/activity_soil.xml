@@ -20,7 +20,8 @@
             android:id="@+id/toolbar_icon"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/icon_smartsoil" />
+            android:src="@drawable/icon_smartsoil"
+            android:layout_marginRight="5dp"/>
 
         <LinearLayout
             android:layout_width="wrap_content"

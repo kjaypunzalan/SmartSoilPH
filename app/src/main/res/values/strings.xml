@@ -42,6 +42,25 @@
     <string name="project_title">Smart</string>
     <string name="project_title2">SoilPH</string>
 
-    <string name="soil_title">Soil Status</string>
+    <string name="soil_title">Soil Data</string>
+    <string name="welcome_user">Welcome back,</string>
+
+    <string name="title_recommend">Recommendations</string>
+    <string name="tv_greeting">Hi, </string>
+    <string name="tv_user_greeting"><i> [Username]</i></string>
+
+    <string name="fertilizer_sentence1">We recommend using at least </string>
+    <string name="tv_fertilizer_amount">" 8kg</string>
+    <string name="fertilizer_sentence2"><b>of fertilizer</b> per hectare based on our assessment!</string>
+    <string name="fertilizer_title">Fertilizer</string>
+
+    <string name="acidity_title">Acidity</string>
+    <string name="tv_lime_amount">" 2kg</string>
+    <string name="acidity_sentence1">We recommend using at least </string>
+    <string name="acidity_sentence2"><b>of lime</b> per hectare for a better soil health!</string>
+    <string name="for_acidity">For acidity,</string>
+
+    <string name="return_soil">Return to Soil Data</string>
+    <string name="previous_data">View Previous Recommendations</string>
 
 </resources>

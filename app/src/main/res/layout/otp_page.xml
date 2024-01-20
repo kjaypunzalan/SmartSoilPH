@@ -31,7 +31,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:cardCornerRadius="28dp"
-        android:layout_marginBottom="100dp">
+        android:layout_marginBottom="100dp"
+        app:cardBackgroundColor="@color/white">
 
         <LinearLayout
             android:id="@+id/innerLinearLayout"
@@ -57,7 +58,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Please enter verification code sent to registered number."
-                android:alpha="0.8"/>
+                android:alpha="0.8"
+                android:textColor="@color/black"/>
+
+
 
             <!-- View's for spacing -->
             <View
@@ -71,7 +75,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Verification Code "
-                android:alpha="0.8"/>
+                android:alpha="0.8"
+                android:textColor="@color/black"/>
 
             <EditText
                 android:id="@+id/verificationCodeEditText"
@@ -111,7 +116,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:alpha="0.8"
-                    android:text="Didn't receive a code?" />
+                    android:text="Didn't receive a code?"
+                    android:textColor="@color/black"/>
 
                 <!-- Resend -->
                 <TextView
