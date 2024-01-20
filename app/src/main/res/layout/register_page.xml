@@ -7,6 +7,7 @@
     android:background="@color/green">
 
     <LinearLayout
+        android:id="@+id/linearLayoutHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -14,11 +15,13 @@
         android:layout_marginTop="45dp">
         <!-- Icon Image -->
         <ImageView
+            android:id="@+id/imageViewIcon"
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:src="@drawable/agriculture"/>
         <!-- SmartSoilPH Title -->
         <TextView
+            android:id="@+id/textViewTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="SmartSoilPH"
@@ -29,6 +32,7 @@
 
     <!-- Card Holder -->
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewMain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -36,14 +40,15 @@
         android:layout_marginBottom="-20dp"
         app:cardBackgroundColor="@color/white">
 
-
         <LinearLayout
+            android:id="@+id/linearLayoutForm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="28dp">
             <!-- Create New Account Text -->
             <TextView
+                android:id="@+id/textViewCreateAccount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Create New Account"
@@ -52,6 +57,7 @@
                 android:textColor="@color/black"/>
             <!-- Text Instruction -->
             <TextView
+                android:id="@+id/textViewInstructions"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Please register your information"
@@ -60,77 +66,90 @@
 
             <!-- View's for spacing -->
             <View
+                android:id="@+id/viewSpacing1"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp" />
 
             <!-- Mobile Number Input -->
             <TextView
+                android:id="@+id/textViewMobileNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Enter Mobile Number "
+                android:text="Enter Email Address "
                 android:textColor="@color/black"
                 android:alpha="0.7"/>
             <EditText
+                android:id="@+id/editTextMobileNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"/>
+                android:inputType="textEmailAddress"/>
 
             <View
+                android:id="@+id/viewSpacing2"
                 android:layout_width="wrap_content"
                 android:layout_height="10dp" />
 
             <!-- Password Input -->
             <TextView
+                android:id="@+id/textViewPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Enter Password "
                 android:textColor="@color/black"
                 android:alpha="0.7"/>
             <EditText
+                android:id="@+id/editTextPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"/>
 
             <View
+                android:id="@+id/viewSpacing3"
                 android:layout_width="wrap_content"
                 android:layout_height="10dp" />
 
             <!-- Password Confirmation -->
             <TextView
+                android:id="@+id/textViewConfirmPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Confirm Password "
                 android:textColor="@color/black"
                 android:alpha="0.7"/>
             <EditText
+                android:id="@+id/editTextConfirmPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"/>
 
             <View
+                android:id="@+id/viewSpacing4"
                 android:layout_width="wrap_content"
                 android:layout_height="10dp" />
 
             <!-- Sign Up Button -->
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonSignUp"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="10dp"
                 android:text="Sign Up"
                 android:textSize="20sp"
                 app:cornerRadius="32dp"
-                android:backgroundTint="@color/darkgreen"/>
+                android:backgroundTint="@color/dark_green"/>
 
             <View
+                android:id="@+id/viewSpacing5"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp" />
 
             <RelativeLayout
+                android:id="@+id/relativeLayoutSignIn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center">
                 <TextView
-                    android:id="@+id/tv_reg"
+                    android:id="@+id/tvAlreadyAccount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:alpha="0.8"
@@ -138,17 +157,19 @@
 
                 <!--Sign In -->
                 <TextView
+                    android:id="@+id/textViewSignIn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Sign in"
                     android:alpha="0.8"
-                    android:layout_toRightOf="@id/tv_reg"
+                    android:layout_toRightOf="@id/tvAlreadyAccount"
                     android:layout_marginLeft="10dp"
                     android:textColor="@color/black"/>
 
             </RelativeLayout>
 
             <View
+                android:id="@+id/viewSpacing6"
                 android:layout_width="wrap_content"
                 android:layout_height="25dp" />
 
