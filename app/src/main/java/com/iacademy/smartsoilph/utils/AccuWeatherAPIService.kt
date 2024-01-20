@@ -1,4 +1,4 @@
-package com.iacademy.smartsoilph.activities
+package com.iacademy.smartsoilph.utils
 
 import com.iacademy.smartsoilph.datamodels.CurrentConditionsResponse
 import com.iacademy.smartsoilph.datamodels.WeatherResponse

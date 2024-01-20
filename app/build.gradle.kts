@@ -52,7 +52,7 @@ android {
 
 dependencies {
 
-
+    //Core Implementations
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     implementation("androidx.activity:activity-compose:1.8.1")
@@ -65,7 +65,6 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
-    implementation(libs.play.services.auth)
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -79,7 +78,7 @@ dependencies {
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
 
-
+    //Android UI
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -90,8 +89,17 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.cardview)
     implementation(libs.material)
+
+    //FIREBASE DATABASE
     implementation(libs.firebase.auth.ktx)
     implementation(libs.firebase.auth)
+    implementation(libs.firebase.database)
+    implementation(libs.play.services.auth)
+
+    //GIF
+    implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.28")
+    implementation("com.squareup.picasso:picasso:2.8")
+
     implementation(libs.appcompat)
     implementation(libs.constraintlayout)
     testImplementation(libs.junit)

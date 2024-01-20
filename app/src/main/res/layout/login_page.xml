@@ -38,6 +38,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:orientation="vertical"
             android:padding="28dp">
             <!-- Welcome Text -->
@@ -45,14 +46,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Welcome!"
+                android:textColor="@color/black"
                 android:textSize="32sp"
-                android:textStyle="bold"
-                android:textColor="@color/black"/>
+                android:textStyle="bold" />
             <!-- Text Instruction -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Please login your information"
+                android:textColor="@color/black"
                 android:alpha="0.8"/>
 
             <!-- View's for spacing -->
@@ -64,11 +66,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mobile Number "
+                android:text="Email"
+                android:textColor="@color/black"
                 android:alpha="0.8"/>
             <EditText
                 android:id="@+id/editTextMobileNumber"
                 android:layout_width="match_parent"
+                android:textColor="@color/black"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"/>
 
@@ -81,11 +85,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Password "
+                android:textColor="@color/black"
                 android:alpha="0.8"/>
             <EditText
                 android:id="@+id/editTextPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
                 android:inputType="textPassword"/>
 
             <!-- Forgot Password -->
@@ -96,6 +102,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Forgot Password?"
+                    android:textColor="@color/black"
                     android:alpha="0.9"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"/>
@@ -110,6 +117,7 @@
                 android:id="@+id/buttonSignIn"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
+                android:textColor="@color/white"
                 android:text="Sign In"
                 android:textSize="20sp"
                 app:cornerRadius="32dp"
@@ -129,7 +137,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:alpha="0.8"
-                    android:text="Don't have an account?" />
+                    android:text="Don't have an account?"
+                    android:textColor="@color/black"/>
+
 
                 <!-- Sign Up -->
                 <TextView
@@ -138,6 +148,7 @@
                     android:layout_height="wrap_content"
                     android:text="Sign Up"
                     android:alpha="0.9"
+                    android:textColor="@color/black"
                     android:layout_toRightOf="@id/tv_log"
                     android:layout_marginLeft="10dp"/>
             </RelativeLayout>

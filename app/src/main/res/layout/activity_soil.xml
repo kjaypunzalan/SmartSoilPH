@@ -55,6 +55,23 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:srcCompat="@drawable/bg_soil" />
 
+        <Button
+            android:id="@+id/btn_view_fertilizer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:textAllCaps="false"
+            android:text="View Recommendation"
+            android:textColor="#80000000"
+            app:layout_constraintBottom_toBottomOf="@+id/bg_weather"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.923"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.976"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="30dp" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Soil Title -->
@@ -97,12 +114,14 @@
                     android:text="@string/nitrogen"
                     android:textAppearance="@style/nutrient_title" />
 
-                <TextView
+                <EditText
                     android:id="@+id/nitrogen_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="@string/nitrogen_value"
+                    android:textColor="#80000000"
+                    android:text="10"
+                    android:inputType="numberDecimal"
                     android:textAppearance="@style/nutrient_value" />
 
             </LinearLayout>
@@ -141,12 +160,14 @@
                     android:text="@string/phosphorus"
                     android:textAppearance="@style/nutrient_title" />
 
-                <TextView
+                <EditText
                     android:id="@+id/phosphorus_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="@string/phosphorus_value"
+                    android:textColor="#80000000"
+                    android:inputType="numberDecimal"
                     android:textAppearance="@style/nutrient_value" />
 
             </LinearLayout>
@@ -186,12 +207,14 @@
                     android:text="@string/potassium"
                     android:textAppearance="@style/nutrient_title" />
 
-                <TextView
+                <EditText
                     android:id="@+id/potassium_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="@string/phosphorus_value"
+                    android:textColor="#80000000"
+                    android:inputType="numberDecimal"
                     android:textAppearance="@style/nutrient_value" />
 
             </LinearLayout>
@@ -231,12 +254,14 @@
                     android:text="@string/ph_level"
                     android:textAppearance="@style/nutrient_title" />
 
-                <TextView
+                <EditText
                     android:id="@+id/ph_level_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="@string/ph_level_value"
+                    android:textColor="#80000000"
+                    android:inputType="numberDecimal"
                     android:textAppearance="@style/nutrient_value" />
 
             </LinearLayout>
@@ -276,12 +301,14 @@
                     android:text="@string/ec_level"
                     android:textAppearance="@style/nutrient_title" />
 
-                <TextView
+                <EditText
                     android:id="@+id/ec_level_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="@string/ec_level_value"
+                    android:textColor="#80000000"
+                    android:inputType="numberDecimal"
                     android:textAppearance="@style/nutrient_value" />
 
             </LinearLayout>
@@ -321,12 +348,14 @@
                     android:text="@string/humidity_soil"
                     android:textAppearance="@style/nutrient_title" />
 
-                <TextView
+                <EditText
                     android:id="@+id/humidity_soil_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="@string/humidity_soil_value"
+                    android:textColor="#80000000"
+                    android:inputType="numberDecimal"
                     android:textAppearance="@style/nutrient_value" />
 
             </LinearLayout>
@@ -366,12 +395,14 @@
                     android:text="@string/temp_soil"
                     android:textAppearance="@style/nutrient_title" />
 
-                <TextView
+                <EditText
                     android:id="@+id/temp_soil_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="@string/temp_soil_value"
+                    android:textColor="#80000000"
+                    android:inputType="numberDecimal"
                     android:textAppearance="@style/nutrient_value" />
 
             </LinearLayout>

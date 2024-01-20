@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/green"
+    android:background="@color/white"
     android:orientation="vertical"
     android:gravity="center"
     tools:context="com.iacademy.smartsoilph.activities.HomeActivity">
@@ -13,8 +13,8 @@
     <ImageView
         android:id="@+id/iv_logo"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:src="@drawable/agriculture"
+        android:layout_height="150dp"
+        android:src="@drawable/icon_smartsoil"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -23,26 +23,41 @@
         app:layout_constraintVertical_bias="0.239" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SmartSoilPH"
-        android:textColor="@color/white"
-        android:textSize="40sp"
-        android:textStyle="bold"
+        android:text="@string/project_title"
+        android:textAppearance="@style/project_title"
+        android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.35"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.107" />
+        app:layout_constraintVertical_bias="0.12" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/project_title2"
+        android:textAppearance="@style/project_title2"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.667"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.118" />
 
     <Button
         android:id="@+id/btnSoil"
-        android:layout_width="112dp"
+        android:layout_width="130dp"
         android:layout_height="89dp"
         android:text="Soil"
+        android:fontFamily="@font/montserrat_bold"
         android:textColor="@color/black"
-        android:backgroundTint="@color/light_green"
+        android:backgroundTint="@color/semi_light_green"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.281"
@@ -52,11 +67,12 @@
 
     <Button
         android:id="@+id/btnWeather"
-        android:layout_width="112dp"
+        android:layout_width="130dp"
         android:layout_height="89dp"
-        android:backgroundTint="@color/light_blue"
+        android:backgroundTint="@color/semi_light_blue"
         android:textColor="@color/black"
         android:text="Weather"
+        android:fontFamily="@font/montserrat_bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.772"
@@ -66,11 +82,12 @@
 
     <Button
         android:id="@+id/btnReports"
-        android:layout_width="112dp"
+        android:layout_width="130dp"
         android:layout_height="89dp"
-        android:backgroundTint="@color/light_red"
+        android:backgroundTint="@color/semi_light_red"
         android:text="Reports"
         android:textColor="@color/black"
+        android:fontFamily="@font/montserrat_bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.28"
@@ -80,10 +97,11 @@
 
     <Button
         android:id="@+id/btnManual"
-        android:layout_width="112dp"
+        android:layout_width="130dp"
         android:layout_height="89dp"
-        android:backgroundTint="@color/light_yellow"
+        android:backgroundTint="@color/semi_light_yellow"
         android:text="Manual"
+        android:fontFamily="@font/montserrat_bold"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -91,6 +109,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.808" />
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/gifImageView"
+        android:layout_width="580dp"
+        android:layout_height="448dp"
+        android:src="@drawable/animated_plant1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.989" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,8 +1,10 @@
 package com.iacademy.smartsoilph.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -32,6 +34,8 @@ class RegisterActivity : AppCompatActivity() {
         signUpButton.setOnClickListener {
             signUpUser()
         }
+
+        setupLoginTextView()
     }
 
     private fun signUpUser() {
@@ -57,5 +61,39 @@ class RegisterActivity : AppCompatActivity() {
                         Toast.LENGTH_SHORT).show()
                 }
             }
+
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val currentUser = FirebaseAuth.getInstance().currentUser
+
+                    if (currentUser?.isEmailVerified == true) {
+                        startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
+                    } else {
+                        currentUser?.sendEmailVerification()
+                        Toast.makeText(
+                            this@RegisterActivity,
+                            "Please check your email to verify your account",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                    }
+                    startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
+                } else {
+                    Toast.makeText(
+                        this@RegisterActivity,
+                        "Registration Error: ${task.exception?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+    }
+
+    private fun setupLoginTextView() {
+        val loginTextView = findViewById<TextView>(R.id.textViewSignIn)
+        loginTextView.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

@@ -6,6 +6,8 @@ import android.util.Log
 import com.iacademy.smartsoilph.databinding.ActivityWeatherBinding
 import com.iacademy.smartsoilph.datamodels.CurrentConditionsResponse
 import com.iacademy.smartsoilph.datamodels.WeatherResponse
+import com.iacademy.smartsoilph.utils.AccuWeatherAPIService
+import com.iacademy.smartsoilph.utils.RetrofitClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
