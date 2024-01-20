@@ -11,22 +11,25 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
+        // declare + initialize variables
         val btnSoil = findViewById<Button>(R.id.btnSoil);
-        btnSoil.setOnClickListener {
-            val Intent = Intent(this, SoilActivity::class.java);
-            startActivity(Intent);
-        }
-
         val btnWeather = findViewById<Button>(R.id.btnWeather);
-        btnWeather.setOnClickListener {
-            val Intent = Intent(this, WeatherActivity::class.java);
-            startActivity(Intent);
-        }
-
         val btnReports = findViewById<Button>(R.id.btnReports);
-        btnReports.setOnClickListener {
-            val Intent = Intent(this, SoilMonitoringActivity::class.java);
-            startActivity(Intent);
+        val btnManual = findViewById<Button>(R.id.btnManual);
+
+        // set click listeners for buttons
+        setButtonClickListener(btnSoil, SoilActivity::class.java)
+        setButtonClickListener(btnWeather, WeatherActivity::class.java)
+        setButtonClickListener(btnReports, LoadScreenActivity::class.java)
+        setButtonClickListener(btnManual, LoadScreenActivity::class.java)
+
+    }
+
+    //Button Function
+    private fun setButtonClickListener(button: Button, activityClass: Class<*>) {
+        button.setOnClickListener {
+            val intent = Intent(this, activityClass)
+            startActivity(intent)
         }
     }
 }

@@ -27,4 +27,12 @@
     <color name="light_pink">#FFDFFD</color>
     <color name="light_red">#FFDFDF</color>
 
+    <color name="semi_light_green">#80DFFFE9</color>
+    <color name="semi_light_blue">#80DEF0FF</color>
+    <color name="semi_light_yellow">#80FFFAC7</color>
+    <color name="semi_light_orange">#80FFF1DD</color>
+    <color name="semi_light_ygreen">#80EEFFC7</color>
+    <color name="semi_light_pink">#80FFDFFD</color>
+    <color name="semi_light_red">#80FFDFDF</color>
+
 </resources>
