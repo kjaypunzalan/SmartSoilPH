@@ -4,7 +4,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
-    private const val BASE_URL = "http://dataservice.accuweather.com/" // AccuWeather API base URL
+
+        private const val BASE_URL = "https://api.open-meteo.com/" // Open-Meteo API base URL
+
 
     val instance: Retrofit
         get() = Retrofit.Builder()

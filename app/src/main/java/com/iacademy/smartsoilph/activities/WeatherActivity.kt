@@ -3,17 +3,20 @@ package com.iacademy.smartsoilph.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
+import com.iacademy.smartsoilph.R
 import com.iacademy.smartsoilph.databinding.ActivityWeatherBinding
-import com.iacademy.smartsoilph.datamodels.CurrentConditionsResponse
 import com.iacademy.smartsoilph.datamodels.WeatherResponse
-import com.iacademy.smartsoilph.utils.AccuWeatherAPIService
+import com.iacademy.smartsoilph.utils.OpenMeteoAPIService
 import com.iacademy.smartsoilph.utils.RetrofitClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class WeatherActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityWeatherBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,55 +24,86 @@ class WeatherActivity : AppCompatActivity() {
         binding = ActivityWeatherBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val locationKey = "262269" // Replace with actual location key
-        fetchCurrentConditions(locationKey)
-        fetchDailyForecast(locationKey)
+        val textViewDate: TextView = findViewById(R.id.tv_date)
+        textViewDate.text = getCurrentFormattedDate()
+
+        getWeatherData()
+    }
+    private fun getCurrentFormattedDate(): String {
+        val dateFormat = SimpleDateFormat("EEE, MMM dd", Locale.getDefault())
+        return dateFormat.format(Date())
     }
 
-    private fun fetchCurrentConditions(locationKey: String) {
-        val weatherService = RetrofitClient.instance.create(AccuWeatherAPIService::class.java)
-        val call = weatherService.getCurrentConditions(locationKey, "sp1ubpYQWiAR50k9Gja5or9OEX6lmAUI")
-
-        call.enqueue(object : Callback<List<CurrentConditionsResponse>> {
-            override fun onResponse(
-                call: Call<List<CurrentConditionsResponse>>,
-                response: Response<List<CurrentConditionsResponse>>
-            ) {
-                if (response.isSuccessful) {
-                    response.body()?.firstOrNull()?.let {
-                        runOnUiThread {
-                            binding.tvTemperatureNumber.text = "${it.Temperature.Metric.Value} ${it.Temperature.Metric.Unit}"
-                            binding.tvWeather.text = it.WeatherText
-                        }
-                    }
-                }
-            }
-
-            override fun onFailure(call: Call<List<CurrentConditionsResponse>>, t: Throwable) {
-                Log.e("WeatherApp", "Error fetching current weather data", t)
-            }
-        })
+    private fun interpretWeatherCode(code: Int): String {
+        return when (code) {
+            0 -> "Clear sky"
+            1, 2, 3 -> "Partly cloudy"
+            45, 48 -> "Fog"
+            51, 53, 55 -> "Drizzle"
+            56, 57 -> "Freezing Drizzle"
+            61, 63, 65 -> "Rain"
+            66, 67 -> "Freezing Rain"
+            71, 73, 75 -> "Snow"
+            77 -> "Snow Grains"
+            80, 81, 82 -> "Rain Showers"
+            85, 86 -> "Snow Showers"
+            95, 96, 99 -> "Thunderstorm"
+            else -> "Unknown"
+        }
     }
 
-    private fun fetchDailyForecast(locationKey: String) {
-        val weatherService = RetrofitClient.instance.create(AccuWeatherAPIService::class.java)
-        val call = weatherService.getDailyForecast(locationKey, "sp1ubpYQWiAR50k9Gja5or9OEX6lmAUI")
+    private fun getWeatherData() {
+        val service = RetrofitClient.instance.create(OpenMeteoAPIService::class.java)
+        val call = service.getWeatherForecast(
+            latitude = 13.7567,
+            longitude = 121.0584,
+            current = "temperature_2m,relative_humidity_2m,wind_speed_10m",
+            hourly = "wind_speed_80m",
+            daily = "temperature_2m_max",
+            timezone = "Asia/Singapore"
+        )
+
 
         call.enqueue(object : Callback<WeatherResponse> {
             override fun onResponse(call: Call<WeatherResponse>, response: Response<WeatherResponse>) {
-                if (response.isSuccessful) {
-                    response.body()?.DailyForecasts?.firstOrNull()?.let { forecast ->
-                        runOnUiThread { 
-                            binding.tvValueTemp.text = "Max: ${forecast.Temperature.Maximum.Value} ${forecast.Temperature.Maximum.Unit}"
-                            // You can add more UI updates here based on the forecast data
-                        }
+                if (response.isSuccessful && response.body() != null) {
+                    val weatherData = response.body()!!
+                    val currentWeather = weatherData.current
+                    val dailyWeather = weatherData.daily
+                    // Update UI with the weather data
+
+                    weatherData.current?.let {
+                        val temperature = it.temperature.toInt() // Convert to Int
+                        val humidity = it.humidity.toInt()       // Convert to Int
+                        val windSpeed = it.windSpeed.toInt()     // Convert to Int
+                        val maxTemperature = weatherData.daily?.maxTemperature?.get(0)?.toInt() // Convert to Int
+
+                        binding.tvTemperatureNumber.text = "$temperature°C"
+                        binding.tvValueHumidity.text = "$humidity%"
+                        binding.tvValueWind.text = "${windSpeed}km/h"
+                        binding.tvValueTemp.text = "$maxTemperature°C"
+
                     }
+//                    binding.tvTemperatureNumber.text = "${weatherData.current?.temperature}°C"
+//                    binding.tvValueHumidity.text = "${weatherData.current?.humidity}%"
+//                    binding.tvValueWind.text = "${weatherData.current?.windSpeed}km/h"
+//                    binding.tvValueTemp.text = "${weatherData.daily?.maxTemperature?.get(0)}°C"
+
+                    currentWeather?.let {
+                        val weatherCondition = interpretWeatherCode(it.weatherCode)
+                        // Update UI with weatherCondition
+                        binding.tvWeather.text = "${weatherCondition} ngayon beshie"
+                    }
+                } else {
+                    Log.e("WeatherActivity", "Response not successful")
                 }
             }
 
             override fun onFailure(call: Call<WeatherResponse>, t: Throwable) {
-                Log.e("WeatherApp", "Error fetching daily forecast data", t)
+                Log.e("WeatherActivity", "API call failed", t)
             }
         })
     }
+
+    // Additional methods and logic for your activity
 }

@@ -1,6 +1,6 @@
 package com.iacademy.smartsoilph.datamodels
 
-class SoilDataModel {
+class   SoilDataModel {
 
     //Data Types
     var nitrogen: Float = 0.0F

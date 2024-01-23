@@ -49,7 +49,7 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Login success, update UI with the signed-in user's information
-                    navigateToMainActivity()
+                    checkIfEmailVerified()
                 } else {
                     // If login fails, display a message to the user.
                     Toast.makeText(baseContext, "Login failed: ${task.exception?.message}",
@@ -70,5 +70,18 @@ class LoginActivity : AppCompatActivity() {
         val intent = Intent(this, HomeActivity::class.java)  // Replace MainActivity with your main activity class
         startActivity(intent)
         finish()
+    }
+
+    private fun checkIfEmailVerified() {
+        val user = auth.currentUser
+
+        if (user != null && user.isEmailVerified) {
+            // Email is verified, proceed to the main activity
+            val intent = Intent(this, HomeActivity::class.java) // Replace with your main activity
+            startActivity(intent)
+            finish()
+        } else {
+            Toast.makeText(baseContext, "Please verify your email first.", Toast.LENGTH_SHORT).show()
+        }
     }
 }

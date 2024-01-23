@@ -1,40 +1,28 @@
 package com.iacademy.smartsoilph.datamodels
 
+import com.google.gson.annotations.SerializedName
+
+// Main response class
 data class WeatherResponse(
-    val DailyForecasts: List<DailyForecast>
-    // Add other top-level fields from the AccuWeather response if necessary
+    val current: CurrentWeather?,
+    val hourly: HourlyWeather?,
+    val daily: DailyWeather?
 )
 
-data class DailyForecast(
-    val Date: String,
-    val Temperature: Temperature,
-    val Day: DayForecast,
-    val Night: NightForecast
-    // Add other fields as per the AccuWeather daily forecast response
+// Current weather data
+data class CurrentWeather(
+    @SerializedName("temperature_2m") val temperature: Double,
+    @SerializedName("relative_humidity_2m") val humidity: Double,
+    @SerializedName("wind_speed_10m") val windSpeed: Double,
+    @SerializedName("weather_code") val weatherCode: Int
 )
 
-data class Temperature(
-    val Minimum: TemperatureDetail,
-    val Maximum: TemperatureDetail
-    // Add other fields if necessary
+// Hourly weather data (only including wind speed for simplicity)
+data class HourlyWeather(
+    val windSpeed80m: List<Double> // Assuming it's a list of wind speeds
 )
 
-data class TemperatureDetail(
-    val Value: Double,
-    val Unit: String
-    // Add other fields if necessary
-)
-
-data class DayForecast(
-    val Icon: Int,
-    val IconPhrase: String,
-    val WeatherCondition: String // Field to store the weather condition (e.g., "Cloudy")
-    // Add other fields if necessary
-)
-
-data class NightForecast(
-    val Icon: Int,
-    val IconPhrase: String,
-    val WeatherCondition: String // Field to store the weather condition (e.g., "Clear")
-    // Add other fields if necessary
+// Daily weather data (only including max temperature for simplicity)
+data class DailyWeather(
+    @SerializedName("temperature_2m_max") val maxTemperature: List<Double> // Assuming it's a list of max temperatures
 )
