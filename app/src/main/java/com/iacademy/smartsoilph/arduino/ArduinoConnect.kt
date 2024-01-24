@@ -1,4 +1,4 @@
-package com.iacademy.smartsoilph.activities
+package com.iacademy.smartsoilph.arduino
 
 import android.Manifest
 import android.bluetooth.BluetoothAdapter
