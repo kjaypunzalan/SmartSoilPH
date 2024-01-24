@@ -64,6 +64,7 @@
                 android:textColor="@color/black"
                 android:alpha="0.7"/>
 
+
             <!-- View's for spacing -->
             <View
                 android:id="@+id/viewSpacing1"
@@ -72,10 +73,28 @@
 
             <!-- Mobile Number Input -->
             <TextView
-                android:id="@+id/textViewMobileNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Enter Email Address "
+                android:text="Enter Name "
+                android:textColor="@color/black"
+                android:alpha="0.7"/>
+            <EditText
+                android:id="@+id/editTextName"
+                android:textColor="@color/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"/>
+
+
+            <View
+                android:id="@+id/viewSpacing2"
+                android:layout_width="wrap_content"
+                android:layout_height="5dp" />
+            <!-- Mobile Number Input -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Enter Mobile Number "
                 android:textColor="@color/black"
                 android:alpha="0.7"/>
             <EditText
@@ -85,10 +104,30 @@
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"/>
 
+            <!-- View's for spacing -->
             <View
-                android:id="@+id/viewSpacing2"
+                android:id="@+id/viewSpacing3"
                 android:layout_width="wrap_content"
-                android:layout_height="10dp" />
+                android:layout_height="5dp" />
+
+            <!-- Mobile Number Input -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Enter Email Address "
+                android:textColor="@color/black"
+                android:alpha="0.7"/>
+            <EditText
+                android:id="@+id/editTextEmail"
+                android:textColor="@color/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"/>
+
+            <View
+                android:id="@+id/viewSpacing4"
+                android:layout_width="wrap_content"
+                android:layout_height="5dp" />
 
             <!-- Password Input -->
             <TextView
@@ -106,9 +145,9 @@
                 android:inputType="textPassword"/>
 
             <View
-                android:id="@+id/viewSpacing3"
+                android:id="@+id/viewSpacing5"
                 android:layout_width="wrap_content"
-                android:layout_height="10dp" />
+                android:layout_height="5dp" />
 
             <!-- Password Confirmation -->
             <TextView
@@ -126,9 +165,9 @@
                 android:inputType="textPassword"/>
 
             <View
-                android:id="@+id/viewSpacing4"
+                android:id="@+id/viewSpacing6"
                 android:layout_width="wrap_content"
-                android:layout_height="10dp" />
+                android:layout_height="5dp" />
 
             <!-- Sign Up Button -->
             <com.google.android.material.button.MaterialButton
@@ -143,7 +182,7 @@
                 android:backgroundTint="@color/dark_green"/>
 
             <View
-                android:id="@+id/viewSpacing5"
+                android:id="@+id/viewSpacing7"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp" />
 
@@ -174,7 +213,7 @@
             </RelativeLayout>
 
             <View
-                android:id="@+id/viewSpacing6"
+                android:id="@+id/viewSpacing8"
                 android:layout_width="wrap_content"
                 android:layout_height="25dp" />
 

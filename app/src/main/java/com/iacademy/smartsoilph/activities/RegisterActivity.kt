@@ -8,10 +8,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.iacademy.smartsoilph.R
+import com.iacademy.smartsoilph.models.FirebaseModel
 
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var nameEditText: EditText
+    private lateinit var numberEditText: EditText
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
     private lateinit var confirmPasswordEditText: EditText
@@ -25,25 +28,30 @@ class RegisterActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
         // Initialize EditTexts and Button
-        emailEditText = findViewById(R.id.editTextMobileNumber) // Update ID as per your layout
+        nameEditText = findViewById(R.id.editTextName) // Update ID as per your layout
+        numberEditText = findViewById(R.id.editTextMobileNumber) // Update ID as per your layout
+        emailEditText = findViewById(R.id.editTextEmail) // Update ID as per your layout
         passwordEditText = findViewById(R.id.editTextPassword) // Update ID as per your layout
         confirmPasswordEditText = findViewById(R.id.editTextConfirmPassword) // Update ID as per your layout
         registerButton = findViewById(R.id.buttonSignUp) // Update ID as per your layout
 
+        // Register User
         registerButton.setOnClickListener {
+            val name = nameEditText.text.toString().trim()
+            val number = numberEditText.text.toString().toDouble()
             val email = emailEditText.text.toString().trim()
             val password = passwordEditText.text.toString().trim()
             val confirmPassword = confirmPasswordEditText.text.toString().trim()
 
             if (password == confirmPassword) {
-                registerUser(email, password)
+                registerUser(name, number, email, password)
             } else {
                 Toast.makeText(baseContext, "Passwords do not match.", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private fun registerUser(email: String, password: String) {
+    private fun registerUser(name: String, number: Double, email: String, password: String) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
@@ -56,6 +64,9 @@ class RegisterActivity : AppCompatActivity() {
                                 checkIfEmailVerified()
                             }
                         }
+
+                    //Add to Firebase Database
+                    FirebaseModel().writeNewUser(name, email, number, auth)
                 } else {
                     Toast.makeText(baseContext, "Authentication failed.", Toast.LENGTH_SHORT).show()
                 }
