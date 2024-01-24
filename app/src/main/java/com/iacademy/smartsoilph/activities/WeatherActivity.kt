@@ -1,5 +1,13 @@
 package com.iacademy.smartsoilph.activities
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.*
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -9,10 +17,6 @@ import com.iacademy.smartsoilph.databinding.ActivityWeatherBinding
 import com.iacademy.smartsoilph.datamodels.WeatherResponse
 import com.iacademy.smartsoilph.utils.OpenMeteoAPIService
 import com.iacademy.smartsoilph.utils.RetrofitClient
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
@@ -27,8 +31,11 @@ class WeatherActivity : AppCompatActivity() {
         val textViewDate: TextView = findViewById(R.id.tv_date)
         textViewDate.text = getCurrentFormattedDate()
 
-        getWeatherData()
+        GlobalScope.launch(Dispatchers.IO) {
+            getWeatherData()
+        }
     }
+
     private fun getCurrentFormattedDate(): String {
         val dateFormat = SimpleDateFormat("EEE, MMM dd", Locale.getDefault())
         return dateFormat.format(Date())
@@ -63,7 +70,6 @@ class WeatherActivity : AppCompatActivity() {
             timezone = "Asia/Singapore"
         )
 
-
         call.enqueue(object : Callback<WeatherResponse> {
             override fun onResponse(call: Call<WeatherResponse>, response: Response<WeatherResponse>) {
                 if (response.isSuccessful && response.body() != null) {
@@ -78,21 +84,20 @@ class WeatherActivity : AppCompatActivity() {
                         val windSpeed = it.windSpeed.toInt()     // Convert to Int
                         val maxTemperature = weatherData.daily?.maxTemperature?.get(0)?.toInt() // Convert to Int
 
-                        binding.tvTemperatureNumber.text = "$temperature°C"
-                        binding.tvValueHumidity.text = "$humidity%"
-                        binding.tvValueWind.text = "${windSpeed}km/h"
-                        binding.tvValueTemp.text = "$maxTemperature°C"
-
+                        runOnUiThread {
+                            binding.tvTemperatureNumber.text = "$temperature°C"
+                            binding.tvValueHumidity.text = "$humidity%"
+                            binding.tvValueWind.text = "${windSpeed}km/h"
+                            binding.tvValueTemp.text = "$maxTemperature°C"
+                        }
                     }
-//                    binding.tvTemperatureNumber.text = "${weatherData.current?.temperature}°C"
-//                    binding.tvValueHumidity.text = "${weatherData.current?.humidity}%"
-//                    binding.tvValueWind.text = "${weatherData.current?.windSpeed}km/h"
-//                    binding.tvValueTemp.text = "${weatherData.daily?.maxTemperature?.get(0)}°C"
 
                     currentWeather?.let {
                         val weatherCondition = interpretWeatherCode(it.weatherCode)
                         // Update UI with weatherCondition
-                        binding.tvWeather.text = "${weatherCondition} ngayon beshie"
+                        runOnUiThread {
+                            binding.tvWeather.text = "${weatherCondition}"
+                        }
                     }
                 } else {
                     Log.e("WeatherActivity", "Response not successful")

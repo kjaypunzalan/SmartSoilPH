@@ -21,6 +21,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.login_page)
 
         setupRegisterTextView()
+        setupForgotTextView()
 
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
@@ -61,6 +62,14 @@ class LoginActivity : AppCompatActivity() {
         val registerTextView = findViewById<TextView>(R.id.tv_sign)
         registerTextView.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    private fun setupForgotTextView() {
+        val registerTextView = findViewById<TextView>(R.id.tv_forgot)
+        registerTextView.setOnClickListener {
+            val intent = Intent(this, ResetPasswordActivity::class.java)
             startActivity(intent)
         }
     }
