@@ -63,4 +63,35 @@
     <string name="return_soil">Return to Soil Data</string>
     <string name="previous_data">View Previous Recommendations</string>
 
+
+<!--Grade Selection String-->
+    <string name="gs_1">29 - 0 - 5</string>
+    <string name="gs_2">18 - 24 - 6</string>
+    <string name="gs_3">10 - 10 - 10</string>
+    <string name="gs_4">14 - 7 - 7</string>
+    <string name="gs_5">10 - 5 - 4</string>
+    <string name="gs_6">32 - 0 - 8</string>
+    <string name="gs_7">1 - 15 - 0</string> //bone meal
+    <string name="gs_8">7 - 2 - 2</string>
+    <string name="gs_9">5 - 6 - 3</string>
+
+    <string name="gs_10">5 - 5 - 5</string> // plant food
+    <string name="gs_11">0 - 10 - 10</string>
+    <string name="gs_12">5 - 5 - 3</string>
+    <string name="gs_13">4 - 5 - 3</string> // tomato veg food
+    <string name="gs_14">7 - 3 - 3</string>
+    <string name="gs_15">4 - 6 - 2</string>
+    <string name="gs_16">18 - 0 - 3</string>
+    <string name="gs_17">10 - 0 - 6</string>
+    <string name="gs_18">4 - 3 - 4</string>
+    <string name="gs_19">15 - 0 - 15</string>
+
+    <string name="gs_20">6 - 2 - 1</string> // cottonseed meal
+    <string name="gs_21">13 - 0 - 0</string> // blood meal
+    <string name="gs_22">3 - 4 - 4</string> // garden tone
+    <string name="gs_23">6 - 8 - 0</string> // bone meal
+    <string name="gs_24">12 - 0 - 0</string> // blood meal
+    <string name="gs_25">9 - 23 - 30</string>
+
+
 </resources>
