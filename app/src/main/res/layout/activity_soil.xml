@@ -53,24 +53,8 @@
             android:layout_width="match_parent"
             android:layout_height="308dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:srcCompat="@drawable/bg_soil" />
-
-        <Button
-            android:id="@+id/btn_view_fertilizer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:textAllCaps="false"
-            android:text="View Recommendation"
-            android:textColor="#80000000"
-            app:layout_constraintBottom_toBottomOf="@+id/bg_weather"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.923"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.976"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="30dp" />
+            app:srcCompat="@drawable/bg_soil"
+            tools:layout_editor_absoluteX="48dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -85,6 +69,27 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         android:layout_marginTop="30dp"
         android:layout_marginStart="30dp"/>
+
+    <!-- Filter Button -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/btn_filter"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
+        app:cardCornerRadius="5dp"
+        app:cardBackgroundColor="@color/main_blue">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_filter"
+            app:tint="@color/white"
+            android:padding="3dp"/>
+
+    </androidx.cardview.widget.CardView>
 
         <!-- Nitrogen Card -->
     <androidx.cardview.widget.CardView
@@ -416,5 +421,15 @@
 
         </androidx.cardview.widget.CardView>
 
-
+    <Button
+        android:id="@+id/btn_view_fertilizer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="View Recommendation"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="30dp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
