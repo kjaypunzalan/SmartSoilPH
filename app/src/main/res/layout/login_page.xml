@@ -1,44 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/green">
+    android:background="@color/white">
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/bg_weather"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:layout_marginTop="45dp">
-        <!-- Icon Image -->
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:src="@drawable/agriculture"/>
-        <!-- SmartSoilPH Title -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="SmartSoilPH"
-            android:textStyle="bold"
-            android:textSize="40sp"
-            android:textColor="@color/white"/>
-    </LinearLayout>
+        android:layout_height="240dp"
+
+        app:srcCompat="@drawable/bg_weather" />
 
     <!-- Card Holder -->
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/project_title"
+        android:textAppearance="@style/project_title"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.328"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.104" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/project_title2"
+        android:textAppearance="@style/project_title2"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.667"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.105" />
+
+    <ImageView
+        android:id="@+id/iv_logo"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:src="@drawable/icon_smartsoil"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.22" />
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:cardCornerRadius="28dp"
-        android:layout_marginBottom="-20dp">
+        android:layout_margin="30dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_logo"
+        tools:layout_editor_absoluteX="30dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="28dp">
             <!-- Welcome Text -->
@@ -53,60 +82,64 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:alpha="0.8"
                 android:text="Please login your information"
-                android:textColor="@color/black"
-                android:alpha="0.8"/>
+                android:textColor="@color/black" />
 
             <!-- View's for spacing -->
             <View
                 android:layout_width="wrap_content"
-                android:layout_height="30dp" />
+                android:layout_height="20dp" />
 
             <!-- Mobile Number Input -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Email"
-                android:textColor="@color/black"
-                android:alpha="0.8"/>
+
             <EditText
                 android:id="@+id/editTextMobileNumber"
                 android:layout_width="match_parent"
-                android:textColor="@color/black"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"/>
+                android:layout_marginTop="20dp"
+                android:background="@drawable/gray_border"
+                android:drawableLeft="@drawable/icon_email"
+                android:drawablePadding="8dp"
+                android:hint="Email Address"
+                android:inputType="textEmailAddress"
+                android:padding="8dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray"
+                android:textSize="15sp" />
 
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="20dp" />
 
             <!-- Password Input -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Password "
-                android:textColor="@color/black"
-                android:alpha="0.8"/>
+
             <EditText
                 android:id="@+id/editTextPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/gray_border"
+                android:drawableLeft="@drawable/icon_pass"
+                android:drawablePadding="8dp"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:padding="8dp"
                 android:textColor="@color/black"
-                android:inputType="textPassword"/>
+                android:textColorHint="@color/gray"
+                android:textSize="15sp" />
 
             <!-- Forgot Password -->
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content">
+
                 <TextView
                     android:id="@+id/tv_forgot"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Forgot Password?"
-                    android:textColor="@color/black"
-                    android:alpha="0.9"
                     android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"/>
+                    android:layout_centerVertical="true"
+                    android:alpha="0.9"
+                    android:text="Forgot Password?"
+                    android:textColor="@color/gray" />
             </RelativeLayout>
 
             <View
@@ -118,45 +151,50 @@
                 android:id="@+id/buttonSignIn"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:textColor="@color/white"
+                android:backgroundTint="@color/main_blue"
                 android:text="Sign In"
+                android:textColor="@color/white"
                 android:textSize="20sp"
-                app:cornerRadius="32dp"
-                android:backgroundTint="@color/dark_green"/>
+                app:cornerRadius="32dp" />
 
             <View
                 android:layout_width="wrap_content"
-                android:layout_height="30dp" />
+                android:layout_height="10dp" />
 
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center">
+
                 <TextView
                     android:id="@+id/tv_log"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:alpha="0.8"
                     android:text="Don't have an account?"
-                    android:textColor="@color/black"/>
-
+                    android:textColor="@color/black" />
 
                 <!-- Sign Up -->
                 <TextView
                     android:id="@+id/tv_sign"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sign Up"
-                    android:alpha="0.9"
-                    android:textColor="@color/black"
+                    android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/tv_log"
-                    android:layout_marginLeft="10dp"/>
+                    android:alpha="0.8"
+                    android:text="Sign Up"
+                    android:textColor="@color/main_blue" />
             </RelativeLayout>
 
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="25dp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-</RelativeLayout>
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="308dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:srcCompat="@drawable/bg_soil"
+        tools:layout_editor_absoluteX="48dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>
