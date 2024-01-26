@@ -11,6 +11,9 @@ class   SoilDataModel {
     var humidity: Float = 0.0F
     var temperature: Float = 0.0F
 
+    var fertilizerRecommendation: Float = 0.0F
+    var limeRecommendation: Float = 0.0F
+
     //Constructors
     constructor()
     constructor(nitrogen: Float, phosphorus: Float, potassium: Float,
