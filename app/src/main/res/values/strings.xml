@@ -93,5 +93,15 @@
     <string name="gs_24">12 - 0 - 0</string> // blood meal
     <string name="gs_25">9 - 23 - 30</string>
 
+<!--Recommendation & Items String-->
+    <string name="rec_history">Recommendation History</string>
+    <string name="date_time">Date and Time</string>
 
+    <string name="fertilizer_value">000kg</string>
+    <string name="lime_value">000tons</string>
+    <string name="npk_value">00-00-00</string>
+
+    <string name="fertilizer_info">Of<b> Fertilizer </b>used</string>
+    <string name="lime_info">Of<b> Lime </b>used</string>
+    <string name="npk_info">recommended<b> Grade</b></string>
 </resources>
