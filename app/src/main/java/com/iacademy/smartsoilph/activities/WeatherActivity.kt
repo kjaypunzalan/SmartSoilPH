@@ -1,7 +1,8 @@
 package com.iacademy.smartsoilph.activities
 
+import android.annotation.SuppressLint
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -10,8 +11,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.TextView
 import com.iacademy.smartsoilph.R
 import com.iacademy.smartsoilph.databinding.ActivityWeatherBinding
 import com.iacademy.smartsoilph.datamodels.WeatherResponse
@@ -28,10 +27,9 @@ class WeatherActivity : AppCompatActivity() {
         binding = ActivityWeatherBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val textViewDate: TextView = findViewById(R.id.tv_date)
-        textViewDate.text = getCurrentFormattedDate()
+        binding.tvDate.text = getCurrentFormattedDate()
 
-        GlobalScope.launch(Dispatchers.IO) {
+        CoroutineScope(Dispatchers.Main).launch {
             getWeatherData()
         }
     }
@@ -71,44 +69,32 @@ class WeatherActivity : AppCompatActivity() {
         )
 
         call.enqueue(object : Callback<WeatherResponse> {
+            @SuppressLint("SetTextI18n")
             override fun onResponse(call: Call<WeatherResponse>, response: Response<WeatherResponse>) {
-                if (response.isSuccessful && response.body() != null) {
-                    val weatherData = response.body()!!
+                response.body()?.let { weatherData ->
                     val currentWeather = weatherData.current
                     val dailyWeather = weatherData.daily
-                    // Update UI with the weather data
 
                     weatherData.current?.let {
-                        val temperature = it.temperature.toInt() // Convert to Int
-                        val humidity = it.humidity.toInt()       // Convert to Int
-                        val windSpeed = it.windSpeed.toInt()     // Convert to Int
-                        val maxTemperature = weatherData.daily?.maxTemperature?.get(0)?.toInt() // Convert to Int
+                        val temperature = it.temperature.toInt()
+                        val humidity = it.humidity.toInt()
+                        val windSpeed = it.windSpeed.toInt()
+                        val maxTemperature = weatherData.daily?.maxTemperature?.get(0)?.toInt()
 
-                        runOnUiThread {
-                            binding.tvTemperatureNumber.text = "$temperature°C"
-                            binding.tvValueHumidity.text = "$humidity%"
-                            binding.tvValueWind.text = "${windSpeed}km/h"
-                            binding.tvValueTemp.text = "$maxTemperature°C"
-                        }
+                        binding.tvTemperatureNumber.text = "$temperature°C"
+                        binding.tvValueHumidity.text = "$humidity%"
+                        binding.tvValueWind.text = "${windSpeed}km/h"
+                        binding.tvValueTemp.text = "$maxTemperature°C"
                     }
 
                     currentWeather?.let {
                         val weatherCondition = interpretWeatherCode(it.weatherCode)
-                        // Update UI with weatherCondition
-                        runOnUiThread {
-                            binding.tvWeather.text = "${weatherCondition}"
-                        }
+                        binding.tvWeather.text = "$weatherCondition"
                     }
-                } else {
-                    Log.e("WeatherActivity", "Response not successful")
                 }
             }
 
-            override fun onFailure(call: Call<WeatherResponse>, t: Throwable) {
-                Log.e("WeatherActivity", "API call failed", t)
-            }
+            override fun onFailure(call: Call<WeatherResponse>, t: Throwable) {}
         })
     }
-
-    // Additional methods and logic for your activity
 }

@@ -12,23 +12,14 @@ import com.iacademy.smartsoilph.R
 
 class ResetPasswordActivity : AppCompatActivity() {
 
-    private lateinit var auth: FirebaseAuth
-    private lateinit var emailEditText: EditText
-    private lateinit var sendVerificationButton: MaterialButton
+    private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.forgotpassword_page)
 
-        // Initialize Firebase Auth
-        auth = FirebaseAuth.getInstance()
-
-        // Initialize UI components
-        emailEditText = findViewById(R.id.et_email)
-        sendVerificationButton = findViewById(R.id.btn_submit)
-
-        sendVerificationButton.setOnClickListener {
-            val email = emailEditText.text.toString().trim()
+        findViewById<MaterialButton>(R.id.btn_submit).setOnClickListener {
+            val email = findViewById<EditText>(R.id.et_email).text.toString().trim()
             if (email.isNotEmpty()) {
                 sendPasswordResetEmail(email)
             } else {
@@ -43,10 +34,8 @@ class ResetPasswordActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     Toast.makeText(this, "Verification email sent \nPlease login using your new password", Toast.LENGTH_LONG).show()
                     Handler().postDelayed({
-                        // Intent to start new Activity
-                        val intent = Intent(this, LoginActivity::class.java)
-                        startActivity(intent)
-                        finish() // Close the current activity
+                        startActivity(Intent(this, LoginActivity::class.java))
+                        finish()
                     }, 3000)
                 } else {
                     Toast.makeText(this, "Failed to send verification email", Toast.LENGTH_SHORT).show()
