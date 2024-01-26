@@ -120,6 +120,9 @@ class FirebaseModel {
         referenceDetails.setValue(soilData)
     }
 
+    /*******************************************
+     * C. save recommendations to firebase
+     *------------------------------------------*/
     fun saveRecommendation(
         fertilizerBag: Int, fertilizerRecommendation: Double, limeRecommendation: Double,
         auth: FirebaseAuth

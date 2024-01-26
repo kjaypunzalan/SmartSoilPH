@@ -3,8 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <!-- PERMISSIONS -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />                  <!-- For internet conenctivity -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />      <!-- Check if there's internet -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />     <!-- Firebase Read and Write -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />

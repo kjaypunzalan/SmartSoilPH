@@ -8,6 +8,7 @@ import android.widget.EditText
 import com.google.firebase.auth.FirebaseAuth
 import com.iacademy.smartsoilph.R
 import com.iacademy.smartsoilph.models.FirebaseModel
+import com.iacademy.smartsoilph.utils.CheckInternet
 
 class SoilActivity : AppCompatActivity() {
 
@@ -53,6 +54,9 @@ class SoilActivity : AppCompatActivity() {
             val humidity = etHumidity.text.toString().toDoubleOrNull() ?: 0.0
             val temperature = etTemperature.text.toString().toDoubleOrNull() ?: 0.0
 
+            /******************************
+             * Computations
+             * ---------------------------*/
             /* SOIL NPK COMPUTATIONS */
             // Calculate fertilizer application rate
             val desiredNApplicationRate = 43.0 // Example N application rate in lbs/acre
@@ -62,9 +66,7 @@ class SoilActivity : AppCompatActivity() {
             // Calculate fertilizer weight required for 1 acre
             val lawnArea = 1.0 // Example lawn area in acres
             val fertilizerWeightRequired = fertilizerApplicationRate * lawnArea
-
-            // Convert weight to kilograms
-            val fertilizerWeightKg = fertilizerWeightRequired * 0.453592
+            val fertilizerWeightKg = fertilizerWeightRequired * 0.453592 // Convert weight to kilograms
 
             /* LIME COMPUTATIONS */
             // Calculate lime requirement
@@ -79,10 +81,23 @@ class SoilActivity : AppCompatActivity() {
                 }
             val limeRequirement = (targetPH - currentPH) * soilTextureFactor
 
-            //Add to Firebase Database
-            FirebaseModel().saveSoilData(nitrogen, potassium, phosphorus, phLevel, ecLevel, humidity, temperature, fertilizerWeightKg, limeRequirement, auth)
-            FirebaseModel().saveRecommendation(0, fertilizerWeightKg, limeRequirement, auth)
+            /***************************
+            * Check Internet Connectivity
+            * ---------------------------*/
+            val checkInternet = CheckInternet(this)
+            if (checkInternet.isInternetAvailable()) {
+                // Internet is available
+                // Add to Firebase Database
+                FirebaseModel().saveSoilData(nitrogen, potassium, phosphorus, phLevel, ecLevel, humidity, temperature, fertilizerWeightKg, limeRequirement, auth)
+                FirebaseModel().saveRecommendation(0, fertilizerWeightKg, limeRequirement, auth)
+            } else {
+                // Internet is not available
 
+            }
+
+            /***************************
+             * Go to FertilizerActivity
+             * ---------------------------*/
             // Pass the computed value to the FertilizerActivity
             val intent = Intent(this, FertilizerActivity::class.java)
             startActivity(intent)
