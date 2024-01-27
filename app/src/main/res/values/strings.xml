@@ -49,7 +49,7 @@
     <string name="tv_greeting">Hi, </string>
     <string name="tv_user_greeting"><i> [Username]</i></string>
 
-    <string name="fertilizer_sentence1">We recommend using at least </string>
+    <string name="fertilizer_sentence1">We recommend using at least  </string>
     <string name="tv_fertilizer_amount">" 8kg</string>
     <string name="fertilizer_sentence2"><b>of fertilizer</b> per hectare based on our assessment!</string>
     <string name="fertilizer_title">Fertilizer</string>

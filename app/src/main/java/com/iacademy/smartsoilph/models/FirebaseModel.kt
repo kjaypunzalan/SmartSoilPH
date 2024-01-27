@@ -1,12 +1,10 @@
 package com.iacademy.smartsoilph.models
 
-import android.content.Context
-import android.widget.Toast
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.database
+import java.util.Calendar
 
 class FirebaseModel {
 
@@ -31,9 +29,8 @@ class FirebaseModel {
     var fertilizerBag: Int? = null
     var fertilizerRecommendation: Double? = null
     var limeRecommendation: Double? = null
-
-
-    private lateinit var database: DatabaseReference
+    var dateOfRecommendation: String? = null
+    var initialStorageType: String? = null
 
     /**************************
      * Constructors
@@ -67,10 +64,21 @@ class FirebaseModel {
 
     // Recommendation constructor
     constructor(
-        fertilizerBag: Int, fertilizerRecommendation: Double, limeRecommendation: Double) {
-        this.fertilizerBag = fertilizerBag
+        nitrogen: Double, potassium: Double, phosphorus: Double,
+        phLevel: Double, ecLevel: Double, humidity: Double, temperature: Double,
+        fertilizerRecommendation: Double, limeRecommendation: Double,
+        dateOfRecommendation: String, initialStorageType: String) {
+        this.nitrogen = nitrogen
+        this.potassium = potassium
+        this.phosphorus = phosphorus
+        this.phLevel = phLevel
+        this.ecLevel = ecLevel
+        this.humidity = humidity
+        this.temperature = temperature
         this.fertilizerRecommendation = fertilizerRecommendation
         this.limeRecommendation = limeRecommendation
+        this.dateOfRecommendation = dateOfRecommendation
+        this.initialStorageType = initialStorageType
     }
 
 
@@ -115,8 +123,9 @@ class FirebaseModel {
         val referenceUser = firebaseDB.child("SmartSoilPH").child("Users").child(auth.currentUser!!.uid)
         val referenceDetails = referenceUser.child("SoilDetails")
 
-        // Create and set soil data
-        val soilData = FirebaseModel(nitrogen, potassium, phosphorus, phLevel, ecLevel, humidity, temperature, fertilizerRecommendation, limeRecommendation)
+        // Create and save soil data
+        val soilData = FirebaseModel(nitrogen, potassium, phosphorus, phLevel, ecLevel, humidity, temperature,
+            fertilizerRecommendation, limeRecommendation)
         referenceDetails.setValue(soilData)
     }
 
@@ -124,7 +133,10 @@ class FirebaseModel {
      * C. save recommendations to firebase
      *------------------------------------------*/
     fun saveRecommendation(
-        fertilizerBag: Int, fertilizerRecommendation: Double, limeRecommendation: Double,
+        nitrogen: Double, potassium: Double, phosphorus: Double,
+        phLevel: Double, ecLevel: Double, humidity: Double, temperature: Double,
+        fertilizerRecommendation: Double, limeRecommendation: Double,
+        initialStorageType: String,
         auth: FirebaseAuth
     ) {
         // Get FirebaseDatabase Reference
@@ -134,8 +146,11 @@ class FirebaseModel {
         val referenceUser = firebaseDB.child("SmartSoilPH").child("Users").child(auth.currentUser!!.uid)
         val referenceDetails = referenceUser.child("RecommendationHistory").push()
 
-        // Create and set recommendation data
-        val recommendationData = FirebaseModel(fertilizerBag, fertilizerRecommendation, limeRecommendation)
+        // Create and save recommendation data
+        val dateOfRecommendation = Calendar.getInstance().time.toString()
+        val recommendationData = FirebaseModel(nitrogen, potassium, phosphorus, phLevel, ecLevel, humidity, temperature,
+            fertilizerRecommendation, limeRecommendation,
+            dateOfRecommendation, initialStorageType)
         referenceDetails.setValue(recommendationData)
     }
 
