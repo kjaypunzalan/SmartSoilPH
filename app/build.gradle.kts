@@ -95,6 +95,8 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.firebase.database)
     implementation(libs.play.services.auth)
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.3.61")
+
 
     //GIF
     implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.28")
