@@ -24,6 +24,7 @@ class HomeActivity : AppCompatActivity() {
         setButtonClickListener(btnWeather, WeatherActivity::class.java)
         setButtonClickListener(btnReports, LoadScreenActivity::class.java)
         setButtonClickListener(btnManual, LoadScreenActivity::class.java)
+
     }
 
     //Button Function

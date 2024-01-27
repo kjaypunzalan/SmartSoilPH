@@ -120,8 +120,6 @@ class DatabaseHelper(private val context: Context) : SQLiteOpenHelper(context, D
             SoilDataModel::temperature to KEY_TEMPERATURE,
             SoilDataModel::fertilizerRecommendation to KEY_FERTILIZER_RECOMMENDATION,
             SoilDataModel::limeRecommendation to KEY_LIME_RECOMMENDATION,
-            SoilDataModel::dateOfRecommendation to KEY_DATE_OF_RECOMMENDATION,
-            SoilDataModel::initialStorageType to KEY_INITIAL_STORAGE_TYPE
         )
 
         cursor?.let {
@@ -135,6 +133,17 @@ class DatabaseHelper(private val context: Context) : SQLiteOpenHelper(context, D
                             // Use reflection to set the field value
                             field.setter.call(soilData, cursor.getFloat(index))
                         }
+                    }
+
+                    // Handle String fields separately
+                    val dateOfRecommendationIndex = it.getColumnIndex(KEY_DATE_OF_RECOMMENDATION)
+                    if (dateOfRecommendationIndex != -1) {
+                        soilData.dateOfRecommendation = it.getString(dateOfRecommendationIndex)
+                    }
+
+                    val initialStorageTypeIndex = it.getColumnIndex(KEY_INITIAL_STORAGE_TYPE)
+                    if (initialStorageTypeIndex != -1) {
+                        soilData.initialStorageType = it.getString(initialStorageTypeIndex)
                     }
 
                     // Add soil data to list
