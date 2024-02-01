@@ -53,6 +53,10 @@ class FertilizerActivity : AppCompatActivity() {
             val Intent = Intent(this, SoilActivity::class.java);
             startActivity(Intent);
         }
+        btnPreviousRecommendations.setOnClickListener {
+            val Intent = Intent(this, RecommendationHistoryActivity::class.java);
+            startActivity(Intent);
+        }
 
         //Initialize Content
         initializeContent()
@@ -88,7 +92,7 @@ class FertilizerActivity : AppCompatActivity() {
 
         //Get User and Soil Reference
         val userReference = firebaseDB.child("UserDetails")
-        val soilReference = firebaseDB.child("SoilDetails")
+        val recommendationReference = firebaseDB.child("RecommendationHistory")
 
         //Get Firebase User Data
         userReference.addValueEventListener(object : ValueEventListener {
@@ -104,27 +108,28 @@ class FertilizerActivity : AppCompatActivity() {
             }
         })
 
-        //Get Firebase Soil Data
-        soilReference.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val data = snapshot.getValue(FirebaseModel::class.java) ?: return
+        // Get Firebase Recommendation Data
+        recommendationReference.limitToLast(1)  // Fetching the most recent recommendation
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    // Assuming the most recent recommendation is what we need
+                    val latestRecommendation = snapshot.children.firstOrNull()?.getValue(FirebaseModel::class.java)
 
-                //format recommended fertilizer
-                val formattedFertilizer = String.format("%.1f ", data.fertilizerRecommendation)
-                val formattedLime = String.format("%.1f ", data.limeRecommendation)
+                    latestRecommendation?.let { data ->
+                        val formattedFertilizer = String.format("%.2f kg", data.fertilizerRecommendation ?: 0.0f)
+                        val formattedLime = String.format("%.2f pounds", data.limeRecommendation ?: 0.0f)
 
-                //put to TextViews
-                tvFertilizerAmount.text = " $formattedFertilizer kg"
-                tvFertilizerAmount1.text = "$formattedFertilizer kg"
-                tvLimeAmount.text = " $formattedLime pounds"
-                tvLimeAmount1.text = "$formattedLime pounds"
+                        tvFertilizerAmount.text = formattedFertilizer
+                        tvFertilizerAmount1.text = formattedFertilizer
+                        tvLimeAmount.text = formattedLime
+                        tvLimeAmount1.text = formattedLime
+                    }
+                }
 
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(applicationContext, "Failed", Toast.LENGTH_SHORT).show()
-            }
-        })
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(applicationContext, "Failed", Toast.LENGTH_SHORT).show()
+                }
+            })
     }
 
     /***********************************

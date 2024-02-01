@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.iacademy.smartsoilph.R
+import com.iacademy.smartsoilph.datamodels.UserData
 import com.iacademy.smartsoilph.models.FirebaseModel
 
 class RegisterActivity : AppCompatActivity() {
@@ -66,7 +67,8 @@ class RegisterActivity : AppCompatActivity() {
                         }
 
                     //Add to Firebase Database
-                    FirebaseModel().writeNewUser(name, email, number, auth)
+                    val userData = UserData(name, email, number)
+                    FirebaseModel().writeNewUser(userData, auth)
                 } else {
                     Toast.makeText(baseContext, "Authentication failed.", Toast.LENGTH_SHORT).show()
                 }
