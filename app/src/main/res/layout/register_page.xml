@@ -36,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sign Up"
-                android:textSize="32sp"
+                android:textAppearance="@style/welcome_user"
                 android:textStyle="bold" />
             <!-- Text Instruction -->
             <TextView
@@ -44,7 +44,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:alpha="0.7"
-                android:text="Please register your information" />
+                android:text="Please register your information"
+                android:textAppearance="@style/recommend_sentence"/>
 
             <!-- View Spacing -->
             <View
@@ -57,16 +58,16 @@
                 android:id="@+id/editTextName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/gray_border"
+                android:background="@drawable/custom_input"
                 android:drawableLeft="@drawable/icon_user"
+                android:drawableStart="@drawable/custom_user_icon"
                 android:drawablePadding="8dp"
-                android:drawableTint="#9DB671"
                 android:hint="Name"
                 android:inputType="textPersonName"
                 android:padding="8dp"
-                android:textColor="@color/black"
+                android:textAppearance="@style/recommend_sentence"
                 android:textColorHint="@color/gray"
-                android:textSize="15sp" />
+                android:textColor="@color/black"/>
 
             <!-- Mobile Number Input -->
             <EditText
@@ -74,16 +75,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/gray_border"
+                android:background="@drawable/custom_input"
                 android:drawableLeft="@drawable/icon_phone"
+                android:drawableStart="@drawable/custom_phone_icon"
                 android:drawablePadding="8dp"
-                android:drawableTint="#9DB671"
                 android:hint="Mobile Number"
                 android:inputType="number"
                 android:padding="8dp"
-                android:textColor="@color/black"
+                android:textAppearance="@style/recommend_sentence"
                 android:textColorHint="@color/gray"
-                android:textSize="15sp" />
+                android:textColor="@color/black"/>
 
             <!-- Email Input -->
             <EditText
@@ -91,16 +92,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/gray_border"
+                android:background="@drawable/custom_input"
                 android:drawableLeft="@drawable/icon_email"
+                android:drawableStart="@drawable/custom_email_icon"
                 android:drawablePadding="8dp"
-                android:drawableTint="#9DB671"
                 android:hint="Email Address"
                 android:inputType="textEmailAddress"
                 android:padding="8dp"
-                android:textColor="@color/black"
+                android:textAppearance="@style/recommend_sentence"
                 android:textColorHint="@color/gray"
-                android:textSize="15sp" />
+                android:textColor="@color/black"/>
 
             <!-- Password Input -->
             <EditText
@@ -108,16 +109,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/gray_border"
+                android:background="@drawable/custom_input"
                 android:drawableLeft="@drawable/icon_pass"
+                android:drawableStart="@drawable/custom_pass_icon"
                 android:drawablePadding="8dp"
-                android:drawableTint="#9DB671"
                 android:hint="Password"
                 android:inputType="textPassword"
                 android:padding="8dp"
-                android:textColor="@color/black"
+                android:textAppearance="@style/recommend_sentence"
                 android:textColorHint="@color/gray"
-                android:textSize="15sp" />
+                android:textColor="@color/black"/>
 
             <!-- Password Confirmation -->
             <EditText
@@ -125,16 +126,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/gray_border"
+                android:background="@drawable/custom_input"
                 android:drawableLeft="@drawable/icon_confirmpass"
+                android:drawableStart="@drawable/custom_confirmpass_icon"
                 android:drawablePadding="8dp"
-                android:drawableTint="#9DB671"
                 android:hint="Confirm Password"
                 android:inputType="textPassword"
                 android:padding="8dp"
-                android:textColor="@color/black"
+                android:textAppearance="@style/recommend_sentence"
                 android:textColorHint="@color/gray"
-                android:textSize="15sp" />
+                android:textColor="@color/black"/>
 
             <!-- Sign Up Button -->
             <com.google.android.material.button.MaterialButton
@@ -166,7 +167,7 @@
                     android:layout_height="wrap_content"
                     android:alpha="0.8"
                     android:text="Already have an account?"
-                    android:textColor="@color/black" />
+                    android:textAppearance="@style/recommend_sentence" />
                 <!--Sign In Link -->
                 <TextView
                     android:id="@+id/textViewSignIn"
@@ -176,6 +177,7 @@
                     android:layout_toRightOf="@id/tvAlreadyAccount"
                     android:alpha="0.8"
                     android:text="Sign in"
+                    android:textAppearance="@style/recommend_sentence"
                     android:textColor="@color/main_blue" />
             </RelativeLayout>
         </LinearLayout>
@@ -184,7 +186,7 @@
     <!-- Soil Image -->
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="158dp"
+        android:layout_height="147dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:srcCompat="@drawable/bg_sprout"
         tools:layout_editor_absoluteX="48dp" />
