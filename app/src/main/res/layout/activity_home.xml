@@ -116,7 +116,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:orientation="horizontal"
-                        android:padding="15dp">
+                        android:padding="15dp"
+                        android:background="@color/white">
 
                         <!-- Soil Card -->
                         <androidx.cardview.widget.CardView
@@ -125,13 +126,15 @@
                             android:layout_height="100dp"
                             android:layout_margin="8dp"
                             app:cardCornerRadius="14dp">
+
                             <!-- Contents of CardView 1 -->
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:orientation="vertical"
-                                android:padding="10dp">
+                                android:padding="10dp"
+                                android:background="@color/white">
 
                                 <ImageView
                                     android:layout_width="60dp"
@@ -165,7 +168,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:orientation="vertical"
-                                android:padding="10dp">
+                                android:padding="10dp"
+                                android:background="@color/white">
 
                                 <ImageView
                                     android:layout_width="60dp"
@@ -199,7 +203,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:orientation="vertical"
-                                android:padding="10dp">
+                                android:padding="10dp"
+                                android:background="@color/white">
 
                                 <ImageView
                                     android:layout_width="60dp"
@@ -237,7 +242,8 @@
                             android:gravity="center"
                             android:maxWidth="100dp"
                             android:orientation="horizontal"
-                            android:padding="10dp">
+                            android:padding="10dp"
+                            android:background="@color/white">
 
                             <ImageView
                                 android:layout_width="60dp"
@@ -295,7 +301,8 @@
                             android:orientation="horizontal"
                             android:padding="10dp"
                             android:maxWidth="100dp"
-                            android:gravity="center">
+                            android:gravity="center"
+                            android:background="@color/white">
 
                             <ImageView
                                 android:layout_width="60dp"
