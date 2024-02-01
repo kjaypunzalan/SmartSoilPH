@@ -13,8 +13,6 @@
         android:background="?attr/colorOnPrimary"
         android:elevation="8dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/icon_menu2"
-        app:collapseIcon="@drawable/icon_collapse2"
         android:paddingStart="10dp">
         <!--collapseIcon used to close side bar-->
 
