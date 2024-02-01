@@ -11,11 +11,18 @@ class   SoilDataModel {
     var humidity: Float = 0.0F
     var temperature: Float = 0.0F
 
+    var fertilizerRecommendation: Float = 0.0F
+    var limeRecommendation: Float = 0.0F
+    var dateOfRecommendation: String? = null
+    var initialStorageType: String? = null
+
     //Constructors
     constructor()
     constructor(nitrogen: Float, phosphorus: Float, potassium: Float,
         phLevel: Float, ecLevel: Float,
-        humidity: Float, temperature: Float) {
+        humidity: Float, temperature: Float,
+        dateOfRecommendation: String, initialStorageType: String) {
+
         this.nitrogen = nitrogen
         this.phosphorus = phosphorus
         this.potassium = potassium
@@ -23,6 +30,8 @@ class   SoilDataModel {
         this.ecLevel = ecLevel
         this.humidity = humidity
         this.temperature = temperature
+        this.dateOfRecommendation = dateOfRecommendation
+        this.initialStorageType = initialStorageType
     }
 
 }
