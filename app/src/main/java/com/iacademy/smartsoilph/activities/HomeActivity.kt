@@ -12,16 +12,16 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
 
         // declare + initialize variables
-        val btnSoil = findViewById<Button>(R.id.btnSoil);
-        val btnWeather = findViewById<Button>(R.id.btnWeather);
-        val btnReports = findViewById<Button>(R.id.btnReports);
-        val btnManual = findViewById<Button>(R.id.btnManual);
+        val btnSoil = findViewById<Button>(R.id.soil_card);
+        val btnWeather = findViewById<Button>(R.id.weather_card);
+        val btnReports = findViewById<Button>(R.id.reports_card);
+//        val btnManual = findViewById<Button>(R.id.btnManual);
 
         // set click listeners for buttons
         setButtonClickListener(btnSoil, SoilActivity::class.java)
         setButtonClickListener(btnWeather, WeatherActivity::class.java)
         setButtonClickListener(btnReports, LoadScreenActivity::class.java)
-        setButtonClickListener(btnManual, LoadScreenActivity::class.java)
+//        setButtonClickListener(btnManual, LoadScreenActivity::class.java)
 
     }
 

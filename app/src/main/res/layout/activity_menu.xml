@@ -20,7 +20,7 @@
         app:itemIconTint="@color/light_blue"
         app:itemTextColor="@color/black"/>
 
-    <!--
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -43,7 +43,7 @@
             android:textSize="40sp"
             android:textColor="@color/white"/>
 
-    </LinearLayout>-->
+    </LinearLayout>
 
 </androidx.drawerlayout.widget.DrawerLayout>
 
