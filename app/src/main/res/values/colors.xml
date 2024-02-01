@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="black">#FF000000</color>
+    <color name="black_70">#B3000000</color>
+    <color name="black_50">#80000000</color>
+    <color name="transparent">#00000000</color>
+
+
     <color name="gray">#888888</color>
-    <color name="white">#FFFFFFFF</color>
     <color name="light_gray">#d3d3d3</color>
-    <color name="semi_light_gray">#80d3d3d3</color>
+    <color name="white">#FFFFFFFF</color>
+
 
     <color name="main_blue">#5DC9FE</color>
     <color name="fade_blue">#405DC9FE</color>
@@ -30,6 +36,7 @@
     <color name="light_pink">#FFDFFD</color>
     <color name="light_red">#FFDFDF</color>
 
+    <color name="semi_light_gray">#80d3d3d3</color>
     <color name="semi_light_green">#80DFFFE9</color>
     <color name="semi_light_blue">#80DEF0FF</color>
     <color name="semi_light_yellow">#80FFFAC7</color>
