@@ -22,8 +22,8 @@ class HomeActivity : AppCompatActivity() {
         // set click listeners for buttons
         setButtonClickListener(btnSoil, SoilActivity::class.java)
         setButtonClickListener(btnWeather, WeatherActivity::class.java)
-        setButtonClickListener(btnReports, LoadScreenActivity::class.java)
-//        setButtonClickListener(btnManual, LoadScreenActivity::class.java)
+        setButtonClickListener(btnReports, RecommendationHistoryActivity::class.java)
+        setButtonClickListener(btnManual, LoadScreenActivity::class.java)
 
     }
 
