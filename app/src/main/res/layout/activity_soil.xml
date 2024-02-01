@@ -44,9 +44,13 @@
     </androidx.appcompat.widget.Toolbar>
 
     <!--Background Image -->
+
+    <!-- Soil Title -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="16dp">
 
         <ImageView
             android:id="@+id/bg_weather"
@@ -56,9 +60,21 @@
             app:srcCompat="@drawable/bg_soil"
             tools:layout_editor_absoluteX="48dp" />
 
+        <TextView
+            android:id="@+id/tv_selected_grade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Please select a soil grade for me :)"
+            android:textAppearance="@style/nutrient_title"
+            app:layout_constraintBottom_toBottomOf="@+id/bg_weather"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.869"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.72" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- Soil Title -->
     <TextView
         android:id="@+id/tv_soil_title"
         android:layout_width="wrap_content"
