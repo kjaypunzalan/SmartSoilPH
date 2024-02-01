@@ -4,9 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import android.widget.Toast
 import com.iacademy.smartsoilph.R
-import com.iacademy.smartsoilph.models.DatabaseHelper
 
 class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -14,16 +12,16 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
 
         // declare + initialize variables
-        val btnSoil = findViewById<Button>(R.id.btnSoil);
-        val btnWeather = findViewById<Button>(R.id.btnWeather);
-        val btnReports = findViewById<Button>(R.id.btnReports);
-        val btnManual = findViewById<Button>(R.id.btnManual);
+        val btnSoil = findViewById<Button>(R.id.soil_card);
+        val btnWeather = findViewById<Button>(R.id.weather_card);
+        val btnReports = findViewById<Button>(R.id.reports_card);
+//        val btnManual = findViewById<Button>(R.id.btnManual);
 
         // set click listeners for buttons
         setButtonClickListener(btnSoil, SoilActivity::class.java)
         setButtonClickListener(btnWeather, WeatherActivity::class.java)
-        setButtonClickListener(btnReports, RecommendationHistoryActivity::class.java)
-        setButtonClickListener(btnManual, LoadScreenActivity::class.java)
+        setButtonClickListener(btnReports, LoadScreenActivity::class.java)
+//        setButtonClickListener(btnManual, LoadScreenActivity::class.java)
 
     }
 
@@ -33,12 +31,5 @@ class HomeActivity : AppCompatActivity() {
             val intent = Intent(this, activityClass)
             startActivity(intent)
         }
-    }
-
-    private fun resetDatabase() {
-        val dbHelper = DatabaseHelper(this)
-        dbHelper.deleteDatabase()
-        // Show a Toast message confirming the database reset
-        Toast.makeText(this, "Database has been reset", Toast.LENGTH_SHORT).show()
     }
 }
