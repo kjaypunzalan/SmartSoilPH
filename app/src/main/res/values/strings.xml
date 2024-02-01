@@ -43,7 +43,17 @@
     <string name="project_title2">SoilPH</string>
 
     <string name="soil_title">Soil Data</string>
+
     <string name="welcome_user">Welcome back,</string>
+    <string name="username">[Username]</string>
+    <string name="exclamation">!</string>
+    <string name="soil_button">Soil</string>
+    <string name="weather_button">Weather</string>
+    <string name="reports_button">Reports</string>
+    <string name="bluetooth_button">Connect to Bluetooth Device</string>
+    <string name="manual_button">Manual</string>
+    <string name="manual_button2">(English/Tagalog)</string>
+    <string name="logout_button">Logout</string>
 
     <string name="title_recommend">Recommendations</string>
     <string name="tv_greeting">Hi, </string>
