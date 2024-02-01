@@ -13,11 +13,14 @@ import android.widget.Toast
 import androidx.cardview.widget.CardView
 import com.google.firebase.auth.FirebaseAuth
 import com.iacademy.smartsoilph.R
-import com.iacademy.smartsoilph.datamodels.SoilDataModel
+import com.iacademy.smartsoilph.datamodels.SoilData
+import com.iacademy.smartsoilph.datamodels.RecommendationData
 import com.iacademy.smartsoilph.models.DatabaseHelper
 import com.iacademy.smartsoilph.models.FirebaseModel
 import com.iacademy.smartsoilph.utils.CheckInternet
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Locale
 
 class SoilActivity : AppCompatActivity() {
 
@@ -131,70 +134,69 @@ class SoilActivity : AppCompatActivity() {
      ***************************/
     private fun recommendation() {
         // Get values from EditText fields
-        val nitrogen = etNitrogen.text.toString().toDoubleOrNull() ?: 0.0
-        val phosphorus = etPhosphorus.text.toString().toDoubleOrNull() ?: 0.0
-        val potassium = etPotassium.text.toString().toDoubleOrNull() ?: 0.0
-        val phLevel = etPHLevel.text.toString().toDoubleOrNull() ?: 0.0
-        val ecLevel = etECLevel.text.toString().toDoubleOrNull() ?: 0.0
-        val humidity = etHumidity.text.toString().toDoubleOrNull() ?: 0.0
-        val temperature = etTemperature.text.toString().toDoubleOrNull() ?: 0.0
+        val nitrogen = etNitrogen.text.toString().toFloatOrNull() ?: 0.0F
+        val phosphorus = etPhosphorus.text.toString().toFloatOrNull() ?: 0.0F
+        val potassium = etPotassium.text.toString().toFloatOrNull() ?: 0.0F
+        val phLevel = etPHLevel.text.toString().toFloatOrNull() ?: 0.0F
+        val ecLevel = etECLevel.text.toString().toFloatOrNull() ?: 0.0F
+        val humidity = etHumidity.text.toString().toFloatOrNull() ?: 0.0F
+        val temperature = etTemperature.text.toString().toFloatOrNull() ?: 0.0F
 
         /******************************
          * Computations
          * ---------------------------*/
         /* SOIL NPK COMPUTATIONS */
         // Calculate fertilizer application rate
-        val desiredNApplicationRate = 43.0 // Example N application rate in lbs/acre
+        val desiredNApplicationRate = 43.0F // Example N application rate in lbs/acre
         val fertilizerApplicationRate =
-            desiredNApplicationRate / ((nitrogen / 100.0).takeIf { it > 0 } ?: 1.0)
+            desiredNApplicationRate / ((nitrogen / 100.0F).takeIf { it > 0 } ?: 1.0F)
 
         // Calculate fertilizer weight required for 1 acre
-        val lawnArea = 1.0 // Example lawn area in acres
+        val lawnArea = 1.0F // Example lawn area in acres
         val fertilizerWeightRequired = fertilizerApplicationRate * lawnArea
-        val fertilizerWeightKg = fertilizerWeightRequired * 0.453592 // Convert weight to kilograms
+        val fertilizerWeightKg = fertilizerWeightRequired * 0.453592F // Convert weight to kilograms
 
         /* LIME COMPUTATIONS */
         // Calculate lime requirement
-        val targetPH = 5.5 // Example target pH
+        val targetPH = 5.5F // Example target pH
         val currentPH = phLevel
         val soilTextureFactor =
             when {
-                currentPH >= 5.5 -> 0.0 // No lime needed if current pH is already above target
-                phLevel <= 7.0 -> 4.0 // Loam to clay loam
-                phLevel <= 8.0 -> 3.0 // Sandy loam
-                else -> 2.0 // Sand
+                currentPH >= 5.5F -> 0.0F // No lime needed if current pH is already above target
+                phLevel <= 7.0F -> 4.0F // Loam to clay loam
+                phLevel <= 8.0F -> 3.0F // Sandy loam
+                else -> 2.0F // Sand
             }
         val limeRequirement = (targetPH - currentPH) * soilTextureFactor
 
-        /***************************
+
+        /******************************
+         * Pass values to Datamodel
+         * ---------------------------*/
+        //get Date
+        val calendar = Calendar.getInstance()
+        val formatter = SimpleDateFormat("MMMM dd, yyyy (EEE) '@'hh:mma", Locale.getDefault())
+        val dateOfRecommendation = formatter.format(calendar.time)
+        //pass values to Datamodel
+        val soilData = SoilData(nitrogen, phosphorus, potassium, phLevel, ecLevel, humidity, temperature)
+        val recommendationData = RecommendationData(soilData, fertilizerWeightKg, limeRequirement, dateOfRecommendation, "Cloud Firebase")
+
+
+        /******************************
          * Check Internet Connectivity
          * ---------------------------*/
         val checkInternet = CheckInternet(this)
         if (checkInternet.isInternetAvailable()) {
             // Internet is available - add to Firebase Database
-            FirebaseModel().saveSoilData(nitrogen, potassium, phosphorus, phLevel, ecLevel, humidity, temperature, fertilizerWeightKg, limeRequirement, auth)
-            FirebaseModel().saveRecommendation(nitrogen, potassium, phosphorus, phLevel, ecLevel, humidity, temperature, fertilizerWeightKg, limeRequirement, "Cloud Firebase", auth)
+            FirebaseModel().saveSoilData(soilData, auth)
+            FirebaseModel().saveRecommendation(recommendationData, auth)
         } else {
-            // Internet is not available - add to SQLite
-            val dateOfRecommendation = Calendar.getInstance().time.toString()
+            // Internet is NOT available - add to SQLite
+            recommendationData.initialStorageType = "Local SQLite"
+            val dbHelper = DatabaseHelper(this)             // Instantiate DatabaseHelper
+            val result = dbHelper.addSoilData(recommendationData)  // Save the soil data to the SQLite database
 
-            val soilData = SoilDataModel()
-            soilData.nitrogen = nitrogen.toFloat()
-            soilData.phosphorus = phosphorus.toFloat()
-            soilData.potassium = potassium.toFloat()
-            soilData.phLevel = phLevel.toFloat()
-            soilData.ecLevel = ecLevel.toFloat()
-            soilData.humidity = humidity.toFloat()
-            soilData.temperature = temperature.toFloat()
-            soilData.fertilizerRecommendation = fertilizerWeightKg.toFloat()
-            soilData.limeRecommendation = limeRequirement.toFloat()
-            soilData.dateOfRecommendation = dateOfRecommendation
-            soilData.initialStorageType = "Local SQLite"
-
-            // Instantiate DatabaseHelper
-            val dbHelper = DatabaseHelper(this)
-            // Save the soil data to the SQLite database
-            val result = dbHelper.addSoilData(soilData)
+            //Add toast notification is successful or not
             if (result != -1L) {
                 // Data saved successfully
                 Toast.makeText(this, "Soil data saved locally", Toast.LENGTH_SHORT).show()
