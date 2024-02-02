@@ -1,42 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@color/white">
+    android:fillViewport="true">
 
-    <!-- Title for the report -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="REPORT AND STATISTICS"
-        android:gravity="center"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="16dp" />
+        android:background="@color/white">
 
-    <!-- Placeholder for Donut Chart -->
-    <FrameLayout
-        android:id="@+id/donut_chart_placeholder"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="#E0E0E0" /> <!-- Temporary background -->
+        <!-- Header -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_reports"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="Reports and Statistics"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-    <!-- Placeholder for Line Chart -->
-    <FrameLayout
-        android:id="@+id/line_chart_placeholder"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="16dp"
-        android:background="#E0E0E0" /> <!-- Temporary background -->
+        <!-- Label for PieChart #1 -->
+        <TextView
+            android:id="@+id/label_pieChart1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Recent Saves"
+            android:textColor="@color/black_50"
+            android:textAlignment="center"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_reports"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/label_pieChart2"
+            app:layout_constraintWidth_percent="0.5"/>
 
-    <!-- Placeholder for Bar Chart -->
-    <FrameLayout
-        android:id="@+id/bar_chart_placeholder"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="16dp"
-        android:background="#E0E0E0" /> <!-- Temporary background -->
+        <!-- Chart #1: PieChart -->
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pieChart1"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            app:layout_constraintTop_toBottomOf="@+id/label_pieChart1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/pieChart2"
+            app:layout_constraintWidth_percent="0.5"/>
 
-</LinearLayout>
+        <!-- Label for PieChart #2 -->
+        <TextView
+            android:id="@+id/label_pieChart2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Recent Soil"
+            android:textColor="@color/black_50"
+            android:textAlignment="center"
+            app:layout_constraintTop_toTopOf="@+id/label_pieChart1"
+            app:layout_constraintStart_toEndOf="@+id/label_pieChart1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintWidth_percent="0.5"/>
+
+        <!-- Chart #2: PieChart -->
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pieChart2"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            app:layout_constraintTop_toTopOf="@+id/pieChart1"
+            app:layout_constraintStart_toEndOf="@+id/pieChart1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintWidth_percent="0.5"/>
+
+        <!-- Label for LineChart #1 -->
+        <TextView
+            android:id="@+id/label_lineChart1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Cumulative Fertilizer Usage"
+            android:textColor="@color/black_50"
+            android:textAlignment="center"
+            app:layout_constraintTop_toBottomOf="@+id/pieChart1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <!-- Chart #3: LineChart -->
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/lineChart1"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            app:layout_constraintTop_toBottomOf="@+id/label_lineChart1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <!-- Label for LineChart #2 -->
+        <TextView
+            android:id="@+id/label_lineChart2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Soil pH Trend"
+            android:textColor="@color/black_50"
+            android:textAlignment="center"
+            app:layout_constraintTop_toBottomOf="@+id/lineChart1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <!-- Chart #4: LineChart -->
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/lineChart2"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            app:layout_constraintTop_toBottomOf="@+id/label_lineChart2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <!-- Label for BarChart #1 -->
+        <TextView
+            android:id="@+id/label_barChart1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Monthly Statistics"
+            android:textColor="@color/black_50"
+            android:textAlignment="center"
+            app:layout_constraintTop_toBottomOf="@+id/lineChart2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <!-- Chart #5: BarChart -->
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/barChart1"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            app:layout_constraintTop_toBottomOf="@+id/label_barChart1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <!-- Download Button -->
+        <Button
+            android:id="@+id/btnDownload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Download Report"
+            app:layout_constraintTop_toBottomOf="@+id/barChart1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="16dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -8,10 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.iacademy.smartsoilph.R
 import com.iacademy.smartsoilph.datamodels.RecommendationData
 
-class RecyclerViewAdapter(
+class RecommendationHistoryRecyclerViewAdapter(
     private val recommendationDataList: ArrayList<RecommendationData>,
     private val onItemClick: (RecommendationData) -> Unit
-) : RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<RecommendationHistoryRecyclerViewAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val tvDateTime: TextView = view.findViewById(R.id.tv_date_time)
