@@ -24,6 +24,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var btnWeather: CardView
     private lateinit var btnReports: CardView
     private lateinit var btnManual: CardView
+    private lateinit var btnLogout: CardView
     private lateinit var tvUsername: TextView
 
     //declare Firebase variables
@@ -37,10 +38,11 @@ class HomeActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
         // declare + initialize variables
-        btnSoil = findViewById<CardView>(R.id.soil_card);
-        btnWeather = findViewById<CardView>(R.id.weather_card);
-        btnReports = findViewById<CardView>(R.id.reports_card);
-        btnManual = findViewById<CardView>(R.id.manual_card);
+        btnSoil = findViewById<CardView>(R.id.soil_card)
+        btnWeather = findViewById<CardView>(R.id.weather_card)
+        btnReports = findViewById<CardView>(R.id.reports_card)
+        btnManual = findViewById<CardView>(R.id.manual_card)
+        btnLogout = findViewById<CardView>(R.id.logout_card)
         tvUsername = findViewById<TextView>(R.id.tv_username)
 
         // set click listeners for buttons
@@ -48,6 +50,12 @@ class HomeActivity : AppCompatActivity() {
         setButtonClickListener(btnWeather, WeatherActivity::class.java)
         setButtonClickListener(btnReports, ReportsActivity::class.java)
         setButtonClickListener(btnManual, RecommendationHistoryActivity::class.java)
+
+        btnLogout.setOnClickListener {
+            auth.signOut()
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
 
         fetchUsername()
         //resetDatabase()

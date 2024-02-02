@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -20,6 +21,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var passwordEditText: EditText
     private lateinit var confirmPasswordEditText: EditText
     private lateinit var registerButton: Button // Assuming there is a register button
+    private lateinit var loginButton: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +37,7 @@ class RegisterActivity : AppCompatActivity() {
         passwordEditText = findViewById(R.id.editTextPassword) // Update ID as per your layout
         confirmPasswordEditText = findViewById(R.id.editTextConfirmPassword) // Update ID as per your layout
         registerButton = findViewById(R.id.buttonSignUp) // Update ID as per your layout
+        loginButton = findViewById(R.id.textViewSignIn)
 
         // Register User
         registerButton.setOnClickListener {
@@ -49,6 +52,13 @@ class RegisterActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(baseContext, "Passwords do not match.", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        // Sign In Button
+        loginButton.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java) // Replace with your next activity
+            startActivity(intent)
+            finish()
         }
     }
 
