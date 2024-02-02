@@ -9,7 +9,7 @@ import com.iacademy.smartsoilph.R
 import com.iacademy.smartsoilph.datamodels.RecommendationData
 import com.iacademy.smartsoilph.models.FirebaseModel
 import com.iacademy.smartsoilph.utils.RecyclerOnItemClickListener
-import com.iacademy.smartsoilph.utils.RecyclerViewAdapter
+import com.iacademy.smartsoilph.utils.RecommendationHistoryRecyclerViewAdapter
 import java.util.ArrayList
 
 class RecommendationHistoryActivity : AppCompatActivity(), RecyclerOnItemClickListener {
@@ -33,7 +33,7 @@ class RecommendationHistoryActivity : AppCompatActivity(), RecyclerOnItemClickLi
         // Fetch data from Firebase
         FirebaseModel.fetchRecommendationHistory(auth) { recommendationDataList ->
             // Update RecyclerView
-            val adapter = RecyclerViewAdapter(ArrayList(recommendationDataList)) { recommendationData ->
+            val adapter = RecommendationHistoryRecyclerViewAdapter(ArrayList(recommendationDataList)) { recommendationData ->
                 // Handle the item click event here
                 // Example: show a Toast or navigate to a detail screen
                 }

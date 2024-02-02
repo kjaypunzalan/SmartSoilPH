@@ -98,7 +98,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.3.61")
 
     //CHART
-    //implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
     //GIF
     implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.28")
