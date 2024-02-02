@@ -6,15 +6,14 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
+    <!-- Cloud Image -->
     <ImageView
         android:id="@+id/bg_weather"
         android:layout_width="match_parent"
         android:layout_height="240dp"
-
         app:srcCompat="@drawable/bg_weather" />
 
-    <!-- Card Holder -->
-
+    <!-- SmartSoil Title Text -->
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
@@ -43,6 +42,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.105" />
 
+    <!-- Logo Image -->
     <ImageView
         android:id="@+id/iv_logo"
         android:layout_width="match_parent"
@@ -55,16 +55,19 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.22" />
 
+    <!-- Card Holder -->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_logo"
-        tools:layout_editor_absoluteX="30dp">
+        app:cardElevation="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_logo">
 
+        <!-- Card Contents -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -72,59 +75,55 @@
             android:padding="28dp">
             <!-- Welcome Text -->
             <TextView
+                android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Welcome!"
-                android:textColor="@color/black"
-                android:textSize="32sp"
+                android:textAppearance="@style/welcome_user"
                 android:textStyle="bold" />
             <!-- Text Instruction -->
             <TextView
+                android:id="@+id/tv_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:alpha="0.8"
                 android:text="Please login your information"
-                android:textColor="@color/black" />
+                android:textAppearance="@style/recommend_sentence" />
 
-            <!-- View's for spacing -->
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="20dp" />
 
-            <!-- Mobile Number Input -->
-
+            <!-- Email Input -->
             <EditText
                 android:id="@+id/editTextMobileNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/gray_border"
+                android:background="@drawable/custom_input"
                 android:drawableLeft="@drawable/icon_email"
+                android:drawableStart="@drawable/custom_email_icon"
                 android:drawablePadding="8dp"
                 android:hint="Email Address"
                 android:inputType="textEmailAddress"
                 android:padding="8dp"
-                android:textColor="@color/black"
+                android:textAppearance="@style/recommend_sentence"
                 android:textColorHint="@color/gray"
-                android:textSize="15sp" />
-
+                android:textColor="@color/black"/>
 
             <!-- Password Input -->
-
             <EditText
                 android:id="@+id/editTextPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/gray_border"
+                android:background="@drawable/custom_input"
                 android:drawableLeft="@drawable/icon_pass"
+                android:drawableStart="@drawable/custom_pass_icon"
                 android:drawablePadding="8dp"
                 android:hint="Password"
                 android:inputType="textPassword"
                 android:padding="8dp"
-                android:textColor="@color/black"
+                android:textAppearance="@style/recommend_sentence"
                 android:textColorHint="@color/gray"
-                android:textSize="15sp" />
+                android:textColor="@color/black"/>
 
             <!-- Forgot Password -->
             <RelativeLayout
@@ -137,45 +136,47 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:alpha="0.9"
+                    android:layout_marginRight="8dp"
+                    android:alpha="0.8"
+                    android:layout_marginTop="10dp"
                     android:text="Forgot Password?"
+                    android:textAppearance="@style/recommend_sentence"
                     android:textColor="@color/gray" />
             </RelativeLayout>
 
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="20dp" />
 
             <!-- Sign In Button -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonSignIn"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
+                android:layout_marginTop="10dp"
                 android:backgroundTint="@color/main_blue"
                 android:text="Sign In"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 app:cornerRadius="32dp" />
 
+            <!-- View Spacing -->
             <View
+                android:id="@+id/viewSpacing1"
                 android:layout_width="wrap_content"
-                android:layout_height="10dp" />
+                android:layout_height="5dp" />
 
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center">
-
+                <!-- Don't have an account? -->
                 <TextView
                     android:id="@+id/tv_log"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:alpha="0.8"
                     android:text="Don't have an account?"
-                    android:textColor="@color/black" />
-
-                <!-- Sign Up -->
+                    android:textAppearance="@style/recommend_sentence" />
+                <!-- Sign Up Link -->
                 <TextView
                     android:id="@+id/tv_sign"
                     android:layout_width="wrap_content"
@@ -184,17 +185,18 @@
                     android:layout_toRightOf="@id/tv_log"
                     android:alpha="0.8"
                     android:text="Sign Up"
+                    android:textAppearance="@style/recommend_sentence"
                     android:textColor="@color/main_blue" />
             </RelativeLayout>
-
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-
+    <!-- Soil Image -->
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="308dp"
+        android:layout_height="147dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:srcCompat="@drawable/bg_soil"
+        app:srcCompat="@drawable/bg_sprout"
         tools:layout_editor_absoluteX="48dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
