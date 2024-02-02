@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
@@ -14,6 +15,7 @@ class ResetPasswordActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var emailEditText: EditText
+    private lateinit var tvSignIn: TextView
     private lateinit var sendVerificationButton: MaterialButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,6 +28,7 @@ class ResetPasswordActivity : AppCompatActivity() {
         // Initialize UI components
         emailEditText = findViewById(R.id.et_email)
         sendVerificationButton = findViewById(R.id.btn_submit)
+        tvSignIn = findViewById(R.id.tv_sign_in)
 
         sendVerificationButton.setOnClickListener {
             val email = emailEditText.text.toString().trim()
@@ -34,6 +37,13 @@ class ResetPasswordActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "Please enter your email", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        tvSignIn.setOnClickListener {
+            // Intent to start new Activity
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish() // Close the current activity
         }
     }
 
