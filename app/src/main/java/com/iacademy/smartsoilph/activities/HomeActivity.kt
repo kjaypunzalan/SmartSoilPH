@@ -50,6 +50,7 @@ class HomeActivity : AppCompatActivity() {
         setButtonClickListener(btnManual, RecommendationHistoryActivity::class.java)
 
         fetchUsername()
+        //resetDatabase()
     }
 
     //Button Function
