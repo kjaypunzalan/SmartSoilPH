@@ -33,7 +33,7 @@ class SoilActivity : AppCompatActivity() {
     private lateinit var etHumidity: EditText
     private lateinit var etTemperature: EditText
     private lateinit var btnFilter: CardView
-    private lateinit var btnViewRecommendation: Button
+    private lateinit var btnViewRecommendation: CardView
 
     //declare dialog variable
     private lateinit var selectedGradeTextView: TextView
@@ -50,6 +50,11 @@ class SoilActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
         // initialize variables
+        initializeLayout()
+        initializeButtons()
+    }
+
+    private fun initializeLayout() {
         etNitrogen = findViewById<EditText>(R.id.nitrogen_value);
         etPhosphorus = findViewById<EditText>(R.id.phosphorus_value);
         etPotassium = findViewById<EditText>(R.id.potassium_value);
@@ -58,9 +63,11 @@ class SoilActivity : AppCompatActivity() {
         etHumidity = findViewById<EditText>(R.id.humidity_soil_value);
         etTemperature = findViewById<EditText>(R.id.temp_soil_value);
         btnFilter = findViewById<CardView>(R.id.btn_filter);
-        btnViewRecommendation = findViewById<Button>(R.id.btn_view_fertilizer);
+        btnViewRecommendation = findViewById<CardView>(R.id.btn_view_fertilizer);
         selectedGradeTextView = findViewById<TextView>(R.id.tv_selected_grade)
+    }
 
+    private fun initializeButtons() {
         // Button Logistics
         btnFilter.setOnClickListener {
             showGradeDialog()
@@ -74,6 +81,13 @@ class SoilActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        val intent = Intent(this, HomeActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        startActivity(intent)
+        finish()
+    }
+
     /*****************************
      * A. Show Grade Dialog
      ***************************/
@@ -83,7 +97,7 @@ class SoilActivity : AppCompatActivity() {
 
         // Initialize RadioButtons using Loop
         val radioButtons = mutableListOf<RadioButton>()
-        for (i in 1..25) {
+        for (i in 1..12) {
             val resId = resources.getIdentifier("gs_$i", "id", packageName)
             radioButtons.add(dialog.findViewById(resId))
         }
