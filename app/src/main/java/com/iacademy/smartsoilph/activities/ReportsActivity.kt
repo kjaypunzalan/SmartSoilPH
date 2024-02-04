@@ -10,8 +10,10 @@ import android.widget.Button
 import android.widget.ScrollView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.compose.animation.core.EaseOutBack
 import androidx.core.content.ContextCompat
+import androidx.core.widget.NestedScrollView
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.LineChart
@@ -47,8 +49,8 @@ class ReportsActivity : AppCompatActivity() {
     private lateinit var lineChart1: LineChart
     private lateinit var lineChart2: LineChart
     private lateinit var barChart1: BarChart
-    private lateinit var btnDownload: Button
-    private lateinit var scrollView: ScrollView
+    private lateinit var btnDownload: CardView
+    private lateinit var scrollView: NestedScrollView
 
     //declare Firebase variables
     private lateinit var auth: FirebaseAuth
@@ -85,8 +87,8 @@ class ReportsActivity : AppCompatActivity() {
         lineChart1 = findViewById<LineChart>(R.id.lineChart1);
         lineChart2 = findViewById<LineChart>(R.id.lineChart2);
         barChart1 = findViewById<BarChart>(R.id.barChart1);
-        scrollView = findViewById<ScrollView>(R.id.sv_scrollview)
-        btnDownload = findViewById<Button>(R.id.btnDownload);
+        scrollView = findViewById<NestedScrollView>(R.id.sv_scrollview)
+        btnDownload = findViewById<CardView>(R.id.btnDownload);
     }
 
     /**
@@ -382,7 +384,7 @@ class ReportsActivity : AppCompatActivity() {
     /**
      * G. Download Reports
      */
-    private fun captureScrollView(scrollView: ScrollView) {
+    private fun captureScrollView(scrollView: NestedScrollView) {
         // Measure the view at its full height
         scrollView.measure(
             View.MeasureSpec.makeMeasureSpec(scrollView.width, View.MeasureSpec.EXACTLY),
