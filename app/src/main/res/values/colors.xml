@@ -4,6 +4,7 @@
     <color name="black">#FF000000</color>
     <color name="black_70">#B3000000</color>
     <color name="black_50">#80000000</color>
+    <color name="black_10">#1A000000</color>
     <color name="transparent">#00000000</color>
 
 
@@ -18,13 +19,6 @@
     <color name="teal_200">#81CBC4</color>
     <color name="teal_700">#00796A</color>
 
-
-    <color name="non_photo_blue">#92DCE5</color>
-    <color name="space_cadet">#2B2D42</color>
-    <color name="seasalt">#F8F7F9</color>
-    <color name="maize">#F7EC59</color>
-    <color name="rose_pink">#FF66D8</color>
-
     <color name="green"> #66A96B </color>
     <color name="dark_green">#3B5F41</color>
 
@@ -38,14 +32,14 @@
     <color name="light_red">#FFDFDF</color>
 
     <!-- Semi-Transparent -->
-    <color name="semi_light_gray">#80d3d3d3</color>
-    <color name="semi_light_green">#80DFFFE9</color>
-    <color name="semi_light_blue">#80DEF0FF</color>
-    <color name="semi_light_yellow">#80FFFAC7</color>
-    <color name="semi_light_orange">#80FFF1DD</color>
-    <color name="semi_light_ygreen">#80EEFFC7</color>
-    <color name="semi_light_pink">#80FFDFFD</color>
-    <color name="semi_light_red">#80FFDFDF</color>
+    <color name="semi_light_gray">#CCd3d3d3</color>
+    <color name="semi_light_green">#CCDFFFE9</color>
+    <color name="semi_light_blue">#CCDEF0FF</color>
+    <color name="semi_light_yellow">#CCFFFAC7</color>
+    <color name="semi_light_orange">#CCFFF1DD</color>
+    <color name="semi_light_ygreen">#CCEEFFC7</color>
+    <color name="semi_light_pink">#CCFFDFFD</color>
+    <color name="semi_light_red">#CCFFDFDF</color>
 
     <!-- Chart Colors -->
     <color name="infra_red">#F05361</color>
