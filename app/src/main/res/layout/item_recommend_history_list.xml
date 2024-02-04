@@ -57,7 +57,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:src="@drawable/icon_fertilizer"
-                    app:tint="#80000000"
+                    app:tint="@color/black_50"
                     app:layout_constraintTop_toTopOf="@id/cl_1"
                     app:layout_constraintBottom_toBottomOf="@id/cl_1"/>
 
@@ -110,7 +110,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:src="@drawable/icon_lime"
-                    app:tint="#80000000"
+                    app:tint="@color/black_50"
                     app:layout_constraintTop_toTopOf="@id/cl_2"
                     app:layout_constraintBottom_toBottomOf="@id/cl_2"/>
 
@@ -162,7 +162,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:src="@drawable/icon_npk"
-                    app:tint="#80000000"
+                    app:tint="@color/black_50"
                     app:layout_constraintTop_toTopOf="@id/cl_3"
                     app:layout_constraintBottom_toBottomOf="@id/cl_3"/>
 

@@ -9,7 +9,8 @@ import android.util.Log
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.database
-import com.iacademy.smartsoilph.datamodels.SoilDataModel
+import com.iacademy.smartsoilph.datamodels.SoilData
+import com.iacademy.smartsoilph.datamodels.RecommendationData
 
 /**
  * SQLite Database helper class for managing local database operations.
@@ -71,9 +72,12 @@ class DatabaseHelper(private val context: Context) : SQLiteOpenHelper(context, D
      * @param soilData the SoilDataModel to be added
      * @return the row ID of the newly inserted row, or -1 if an error occurred
      */
-    fun addSoilData(soilData: SoilDataModel): Long {
+    fun addSoilData(recommendationData: RecommendationData): Long {
         // Get database
         val db = this.writableDatabase
+
+        // Extracting soil data from the recommendationData
+        val soilData = recommendationData.soilData
 
         // Putting values in ContentValues
         val contentValues = ContentValues()
@@ -84,10 +88,10 @@ class DatabaseHelper(private val context: Context) : SQLiteOpenHelper(context, D
         contentValues.put(KEY_EC_LEVEL, soilData.ecLevel)
         contentValues.put(KEY_HUMIDITY, soilData.humidity)
         contentValues.put(KEY_TEMPERATURE, soilData.temperature)
-        contentValues.put(KEY_FERTILIZER_RECOMMENDATION, soilData.fertilizerRecommendation)
-        contentValues.put(KEY_LIME_RECOMMENDATION, soilData.limeRecommendation)
-        contentValues.put(KEY_DATE_OF_RECOMMENDATION, soilData.dateOfRecommendation)
-        contentValues.put(KEY_INITIAL_STORAGE_TYPE, soilData.initialStorageType)
+        contentValues.put(KEY_FERTILIZER_RECOMMENDATION, recommendationData.fertilizerRecommendation)
+        contentValues.put(KEY_LIME_RECOMMENDATION, recommendationData.limeRecommendation)
+        contentValues.put(KEY_DATE_OF_RECOMMENDATION, recommendationData.dateOfRecommendation)
+        contentValues.put(KEY_INITIAL_STORAGE_TYPE, recommendationData.initialStorageType)
 
         // Inserting Row and returning the row id
         val success = db.insert(TABLE_SOIL, null, contentValues)
@@ -103,71 +107,21 @@ class DatabaseHelper(private val context: Context) : SQLiteOpenHelper(context, D
      * Retrieves all soil data records from the database.
      * @return a list of SoilDataModel containing the data from the database
      */
-    fun getAllSoilData(): List<SoilDataModel> {
-        val soilList: ArrayList<SoilDataModel> = ArrayList()
+    fun getAllSoilData(): List<RecommendationData> {
+
+        // Create ArrayList to list all data
+        val recommendationList: ArrayList<RecommendationData> = ArrayList()
+
+        // Get database
+        val db = this.readableDatabase
         val selectQuery = "SELECT * FROM $TABLE_SOIL"
-        val db = this.readableDatabase
+        // Execute the query and get a cursor to iterate over the results
         val cursor: Cursor? = db.rawQuery(selectQuery, null)
-
-        // Map each field to its corresponding column key
-        val fieldMap = mapOf(
-            SoilDataModel::nitrogen to KEY_NITROGEN,
-            SoilDataModel::phosphorus to KEY_PHOSPHORUS,
-            SoilDataModel::potassium to KEY_POTASSIUM,
-            SoilDataModel::ecLevel to KEY_EC_LEVEL,
-            SoilDataModel::phLevel to KEY_PH_LEVEL,
-            SoilDataModel::humidity to KEY_HUMIDITY,
-            SoilDataModel::temperature to KEY_TEMPERATURE,
-            SoilDataModel::fertilizerRecommendation to KEY_FERTILIZER_RECOMMENDATION,
-            SoilDataModel::limeRecommendation to KEY_LIME_RECOMMENDATION,
-        )
-
-        cursor?.let {
-            if (cursor.moveToFirst()) {
-                do {
-                    val soilData = SoilDataModel()
-
-                    // Iterate through the fieldMap and use reflection to set field values
-                    fieldMap.forEach { (field, key) ->
-                        cursor.getColumnIndex(key).takeIf { it != -1 }?.let { index ->
-                            // Use reflection to set the field value
-                            field.setter.call(soilData, cursor.getFloat(index))
-                        }
-                    }
-
-                    // Handle String fields separately
-                    val dateOfRecommendationIndex = it.getColumnIndex(KEY_DATE_OF_RECOMMENDATION)
-                    if (dateOfRecommendationIndex != -1) {
-                        soilData.dateOfRecommendation = it.getString(dateOfRecommendationIndex)
-                    }
-
-                    val initialStorageTypeIndex = it.getColumnIndex(KEY_INITIAL_STORAGE_TYPE)
-                    if (initialStorageTypeIndex != -1) {
-                        soilData.initialStorageType = it.getString(initialStorageTypeIndex)
-                    }
-
-                    // Add soil data to list
-                    soilList.add(soilData)
-                } while (cursor.moveToNext())
-            }
-            cursor.close()
-        }
-        db.close()
-        return soilList
-    }
-
-    /**
-     * Retrieves the recently saved soil data.
-     * @return a list of SoilDataModel containing the data from the database
-     */
-    fun getLatestSoilData(): SoilDataModel? {
-        val db = this.readableDatabase
-        val selectQuery = "SELECT * FROM $TABLE_SOIL ORDER BY $KEY_ID DESC LIMIT 1"
-        val cursor: Cursor? = db.rawQuery(selectQuery, null)
-
-        var soilData: SoilDataModel? = null
+        // Use the cursor in a safe block to ensure it's closed after use
         cursor?.use {
-            if (it.moveToFirst()) {
+            while (it.moveToNext()) {
+                // Get the index of the columns.
+                // This is separated from data extraction to handle cases where the column might not exist.
                 val nitrogenIndex = it.getColumnIndex(KEY_NITROGEN)
                 val phosphorusIndex = it.getColumnIndex(KEY_PHOSPHORUS)
                 val potassiumIndex = it.getColumnIndex(KEY_POTASSIUM)
@@ -180,27 +134,82 @@ class DatabaseHelper(private val context: Context) : SQLiteOpenHelper(context, D
                 val dateOfRecommendationIndex = it.getColumnIndex(KEY_DATE_OF_RECOMMENDATION)
                 val initialStorageTypeIndex = it.getColumnIndex(KEY_INITIAL_STORAGE_TYPE)
 
+                // Extract data
+                val nitrogen = it.getFloat(nitrogenIndex)
+                val phosphorus = it.getFloat(phosphorusIndex)
+                val potassium = it.getFloat(potassiumIndex)
+                val phLevel = it.getFloat(phLevelIndex)
+                val ecLevel = it.getFloat(ecLevelIndex)
+                val humidity = it.getFloat(humidityIndex)
+                val temperature = it.getFloat(temperatureIndex)
+                val fertilizerRecommendation = it.getFloat(fertilizerRecommendationIndex)
+                val limeRecommendation = it.getFloat(limeRecommendationIndex)
+                val dateOfRecommendation = it.getString(dateOfRecommendationIndex)
+                val initialStorageType = it.getString(initialStorageTypeIndex)
 
-                // Check if indices are valid
-                if (nitrogenIndex != -1 && phosphorusIndex != -1 /* ... and so on for other indices */) {
-                    soilData = SoilDataModel().apply {
-                        nitrogen = it.getFloat(nitrogenIndex)
-                        phosphorus = it.getFloat(phosphorusIndex)
-                        potassium = it.getFloat(potassiumIndex)
-                        phLevel = it.getFloat(phLevelIndex)
-                        ecLevel = it.getFloat(ecLevelIndex)
-                        humidity = it.getFloat(humidityIndex)
-                        temperature = it.getFloat(temperatureIndex)
-                        fertilizerRecommendation = it.getFloat(fertilizerRecommendationIndex)
-                        limeRecommendation = it.getFloat(limeRecommendationIndex)
-                        dateOfRecommendation = it.getString(dateOfRecommendationIndex)
-                        initialStorageType = it.getString(initialStorageTypeIndex)
-                    }
-                }
+                // Create a RecommendationData object with the extracted values and add it to the list
+                val soilData = SoilData (nitrogen, phosphorus, potassium, phLevel, ecLevel, humidity, temperature)
+                val recommendationData = RecommendationData(soilData, fertilizerRecommendation, limeRecommendation, dateOfRecommendation, initialStorageType)
+                recommendationList.add(recommendationData)
             }
         }
+
         db.close()
-        return soilData
+        return recommendationList
+    }
+
+    /**
+     * Retrieves the recently saved soil data.
+     * @return a list of SoilDataModel containing the data from the database
+     */
+    fun getLatestSoilData(): RecommendationData? {
+
+        // Create object RecommendationData that holds the latest data
+        var recommendationData: RecommendationData? = null
+
+        // Get database
+        val db = this.readableDatabase
+        val selectQuery = "SELECT * FROM $TABLE_SOIL"
+        // Execute the query and get a cursor to iterate over the results
+        val cursor: Cursor? = db.rawQuery(selectQuery, null)
+        // Use the cursor in a safe block to ensure it's closed after use
+        cursor?.use {
+            while (it.moveToFirst()) {
+                // Get the index of the columns.
+                // This is separated from data extraction to handle cases where the column might not exist.
+                val nitrogenIndex = it.getColumnIndex(KEY_NITROGEN)
+                val phosphorusIndex = it.getColumnIndex(KEY_PHOSPHORUS)
+                val potassiumIndex = it.getColumnIndex(KEY_POTASSIUM)
+                val phLevelIndex = it.getColumnIndex(KEY_PH_LEVEL)
+                val ecLevelIndex = it.getColumnIndex(KEY_EC_LEVEL)
+                val humidityIndex = it.getColumnIndex(KEY_HUMIDITY)
+                val temperatureIndex = it.getColumnIndex(KEY_TEMPERATURE)
+                val fertilizerRecommendationIndex = it.getColumnIndex(KEY_FERTILIZER_RECOMMENDATION)
+                val limeRecommendationIndex = it.getColumnIndex(KEY_LIME_RECOMMENDATION)
+                val dateOfRecommendationIndex = it.getColumnIndex(KEY_DATE_OF_RECOMMENDATION)
+                val initialStorageTypeIndex = it.getColumnIndex(KEY_INITIAL_STORAGE_TYPE)
+
+                // Extract data
+                val nitrogen = it.getFloat(nitrogenIndex)
+                val phosphorus = it.getFloat(phosphorusIndex)
+                val potassium = it.getFloat(potassiumIndex)
+                val phLevel = it.getFloat(phLevelIndex)
+                val ecLevel = it.getFloat(ecLevelIndex)
+                val humidity = it.getFloat(humidityIndex)
+                val temperature = it.getFloat(temperatureIndex)
+                val fertilizerRecommendation = it.getFloat(fertilizerRecommendationIndex)
+                val limeRecommendation = it.getFloat(limeRecommendationIndex)
+                val dateOfRecommendation = it.getString(dateOfRecommendationIndex)
+                val initialStorageType = it.getString(initialStorageTypeIndex)
+
+                // Create a RecommendationData object with the extracted values and add it to the list
+                val soilData = SoilData (nitrogen, phosphorus, potassium, phLevel, ecLevel, humidity, temperature)
+                val recommendationData = RecommendationData(soilData, fertilizerRecommendation, limeRecommendation, dateOfRecommendation, initialStorageType)
+            }
+        }
+
+        db.close()
+        return recommendationData
     }
 
     /**
@@ -216,8 +225,8 @@ class DatabaseHelper(private val context: Context) : SQLiteOpenHelper(context, D
         val referenceUser = firebaseDB.child("SmartSoilPH").child("Users").child(auth.currentUser!!.uid)
         val referenceDetails = referenceUser.child("RecommendationHistory")
 
-        localDataList.forEach { soilData ->
-            referenceDetails.push().setValue(soilData)
+        localDataList.forEach { recommendationData ->
+            referenceDetails.push().setValue(recommendationData)
         }
     }
 

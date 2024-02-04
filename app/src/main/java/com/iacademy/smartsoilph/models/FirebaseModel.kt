@@ -1,8 +1,17 @@
 package com.iacademy.smartsoilph.models
 
+//import datamodels
+import com.iacademy.smartsoilph.datamodels.UserData
+import com.iacademy.smartsoilph.datamodels.SoilData
+import com.iacademy.smartsoilph.datamodels.RecommendationData
+
+//import database
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.database
 import java.util.Calendar
 
@@ -17,18 +26,18 @@ class FirebaseModel {
     var number: Double? = null
 
     //soil data
-    var nitrogen: Double? = null
-    var potassium: Double? = null
-    var phosphorus: Double? = null
-    var phLevel: Double? = null
-    var ecLevel: Double? = null
-    var humidity: Double? = null
-    var temperature: Double? = null
+    var nitrogen: Float? = null
+    var potassium: Float? = null
+    var phosphorus: Float? = null
+    var phLevel: Float? = null
+    var ecLevel: Float? = null
+    var humidity: Float? = null
+    var temperature: Float? = null
 
     //recommendation data
     var fertilizerBag: Int? = null
-    var fertilizerRecommendation: Double? = null
-    var limeRecommendation: Double? = null
+    var fertilizerRecommendation: Float? = null
+    var limeRecommendation: Float? = null
     var dateOfRecommendation: String? = null
     var initialStorageType: String? = null
 
@@ -48,9 +57,9 @@ class FirebaseModel {
 
     // Soil constructor
     constructor(
-        nitrogen: Double, potassium: Double, phosphorus: Double,
-        phLevel: Double, ecLevel: Double, humidity: Double, temperature: Double,
-        fertilizerRecommendation: Double, limeRecommendation: Double) {
+        nitrogen: Float, potassium: Float, phosphorus: Float,
+        phLevel: Float, ecLevel: Float, humidity: Float, temperature: Float,
+        fertilizerRecommendation: Float, limeRecommendation: Float) {
         this.nitrogen = nitrogen
         this.potassium = potassium
         this.phosphorus = phosphorus
@@ -64,9 +73,9 @@ class FirebaseModel {
 
     // Recommendation constructor
     constructor(
-        nitrogen: Double, potassium: Double, phosphorus: Double,
-        phLevel: Double, ecLevel: Double, humidity: Double, temperature: Double,
-        fertilizerRecommendation: Double, limeRecommendation: Double,
+        nitrogen: Float, potassium: Float, phosphorus: Float,
+        phLevel: Float, ecLevel: Float, humidity: Float, temperature: Float,
+        fertilizerRecommendation: Float, limeRecommendation: Float,
         dateOfRecommendation: String, initialStorageType: String) {
         this.nitrogen = nitrogen
         this.potassium = potassium
@@ -89,9 +98,7 @@ class FirebaseModel {
      * A. write new user
      *------------------------*/
     fun writeNewUser(
-        name: String,
-        email: String,
-        number: Double,
+        userData: UserData,
         auth: FirebaseAuth
     ) {
         // Get FirebaseDatabase Reference
@@ -102,7 +109,6 @@ class FirebaseModel {
         val referenceDetails = referenceUser.child("UserDetails")
 
         // Create and set user data
-        val userData = FirebaseModel(name, email, number)
         referenceDetails.setValue(userData)
     }
 
@@ -111,9 +117,7 @@ class FirebaseModel {
      * B. save soil nutrient data to firebase
      *------------------------------------------*/
     fun saveSoilData(
-        nitrogen: Double, potassium: Double, phosphorus: Double,
-        phLevel: Double, ecLevel: Double, humidity: Double, temperature: Double,
-        fertilizerRecommendation: Double, limeRecommendation: Double,
+        soilData: SoilData,
         auth: FirebaseAuth
     ) {
         // Get FirebaseDatabase Reference
@@ -124,8 +128,6 @@ class FirebaseModel {
         val referenceDetails = referenceUser.child("SoilDetails")
 
         // Create and save soil data
-        val soilData = FirebaseModel(nitrogen, potassium, phosphorus, phLevel, ecLevel, humidity, temperature,
-            fertilizerRecommendation, limeRecommendation)
         referenceDetails.setValue(soilData)
     }
 
@@ -133,10 +135,7 @@ class FirebaseModel {
      * C. save recommendations to firebase
      *------------------------------------------*/
     fun saveRecommendation(
-        nitrogen: Double, potassium: Double, phosphorus: Double,
-        phLevel: Double, ecLevel: Double, humidity: Double, temperature: Double,
-        fertilizerRecommendation: Double, limeRecommendation: Double,
-        initialStorageType: String,
+        recommendationData: RecommendationData,
         auth: FirebaseAuth
     ) {
         // Get FirebaseDatabase Reference
@@ -147,11 +146,49 @@ class FirebaseModel {
         val referenceDetails = referenceUser.child("RecommendationHistory").push()
 
         // Create and save recommendation data
-        val dateOfRecommendation = Calendar.getInstance().time.toString()
-        val recommendationData = FirebaseModel(nitrogen, potassium, phosphorus, phLevel, ecLevel, humidity, temperature,
-            fertilizerRecommendation, limeRecommendation,
-            dateOfRecommendation, initialStorageType)
         referenceDetails.setValue(recommendationData)
     }
+
+
+    /*******************************************
+     * D. fetch recommendation history in recycler view
+     *------------------------------------------*/
+    companion object {
+        fun fetchRecommendationHistory(auth: FirebaseAuth, onDataReceived: (List<RecommendationData>) -> Unit) {
+            val firebaseDB = Firebase.database.reference
+            val referenceUser = firebaseDB.child("SmartSoilPH").child("Users").child(auth.currentUser!!.uid)
+            val referenceDetails = referenceUser.child("RecommendationHistory")
+
+            referenceDetails.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val dataList = snapshot.children.mapNotNull { dataSnapshot ->
+                        dataSnapshot.getValue(FirebaseModel::class.java)?.let { firebaseModel ->
+                            RecommendationData(
+                                SoilData(
+                                    firebaseModel.nitrogen ?: 0.0f,
+                                    firebaseModel.potassium ?: 0.0f,
+                                    firebaseModel.phosphorus ?: 0.0f,
+                                    firebaseModel.phLevel ?: 0.0f,
+                                    firebaseModel.ecLevel ?: 0.0f,
+                                    firebaseModel.humidity ?: 0.0f,
+                                    firebaseModel.temperature ?: 0.0f
+                                ),
+                                firebaseModel.fertilizerRecommendation ?: 0.0f,
+                                firebaseModel.limeRecommendation ?: 0.0f,
+                                firebaseModel.dateOfRecommendation.orEmpty(),
+                                firebaseModel.initialStorageType.orEmpty()
+                            )
+                        }
+                    }
+                    onDataReceived(dataList)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    // Handle error case
+                }
+            })
+        }
+    }
+
 
 }

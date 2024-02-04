@@ -28,6 +28,7 @@
     <color name="green"> #66A96B </color>
     <color name="dark_green">#3B5F41</color>
 
+    <!-- Light Colors -->
     <color name="light_green">#DFFFE9</color>
     <color name="light_blue">#DEF0FF</color>
     <color name="light_yellow">#FFFAC7</color>
@@ -36,6 +37,7 @@
     <color name="light_pink">#FFDFFD</color>
     <color name="light_red">#FFDFDF</color>
 
+    <!-- Semi-Transparent -->
     <color name="semi_light_gray">#80d3d3d3</color>
     <color name="semi_light_green">#80DFFFE9</color>
     <color name="semi_light_blue">#80DEF0FF</color>
@@ -45,4 +47,7 @@
     <color name="semi_light_pink">#80FFDFFD</color>
     <color name="semi_light_red">#80FFDFDF</color>
 
+    <!-- Chart Colors -->
+    <color name="infra_red">#F05361</color>
+    <color name="ultramarine_blue">#4A65FC</color>
 </resources>
