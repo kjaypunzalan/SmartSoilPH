@@ -14,7 +14,8 @@
         android:text="@string/date_time"
         android:textAppearance="@style/date_time"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="15dp">
     </TextView>
 
     <ImageView
@@ -57,7 +58,8 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:src="@drawable/icon_fertilizer"
-                    app:tint="@color/black_50"
+                    app:tint="#80000000"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/cl_1"
                     app:layout_constraintBottom_toBottomOf="@id/cl_1"/>
 
@@ -110,7 +112,8 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:src="@drawable/icon_lime"
-                    app:tint="@color/black_50"
+                    app:tint="#80000000"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/cl_2"
                     app:layout_constraintBottom_toBottomOf="@id/cl_2"/>
 
@@ -162,7 +165,8 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:src="@drawable/icon_npk"
-                    app:tint="@color/black_50"
+                    app:tint="#80000000"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/cl_3"
                     app:layout_constraintBottom_toBottomOf="@id/cl_3"/>
 
@@ -206,7 +210,7 @@
         android:layout_width="330dp"
         android:layout_height="1dp"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/custom_scroll_bar_divider"
         app:layout_constraintTop_toBottomOf="@+id/hsv_1"

@@ -3,25 +3,41 @@
     <string name="open_nav">Open Navigation Drawer</string>
     <string name="close_nav">Close Navigation Drawer</string>
 
-    <string name="location">San Juan, \nBatangas City</string>
+    <!--Header===================================================-->
+    <string name="project_title">Smart</string>
+    <string name="project_title2">SoilPH</string>
+
+    <string name="feature_title">Soil Data</string>
+    <string name="feature_title2">Weather Forecast</string>
+    <string name="feature_title3">Reports &amp; Statistics</string>
+    <!--=================================================================-->
+
+    <!--Activity Weather===================================================-->
+    <string name="location_info">Current weather at...</string>
+    <string name="location">San Juan, Batangas City</string>
     <string name="date">Tues, Jan 02</string>
     <string name="temperature">24</string>
     <string name="tv_temperature_symbol">°C</string>
 
-    <string name="weather">Partially Cloudy</string>
+    <string name="weather">Partly Cloudy</string>
 
     <string name="humidity">Humidity</string>
-    <string name="value_humidity">%</string>
+    <string name="value_humidity">0%</string>
 
     <string name="temperature2">Temperature</string>
-    <string name="value_temp">°C</string>
+    <string name="value_temp">0°C</string>
 
     <string name="wind">Wind Speed</string>
-    <string name="value_wind">km/h</string>
+    <string name="value_wind">0km/h</string>
 
-    <string name="day_name">name of day</string>
-    <string name="week_date">date of week</string>
-    <string name="value_temp2">31°C</string>
+    <string name="day_name">Monday</string>
+    <string name="week_date">1 Jan 2024</string>
+    <string name="value_temp2">31</string>
+    <!--=================================================================-->
+
+    <!--Activity Soil===================================================-->
+    <string name="soil_title">Current soil status</string>
+    <string name="soil_info">Please select a soil grade by clicking the filter button on the right side of the screen.</string>
 
     <string name="nitrogen">Nitrogen</string>
     <string name="phosphorus">Phosphorus</string>
@@ -31,7 +47,7 @@
     <string name="humidity_soil">Humidity</string>
     <string name="temp_soil">Temperature</string>
 
-    <string name="nitrogen_value">10</string>
+    <string name="nitrogen_value">0</string>
     <string name="phosphorus_value">0</string>
     <string name="potassium_value">0</string>
     <string name="ph_level_value">0</string>
@@ -39,11 +55,29 @@
     <string name="humidity_soil_value">0</string>
     <string name="temp_soil_value">0</string>
 
-    <string name="project_title">Smart</string>
-    <string name="project_title2">SoilPH</string>
+    <string name="view_recommend">View recommendation</string>
+    <!--=================================================================-->
 
-    <string name="soil_title">Soil Data</string>
+    <!--Grade Selection String===========================================-->
+    <string name="gs_1">82 - 0 - 0</string> //Anhydrous Ammonia
+    <string name="gs_2">46 - 0 - 0</string> //Urea
+    <string name="gs_3">34 - 0 - 0</string> //Ammonium Nitrate
+    <string name="gs_4">28 - 0 - 0</string> //28% UAN
+    <string name="gs_5">21 - 0 - 0</string> //Ammonium Sulfate
+    <string name="gs_6">12 - 52 - 0</string> //MAP
 
+    <string name="gs_7">18 - 46 - 0</string> //DAP
+    <string name="gs_8">10 - 34 - 0</string> //Ammonium Polyphosphate
+    <string name="gs_9">0 - 0 - 60</string> //Potash
+    <string name="gs_10">0 - 45 - 0</string> //Triple Super Phosphate
+    <string name="gs_11">12 - 32 - 16</string>
+    <string name="gs_12">10 - 26 - 26</string>
+
+    <string name="btn_apply">Apply</string>
+    <!--=================================================================-->
+
+<!--Activity Home===================================================-->
+    <string name="date_today">Monday, 5th</string>
     <string name="welcome_user">Welcome back,</string>
     <string name="username">[Username]</string>
     <string name="exclamation">!</string>
@@ -54,6 +88,7 @@
     <string name="manual_button">Manual</string>
     <string name="manual_button2">(English/Tagalog)</string>
     <string name="logout_button">Logout</string>
+<!--=================================================================-->
 
     <string name="title_recommend">Recommendations</string>
     <string name="tv_greeting">Hi, </string>
@@ -73,36 +108,6 @@
     <string name="return_soil">Return to Soil Data</string>
     <string name="previous_data">View Previous Recommendations</string>
 
-
-<!--Grade Selection String-->
-    <string name="gs_1">29 - 0 - 5</string>
-    <string name="gs_2">18 - 24 - 6</string>
-    <string name="gs_3">10 - 10 - 10</string>
-    <string name="gs_4">14 - 7 - 7</string>
-    <string name="gs_5">10 - 5 - 4</string>
-    <string name="gs_6">32 - 0 - 8</string>
-    <string name="gs_7">1 - 15 - 0</string> //bone meal
-    <string name="gs_8">7 - 2 - 2</string>
-    <string name="gs_9">5 - 6 - 3</string>
-
-    <string name="gs_10">5 - 5 - 5</string> // plant food
-    <string name="gs_11">0 - 10 - 10</string>
-    <string name="gs_12">5 - 5 - 3</string>
-    <string name="gs_13">4 - 5 - 3</string> // tomato veg food
-    <string name="gs_14">7 - 3 - 3</string>
-    <string name="gs_15">4 - 6 - 2</string>
-    <string name="gs_16">18 - 0 - 3</string>
-    <string name="gs_17">10 - 0 - 6</string>
-    <string name="gs_18">4 - 3 - 4</string>
-    <string name="gs_19">15 - 0 - 15</string>
-
-    <string name="gs_20">6 - 2 - 1</string> // cottonseed meal
-    <string name="gs_21">13 - 0 - 0</string> // blood meal
-    <string name="gs_22">3 - 4 - 4</string> // garden tone
-    <string name="gs_23">6 - 8 - 0</string> // bone meal
-    <string name="gs_24">12 - 0 - 0</string> // blood meal
-    <string name="gs_25">9 - 23 - 30</string>
-
 <!--Recommendation & Items String-->
     <string name="rec_history">Recommendation History</string>
     <string name="date_time">Date and Time</string>
@@ -114,4 +119,15 @@
     <string name="fertilizer_info">Of<b> Fertilizer </b>used</string>
     <string name="lime_info">Of<b> Lime </b>used</string>
     <string name="npk_info">recommended<b> Grade</b></string>
+
+    <!--Activity Reports===================================================-->
+    <string name="stat_title">Summary Report</string>
+    <string name="stat_sub_title">Recent Saves</string>
+    <string name="stat_sub_title2">Soil pH Acidity</string>
+    <string name="stat_sub_title3">Cumulative Fertilizer Usage</string>
+    <string name="stat_sub_title4">Soil pH Trend</string>
+    <string name="stat_sub_title5">Monthly Average Soil NPK</string>
+    <string name="sub_summary">Summary reports of soil nutrient data and more.</string>
+    <!--=================================================================-->
+
 </resources>
