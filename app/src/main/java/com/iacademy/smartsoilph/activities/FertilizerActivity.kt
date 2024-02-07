@@ -2,10 +2,8 @@ package com.iacademy.smartsoilph.activities
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.Firebase
@@ -19,7 +17,7 @@ import com.iacademy.smartsoilph.models.DatabaseHelper
 import com.iacademy.smartsoilph.models.FirebaseModel
 import com.iacademy.smartsoilph.utils.CheckInternet
 
-class FertilizerActivity : AppCompatActivity() {
+class FertilizerActivity : BaseActivity() {
 
     //declare layout variables
     private lateinit var tvUserName: TextView

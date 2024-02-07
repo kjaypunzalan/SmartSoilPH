@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">SmartSoilPH</string>
-    <string name="open_nav">Open Navigation Drawer</string>
-    <string name="close_nav">Close Navigation Drawer</string>
+    <string name="app_name" translatable="false">SmartSoilPH</string>
+    <string name="open_nav" translatable="false">Open Navigation Drawer</string>
+    <string name="close_nav" translatable="false">Close Navigation Drawer</string>
 
     <!--Header===================================================-->
-    <string name="project_title">Smart</string>
-    <string name="project_title2">SoilPH</string>
+    <string name="project_title" translatable="false">Smart</string>
+    <string name="project_title2" translatable="false">SoilPH</string>
 
     <string name="feature_title">Soil Data</string>
     <string name="feature_title2">Weather Forecast</string>
@@ -14,93 +14,93 @@
 
     <!--Activity Weather===================================================-->
     <string name="location_info">Current weather at...</string>
-    <string name="location">San Juan, Batangas City</string>
-    <string name="date">Tues, Jan 02</string>
-    <string name="temperature">24</string>
-    <string name="tv_temperature_symbol">°C</string>
+    <string name="location" translatable="false">San Juan, Batangas City</string>
+    <string name="date" translatable="false">Tues, Jan 02</string>
+    <string name="temperature" translatable="false">24</string>
+    <string name="tv_temperature_symbol" translatable="false">°C</string>
 
-    <string name="weather">Partly Cloudy</string>
+    <string name="weather" translatable="false">Partly Cloudy</string>
 
     <string name="humidity">Humidity</string>
-    <string name="value_humidity">0%</string>
+    <string name="value_humidity" translatable="false">0%</string>
 
     <string name="temperature2">Temperature</string>
-    <string name="value_temp">0°C</string>
+    <string name="value_temp" translatable="false">0°C</string>
 
     <string name="wind">Wind Speed</string>
-    <string name="value_wind">0km/h</string>
+    <string name="value_wind" translatable="false">0km/h</string>
 
-    <string name="day_name">Monday</string>
-    <string name="week_date">1 Jan 2024</string>
-    <string name="value_temp2">31</string>
+    <string name="day_name" translatable="false">Monday</string>
+    <string name="week_date" translatable="false">1 Jan 2024</string>
+    <string name="value_temp2" translatable="false">31</string>
     <!--=================================================================-->
 
     <!--Activity Soil===================================================-->
     <string name="soil_title">Current soil status</string>
     <string name="soil_info">Please select a soil grade by clicking the filter button on the right side of the screen.</string>
 
-    <string name="nitrogen">Nitrogen</string>
-    <string name="phosphorus">Phosphorus</string>
-    <string name="potassium">Potassium</string>
-    <string name="ph_level">pH Level</string>
-    <string name="ec_level">EC Level</string>
-    <string name="humidity_soil">Humidity</string>
-    <string name="temp_soil">Temperature</string>
+    <string name="nitrogen" translatable="false">Nitrogen</string>
+    <string name="phosphorus" translatable="false">Phosphorus</string>
+    <string name="potassium" translatable="false">Potassium</string>
+    <string name="ph_level" translatable="false">pH Level</string>
+    <string name="ec_level" translatable="false">EC Level</string>
+    <string name="humidity_soil" translatable="false">Humidity</string>
+    <string name="temp_soil" translatable="false">Temperature</string>
 
-    <string name="nitrogen_value">0</string>
-    <string name="phosphorus_value">0</string>
-    <string name="potassium_value">0</string>
-    <string name="ph_level_value">0</string>
-    <string name="ec_level_value">0</string>
-    <string name="humidity_soil_value">0</string>
-    <string name="temp_soil_value">0</string>
+    <string name="nitrogen_value" translatable="false">0</string>
+    <string name="phosphorus_value" translatable="false">0</string>
+    <string name="potassium_value" translatable="false">0</string>
+    <string name="ph_level_value" translatable="false">0</string>
+    <string name="ec_level_value" translatable="false">0</string>
+    <string name="humidity_soil_value" translatable="false">0</string>
+    <string name="temp_soil_value" translatable="false">0</string>
 
     <string name="view_recommend">View recommendation</string>
     <!--=================================================================-->
 
     <!--Grade Selection String===========================================-->
-    <string name="gs_1">82 - 0 - 0</string> //Anhydrous Ammonia
-    <string name="gs_2">46 - 0 - 0</string> //Urea
-    <string name="gs_3">34 - 0 - 0</string> //Ammonium Nitrate
-    <string name="gs_4">28 - 0 - 0</string> //28% UAN
-    <string name="gs_5">21 - 0 - 0</string> //Ammonium Sulfate
-    <string name="gs_6">12 - 52 - 0</string> //MAP
+    <string name="gs_1" translatable="false">82 - 0 - 0</string> //Anhydrous Ammonia
+    <string name="gs_2" translatable="false">46 - 0 - 0</string> //Urea
+    <string name="gs_3" translatable="false">34 - 0 - 0</string> //Ammonium Nitrate
+    <string name="gs_4" translatable="false">28 - 0 - 0</string> //28% UAN
+    <string name="gs_5" translatable="false">21 - 0 - 0</string> //Ammonium Sulfate
+    <string name="gs_6" translatable="false">12 - 52 - 0</string> //MAP
 
-    <string name="gs_7">18 - 46 - 0</string> //DAP
-    <string name="gs_8">10 - 34 - 0</string> //Ammonium Polyphosphate
-    <string name="gs_9">0 - 0 - 60</string> //Potash
-    <string name="gs_10">0 - 45 - 0</string> //Triple Super Phosphate
-    <string name="gs_11">12 - 32 - 16</string>
-    <string name="gs_12">10 - 26 - 26</string>
+    <string name="gs_7" translatable="false">18 - 46 - 0</string> //DAP
+    <string name="gs_8" translatable="false">10 - 34 - 0</string> //Ammonium Polyphosphate
+    <string name="gs_9" translatable="false">0 - 0 - 60</string> //Potash
+    <string name="gs_10" translatable="false">0 - 45 - 0</string> //Triple Super Phosphate
+    <string name="gs_11" translatable="false">12 - 32 - 16</string>
+    <string name="gs_12" translatable="false">10 - 26 - 26</string>
 
     <string name="btn_apply">Apply</string>
     <!--=================================================================-->
 
 <!--Activity Home===================================================-->
-    <string name="date_today">Monday, 5th</string>
+    <string name="date_today" translatable="false">Monday, 5th</string>
     <string name="welcome_user">Welcome back,</string>
-    <string name="username">[Username]</string>
-    <string name="exclamation">!</string>
+    <string name="username" translatable="false">[Username]</string>
+    <string name="exclamation" translatable="false">!</string>
     <string name="soil_button">Soil</string>
     <string name="weather_button">Weather</string>
     <string name="reports_button">Reports</string>
     <string name="bluetooth_button">Connect to Bluetooth Device</string>
     <string name="manual_button">Manual</string>
-    <string name="manual_button2">(English/Tagalog)</string>
+    <string name="manual_button2" translatable="false">(English/Tagalog)</string>
     <string name="logout_button">Logout</string>
 <!--=================================================================-->
 
     <string name="title_recommend">Recommendations</string>
-    <string name="tv_greeting">Hi, </string>
-    <string name="tv_user_greeting"><i> [Username]</i></string>
+    <string name="tv_greeting" translatable="false">Hi, </string>
+    <string name="tv_user_greeting" translatable="false"><i> [Username]</i></string>
 
     <string name="fertilizer_sentence1">We recommend using at least  </string>
-    <string name="tv_fertilizer_amount">" 8kg</string>
+    <string name="tv_fertilizer_amount" translatable="false">" 8kg</string>
     <string name="fertilizer_sentence2"><b>of fertilizer</b> per hectare based on our assessment!</string>
     <string name="fertilizer_title">Fertilizer</string>
 
     <string name="acidity_title">Acidity</string>
-    <string name="tv_lime_amount">" 2kg</string>
+    <string name="tv_lime_amount" translatable="false">" 2kg</string>
     <string name="acidity_sentence1">We recommend using at least </string>
     <string name="acidity_sentence2"><b>of lime</b> per hectare for a better soil health!</string>
     <string name="for_acidity">For acidity,</string>
@@ -112,9 +112,9 @@
     <string name="rec_history">Recommendation History</string>
     <string name="date_time">Date and Time</string>
 
-    <string name="fertilizer_value">000kg</string>
-    <string name="lime_value">000tons</string>
-    <string name="npk_value">00-00-00</string>
+    <string name="fertilizer_value" translatable="false">000kg</string>
+    <string name="lime_value" translatable="false">000tons</string>
+    <string name="npk_value" translatable="false">00-00-00</string>
 
     <string name="fertilizer_info">Of<b> Fertilizer </b>used</string>
     <string name="lime_info">Of<b> Lime </b>used</string>

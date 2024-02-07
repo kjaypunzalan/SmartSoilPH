@@ -1,6 +1,5 @@
 package com.iacademy.smartsoilph.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,7 +11,7 @@ import com.iacademy.smartsoilph.utils.RecyclerOnItemClickListener
 import com.iacademy.smartsoilph.utils.RecommendationHistoryRecyclerViewAdapter
 import java.util.ArrayList
 
-class RecommendationHistoryActivity : AppCompatActivity(), RecyclerOnItemClickListener {
+class RecommendationHistoryActivity : BaseActivity(), RecyclerOnItemClickListener {
 
     //declare layout variables
     private lateinit var rvRecommendationHistory: RecyclerView

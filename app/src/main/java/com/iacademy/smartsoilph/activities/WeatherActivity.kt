@@ -10,7 +10,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
@@ -23,7 +22,7 @@ import com.iacademy.smartsoilph.utils.RetrofitClient
 import java.util.Date
 import java.util.Locale
 
-class WeatherActivity : AppCompatActivity() {
+class WeatherActivity : BaseActivity() {
     private lateinit var binding: ActivityWeatherBinding
     private lateinit var btnReturn: ImageView
 

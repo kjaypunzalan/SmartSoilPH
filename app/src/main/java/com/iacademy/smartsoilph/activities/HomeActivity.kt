@@ -1,7 +1,6 @@
 package com.iacademy.smartsoilph.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -22,7 +21,7 @@ import java.util.Locale
 import androidx.appcompat.app.AlertDialog
 
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : BaseActivity() {
 
     //declare layout variables
     private lateinit var btnSoil: CardView
@@ -33,6 +32,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var tvUsername: TextView
     private lateinit var tvDateToday: TextView
     private lateinit var btnSyncDatabase: Button
+    private lateinit var btnLanguage: Button
 
     //declare Firebase variables
     private lateinit var auth: FirebaseAuth
@@ -63,7 +63,8 @@ class HomeActivity : AppCompatActivity() {
         btnLogout = findViewById<CardView>(R.id.logout_card)
         tvUsername = findViewById<TextView>(R.id.tv_username)
         tvDateToday = findViewById<TextView>(R.id.tv_date_today)
-        btnSyncDatabase = findViewById<Button>(R.id.sw_sync_database)
+        btnSyncDatabase = findViewById<Button>(R.id.btn_sync_database)
+        btnLanguage = findViewById<Button>(R.id.btn_language)
     }
 
     private fun setupButtonNavigation() {
@@ -81,6 +82,10 @@ class HomeActivity : AppCompatActivity() {
 
         btnSyncDatabase.setOnClickListener {
             showSyncDatabaseDialog()
+        }
+
+        btnLanguage.setOnClickListener {
+            showLanguageDialog()
         }
     }
 
@@ -136,6 +141,43 @@ class HomeActivity : AppCompatActivity() {
         val alert = dialogBuilder.create()
         alert.setTitle("Database Sync")
         alert.show()
+    }
+
+    private fun showLanguageDialog() {
+        val dialogBuilder = AlertDialog.Builder(this)
+        val languages = arrayOf("English", "Tagalog")
+        var chosenLanguage = 0 // 0 for English, 1 for Tagalog
+
+        dialogBuilder.setSingleChoiceItems(languages, chosenLanguage) { dialog, which ->
+            chosenLanguage = which
+        }
+
+        dialogBuilder.setCancelable(false)
+            .setPositiveButton("OK") { dialog, id ->
+                if (chosenLanguage == 1) {
+                    setLocale("fil") // Tagalog
+                    recreate() // Recreate the activity to apply the language change
+                } else {
+                    setLocale("en") // English or default language
+                    recreate()
+                }
+            }
+            .setNegativeButton("Cancel") { dialog, id ->
+                dialog.dismiss()
+            }
+
+        val alert = dialogBuilder.create()
+        alert.setTitle("Set SmartSoilPH Language")
+        alert.show()
+    }
+
+    private fun setLocale(languageCode: String) {
+        // Save the chosen language in SharedPreferences or any persistent storage
+        // so you can load it on app start next time.
+        val sharedPreferences = getSharedPreferences("Settings", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("My_Lang", languageCode)
+        editor.apply()
     }
 
     private fun resetDatabase() {
