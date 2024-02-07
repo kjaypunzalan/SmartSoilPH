@@ -1,5 +1,7 @@
 package com.iacademy.smartsoilph.activities
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
@@ -7,6 +9,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.ScrollView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -50,6 +53,7 @@ class ReportsActivity : AppCompatActivity() {
     private lateinit var lineChart2: LineChart
     private lateinit var barChart1: BarChart
     private lateinit var btnDownload: CardView
+    private lateinit var btnReturn: ImageView
     private lateinit var scrollView: NestedScrollView
 
     //declare Firebase variables
@@ -59,23 +63,27 @@ class ReportsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reports)
 
-        // Initialize Firebase Auth
+        // initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
 
         // initialize variables
         initializeLayout()
+        setupButtonNavigation()
 
-        //fetch and display reports
+        // fetch and display reports
         fetchAndDisplayInitialStorageTypeData()
         fetchAndDisplayPHLevelDistribution()
         fetchAndDisplayCumulativeFertilizerUsage()
         fetchAndDisplayPhLevelTrend()
         fetchAndDisplayMonthlySoilHealth()
+    }
 
-        // Initialize download button and set its click listener
-        btnDownload.setOnClickListener {
-            captureScrollView(scrollView)
-        }
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
+        val intent = Intent(this, HomeActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        startActivity(intent)
+        finish()
     }
 
     /**
@@ -89,6 +97,19 @@ class ReportsActivity : AppCompatActivity() {
         barChart1 = findViewById<BarChart>(R.id.barChart1);
         scrollView = findViewById<NestedScrollView>(R.id.sv_scrollview)
         btnDownload = findViewById<CardView>(R.id.btnDownload);
+        btnReturn = findViewById<ImageView>(R.id.toolbar_back_icon)
+    }
+
+    private fun setupButtonNavigation() {
+        btnReturn.setOnClickListener{
+            val intent = Intent(this, HomeActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            startActivity(intent)
+            finish()
+        }
+        btnDownload.setOnClickListener {
+            captureScrollView(scrollView)
+        }
     }
 
     /**

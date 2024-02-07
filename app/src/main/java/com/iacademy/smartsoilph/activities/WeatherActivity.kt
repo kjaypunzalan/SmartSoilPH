@@ -1,5 +1,7 @@
 package com.iacademy.smartsoilph.activities
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -11,6 +13,7 @@ import java.util.*
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
 import android.widget.TextView
 import com.iacademy.smartsoilph.R
 import com.iacademy.smartsoilph.databinding.ActivityWeatherBinding
@@ -22,11 +25,15 @@ import java.util.Locale
 
 class WeatherActivity : AppCompatActivity() {
     private lateinit var binding: ActivityWeatherBinding
+    private lateinit var btnReturn: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityWeatherBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //return button
+        initializeReturnButton()
 
         val textViewDate: TextView = findViewById(R.id.tv_date)
         textViewDate.text = getCurrentFormattedDate()
@@ -34,6 +41,24 @@ class WeatherActivity : AppCompatActivity() {
         GlobalScope.launch(Dispatchers.IO) {
             getWeatherData()
         }
+    }
+
+    private fun initializeReturnButton() {
+        btnReturn = findViewById<ImageView>(R.id.toolbar_back_icon)
+        btnReturn.setOnClickListener{
+            val intent = Intent(this, HomeActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            startActivity(intent)
+            finish()
+        }
+    }
+
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
+        val intent = Intent(this, HomeActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        startActivity(intent)
+        finish()
     }
 
     private fun getCurrentFormattedDate(): String {
