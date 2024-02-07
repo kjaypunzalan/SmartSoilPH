@@ -16,13 +16,13 @@ class RecommendationHistoryRecyclerViewAdapter(
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val tvDateTime: TextView = view.findViewById(R.id.tv_date_time)
         private val tvFertilizerAmount: TextView = view.findViewById(R.id.tv_fertilizer_amount)
-        private val tvLimeAmount: TextView = view.findViewById(R.id.tv_lime_amount)
+//        private val tvLimeAmount: TextView = view.findViewById(R.id.tv_lime_amount)
         private val tvNpkAmount: TextView = view.findViewById(R.id.tv_npk_amount)
 
         fun bind(recommendationData: RecommendationData, onItemClick: (RecommendationData) -> Unit) {
             tvDateTime.text = recommendationData.dateOfRecommendation
             tvFertilizerAmount.text = String.format("%.2f kg", recommendationData.fertilizerRecommendation)
-            tvLimeAmount.text = String.format("%.2f pounds", recommendationData.limeRecommendation)
+//            tvLimeAmount.text = String.format("%.2f pounds", recommendationData.limeRecommendation)
             val soilData = recommendationData.soilData
             tvNpkAmount.text = "${soilData.nitrogen}-${soilData.phosphorus}-${soilData.potassium}"
             itemView.setOnClickListener { onItemClick(recommendationData) }

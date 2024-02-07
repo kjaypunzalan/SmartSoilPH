@@ -74,6 +74,7 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         android:layout_marginTop="30dp"
         android:layout_marginStart="30dp"/>
+
     <!-- Horizontal Divider -->
     <View
         android:id="@+id/hd_1"

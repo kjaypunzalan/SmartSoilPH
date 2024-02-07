@@ -29,7 +29,7 @@
             android:layout_gravity="center">
 
             <ImageView
-                android:id="@+id/icon_soil_mini"
+                android:id="@+id/icon_reports_mini"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:src="@drawable/icon_reports_mini"
