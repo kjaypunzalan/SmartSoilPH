@@ -49,11 +49,11 @@ class FertilizerActivity : BaseActivity() {
     }
 
     private fun initializeLayout() {
-        tvUserName = findViewById<TextView>(R.id.tv_user_greeting)
+//        tvUserName = findViewById<TextView>(R.id.tv_user_greeting)
         tvFertilizerAmount = findViewById<TextView>(R.id.tv_fertilizer_amount)
         tvFertilizerAmount1 = findViewById<TextView>(R.id.tv_fertilizer_amount1)
-        tvLimeAmount = findViewById<TextView>(R.id.tv_lime_amount)
-        tvLimeAmount1 = findViewById<TextView>(R.id.tv_lime_amount1)
+//        tvLimeAmount = findViewById<TextView>(R.id.tv_lime_amount)
+//        tvLimeAmount1 = findViewById<TextView>(R.id.tv_lime_amount1)
         btnPreviousRecommendations = findViewById<Button>(R.id.btn_previous);
         btnReturnSoil = findViewById<Button>(R.id.btn_return_soil);
     }
