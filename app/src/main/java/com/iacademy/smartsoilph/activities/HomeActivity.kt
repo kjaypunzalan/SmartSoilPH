@@ -16,6 +16,11 @@ import com.google.firebase.database.database
 import com.iacademy.smartsoilph.R
 import com.iacademy.smartsoilph.models.DatabaseHelper
 import com.iacademy.smartsoilph.models.FirebaseModel
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
+import androidx.appcompat.app.AlertDialog
+
 
 class HomeActivity : AppCompatActivity() {
 
@@ -26,6 +31,8 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var btnManual: CardView
     private lateinit var btnLogout: CardView
     private lateinit var tvUsername: TextView
+    private lateinit var tvDateToday: TextView
+    private lateinit var btnSyncDatabase: Button
 
     //declare Firebase variables
     private lateinit var auth: FirebaseAuth
@@ -37,14 +44,29 @@ class HomeActivity : AppCompatActivity() {
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
 
-        // declare + initialize variables
+        // initialize variables
+        initializeLayout()
+        setupButtonNavigation()
+
+        //Display Date and Username
+        displayCurrentDate()
+        fetchUsername()
+
+        //resetDatabase()
+    }
+
+    private fun initializeLayout() {
         btnSoil = findViewById<CardView>(R.id.soil_card)
         btnWeather = findViewById<CardView>(R.id.weather_card)
         btnReports = findViewById<CardView>(R.id.reports_card)
         btnManual = findViewById<CardView>(R.id.manual_card)
         btnLogout = findViewById<CardView>(R.id.logout_card)
         tvUsername = findViewById<TextView>(R.id.tv_username)
+        tvDateToday = findViewById<TextView>(R.id.tv_date_today)
+        btnSyncDatabase = findViewById<Button>(R.id.sw_sync_database)
+    }
 
+    private fun setupButtonNavigation() {
         // set click listeners for buttons
         setButtonClickListener(btnSoil, SoilActivity::class.java)
         setButtonClickListener(btnWeather, WeatherActivity::class.java)
@@ -57,8 +79,9 @@ class HomeActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        fetchUsername()
-        //resetDatabase()
+        btnSyncDatabase.setOnClickListener {
+            showSyncDatabaseDialog()
+        }
     }
 
     //Button Function
@@ -67,6 +90,12 @@ class HomeActivity : AppCompatActivity() {
             val intent = Intent(this, activityClass)
             startActivity(intent)
         }
+    }
+
+    private fun displayCurrentDate() {
+        val dateFormat = SimpleDateFormat("EEEE, MMM d", Locale.getDefault())
+        val currentDate = dateFormat.format(Calendar.getInstance().time)
+        tvDateToday.text = currentDate
     }
 
     private fun fetchUsername() {
@@ -87,6 +116,26 @@ class HomeActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, "Failed", Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+    private fun showSyncDatabaseDialog() {
+        val dialogBuilder = AlertDialog.Builder(this)
+        dialogBuilder.setMessage("Do you want to sync database? Make sure you are connected to the internet.")
+            .setCancelable(false)
+            .setPositiveButton("Sync Database") { dialog, id ->
+                // Perform the database sync operation
+                val dbHelper = DatabaseHelper(this)
+                dbHelper.syncDataWithFirebase(auth, this)
+                Toast.makeText(this, "Database syncing...", Toast.LENGTH_SHORT).show()
+            }
+            .setNegativeButton("Cancel") { dialog, id ->
+                // Close the dialog
+                dialog.dismiss()
+            }
+
+        val alert = dialogBuilder.create()
+        alert.setTitle("Database Sync")
+        alert.show()
     }
 
     private fun resetDatabase() {
