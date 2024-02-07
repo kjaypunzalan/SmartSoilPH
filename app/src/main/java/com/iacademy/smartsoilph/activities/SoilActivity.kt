@@ -3,9 +3,7 @@ package com.iacademy.smartsoilph.activities
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.RadioButton
@@ -23,7 +21,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-class SoilActivity : AppCompatActivity() {
+class SoilActivity : BaseActivity() {
 
     //declare layout variables
     private lateinit var etNitrogen: EditText

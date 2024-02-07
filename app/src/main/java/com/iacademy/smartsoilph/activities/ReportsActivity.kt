@@ -4,17 +4,12 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.graphics.Color
 import android.os.Bundle
 import android.os.Environment
 import android.view.View
-import android.widget.Button
 import android.widget.ImageView
-import android.widget.ScrollView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
-import androidx.compose.animation.core.EaseOutBack
 import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import com.github.mikephil.charting.animation.Easing
@@ -44,7 +39,7 @@ import java.util.Calendar
 import java.util.Locale
 
 
-class ReportsActivity : AppCompatActivity() {
+class ReportsActivity : BaseActivity() {
 
     //declare layout variables
     private lateinit var pieChart1: PieChart
