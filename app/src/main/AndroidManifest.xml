@@ -35,10 +35,18 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity
+            android:name=".activities.SplashScreenActivity"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <!-- ACTIVITIES -->
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".activities.BaseActivity"
             android:exported="true" />
         <activity
             android:name=".activities.HomeActivity"
@@ -72,15 +80,24 @@
         <activity
             android:name=".activities.LoadScreenActivity"
             android:exported="true" />
-        <activity
-            android:name=".activities.SplashScreenActivity"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity android:name=".activities.ResetPasswordActivity"
+            android:exported="true"
+            android:theme="@style/Theme.SmartSoilPH" />
+
+        <!-- Onboarding Screens -->
+        <activity android:name=".onboarding.screens.FirstScreen"
+            android:exported="true"
+            android:theme="@style/Theme.SmartSoilPH" />
+        <activity android:name=".onboarding.screens.SecondScreen"
+            android:exported="true"
+            android:theme="@style/Theme.SmartSoilPH" />
+        <activity android:name=".onboarding.screens.ThirdScreen"
+            android:exported="true"
+            android:theme="@style/Theme.SmartSoilPH" />
+        <activity android:name=".onboarding.screens.FourthScreen"
+            android:exported="true"
+            android:theme="@style/Theme.SmartSoilPH" />
+        <activity android:name=".onboarding.screens.FifthScreen"
             android:exported="true"
             android:theme="@style/Theme.SmartSoilPH" />
     </application>

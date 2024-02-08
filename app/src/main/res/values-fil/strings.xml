@@ -3,6 +3,9 @@
     <string name="feature_title">Datos ng Lupa</string>
     <string name="feature_title2">Pagtaya ng Weather</string>
     <string name="feature_title3">Mga Ulat at Istatistika</string>
+    <string name="feature_title4">Nakaraang Rekomendasyon</string>
+    <string name="feature_title5">Rekomendasyon ng Pataba</string>
+    <string name="feature_title6">Tulong o Manwal</string>
     <string name="location_info">Kasalukuyang panahon sa...</string>
     <string name="humidity">Kahalumigmigan</string>
     <string name="temperature2">Temperature</string>
@@ -19,6 +22,7 @@
     <string name="manual_button">Tulong</string>
     <string name="logout_button">Mag Logout</string>
     <string name="title_recommend">Rekomendasyon</string>
+    <string name="sub_title_rec">para sa pataba</string>
     <string name="fertilizer_sentence1">Inirerekomenda namin ang paggamit ng</string>
     <string name="fertilizer_sentence2"><b>ng pataba</b> kada ektarya batay sa aming pagtatasa!</string>
     <string name="fertilizer_title">Pataba</string>
@@ -31,7 +35,17 @@
     <string name="rec_history">Mga Nakaraang Rekomendasyon</string>
     <string name="date_time">Petsa at Oras</string>
     <string name="fertilizer_info">ng<b> Pataba </b>ang ginamit</string>
-    <string name="lime_info">ng<b> Kalamansi </b>ang ginamit</string>
+    <string name="manu_title">Isang gabay na ginawa para sa iyo...</string>
+    <string name="screen_1">Isang app sa pagsubaybay sa lupa upang mapahusay ang iyong sakahan!</string>
+    <string name="screen_2">Mabisang sukatin ang mahahalagang sustansya ng lupa para sa isang malusog na lupa!</string>
+    <string name="screen_3">Maging alam sa kasalukuyang mga update sa panahon para sa paghahanda!</string>
+    <string name="screen_4">Kumuha ng mga desisyon na batay sa data batay sa iyong kasalukuyang kalusugan ng lupa para sa mga linggo!</string>
+    <string name="screen_5">Kumonekta sa SmartSoilPH device gamit ang iyong Bluetooth device!</string>
+    <string name="scr_2">Subaybayan ang lupa</string>
+    <string name="scr_3">Pagsasama ng Panahon</string>
+    <string name="scr_4">Mga Ulat at Analitika</string>
+    <string name="scr_5">Kumonekta sa Device</string>
+    <string name="btn_start">Magsimula</string>
     <string name="npk_info">inirerekomendang <b> Grado</b></string>
     <string name="stat_title">Ulat ng Buod</string>
     <string name="stat_sub_title">"Kamakailang pag-save "</string>

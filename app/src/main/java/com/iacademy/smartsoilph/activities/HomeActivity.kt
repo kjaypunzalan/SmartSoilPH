@@ -3,6 +3,7 @@ package com.iacademy.smartsoilph.activities
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
@@ -31,8 +32,8 @@ class HomeActivity : BaseActivity() {
     private lateinit var btnLogout: CardView
     private lateinit var tvUsername: TextView
     private lateinit var tvDateToday: TextView
-    private lateinit var btnSyncDatabase: Button
-    private lateinit var btnLanguage: Button
+    private lateinit var btnSyncDatabase: ImageView
+    private lateinit var btnLanguage: ImageView
 
     //declare Firebase variables
     private lateinit var auth: FirebaseAuth
@@ -63,8 +64,8 @@ class HomeActivity : BaseActivity() {
         btnLogout = findViewById<CardView>(R.id.logout_card)
         tvUsername = findViewById<TextView>(R.id.tv_username)
         tvDateToday = findViewById<TextView>(R.id.tv_date_today)
-        btnSyncDatabase = findViewById<Button>(R.id.btn_sync_database)
-        btnLanguage = findViewById<Button>(R.id.btn_language)
+        btnSyncDatabase = findViewById<ImageView>(R.id.btn_sync_database)
+        btnLanguage = findViewById<ImageView>(R.id.btn_language)
     }
 
     private fun setupButtonNavigation() {

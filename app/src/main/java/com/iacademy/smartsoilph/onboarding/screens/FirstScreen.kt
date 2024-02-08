@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.iacademy.smartsoilph.R
+import com.iacademy.smartsoilph.activities.BaseActivity
 
 class FirstScreen : Fragment() {
     override fun onCreateView(
