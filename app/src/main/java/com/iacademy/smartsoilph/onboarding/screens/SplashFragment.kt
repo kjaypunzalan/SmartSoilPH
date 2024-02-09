@@ -15,21 +15,27 @@ class SplashFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // Inflate the layout for this fragment
+        val view = inflater.inflate(R.layout.fragment_splash, container, false)
 
         Handler(Looper.getMainLooper()).postDelayed({
-            if (onBoardingFinished()) {
-                findNavController().navigate(R.id.action_splashFragment_to_loginActivity)
-            } else {
-                findNavController().navigate(R.id.action_splashFragment_to_viewPagerFragment)
+            // Check if the fragment is added to its context
+            if (isAdded) {
+                if (onBoardingFinished()) {
+                    findNavController().navigate(R.id.action_splashFragment_to_loginActivity)
+                } else {
+                    findNavController().navigate(R.id.action_splashFragment_to_viewPagerFragment)
+                }
             }
         }, 3000)
 
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_splash, container, false)
+        return view
     }
 
     private fun onBoardingFinished(): Boolean {
-        val sharedPref = requireActivity().getSharedPreferences("onBoarding", Context.MODE_PRIVATE)
+        // Early return if context is null to avoid IllegalStateException
+        val context = context ?: return false
+        val sharedPref = context.getSharedPreferences("onBoarding", Context.MODE_PRIVATE)
         return sharedPref.getBoolean("Finished", false)
     }
 }

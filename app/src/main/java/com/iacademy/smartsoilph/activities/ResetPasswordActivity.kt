@@ -30,12 +30,7 @@ class ResetPasswordActivity : BaseActivity() {
         tvSignIn = findViewById(R.id.tv_sign_in)
 
         sendVerificationButton.setOnClickListener {
-            val email = emailEditText.text.toString().trim()
-            if (email.isNotEmpty()) {
-                sendPasswordResetEmail(email)
-            } else {
-                Toast.makeText(this, "Please enter your email", Toast.LENGTH_SHORT).show()
-            }
+            validateInput()
         }
 
         tvSignIn.setOnClickListener {
@@ -44,6 +39,25 @@ class ResetPasswordActivity : BaseActivity() {
             startActivity(intent)
             finish() // Close the current activity
         }
+    }
+
+    private fun validateInput() {
+        val email = emailEditText.text.toString().trim()
+
+        // Validate email
+        if (email.isEmpty()) {
+            emailEditText.error = "Email cannot be empty"
+            emailEditText.requestFocus()
+            return
+        }
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            emailEditText.error = "Please enter a valid email address"
+            emailEditText.requestFocus()
+            return
+        }
+
+        // Proceed with reset password if all validations pass
+        sendPasswordResetEmail(email)
     }
 
     private fun sendPasswordResetEmail(email: String) {

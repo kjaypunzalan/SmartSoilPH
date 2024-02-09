@@ -18,7 +18,7 @@ class SplashScreenActivity : BaseActivity() {
 
         val randomDelay = Random().nextInt(1000) + 1500
         Handler().postDelayed({
-            startActivity(Intent(this, LoginActivity::class.java))
+            startActivity(Intent(this, OnboardingActivity::class.java))
             finish()
         }, randomDelay.toLong())
 

@@ -43,6 +43,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activities.OnboardingActivity"
+            android:exported="true" />
 
         <!-- ACTIVITIES -->
         <activity
@@ -84,22 +87,6 @@
             android:exported="true"
             android:theme="@style/Theme.SmartSoilPH" />
 
-        <!-- Onboarding Screens -->
-        <activity android:name=".onboarding.screens.FirstScreen"
-            android:exported="true"
-            android:theme="@style/Theme.SmartSoilPH" />
-        <activity android:name=".onboarding.screens.SecondScreen"
-            android:exported="true"
-            android:theme="@style/Theme.SmartSoilPH" />
-        <activity android:name=".onboarding.screens.ThirdScreen"
-            android:exported="true"
-            android:theme="@style/Theme.SmartSoilPH" />
-        <activity android:name=".onboarding.screens.FourthScreen"
-            android:exported="true"
-            android:theme="@style/Theme.SmartSoilPH" />
-        <activity android:name=".onboarding.screens.FifthScreen"
-            android:exported="true"
-            android:theme="@style/Theme.SmartSoilPH" />
     </application>
 
 </manifest>
