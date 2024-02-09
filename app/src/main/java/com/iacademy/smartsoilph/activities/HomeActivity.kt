@@ -22,7 +22,6 @@ import java.lang.reflect.Method
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
-import androidx.appcompat.app.AlertDialog
 import com.iacademy.smartsoilph.arduino.BluetoothController
 
 
