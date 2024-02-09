@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.cardview.widget.CardView
 import androidx.viewpager2.widget.ViewPager2
 import com.iacademy.smartsoilph.R
 class ThirdScreen : Fragment() {
@@ -17,7 +18,7 @@ class ThirdScreen : Fragment() {
 
         val viewPager =  activity?.findViewById<ViewPager2>(R.id.viewPager)
 
-        view.findViewById<ViewPager2>(R.id. btn_next2).setOnClickListener() {
+        view.findViewById<CardView>(R.id. btn_next2).setOnClickListener() {
             viewPager?.currentItem = 3
         }
 

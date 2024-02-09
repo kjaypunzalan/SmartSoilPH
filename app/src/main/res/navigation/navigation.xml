@@ -36,4 +36,13 @@
         android:id="@+id/loginActivity"
         android:name="com.iacademy.smartsoilph.activities.LoginActivity"
         android:label="LoginActivity" />
+
+    <fragment
+        android:id="@+id/fifthScreen"
+        android:name="com.iacademy.smartsoilph.onboarding.screens.FifthScreen"
+        android:label="fifth_screen" >
+    <action
+        android:id="@+id/action_fifthScreen_to_loginActivity"
+        app:destination="@id/loginActivity" />
+    </fragment>
 </navigation>

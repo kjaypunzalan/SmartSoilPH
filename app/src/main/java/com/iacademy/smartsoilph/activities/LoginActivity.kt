@@ -42,9 +42,31 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun loginUser() {
-        val email = emailEditText.text.toString()
-        val password = passwordEditText.text.toString()
+        val email = emailEditText.text.toString().trim()
+        val password = passwordEditText.text.toString().trim()
 
+        // Check if email is empty
+        if (email.isEmpty()) {
+            emailEditText.error = "Email cannot be empty"
+            emailEditText.requestFocus()
+            return
+        }
+
+        // Check if password is empty
+        if (password.isEmpty()) {
+            passwordEditText.error = "Password cannot be empty"
+            passwordEditText.requestFocus()
+            return
+        }
+
+        // Check if email is valid
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            emailEditText.error = "Please enter a valid email address"
+            emailEditText.requestFocus()
+            return
+        }
+
+        // Proceed with Firebase authentication
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {

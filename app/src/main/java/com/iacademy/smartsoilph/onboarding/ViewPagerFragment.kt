@@ -7,8 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.ViewPager
 import com.iacademy.smartsoilph.R
+import com.iacademy.smartsoilph.onboarding.screens.FifthScreen
 import com.iacademy.smartsoilph.onboarding.screens.FirstScreen
+import com.iacademy.smartsoilph.onboarding.screens.FourthScreen
 import com.iacademy.smartsoilph.onboarding.screens.SecondScreen
+import com.iacademy.smartsoilph.onboarding.screens.ThirdScreen
 
 class ViewPagerFragment : Fragment() {
 
@@ -22,6 +25,9 @@ class ViewPagerFragment : Fragment() {
         val fragmentList = arrayListOf<Fragment>(
             FirstScreen(),
             SecondScreen(),
+            ThirdScreen(),
+            FourthScreen(),
+            FifthScreen()
         )
 
         val adapter = ViewPagerAdapter(

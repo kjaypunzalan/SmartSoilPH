@@ -3,7 +3,12 @@ package com.iacademy.smartsoilph.activities
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
+import android.view.LayoutInflater
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.iacademy.smartsoilph.R
+import com.iacademy.smartsoilph.onboarding.screens.FirstScreen
 import java.util.Random
 
 class SplashScreenActivity : BaseActivity() {
@@ -13,7 +18,7 @@ class SplashScreenActivity : BaseActivity() {
 
         val randomDelay = Random().nextInt(1000) + 1500
         Handler().postDelayed({
-            startActivity(Intent(this, LoginActivity::class.java))
+            startActivity(Intent(this, OnboardingActivity::class.java))
             finish()
         }, randomDelay.toLong())
 
