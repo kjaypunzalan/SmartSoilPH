@@ -22,6 +22,8 @@ import java.lang.reflect.Method
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import androidx.appcompat.app.AlertDialog
+import com.iacademy.smartsoilph.arduino.BluetoothController
 
 
 class HomeActivity : BaseActivity() {
@@ -36,6 +38,7 @@ class HomeActivity : BaseActivity() {
     private lateinit var tvDateToday: TextView
     private lateinit var btnSyncDatabase: ImageView
     private lateinit var btnLanguage: ImageView
+    private lateinit var btnBtConnect: CardView
 
     //settings
     private lateinit var btnSettings: ImageView
@@ -73,8 +76,7 @@ class HomeActivity : BaseActivity() {
         tvDateToday = findViewById<TextView>(R.id.tv_date_today)
         btnSyncDatabase = findViewById<ImageView>(R.id.btn_sync_database)
         btnLanguage = findViewById<ImageView>(R.id.btn_language)
-
-        //settings
+        btnBtConnect = findViewById<CardView>(R.id.bluetooth_card)
         btnSettings = findViewById<ImageView>(R.id.btn_settings)
     }
 
@@ -84,6 +86,7 @@ class HomeActivity : BaseActivity() {
         setButtonClickListener(btnWeather, WeatherActivity::class.java)
         setButtonClickListener(btnReports, ReportsActivity::class.java)
         setButtonClickListener(btnManual, RecommendationHistoryActivity::class.java)
+        setButtonClickListener(btnBtConnect, ArduinoController::class.java)
 
         btnLogout.setOnClickListener {
             auth.signOut()
