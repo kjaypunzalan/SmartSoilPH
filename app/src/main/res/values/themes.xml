@@ -27,5 +27,16 @@
     <!-- Status bar color. -->
     <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
     <!-- Customize your theme here. -->
+    <item name="android:textAppearance">@style/CustomTextItems</item>
+    <item name="android:popupMenuStyle">@style/popupBGStyle</item>
 </style>
+
+    <style name="CustomTextItems" parent="@android:style/TextAppearance.Widget.IconMenu.Item">
+        <item name="android:fontFamily">@font/open_sans</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="popupBGStyle" parent="Widget.AppCompat.PopupMenu">
+        <item name="android:popupBackground">@drawable/popup_menu_bg</item>
+    </style>
 </resources>
