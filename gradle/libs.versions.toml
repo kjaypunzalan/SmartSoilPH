@@ -17,6 +17,8 @@ appcompat = "1.6.1"
 constraintlayout = "2.1.4"
 playServicesAuth = "20.7.0"
 firebase-database = "20.3.0"
+navigationFragmentKtx = "2.7.7"
+navigationUiKtx = "2.7.7"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -42,6 +44,8 @@ appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "a
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "playServicesAuth" }
 firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebase-database" }
+androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
+androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtx" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

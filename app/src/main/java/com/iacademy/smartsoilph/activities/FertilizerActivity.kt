@@ -1,10 +1,9 @@
 package com.iacademy.smartsoilph.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.Firebase
@@ -18,7 +17,7 @@ import com.iacademy.smartsoilph.models.DatabaseHelper
 import com.iacademy.smartsoilph.models.FirebaseModel
 import com.iacademy.smartsoilph.utils.CheckInternet
 
-class FertilizerActivity : AppCompatActivity() {
+class FertilizerActivity : BaseActivity() {
 
     //declare layout variables
     private lateinit var tvUserName: TextView
@@ -40,15 +39,26 @@ class FertilizerActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
         // initialize variables
-        tvUserName = findViewById<TextView>(R.id.tv_user_greeting)
-        tvFertilizerAmount = findViewById<TextView>(R.id.tv_fertilizer_amount)
-        tvFertilizerAmount1 = findViewById<TextView>(R.id.tv_fertilizer_amount1)
-        tvLimeAmount = findViewById<TextView>(R.id.tv_lime_amount)
-        tvLimeAmount1 = findViewById<TextView>(R.id.tv_lime_amount1)
-        btnPreviousRecommendations = findViewById<Button>(R.id.btn_previous);
-        btnReturnSoil = findViewById<Button>(R.id.btn_return_soil);
+        initializeLayout()
 
         //Buttons
+        setupButtonNavigation()
+
+        //Initialize Content
+        initializeContent()
+    }
+
+    private fun initializeLayout() {
+//        tvUserName = findViewById<TextView>(R.id.tv_user_greeting)
+        tvFertilizerAmount = findViewById<TextView>(R.id.tv_fertilizer_amount)
+        tvFertilizerAmount1 = findViewById<TextView>(R.id.tv_fertilizer_amount1)
+//        tvLimeAmount = findViewById<TextView>(R.id.tv_lime_amount)
+//        tvLimeAmount1 = findViewById<TextView>(R.id.tv_lime_amount1)
+        btnPreviousRecommendations = findViewById<Button>(R.id.btn_previous);
+        btnReturnSoil = findViewById<Button>(R.id.btn_return_soil);
+    }
+
+    private fun setupButtonNavigation() {
         btnReturnSoil.setOnClickListener {
             val Intent = Intent(this, SoilActivity::class.java);
             startActivity(Intent);
@@ -57,9 +67,14 @@ class FertilizerActivity : AppCompatActivity() {
             val Intent = Intent(this, RecommendationHistoryActivity::class.java);
             startActivity(Intent);
         }
+    }
 
-        //Initialize Content
-        initializeContent()
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
+        val intent = Intent(this, SoilActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        startActivity(intent)
+        finish()
     }
 
     /******************************************************
@@ -68,11 +83,7 @@ class FertilizerActivity : AppCompatActivity() {
     private fun initializeContent() {
         // Check Internet Connection
         val checkInternet = CheckInternet(this)
-        val dbHelper = DatabaseHelper(this)
         if (checkInternet.isInternetAvailable()) {
-            // Internet is available, sync SQLite data with Firebase
-            dbHelper.syncDataWithFirebase(auth, this)
-
             // Internet is available, fetch data from Firebase
             fetchFromFirebase()
         } else {

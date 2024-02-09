@@ -5,12 +5,11 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import com.iacademy.smartsoilph.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthProvider
 
-class VerifyCodeActivity : AppCompatActivity() {
+class VerifyCodeActivity : BaseActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var verificationId: String

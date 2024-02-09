@@ -1,106 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-<!--Weather Page styles-->
-	<style name="location">
-		<item name="android:textSize">22sp</item>
-		<item name="android:textColor">#B3000000</item>
-		<item name="android:fontFamily">@font/montserrat_bold</item>
-	</style>
-	<style name="date">
-		<item name="android:textSize">14sp</item>
-		<item name="android:textColor">#80000000</item>
-		<item name="android:fontFamily">@font/open_sans</item>
-	</style>
-	<style name="tv_temperature_number">
-		<item name="android:textSize">48sp</item>
-		<item name="android:textColor">#B3000000</item>
-		<item name="android:fontFamily">@font/montserrat_bold</item>
-	</style>
-	<style name="tv_temp_symbol">
-			<item name="android:textSize">24sp</item>
-			<item name="android:textColor">#80000000</item>
-			<item name="android:fontFamily">@font/open_sans</item>
-		</style>
-	<style name="weather">
-		<item name="android:textSize">14sp</item>
-		<item name="android:textColor">#B3000000</item>
-		<item name="android:fontFamily">@font/open_sans</item>
-	</style>
-
-	<!--Humidity styles-->
-	<style name="humidity">
-		<item name="android:textSize">8sp</item>
-		<item name="android:textStyle">bold</item>
-		<item name="android:textColor">#5DC9FE</item>
-		<item name="android:fontFamily">@font/open_sans</item>
-	</style>
-	<style name="value_humidity">
-		<item name="android:textSize">14sp</item>
-		<item name="android:textColor">#B3000000</item>
-		<item name="android:fontFamily">@font/montserrat_bold</item>
-	</style>
-
-	<!--Temperature styles-->
-	<style name="temperature2">
-		<item name="android:textSize">8sp</item>
-		<item name="android:textColor">#5DC9FE</item>
-		<item name="android:textStyle">bold</item>
-		<item name="android:fontFamily">@font/open_sans</item>
-	</style>
-	<style name="value_temp">
-		<item name="android:textSize">14sp</item>
-		<item name="android:textColor">#B3000000</item>
-		<item name="android:fontFamily">@font/montserrat_bold</item>
-	</style>
-
-	<!--Wind styles-->
-	<style name="wind">
-		<item name="android:textSize">8sp</item>
-		<item name="android:textColor">#5DC9FE</item>
-		<item name="android:textStyle">bold</item>
-		<item name="android:fontFamily">@font/open_sans</item>
-	</style>
-	<style name="value_wind">
-		<item name="android:textSize">14sp</item>
-		<item name="android:textColor">#B3000000</item>
-		<item name="android:fontFamily">@font/montserrat_bold</item>
-	</style>
-
-	<style name="day_name">
-		<item name="android:textSize">13sp</item>
-		<item name="android:textColor">#80000000</item>
-		<item name="android:fontFamily">@font/montserrat_bold</item>
-	</style>
-	<style name="week_date">
-		<item name="android:textSize">10sp</item>
-		<item name="android:textColor">#80000000</item>
-		<item name="android:fontFamily">@font/open_sans</item>
-	</style>
-	<style name="value_temp2">
-		<item name="android:textSize">22sp</item>
-		<item name="android:textColor">#80000000</item>
-		<item name="android:fontFamily">@font/open_sans</item>
-		<item name="android:textStyle">bold</item>
-	</style>
-
-	<style name="CardViewStyle">
-		<item name="cardCornerRadius">4dp</item>
-		<item name="cardBackgroundColor">#805DC9FE</item> <!-- Semi-transparent background -->
-	</style>
-
-	<style name="nutrient_title">
-		<item name="android:textSize">13sp</item>
-		<item name="android:textColor">#80000000</item>
-		<item name="android:fontFamily">@font/open_sans</item>
-	</style>
-	<style name="nutrient_value">
-		<item name="android:textSize">26sp</item>
-		<item name="android:textColor">#80000000</item>
-		<item name="android:inputType">numberDecimal</item>
-		<item name="android:fontFamily">@font/montserrat_bold</item>
-	</style>
-
+	<!--Header===================================================-->
 	<style name="project_title">
 		<item name="android:textSize">16sp</item>
 		<item name="android:textColor">@color/main_blue</item>
@@ -111,109 +11,135 @@
 		<item name="android:textColor">@color/main_blue</item>
 		<item name="android:fontFamily">@font/montserrat_bold</item>
 	</style>
-
-	<style name="soil_title">
+	<style name="act_title">
 		<item name="android:textSize">22sp</item>
-		<item name="android:textColor">#B3000000</item>
+		<item name="android:textColor">@color/black_70</item>
+		<item name="android:fontFamily">@font/montserrat_bold</item>
+	</style>
+	<!--=================================================================-->
+
+<!--Activity Weather==================================-->
+	<style name="location">
+		<item name="android:textSize">18sp</item>
+		<item name="android:textColor">@color/black_50</item>
+		<item name="android:fontFamily">@font/montserrat</item>
+	</style>
+	<style name="date">
+		<item name="android:textSize">14sp</item>
+		<item name="android:textColor">#80000000</item>
+		<item name="android:fontFamily">@font/open_sans</item>
+		<item name="android:textStyle">bold</item>
+
+	</style>
+	<style name="tv_temperature_number">
+		<item name="android:textSize">68sp</item>
+		<item name="android:textColor">@color/black_70</item>
+		<item name="android:fontFamily">@font/montserrat_bold</item>
+	</style>
+	<style name="tv_temp_symbol">
+			<item name="android:textSize">24sp</item>
+			<item name="android:textColor">@color/black_70</item>
+			<item name="android:fontFamily">@font/montserrat_bold</item>
+		</style>
+	<style name="weather">
+		<item name="android:textSize">14sp</item>
+		<item name="android:textColor">@color/black_50</item>
+		<item name="android:fontFamily">@font/open_sans</item>
+	</style>
+
+	<!--Humidity styles-->
+	<style name="humidity">
+		<item name="android:textSize">10sp</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:textColor">@color/black_50</item>
+		<item name="android:fontFamily">@font/open_sans</item>
+	</style>
+	<style name="value_humidity">
+		<item name="android:textSize">14sp</item>
+		<item name="android:textColor">@color/black_70</item>
 		<item name="android:fontFamily">@font/montserrat_bold</item>
 	</style>
 
+	<!--Temperature styles-->
+	<style name="temperature2">
+		<item name="android:textSize">10sp</item>
+		<item name="android:textColor">@color/black_50</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:fontFamily">@font/open_sans</item>
+	</style>
+	<style name="value_temp">
+		<item name="android:textSize">14sp</item>
+		<item name="android:textColor">@color/black_70</item>
+		<item name="android:fontFamily">@font/montserrat_bold</item>
+	</style>
 
+	<!--Wind styles-->
+	<style name="wind">
+		<item name="android:textSize">10sp</item>
+		<item name="android:textColor">@color/black_50</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:fontFamily">@font/open_sans</item>
+	</style>
+	<style name="value_wind">
+		<item name="android:textSize">14sp</item>
+		<item name="android:textColor">@color/black_70</item>
+		<item name="android:fontFamily">@font/montserrat_bold</item>
+	</style>
+
+	<style name="day_name">
+		<item name="android:textSize">14sp</item>
+		<item name="android:textColor">@color/black_70</item>
+		<item name="android:fontFamily">@font/montserrat_bold</item>
+	</style>
+	<style name="week_date">
+		<item name="android:textSize">10sp</item>
+		<item name="android:textColor">@color/black_50</item>
+		<item name="android:fontFamily">@font/open_sans</item>
+	</style>
+	<style name="value_temp2">
+		<item name="android:textSize">22sp</item>
+		<item name="android:textColor">@color/black_70</item>
+		<item name="android:fontFamily">@font/montserrat_bold</item>
+		<item name="android:textStyle">bold</item>
+	</style>
+	<style name="tv_temp_symbol2">
+		<item name="android:textSize">11sp</item>
+		<item name="android:textColor">@color/black_70</item>
+		<item name="android:fontFamily">@font/montserrat_bold</item>
+	</style>
+	<!--=================================================================-->
+
+	<!--Activity Soil===================================================-->
+	<style name="nutrient_title">
+		<item name="android:textSize">13sp</item>
+		<item name="android:textColor">@color/black_50</item>
+		<item name="android:fontFamily">@font/open_sans</item>
+	</style>
+	<style name="nutrient_value">
+		<item name="android:textSize">26sp</item>
+		<item name="android:textColor">@color/black_50</item>
+		<item name="android:inputType">numberDecimal</item>
+		<item name="android:fontFamily">@font/montserrat_bold</item>
+	</style>
+
+	<style name="sub_buttons">
+		<item name="android:textSize">13sp</item>
+		<item name="android:textColor">@color/white</item>
+		<item name="android:fontFamily">@font/montserrat_bold</item>
+	</style>
+	<!--=================================================================-->
+
+<!--Activity Home===================================================-->
 	<style name="welcome_user">
 		<item name="android:textSize">22sp</item>
-		<item name="android:textColor">#B3000000</item>
-		<item name="android:fontFamily">@font/montserrat_bold</item>
+		<item name="android:textColor">@color/black_70</item>
+		<item name="android:fontFamily">@font/montserrat</item>
 	</style>
-
-	<style name="title_recommend">
-		<item name="android:textSize">22sp</item>
-		<item name="android:textColor">#B3000000</item>
-		<item name="android:fontFamily">@font/montserrat_bold</item>
-	</style>
-
-	<style name="sub_title">
-		<item name="android:textSize">22sp</item>
-		<item name="android:textColor">#B3000000</item>
-		<item name="android:fontFamily">@font/open_sans</item>
-	</style>
-
-	<style name="tv_user_greeting">
-		<item name="android:textSize">22sp</item>
-		<item name="android:textColor">#B3000000</item>
+	<style name="date_today">
+		<item name="android:textSize">12sp</item>
+		<item name="android:textColor">@color/black_50</item>
 		<item name="android:fontFamily">@font/open_sans</item>
 		<item name="android:textStyle">bold</item>
-	</style>
-
-	<style name="recommend_sentence">
-		<item name="android:textSize">15sp</item>
-		<item name="android:textColor">#B3000000</item>
-		<item name="android:fontFamily">@font/open_sans</item>
-	</style>
-
-	<style name="tv_fertilizer_amount">
-		<item name="android:textSize">15sp</item>
-		<item name="android:textColor">#B3000000</item>
-		<item name="android:fontFamily">@font/open_sans</item>
-		<item name="android:textStyle">bold</item>
-	</style>
-
-	<style name="fertilizer_title">
-		<item name="android:textSize">12sp</item>
-		<item name="android:textColor">#B3000000</item>
-		<item name="android:fontFamily">@font/montserrat_bold</item>
-	</style>
-
-	<style name="tv_fertilizer_amount1">
-		<item name="android:textSize">20sp</item>
-		<item name="android:textColor">#B3000000</item>
-		<item name="android:fontFamily">@font/montserrat_bold</item>
-	</style>
-
-	<style name="gs_item">
-		<item name="android:textSize">12sp</item>
-		<item name="android:textColor">@color/main_blue</item>
-		<item name="android:fontFamily">@font/montserrat_bold</item>
-	</style>
-
-	<style name="tv_grade_title">
-		<item name="android:textSize">20sp</item>
-		<item name="android:textColor">#B3000000</item>
-		<item name="android:fontFamily">@font/montserrat_bold</item>
-	</style>
-
-	<style name="tv_grade_info">
-		<item name="android:textSize">14sp</item>
-		<item name="android:textColor">#80000000</item>
-		<item name="android:fontFamily">@font/open_sans</item>
-	</style>
-
-	<style name="btn_template">
-		<item name="android:textSize">14sp</item>
-		<item name="android:textColor">@color/white</item>
-		<item name="android:fontFamily">@font/open_sans</item>
-	</style>
-
-	<!--Recommendation & Items String-->
-	<style name="rec_history">
-		<item name="android:textSize">22sp</item>
-		<item name="android:textColor">#B3000000</item>
-		<item name="android:fontFamily">@font/montserrat_bold</item>
-	</style>
-	<style name="date_time">
-		<item name="android:textSize">16sp</item>
-		<item name="android:textColor">#B3000000</item>
-		<item name="android:fontFamily">@font/montserrat_bold</item>
-	</style>
-
-	<style name="recommendation_value">
-		<item name="android:textSize">14sp</item>
-		<item name="android:textColor">#B3000000</item>
-		<item name="android:fontFamily">@font/montserrat_bold</item>
-	</style>
-	<style name="recommendation_info">
-		<item name="android:textSize">6sp</item>
-		<item name="android:textColor">#80000000</item>
-		<item name="android:fontFamily">@font/open_sans</item>
 	</style>
 
 	<style name="button_title">
@@ -222,14 +148,12 @@
 		<item name="android:fontFamily">@font/open_sans</item>
 		<item name="android:textStyle">bold</item>
 	</style>
-
 	<style name="button_title2">
 		<item name="android:textSize">16sp</item>
 		<item name="android:textColor">#80000000</item>
 		<item name="android:fontFamily">@font/open_sans</item>
 		<item name="android:textStyle">bold</item>
 	</style>
-
 	<style name="button_subtitle">
 		<item name="android:textSize">14sp</item>
 		<item name="android:textColor">#80000000</item>
@@ -242,6 +166,105 @@
 		<item name="android:fontFamily">@font/open_sans</item>
 		<item name="android:textStyle">bold</item>
 	</style>
+	<!--=================================================================-->
 
+	<!--Activity Recommendation History Item===================================================-->
+	<style name="date_time">
+		<item name="android:textSize">16sp</item>
+		<item name="android:textColor">@color/black_70</item>
+		<item name="android:fontFamily">@font/montserrat_bold</item>
+	</style>
+	<style name="recommendation_value">
+		<item name="android:textSize">16sp</item>
+		<item name="android:textColor">@color/black_70</item>
+		<item name="android:fontFamily">@font/montserrat_bold</item>
+	</style>
+	<style name="recommendation_info">
+		<item name="android:textSize">8sp</item>
+		<item name="android:textColor">@color/black_50</item>
+		<item name="android:fontFamily">@font/open_sans</item>
+	</style>
+	<!--=================================================================-->
+
+	<!--Activity Fertilizer Recommendation===================================================-->
+	<style name="sub_title_rec">
+		<item name="android:textSize">18sp</item>
+		<item name="android:textColor">#B3000000</item>
+		<item name="android:fontFamily">@font/open_sans</item>
+	</style>
+	<style name="recommend_sentence">
+		<item name="android:textSize">14sp</item>
+		<item name="android:textColor">#B3000000</item>
+		<item name="android:fontFamily">@font/open_sans</item>
+	</style>
+	<style name="fertilizer_title">
+		<item name="android:textSize">12sp</item>
+		<item name="android:textColor">#B3000000</item>
+		<item name="android:fontFamily">@font/montserrat_bold</item>
+	</style>
+	<style name="tv_fertilizer_amount">
+		<item name="android:textSize">15sp</item>
+		<item name="android:textColor">#B3000000</item>
+		<item name="android:fontFamily">@font/open_sans</item>
+		<item name="android:textStyle">bold</item>
+	</style>
+	<style name="tv_fertilizer_amount1">
+		<item name="android:textSize">20sp</item>
+		<item name="android:textColor">#B3000000</item>
+		<item name="android:fontFamily">@font/montserrat_bold</item>
+	</style>
+	<!--=================================================================-->
+
+	<!--Choose Gradle Dialog Box===================================================-->
+	<style name="gs_item">
+		<item name="android:textSize">12sp</item>
+		<item name="android:textColor">@color/main_blue</item>
+		<item name="android:fontFamily">@font/montserrat_bold</item>
+	</style>
+	<style name="tv_grade_title">
+		<item name="android:textSize">20sp</item>
+		<item name="android:textColor">#B3000000</item>
+		<item name="android:fontFamily">@font/montserrat_bold</item>
+	</style>
+
+	<style name="tv_grade_info">
+		<item name="android:textSize">14sp</item>
+		<item name="android:textColor">#80000000</item>
+		<item name="android:fontFamily">@font/open_sans</item>
+	</style>
+	<!--=================================================================-->
+
+	<!--Activity Reports===================================================-->
+	<style name="sub_title">
+		<item name="android:textSize">14sp</item>
+		<item name="android:textColor">@color/black_50</item>
+		<item name="android:fontFamily">@font/open_sans</item>
+		<item name="android:textStyle">bold</item>
+	</style>
+	<style name="sub_summary">
+		<item name="android:textSize">12sp</item>
+		<item name="android:textColor">@color/black_50</item>
+		<item name="android:fontFamily">@font/open_sans</item>
+	</style>
+	<!--=================================================================-->
+
+	<!--Screen Fragments===================================================-->
+	<style name="frag_title">
+		<item name="android:textSize">26sp</item>
+		<item name="android:textColor">@color/black_70</item>
+		<item name="android:fontFamily">@font/montserrat_bold</item>
+	</style>
+	<style name="frag_screen">
+		<item name="android:textSize">18sp</item>
+		<item name="android:textColor">@color/black_50</item>
+		<item name="android:fontFamily">@font/open_sans</item>
+	</style>
+	<style name="btn_start">
+		<item name="android:textSize">16sp</item>
+		<item name="android:textColor">@color/white</item>
+		<item name="android:fontFamily">@font/open_sans</item>
+		<item name="android:textStyle">bold</item>
+	</style>
+	<!--=================================================================-->
 
 </resources>

@@ -1,16 +1,19 @@
 package com.iacademy.smartsoilph.activities
 
 import android.annotation.SuppressLint
-import kotlinx.coroutines.CoroutineScope
+import android.content.Intent
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.ImageView
+import android.widget.TextView
 import com.iacademy.smartsoilph.R
 import com.iacademy.smartsoilph.databinding.ActivityWeatherBinding
 import com.iacademy.smartsoilph.datamodels.WeatherResponse
@@ -19,19 +22,42 @@ import com.iacademy.smartsoilph.utils.RetrofitClient
 import java.util.Date
 import java.util.Locale
 
-class WeatherActivity : AppCompatActivity() {
+class WeatherActivity : BaseActivity() {
     private lateinit var binding: ActivityWeatherBinding
+    private lateinit var btnReturn: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityWeatherBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.tvDate.text = getCurrentFormattedDate()
+        //return button
+        initializeReturnButton()
 
-        CoroutineScope(Dispatchers.Main).launch {
+        val textViewDate: TextView = findViewById(R.id.tv_date)
+        textViewDate.text = getCurrentFormattedDate()
+
+        GlobalScope.launch(Dispatchers.IO) {
             getWeatherData()
         }
+    }
+
+    private fun initializeReturnButton() {
+        btnReturn = findViewById<ImageView>(R.id.toolbar_back_icon)
+        btnReturn.setOnClickListener{
+            val intent = Intent(this, HomeActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            startActivity(intent)
+            finish()
+        }
+    }
+
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
+        val intent = Intent(this, HomeActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        startActivity(intent)
+        finish()
     }
 
     private fun getCurrentFormattedDate(): String {
@@ -69,32 +95,44 @@ class WeatherActivity : AppCompatActivity() {
         )
 
         call.enqueue(object : Callback<WeatherResponse> {
-            @SuppressLint("SetTextI18n")
             override fun onResponse(call: Call<WeatherResponse>, response: Response<WeatherResponse>) {
-                response.body()?.let { weatherData ->
+                if (response.isSuccessful && response.body() != null) {
+                    val weatherData = response.body()!!
                     val currentWeather = weatherData.current
                     val dailyWeather = weatherData.daily
+                    // Update UI with the weather data
 
                     weatherData.current?.let {
-                        val temperature = it.temperature.toInt()
-                        val humidity = it.humidity.toInt()
-                        val windSpeed = it.windSpeed.toInt()
-                        val maxTemperature = weatherData.daily?.maxTemperature?.get(0)?.toInt()
+                        val temperature = it.temperature.toInt() // Convert to Int
+                        val humidity = it.humidity.toInt()       // Convert to Int
+                        val windSpeed = it.windSpeed.toInt()     // Convert to Int
+                        val maxTemperature = weatherData.daily?.maxTemperature?.get(0)?.toInt() // Convert to Int
 
-                        binding.tvTemperatureNumber.text = "$temperature°C"
-                        binding.tvValueHumidity.text = "$humidity%"
-                        binding.tvValueWind.text = "${windSpeed}km/h"
-                        binding.tvValueTemp.text = "$maxTemperature°C"
+                        runOnUiThread {
+                            binding.tvTemperatureNumber.text = "$temperature°C"
+                            binding.tvValueHumidity.text = "$humidity%"
+                            binding.tvValueWind.text = "${windSpeed}km/h"
+                            binding.tvValueTemp.text = "$maxTemperature°C"
+                        }
                     }
 
                     currentWeather?.let {
                         val weatherCondition = interpretWeatherCode(it.weatherCode)
-                        binding.tvWeather.text = "$weatherCondition"
+                        // Update UI with weatherCondition
+                        runOnUiThread {
+                            binding.tvWeather.text = "${weatherCondition}"
+                        }
                     }
+                } else {
+                    Log.e("WeatherActivity", "Response not successful")
                 }
             }
 
-            override fun onFailure(call: Call<WeatherResponse>, t: Throwable) {}
+            override fun onFailure(call: Call<WeatherResponse>, t: Throwable) {
+                Log.e("WeatherActivity", "API call failed", t)
+            }
         })
     }
+
+    // Additional methods and logic for your activity
 }
