@@ -2,10 +2,12 @@ package com.iacademy.smartsoilph.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
+import android.view.View
 import android.widget.ImageView
+import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -16,6 +18,7 @@ import com.google.firebase.database.database
 import com.iacademy.smartsoilph.R
 import com.iacademy.smartsoilph.models.DatabaseHelper
 import com.iacademy.smartsoilph.models.FirebaseModel
+import java.lang.reflect.Method
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -36,6 +39,9 @@ class HomeActivity : BaseActivity() {
     private lateinit var btnSyncDatabase: ImageView
     private lateinit var btnLanguage: ImageView
     private lateinit var btnBtConnect: CardView
+
+    //settings
+    private lateinit var btnSettings: ImageView
 
     //declare Firebase variables
     private lateinit var auth: FirebaseAuth
@@ -58,6 +64,8 @@ class HomeActivity : BaseActivity() {
         //resetDatabase()
     }
 
+
+
     private fun initializeLayout() {
         btnSoil = findViewById<CardView>(R.id.soil_card)
         btnWeather = findViewById<CardView>(R.id.weather_card)
@@ -69,6 +77,7 @@ class HomeActivity : BaseActivity() {
         btnSyncDatabase = findViewById<ImageView>(R.id.btn_sync_database)
         btnLanguage = findViewById<ImageView>(R.id.btn_language)
         btnBtConnect = findViewById<CardView>(R.id.bluetooth_card)
+        btnSettings = findViewById<ImageView>(R.id.btn_settings)
     }
 
     private fun setupButtonNavigation() {
@@ -92,7 +101,49 @@ class HomeActivity : BaseActivity() {
         btnLanguage.setOnClickListener {
             showLanguageDialog()
         }
+
+        //settings
+        btnSettings.setOnClickListener { view ->
+            showPopupMenu(view)
+        }
     }
+
+    //settings
+    private fun showPopupMenu(view: View?) {
+        val popup = PopupMenu(this, view)
+        popup.menuInflater.inflate(R.menu.popup_menu, popup.menu)
+
+        try {
+            val popupField = PopupMenu::class.java.getDeclaredField("mPopup")
+            popupField.isAccessible = true
+            val menuPopupHelper = popupField.get(popup)
+            val setForceShowIconMethod: Method = menuPopupHelper.javaClass.getDeclaredMethod(
+                "setForceShowIcon", Boolean::class.javaPrimitiveType
+            )
+            setForceShowIconMethod.invoke(menuPopupHelper, true)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        popup.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.btn_sync_database -> {
+                    // Handle sync action
+                    showSyncDatabaseDialog()
+                    true
+                }
+                R.id.btn_language -> {
+                    // Handle change language action
+                    showLanguageDialog()
+                    true
+                }
+                else -> false
+            }
+        }
+
+        popup.show()
+    }
+
 
     //Button Function
     private fun setButtonClickListener(button: CardView, activityClass: Class<*>) {
