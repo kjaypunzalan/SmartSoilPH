@@ -18,7 +18,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.database
 import com.iacademy.smartsoilph.R
-import com.iacademy.smartsoilph.models.DatabaseHelper
+import com.iacademy.smartsoilph.models.SQLiteModel
 import com.iacademy.smartsoilph.models.FirebaseModel
 import java.lang.reflect.Method
 import java.text.SimpleDateFormat
@@ -37,8 +37,8 @@ class HomeActivity : BaseActivity() {
     private lateinit var btnLogout: CardView
     private lateinit var tvUsername: TextView
     private lateinit var tvDateToday: TextView
-    private lateinit var btnLanguage: ImageView
     private lateinit var btnBtConnect: CardView
+    private lateinit var btnSettings: ImageView
 
     // Declare Firebase variables
     private lateinit var auth: FirebaseAuth
@@ -60,6 +60,17 @@ class HomeActivity : BaseActivity() {
     }
 
     private fun initializeLayout() {
+
+        btnSoil = findViewById<CardView>(R.id.soil_card)
+        btnWeather = findViewById<CardView>(R.id.weather_card)
+        btnReports = findViewById<CardView>(R.id.reports_card)
+        btnManual = findViewById<CardView>(R.id.manual_card)
+        btnLogout = findViewById<CardView>(R.id.logout_card)
+        tvUsername = findViewById<TextView>(R.id.tv_username)
+        tvDateToday = findViewById<TextView>(R.id.tv_date_today)
+
+        //settings
+        btnSettings = findViewById<ImageView>(R.id.btn_settings)
         btnSoil = findViewById(R.id.soil_card)
         btnWeather = findViewById(R.id.weather_card)
         btnReports = findViewById(R.id.reports_card)
@@ -86,14 +97,52 @@ class HomeActivity : BaseActivity() {
             finish()
         }
 
-//        btnLanguage.setOnClickListener {
-//            showLanguageDialog()
-//        }
+
+        //settings
+        btnSettings.setOnClickListener { view ->
+            showPopupMenu(view)
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.popup_menu, menu) // Replace "your_menu_xml_file_name" with the actual file name of your menu
         return true
+    }
+
+    private fun showPopupMenu(view: View?) {
+        val popup = PopupMenu(this, view)
+        popup.menuInflater.inflate(R.menu.popup_menu, popup.menu)
+
+        try {
+            val popupField = PopupMenu::class.java.getDeclaredField("mPopup")
+            popupField.isAccessible = true
+            val menuPopupHelper = popupField.get(popup)
+            val setForceShowIconMethod: Method = menuPopupHelper.javaClass.getDeclaredMethod(
+                "setForceShowIcon", Boolean::class.javaPrimitiveType
+            )
+            setForceShowIconMethod.invoke(menuPopupHelper, true)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        popup.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.btn_sync_database -> {
+                    // Handle sync action
+                    showSyncDatabaseDialog()
+                    true
+                }
+                R.id.btn_language -> {
+                    // Handle change language action
+                    showLanguageDialog()
+                    true
+                }
+                else -> false
+            }
+        }
+
+        popup.show()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -126,23 +175,16 @@ class HomeActivity : BaseActivity() {
     }
 
     private fun fetchUsername() {
-        // Get FirebaseDatabase Reference
-        val firebaseDB = Firebase.database.getReference("SmartSoilPH").child("Users").child(auth.currentUser!!.uid)
-
-        //Get User and Soil Reference
-        val userReference = firebaseDB.child("UserDetails")
-        userReference.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val data = snapshot.getValue(FirebaseModel::class.java) ?: return
-
-                //put UserName to TextView
-                tvUsername.text = " " + data.name.toString()
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(applicationContext, "Failed", Toast.LENGTH_SHORT).show()
-            }
-        })
+        val dbHelper = SQLiteModel(this)
+        val username = dbHelper.getCurrentUserName()
+        // Check if username is not null
+        if (username != null) {
+            // Set the username to the TextView
+            tvUsername.text = " $username"
+        } else {
+            // Handle case where username is null, maybe set a default name or prompt user
+            tvUsername.text = " User"
+        }
     }
 
     private fun showSyncDatabaseDialog() {
@@ -151,8 +193,8 @@ class HomeActivity : BaseActivity() {
             .setCancelable(false)
             .setPositiveButton("Sync Database") { dialog, id ->
                 // Perform the database sync operation
-                val dbHelper = DatabaseHelper(this)
-                dbHelper.syncDataWithFirebase(auth, this)
+                val dbHelper = SQLiteModel(this)
+                dbHelper.syncDataWithFirebase(auth)
                 Toast.makeText(this, "Database syncing...", Toast.LENGTH_SHORT).show()
             }
             .setNegativeButton("Cancel") { dialog, id ->
@@ -203,7 +245,7 @@ class HomeActivity : BaseActivity() {
     }
 
     private fun resetDatabase() {
-        val dbHelper = DatabaseHelper(this)
+        val dbHelper = SQLiteModel(this)
         dbHelper.deleteDatabase()
         // Show a Toast message confirming the database reset
         Toast.makeText(this, "Database has been reset", Toast.LENGTH_SHORT).show()

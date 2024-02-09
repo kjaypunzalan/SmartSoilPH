@@ -18,80 +18,6 @@ import java.util.Calendar
 class FirebaseModel {
 
     /**************************
-     * Firebase Database data
-     *------------------------*/
-    //user data
-    var name: String? = null
-    var email: String? = null
-    var number: Double? = null
-
-    //soil data
-    var nitrogen: Float? = null
-    var potassium: Float? = null
-    var phosphorus: Float? = null
-    var phLevel: Float? = null
-    var ecLevel: Float? = null
-    var humidity: Float? = null
-    var temperature: Float? = null
-
-    //recommendation data
-    var fertilizerBag: Int? = null
-    var fertilizerRecommendation: Float? = null
-    var limeRecommendation: Float? = null
-    var dateOfRecommendation: String? = null
-    var initialStorageType: String? = null
-
-    /**************************
-     * Constructors
-     *------------------------*/
-    // Empty constructor for Firebase
-    constructor()
-
-    // User constructor
-    constructor(
-        name: String, email: String, number: Double) {
-        this.name = name
-        this.email = email
-        this.number = number
-    }
-
-    // Soil constructor
-    constructor(
-        nitrogen: Float, potassium: Float, phosphorus: Float,
-        phLevel: Float, ecLevel: Float, humidity: Float, temperature: Float,
-        fertilizerRecommendation: Float, limeRecommendation: Float) {
-        this.nitrogen = nitrogen
-        this.potassium = potassium
-        this.phosphorus = phosphorus
-        this.phLevel = phLevel
-        this.ecLevel = ecLevel
-        this.humidity = humidity
-        this.temperature = temperature
-        this.fertilizerRecommendation = fertilizerRecommendation
-        this.limeRecommendation = limeRecommendation
-    }
-
-    // Recommendation constructor
-    constructor(
-        nitrogen: Float, potassium: Float, phosphorus: Float,
-        phLevel: Float, ecLevel: Float, humidity: Float, temperature: Float,
-        fertilizerRecommendation: Float, limeRecommendation: Float,
-        dateOfRecommendation: String, initialStorageType: String) {
-        this.nitrogen = nitrogen
-        this.potassium = potassium
-        this.phosphorus = phosphorus
-        this.phLevel = phLevel
-        this.ecLevel = ecLevel
-        this.humidity = humidity
-        this.temperature = temperature
-        this.fertilizerRecommendation = fertilizerRecommendation
-        this.limeRecommendation = limeRecommendation
-        this.dateOfRecommendation = dateOfRecommendation
-        this.initialStorageType = initialStorageType
-    }
-
-
-    /**************************
      * Functions
      *------------------------*/
     /**************************
@@ -143,10 +69,10 @@ class FirebaseModel {
 
         // Soil data reference
         val referenceUser = firebaseDB.child("SmartSoilPH").child("Users").child(auth.currentUser!!.uid)
-        val referenceDetails = referenceUser.child("RecommendationHistory").push()
+        val referenceDetails = referenceUser.child("RecommendationHistory").child(recommendationData.recommendationID) // Reference ID
 
         // Create and save recommendation data
-        referenceDetails.setValue(recommendationData)
+        referenceDetails.setValue(recommendationData.apply { this.isSavedOnline = true }) // Mark as saved online
     }
 
 
@@ -162,8 +88,9 @@ class FirebaseModel {
             referenceDetails.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val dataList = snapshot.children.mapNotNull { dataSnapshot ->
-                        dataSnapshot.getValue(FirebaseModel::class.java)?.let { firebaseModel ->
-                            RecommendationData(
+                        dataSnapshot.getValue(RecommendationData::class.java)?.apply {
+
+                            /*firebaseModel -> RecommendationData(
                                 SoilData(
                                     firebaseModel.nitrogen ?: 0.0f,
                                     firebaseModel.potassium ?: 0.0f,
@@ -177,7 +104,7 @@ class FirebaseModel {
                                 firebaseModel.limeRecommendation ?: 0.0f,
                                 firebaseModel.dateOfRecommendation.orEmpty(),
                                 firebaseModel.initialStorageType.orEmpty()
-                            )
+                            )*/
                         }
                     }
                     onDataReceived(dataList)
