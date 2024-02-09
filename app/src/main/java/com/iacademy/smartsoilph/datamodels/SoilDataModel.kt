@@ -19,6 +19,7 @@ data class SoilData(
 
 data class RecommendationData(
     val recommendationID: String,
+    val userID: String,
     val soilData: SoilData,
     val fertilizerRecommendation: Float,
     val limeRecommendation: Float,

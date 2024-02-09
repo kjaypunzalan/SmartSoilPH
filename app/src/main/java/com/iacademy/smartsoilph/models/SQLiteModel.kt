@@ -64,23 +64,24 @@ class SQLiteModel(private val context: Context) : SQLiteOpenHelper(context, DATA
 
         // Table creation for SoilTable to use recommendationID as the primary key
         val createSoilTable = """
-            CREATE TABLE $TABLE_RECOMMENDATION (
-                recommendationID TEXT PRIMARY KEY,
-                nitrogen REAL,
-                potassium REAL,
-                phosphorus REAL,
-                phLevel REAL,
-                ecLevel REAL,
-                humidity REAL,
-                temperature REAL,
-                fertilizerRecommendation REAL,
-                limeRecommendation REAL,
-                dateOfRecommendation TEXT,
-                initialStorageType TEXT,
-                isSavedOnline INTEGER,
-                FOREIGN KEY(userID) REFERENCES $TABLE_USER(userID)
-            )
-        """.trimIndent()
+        CREATE TABLE $TABLE_RECOMMENDATION (
+            recommendationID TEXT PRIMARY KEY,
+            userID TEXT,
+            nitrogen REAL,
+            potassium REAL,
+            phosphorus REAL,
+            phLevel REAL,
+            ecLevel REAL,
+            humidity REAL,
+            temperature REAL,
+            fertilizerRecommendation REAL,
+            limeRecommendation REAL,
+            dateOfRecommendation TEXT,
+            initialStorageType TEXT,
+            isSavedOnline INTEGER,
+            FOREIGN KEY(userID) REFERENCES $TABLE_USER(userID)
+        )
+    """.trimIndent()
         db.execSQL(createSoilTable)
     }
 
@@ -126,18 +127,70 @@ class SQLiteModel(private val context: Context) : SQLiteOpenHelper(context, DATA
      */
     fun getUserData(userID: String): UserData? {
         val db = this.readableDatabase
-        val cursor = db.query(TABLE_USER, null, "userID=?", arrayOf(userID), null, null, null)
-
         var userData: UserData? = null
+
+        val cursor = db.query(
+            TABLE_USER,
+            arrayOf(KEY_USER_ID, KEY_NAME, KEY_EMAIL, KEY_NUMBER), // Specify columns to avoid "SELECT *"
+            "$KEY_USER_ID=?",
+            arrayOf(userID),
+            null,
+            null,
+            null
+        )
+
         if (cursor.moveToFirst()) {
-            val name = cursor.getString(cursor.getColumnIndex(KEY_NAME))
-            val email = cursor.getString(cursor.getColumnIndex(KEY_EMAIL))
-            val number = cursor.getDouble(cursor.getColumnIndex(KEY_NUMBER))
-            userData = UserData(userID, name, email, number)
+            val nameIndex = cursor.getColumnIndex(KEY_NAME)
+            val emailIndex = cursor.getColumnIndex(KEY_EMAIL)
+            val numberIndex = cursor.getColumnIndex(KEY_NUMBER)
+
+            // Check if indexes are valid
+            if (nameIndex != -1 && emailIndex != -1 && numberIndex != -1) {
+                val name = cursor.getString(nameIndex)
+                val email = cursor.getString(emailIndex)
+                val number = cursor.getString(numberIndex).toDouble() // Assuming number is stored as TEXT
+
+                userData = UserData(userID, name, email, number)
+            }
         }
         cursor.close()
         db.close()
         return userData
+    }
+
+    fun getCurrentUserUID(): String? {
+        val db = this.readableDatabase
+        val selectQuery = "SELECT userID FROM UserTable ORDER BY ROWID DESC LIMIT 1" // Ensure 'userID' matches your column name exactly
+        val cursor = db.rawQuery(selectQuery, null)
+        var userID: String? = null
+        if (cursor.moveToFirst()) {
+            val columnIndex = cursor.getColumnIndex("userID")
+            if (columnIndex != -1) { // Check to ensure the column index is valid
+                userID = cursor.getString(columnIndex)
+            } else {
+                // Handle the error or log it
+                Log.e("SQLiteModel", "Column 'userID' not found.")
+            }
+        }
+        cursor.close()
+        db.close()
+        return userID
+    }
+
+    fun getCurrentUserName(): String? {
+        val db = this.readableDatabase
+        val selectQuery = "SELECT name FROM UserTable ORDER BY ROWID DESC LIMIT 1" // Assuming you want the most recently added user
+        val cursor = db.rawQuery(selectQuery, null)
+        var name: String? = null
+        if (cursor.moveToFirst()) {
+            val nameIndex = cursor.getColumnIndex("name")
+            if (nameIndex != -1) { // Ensure index is valid
+                name = cursor.getString(nameIndex)
+            }
+        }
+        cursor.close()
+        db.close()
+        return name
     }
 
 
@@ -156,7 +209,7 @@ class SQLiteModel(private val context: Context) : SQLiteOpenHelper(context, DATA
         // Putting values in ContentValues
         val contentValues = ContentValues().apply {
             put(KEY_RECOMMENDATION_ID, recommendationData.recommendationID)
-            //put(KEY_USER_ID, recommendationData.userID) // Assuming you add userID in RecommendationData model
+            put(KEY_USER_ID, recommendationData.userID)
             put(KEY_NITROGEN, soilData.nitrogen)
             put(KEY_POTASSIUM, soilData.potassium)
             put(KEY_PHOSPHORUS, soilData.phosphorus)
@@ -195,50 +248,47 @@ class SQLiteModel(private val context: Context) : SQLiteOpenHelper(context, DATA
         val db = this.readableDatabase
         val selectQuery = "SELECT * FROM $TABLE_RECOMMENDATION"
         // Execute the query and get a cursor to iterate over the results
-        val cursor: Cursor? = db.rawQuery(selectQuery, null)
-        // Use the cursor in a safe block to ensure it's closed after use
-        cursor?.use {
-            while (it.moveToNext()) {
-                // Get the index of the columns.
-                // This is separated from data extraction to handle cases where the column might not exist.
-                val recommendationIDIndex = it.getColumnIndex(KEY_RECOMMENDATION_ID)
-                val userIDIndex = it.getColumnIndex(KEY_USER_ID)
-                val nitrogenIndex = it.getColumnIndex(KEY_NITROGEN)
-                val phosphorusIndex = it.getColumnIndex(KEY_PHOSPHORUS)
-                val potassiumIndex = it.getColumnIndex(KEY_POTASSIUM)
-                val phLevelIndex = it.getColumnIndex(KEY_PH_LEVEL)
-                val ecLevelIndex = it.getColumnIndex(KEY_EC_LEVEL)
-                val humidityIndex = it.getColumnIndex(KEY_HUMIDITY)
-                val temperatureIndex = it.getColumnIndex(KEY_TEMPERATURE)
-                val fertilizerRecommendationIndex = it.getColumnIndex(KEY_FERTILIZER_RECOMMENDATION)
-                val limeRecommendationIndex = it.getColumnIndex(KEY_LIME_RECOMMENDATION)
-                val dateOfRecommendationIndex = it.getColumnIndex(KEY_DATE_OF_RECOMMENDATION)
-                val initialStorageTypeIndex = it.getColumnIndex(KEY_INITIAL_STORAGE_TYPE)
-                val isSavedOnlineIndex = it.getColumnIndex(KEY_IS_SAVED_ONLINE)
+        val cursor = db.rawQuery(selectQuery, null)
 
-                // Extract data
-                val recommendationID = it.getString(recommendationIDIndex)
-                val userID = it.getString(userIDIndex)
-                val nitrogen = it.getFloat(nitrogenIndex)
-                val phosphorus = it.getFloat(phosphorusIndex)
-                val potassium = it.getFloat(potassiumIndex)
-                val phLevel = it.getFloat(phLevelIndex)
-                val ecLevel = it.getFloat(ecLevelIndex)
-                val humidity = it.getFloat(humidityIndex)
-                val temperature = it.getFloat(temperatureIndex)
-                val fertilizerRecommendation = it.getFloat(fertilizerRecommendationIndex)
-                val limeRecommendation = it.getFloat(limeRecommendationIndex)
-                val dateOfRecommendation = it.getString(dateOfRecommendationIndex)
-                val initialStorageType = it.getString(initialStorageTypeIndex)
-                val isSavedOnline = it.getInt(isSavedOnlineIndex) == 1
+        if (cursor.moveToNext()) {
+            // Extract data for RecommendationData
+            val recommendationID = cursor.getString(cursor.getColumnIndexOrThrow(KEY_RECOMMENDATION_ID))
+            val userID = cursor.getString(cursor.getColumnIndexOrThrow(KEY_USER_ID))
+            val nitrogen = cursor.getFloat(cursor.getColumnIndexOrThrow(KEY_NITROGEN))
+            val phosphorus = cursor.getFloat(cursor.getColumnIndexOrThrow(KEY_PHOSPHORUS))
+            val potassium = cursor.getFloat(cursor.getColumnIndexOrThrow(KEY_POTASSIUM))
+            val phLevel = cursor.getFloat(cursor.getColumnIndexOrThrow(KEY_PH_LEVEL))
+            val ecLevel = cursor.getFloat(cursor.getColumnIndexOrThrow(KEY_EC_LEVEL))
+            val humidity = cursor.getFloat(cursor.getColumnIndexOrThrow(KEY_HUMIDITY))
+            val temperature = cursor.getFloat(cursor.getColumnIndexOrThrow(KEY_TEMPERATURE))
+            val fertilizerRecommendation = cursor.getFloat(cursor.getColumnIndexOrThrow(KEY_FERTILIZER_RECOMMENDATION))
+            val limeRecommendation = cursor.getFloat(cursor.getColumnIndexOrThrow(KEY_LIME_RECOMMENDATION))
+            val dateOfRecommendation = cursor.getString(cursor.getColumnIndexOrThrow(KEY_DATE_OF_RECOMMENDATION))
+            val initialStorageType = cursor.getString(cursor.getColumnIndexOrThrow(KEY_INITIAL_STORAGE_TYPE))
+            val isSavedOnline = cursor.getInt(cursor.getColumnIndexOrThrow(KEY_IS_SAVED_ONLINE)) == 1
 
-                // Create a RecommendationData object with the extracted values and add it to the list
-                val soilData = SoilData (nitrogen, phosphorus, potassium, phLevel, ecLevel, humidity, temperature)
-                val recommendationData = RecommendationData(recommendationID, soilData, fertilizerRecommendation, limeRecommendation, dateOfRecommendation, initialStorageType, isSavedOnline)
-                recommendationList.add(recommendationData)
-            }
+            Log.d("", "recommendationID: $recommendationID")
+            Log.d("", "currentUserUID: $userID")
+            Log.d("", "soilData: $nitrogen")
+            Log.d("", "fertilizer: $fertilizerRecommendation")
+            Log.d("", "lime: $limeRecommendation")
+            Log.d("", "dateOfRecommendation: $dateOfRecommendation")
+            Log.d("", "storageType: $initialStorageType")
+            Log.d("", "savedOnline: $isSavedOnline")
+
+            // Constructing SoilData object
+            val soilData = SoilData(
+                nitrogen, phosphorus, potassium, phLevel, ecLevel, humidity, temperature
+            )
+
+            // Constructing RecommendationData object
+            val recommendationData = RecommendationData(
+                recommendationID, userID, soilData, fertilizerRecommendation, limeRecommendation,
+                dateOfRecommendation, initialStorageType, true
+            )
+            recommendationList.add(recommendationData)
         }
-
+        cursor.close()
         db.close()
         return recommendationList
     }
@@ -248,72 +298,95 @@ class SQLiteModel(private val context: Context) : SQLiteOpenHelper(context, DATA
      * @return a list of SoilDataModel containing the data from the database
      */
     fun getLatestSoilData(): RecommendationData? {
-        // Create object RecommendationData that holds the latest data
-        var recommendationData: RecommendationData? = null
-
-        // Get database
         val db = this.readableDatabase
-        // Make sure to order by an appropriate column to get the latest entry
-        val selectQuery = "SELECT * FROM $TABLE_RECOMMENDATION ORDER BY id DESC LIMIT 1" // Assuming 'id' is your primary key
-        // Execute the query and get a cursor to iterate over the results
-        val cursor: Cursor? = db.rawQuery(selectQuery, null)
+        var recommendationData: RecommendationData? = null
+        val selectQuery = "SELECT * FROM $TABLE_RECOMMENDATION ORDER BY $KEY_RECOMMENDATION_ID DESC LIMIT 1"
+        val cursor = db.rawQuery(selectQuery, null)
 
-        // Use the cursor in a safe block to ensure it's closed after use
-        cursor?.use {
-            if (it.moveToFirst()) {
-                // Get the index of the columns.
-                val nitrogenIndex = it.getColumnIndex(KEY_NITROGEN)
-                val phosphorusIndex = it.getColumnIndex(KEY_PHOSPHORUS)
-                val potassiumIndex = it.getColumnIndex(KEY_POTASSIUM)
-                val phLevelIndex = it.getColumnIndex(KEY_PH_LEVEL)
-                val ecLevelIndex = it.getColumnIndex(KEY_EC_LEVEL)
-                val humidityIndex = it.getColumnIndex(KEY_HUMIDITY)
-                val temperatureIndex = it.getColumnIndex(KEY_TEMPERATURE)
-                val fertilizerRecommendationIndex = it.getColumnIndex(KEY_FERTILIZER_RECOMMENDATION)
-                val limeRecommendationIndex = it.getColumnIndex(KEY_LIME_RECOMMENDATION)
-                val dateOfRecommendationIndex = it.getColumnIndex(KEY_DATE_OF_RECOMMENDATION)
-                val initialStorageTypeIndex = it.getColumnIndex(KEY_INITIAL_STORAGE_TYPE)
+        if (cursor.moveToFirst()) {
+            // Extract data for RecommendationData
+            val recommendationID = cursor.getString(cursor.getColumnIndexOrThrow(KEY_RECOMMENDATION_ID))
+            val userID = cursor.getString(cursor.getColumnIndexOrThrow(KEY_USER_ID))
+            val nitrogen = cursor.getFloat(cursor.getColumnIndexOrThrow(KEY_NITROGEN))
+            val phosphorus = cursor.getFloat(cursor.getColumnIndexOrThrow(KEY_PHOSPHORUS))
+            val potassium = cursor.getFloat(cursor.getColumnIndexOrThrow(KEY_POTASSIUM))
+            val phLevel = cursor.getFloat(cursor.getColumnIndexOrThrow(KEY_PH_LEVEL))
+            val ecLevel = cursor.getFloat(cursor.getColumnIndexOrThrow(KEY_EC_LEVEL))
+            val humidity = cursor.getFloat(cursor.getColumnIndexOrThrow(KEY_HUMIDITY))
+            val temperature = cursor.getFloat(cursor.getColumnIndexOrThrow(KEY_TEMPERATURE))
+            val fertilizerRecommendation = cursor.getFloat(cursor.getColumnIndexOrThrow(KEY_FERTILIZER_RECOMMENDATION))
+            val limeRecommendation = cursor.getFloat(cursor.getColumnIndexOrThrow(KEY_LIME_RECOMMENDATION))
+            val dateOfRecommendation = cursor.getString(cursor.getColumnIndexOrThrow(KEY_DATE_OF_RECOMMENDATION))
+            val initialStorageType = cursor.getString(cursor.getColumnIndexOrThrow(KEY_INITIAL_STORAGE_TYPE))
+            val isSavedOnline = cursor.getInt(cursor.getColumnIndexOrThrow(KEY_IS_SAVED_ONLINE)) == 1
 
-                // Extract data
-                val nitrogen = it.getFloat(nitrogenIndex)
-                val phosphorus = it.getFloat(phosphorusIndex)
-                val potassium = it.getFloat(potassiumIndex)
-                val phLevel = it.getFloat(phLevelIndex)
-                val ecLevel = it.getFloat(ecLevelIndex)
-                val humidity = it.getFloat(humidityIndex)
-                val temperature = it.getFloat(temperatureIndex)
-                val fertilizerRecommendation = it.getFloat(fertilizerRecommendationIndex)
-                val limeRecommendation = it.getFloat(limeRecommendationIndex)
-                val dateOfRecommendation = it.getString(dateOfRecommendationIndex)
-                val initialStorageType = it.getString(initialStorageTypeIndex)
+            Log.d("", "recommendationID: $recommendationID")
+            Log.d("", "currentUserUID: $userID")
+            Log.d("", "soilData: $nitrogen")
+            Log.d("", "fertilizer: $fertilizerRecommendation")
+            Log.d("", "lime: $limeRecommendation")
+            Log.d("", "dateOfRecommendation: $dateOfRecommendation")
+            Log.d("", "storageType: $initialStorageType")
+            Log.d("", "savedOnline: $isSavedOnline")
 
-                // Create a RecommendationData object with the extracted values
-                val soilData = SoilData(nitrogen, phosphorus, potassium, phLevel, ecLevel, humidity, temperature)
-                recommendationData = RecommendationData(soilData, fertilizerRecommendation, limeRecommendation, dateOfRecommendation, initialStorageType)
-            }
+            // Constructing SoilData object
+            val soilData = SoilData(
+                nitrogen, phosphorus, potassium, phLevel, ecLevel, humidity, temperature
+            )
+
+            // Constructing RecommendationData object
+            recommendationData = RecommendationData(
+                recommendationID, userID, soilData, fertilizerRecommendation, limeRecommendation,
+                dateOfRecommendation, initialStorageType, true
+            )
         }
-
+        cursor.close()
         db.close()
         return recommendationData
     }
+
+
 
 
     /**
      * Syncs local SQLite data with FirebaseDatabase.
      * @return a list of SoilDataModel containing the data from the database
      */
-    fun syncDataWithFirebase(auth: FirebaseAuth, context: Context) {
-        val dbHelper = SQLiteModel(context)
-        val localDataList = dbHelper.getAllSoilData()
-
-        // Get FirebaseDatabase Reference
+    fun syncDataWithFirebase(auth: FirebaseAuth) {
+        val db = this.readableDatabase
         val firebaseDB = Firebase.database.reference
-        val referenceUser = firebaseDB.child("SmartSoilPH").child("Users").child(auth.currentUser!!.uid)
-        val referenceDetails = referenceUser.child("RecommendationHistory")
+        val localDataList = getAllSoilData()
 
-        localDataList.forEach { recommendationData ->
-            referenceDetails.push().setValue(recommendationData)
+        for (recommendationData in localDataList) {
+            if (!recommendationData.isSavedOnline) {
+                val referenceUser = firebaseDB.child("SmartSoilPH").child("Users").child(recommendationData.userID)
+                val referenceDetails = referenceUser.child("RecommendationHistory").child(recommendationData.recommendationID)
+                referenceDetails.setValue(recommendationData).addOnSuccessListener {
+                    // Update the local database to mark this record as synced
+                    val contentValues = ContentValues()
+                    contentValues.put(KEY_IS_SAVED_ONLINE, 1) // Mark as saved online
+                    db.update(TABLE_RECOMMENDATION, contentValues, "recommendationID=?", arrayOf(recommendationData.recommendationID))
+                }
+            }
         }
+        db.close()
+    }
+
+    fun generateRecommendationID(): String {
+        val db = this.readableDatabase
+        val cursor = db.rawQuery("SELECT recommendationID FROM $TABLE_RECOMMENDATION ORDER BY recommendationID DESC LIMIT 1", null)
+
+        var lastId = 0
+        if (cursor.moveToFirst()) {
+            val recommendationID = cursor.getString(0)
+            val idPart = recommendationID.replace("RID-", "")
+            lastId = idPart.toIntOrNull() ?: 0
+        }
+        cursor.close()
+        db.close()
+
+        val newId = lastId + 1
+        return "RID-" + String.format("%06d", newId)
     }
 
 }

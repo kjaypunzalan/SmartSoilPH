@@ -31,7 +31,7 @@ class FirebaseModel {
         val firebaseDB = Firebase.database.reference
 
         // Reference to SmartSoilPH
-        val referenceUser = firebaseDB.child("SmartSoilPH").child("Users").child(userData.userID)
+        val referenceUser = firebaseDB.child("SmartSoilPH").child("Users").child(auth.currentUser!!.uid)
         val referenceDetails = referenceUser.child("UserDetails")
 
         // Create and set user data

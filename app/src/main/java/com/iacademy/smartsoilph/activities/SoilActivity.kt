@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.RadioButton
@@ -195,17 +196,31 @@ class SoilActivity : BaseActivity() {
         /******************************
          * Pass values to Datamodel
          * ---------------------------*/
-        //get Date
+        //Create SQLite instance
+        val dbHelper = SQLiteModel(this)
+        // Get the current user's UID
+        val currentUserUID = dbHelper.getCurrentUserUID() ?: return // Add appropriate error handling or fallback
+        // Generate a unique recommendationID
+        val recommendationID = dbHelper.generateRecommendationID()
+
+        // Get Date
         val calendar = Calendar.getInstance()
         val formatter = SimpleDateFormat("MMMM dd, yyyy (EEE) '@'hh:mma", Locale.getDefault())
         val dateOfRecommendation = formatter.format(calendar.time)
-        //pass values to Datamodel
+
+        // Pass values to Datamodel
         val soilData = SoilData(nitrogen, phosphorus, potassium, phLevel, ecLevel, humidity, temperature)
-        val recommendationData = RecommendationData(soilData, fertilizerWeightKg, limeRequirement, dateOfRecommendation, "Local SQLite")
-
-        //Create SQLite instance
-        val dbHelper = SQLiteModel(this)
-
+        val storageType = "Local SQLite"
+        val isSavedOnline = false
+        val recommendationData = RecommendationData(recommendationID, currentUserUID, soilData, fertilizerWeightKg, limeRequirement, dateOfRecommendation, storageType, isSavedOnline)
+        Log.d("", "recommendationID: $recommendationID")
+        Log.d("", "currentUserUID: $currentUserUID")
+        Log.d("", "soilData: $soilData")
+        Log.d("", "fertilizer: $fertilizerWeightKg")
+        Log.d("", "lime: $limeRequirement")
+        Log.d("", "dateOfRecommendation: $dateOfRecommendation")
+        Log.d("", "storageType: $storageType")
+        Log.d("", "savedOnline: $isSavedOnline")
 
         /******************************
          * Check Internet Connectivity
@@ -221,16 +236,7 @@ class SoilActivity : BaseActivity() {
             FirebaseModel().saveRecommendation(recommendationData, auth)
         } else {
             // Internet is NOT available - add to SQLite
-            val result = dbHelper.addSoilData(recommendationData)  // Save the soil data to the SQLite database
-
-            //Add toast notification is successful or not
-            if (result != -1L) {
-                // Data saved successfully
-                Toast.makeText(this, "Soil data saved locally", Toast.LENGTH_SHORT).show()
-            } else {
-                // Error occurred in saving data
-                Toast.makeText(this, "Failed to save soil data locally", Toast.LENGTH_SHORT).show()
-            }
+            dbHelper.addSoilData(recommendationData)  // Save the soil data to the SQLite database
 
         }
 

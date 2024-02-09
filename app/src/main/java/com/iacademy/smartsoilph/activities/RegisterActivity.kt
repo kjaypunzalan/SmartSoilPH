@@ -29,6 +29,7 @@ class RegisterActivity : BaseActivity() {
 
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
+        //resetDatabase() //FOR TESTING PURPOSES ONLY
 
         // Initialize EditTexts and Button
         nameEditText = findViewById(R.id.editTextName) // Update ID as per your layout
@@ -50,6 +51,12 @@ class RegisterActivity : BaseActivity() {
             startActivity(intent)
             finish()
         }
+    }
+    private fun resetDatabase() {
+        val dbHelper = SQLiteModel(this)
+        dbHelper.deleteDatabase()
+        // Show a Toast message confirming the database reset
+        Toast.makeText(this, "Database has been reset", Toast.LENGTH_SHORT).show()
     }
 
     private fun validateInput() {
@@ -127,18 +134,21 @@ class RegisterActivity : BaseActivity() {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
+
                     // Send verification email
                     val user = auth.currentUser
+                    val userID = user?.uid ?: ""    // Generate a unique userID
                     user?.sendEmailVerification()
                         ?.addOnCompleteListener { verificationTask ->
                             if (verificationTask.isSuccessful) {
                                 Toast.makeText(baseContext, "Verification email sent to $email", Toast.LENGTH_SHORT).show()
+                                // You might want to check if the email was verified before proceeding
                                 checkIfEmailVerified()
                             }
                         }
 
                     //Add to Database
-                    val userData = UserData(name, email, number)
+                    val userData = UserData(userID, name, email, number)
                     SQLiteModel(this).addUserData(userData)  // Save to SQLite
                     FirebaseModel().writeNewUser(userData, auth)    // Save to Firebase
                 } else {
@@ -161,4 +171,5 @@ class RegisterActivity : BaseActivity() {
             }
         }
     }
+
 }

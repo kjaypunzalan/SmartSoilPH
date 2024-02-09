@@ -140,21 +140,17 @@ class FertilizerActivity : BaseActivity() {
      * C. Fetch content from SQLite
      *---------------------------------*/
     private fun fetchFromSQLite() {
-        // Fetch the latest soil data from SQLite
         val dbHelper = SQLiteModel(this)
         val latestSoilData = dbHelper.getLatestSoilData()
 
-        // Update UI with the latest soil data
-        latestSoilData?.let { soilData ->
-            val formattedFertilizerAmount = String.format("%.1f", soilData.fertilizerRecommendation)
-            //val formattedLimeAmount = String.format("%.1f", soilData.limeRecommendation)
-
-            tvFertilizerAmount.text = " $formattedFertilizerAmount kg"
-            tvFertilizerAmount1.text = "$formattedFertilizerAmount kg"
-            //tvLimeAmount.text = " $formattedLimeAmount pounds"
-            //tvLimeAmount1.text = "$formattedLimeAmount pounds"
-        } ?: run {
+        if (latestSoilData != null) {
+            val formattedFertilizerAmount = String.format("%.1f kg", latestSoilData.fertilizerRecommendation)
+            tvFertilizerAmount.text = formattedFertilizerAmount
+            tvFertilizerAmount1.text = formattedFertilizerAmount
+            // Do similar for other fields
+        } else {
             Toast.makeText(applicationContext, "No local soil data available", Toast.LENGTH_SHORT).show()
         }
     }
+
 }

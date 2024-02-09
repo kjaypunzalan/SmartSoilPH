@@ -16,7 +16,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.database
 import com.iacademy.smartsoilph.R
-import com.iacademy.smartsoilph.models.DatabaseHelper
+import com.iacademy.smartsoilph.models.SQLiteModel
 import com.iacademy.smartsoilph.models.FirebaseModel
 import java.lang.reflect.Method
 import java.text.SimpleDateFormat
@@ -34,8 +34,6 @@ class HomeActivity : BaseActivity() {
     private lateinit var btnLogout: CardView
     private lateinit var tvUsername: TextView
     private lateinit var tvDateToday: TextView
-    private lateinit var btnSyncDatabase: ImageView
-    private lateinit var btnLanguage: ImageView
 
     //settings
     private lateinit var btnSettings: ImageView
@@ -71,8 +69,6 @@ class HomeActivity : BaseActivity() {
         btnLogout = findViewById<CardView>(R.id.logout_card)
         tvUsername = findViewById<TextView>(R.id.tv_username)
         tvDateToday = findViewById<TextView>(R.id.tv_date_today)
-        btnSyncDatabase = findViewById<ImageView>(R.id.btn_sync_database)
-        btnLanguage = findViewById<ImageView>(R.id.btn_language)
 
         //settings
         btnSettings = findViewById<ImageView>(R.id.btn_settings)
@@ -89,14 +85,6 @@ class HomeActivity : BaseActivity() {
             auth.signOut()
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
-        }
-
-        btnSyncDatabase.setOnClickListener {
-            showSyncDatabaseDialog()
-        }
-
-        btnLanguage.setOnClickListener {
-            showLanguageDialog()
         }
 
         //settings
@@ -157,23 +145,16 @@ class HomeActivity : BaseActivity() {
     }
 
     private fun fetchUsername() {
-        // Get FirebaseDatabase Reference
-        val firebaseDB = Firebase.database.getReference("SmartSoilPH").child("Users").child(auth.currentUser!!.uid)
-
-        //Get User and Soil Reference
-        val userReference = firebaseDB.child("UserDetails")
-        userReference.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val data = snapshot.getValue(FirebaseModel::class.java) ?: return
-
-                //put UserName to TextView
-                tvUsername.text = " " + data.name.toString()
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(applicationContext, "Failed", Toast.LENGTH_SHORT).show()
-            }
-        })
+        val dbHelper = SQLiteModel(this)
+        val username = dbHelper.getCurrentUserName()
+        // Check if username is not null
+        if (username != null) {
+            // Set the username to the TextView
+            tvUsername.text = " $username"
+        } else {
+            // Handle case where username is null, maybe set a default name or prompt user
+            tvUsername.text = " User"
+        }
     }
 
     private fun showSyncDatabaseDialog() {
@@ -182,8 +163,8 @@ class HomeActivity : BaseActivity() {
             .setCancelable(false)
             .setPositiveButton("Sync Database") { dialog, id ->
                 // Perform the database sync operation
-                val dbHelper = DatabaseHelper(this)
-                dbHelper.syncDataWithFirebase(auth, this)
+                val dbHelper = SQLiteModel(this)
+                dbHelper.syncDataWithFirebase(auth)
                 Toast.makeText(this, "Database syncing...", Toast.LENGTH_SHORT).show()
             }
             .setNegativeButton("Cancel") { dialog, id ->
@@ -234,7 +215,7 @@ class HomeActivity : BaseActivity() {
     }
 
     private fun resetDatabase() {
-        val dbHelper = DatabaseHelper(this)
+        val dbHelper = SQLiteModel(this)
         dbHelper.deleteDatabase()
         // Show a Toast message confirming the database reset
         Toast.makeText(this, "Database has been reset", Toast.LENGTH_SHORT).show()
