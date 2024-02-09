@@ -290,7 +290,11 @@
                 app:layout_constraintTop_toBottomOf="@id/hl_4"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="20dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@drawable/ripple_effect2"
+                android:foreground="?android:attr/selectableItemBackground">
                 <!-- Contents of the additional CardView -->
 
                 <LinearLayout
@@ -331,7 +335,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_margin="16dp"
             app:tint="#80000000"
-            android:layout_gravity="right"/>
+            android:layout_gravity="right"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@drawable/ripple_effect"/>
 
     </androidx.cardview.widget.CardView>
 

@@ -2,6 +2,8 @@ package com.iacademy.smartsoilph.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.PopupMenu
@@ -22,11 +24,12 @@ import java.lang.reflect.Method
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import com.iacademy.smartsoilph.arduino.BluetoothController
 
 
 class HomeActivity : BaseActivity() {
 
-    //declare layout variables
+    // Declare layout variables
     private lateinit var btnSoil: CardView
     private lateinit var btnWeather: CardView
     private lateinit var btnReports: CardView
@@ -34,11 +37,9 @@ class HomeActivity : BaseActivity() {
     private lateinit var btnLogout: CardView
     private lateinit var tvUsername: TextView
     private lateinit var tvDateToday: TextView
+    private lateinit var btnBtConnect: CardView
 
-    //settings
-    private lateinit var btnSettings: ImageView
-
-    //declare Firebase variables
+    // Declare Firebase variables
     private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,20 +49,17 @@ class HomeActivity : BaseActivity() {
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
 
-        // initialize variables
+        // Initialize variables
         initializeLayout()
         setupButtonNavigation()
 
-        //Display Date and Username
+        // Display Date and Username
         displayCurrentDate()
         fetchUsername()
-
-        //resetDatabase()
     }
 
-
-
     private fun initializeLayout() {
+
         btnSoil = findViewById<CardView>(R.id.soil_card)
         btnWeather = findViewById<CardView>(R.id.weather_card)
         btnReports = findViewById<CardView>(R.id.reports_card)
@@ -72,6 +70,15 @@ class HomeActivity : BaseActivity() {
 
         //settings
         btnSettings = findViewById<ImageView>(R.id.btn_settings)
+        btnSoil = findViewById(R.id.soil_card)
+        btnWeather = findViewById(R.id.weather_card)
+        btnReports = findViewById(R.id.reports_card)
+        btnManual = findViewById(R.id.manual_card)
+        btnLogout = findViewById(R.id.logout_card)
+        tvUsername = findViewById(R.id.tv_username)
+        tvDateToday = findViewById(R.id.tv_date_today)
+        btnBtConnect = findViewById(R.id.bluetooth_card)
+        // Note: btnSyncDatabase and other menu items are handled through onCreateOptionsMenu and onOptionsItemSelected
     }
 
     private fun setupButtonNavigation() {
@@ -80,53 +87,40 @@ class HomeActivity : BaseActivity() {
         setButtonClickListener(btnWeather, WeatherActivity::class.java)
         setButtonClickListener(btnReports, ReportsActivity::class.java)
         setButtonClickListener(btnManual, RecommendationHistoryActivity::class.java)
+        setButtonClickListener(btnBtConnect, ArduinoController::class.java) // Ensure BluetoothController exists or adjust as needed
 
         btnLogout.setOnClickListener {
             auth.signOut()
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
+            finish()
         }
+
 
         //settings
         btnSettings.setOnClickListener { view ->
             showPopupMenu(view)
         }
+        
     }
 
-    //settings
-    private fun showPopupMenu(view: View?) {
-        val popup = PopupMenu(this, view)
-        popup.menuInflater.inflate(R.menu.popup_menu, popup.menu)
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.popup_menu, menu) // Replace "your_menu_xml_file_name" with the actual file name of your menu
+        return true
+    }
 
-        try {
-            val popupField = PopupMenu::class.java.getDeclaredField("mPopup")
-            popupField.isAccessible = true
-            val menuPopupHelper = popupField.get(popup)
-            val setForceShowIconMethod: Method = menuPopupHelper.javaClass.getDeclaredMethod(
-                "setForceShowIcon", Boolean::class.javaPrimitiveType
-            )
-            setForceShowIconMethod.invoke(menuPopupHelper, true)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
-        popup.setOnMenuItemClickListener { item ->
-            when (item.itemId) {
-                R.id.btn_sync_database -> {
-                    // Handle sync action
-                    showSyncDatabaseDialog()
-                    true
-                }
-                R.id.btn_language -> {
-                    // Handle change language action
-                    showLanguageDialog()
-                    true
-                }
-                else -> false
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.btn_sync_database -> {
+                showSyncDatabaseDialog()
+                true
             }
+            R.id.btn_language -> {
+                showLanguageDialog()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
-
-        popup.show()
     }
 
 
