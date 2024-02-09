@@ -7,15 +7,26 @@ import java.util.UUID
 
 class BluetoothController(private val context: Context) {
 
+    interface BluetoothDataListener {
+        fun onDataReceived(data: String)
+    }
+
     private var bluetoothAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
     private var bluetoothGatt: BluetoothGatt? = null
-    private val hc10MacAddress = "88:4A:EA:98:22:E7" // Replace with your HM-10 MAC address
-    private val serviceUUID = UUID.fromString("0000FFE0-0000-1000-8000-00805F9B34FB") // Replace with your HM-10 service UUID
-    private val charUUID = UUID.fromString("0000FFE1-0000-1000-8000-00805F9B34FB") // Replace with your HM-10 characteristic UUID
+    private var dataListener: BluetoothDataListener? = null
+
+    // Replace these with your actual Bluetooth module MAC address and UUIDs
+    private val deviceMacAddress = "88:4A:EA:98:22:E7"
+    private val serviceUUID = UUID.fromString("0000FFE0-0000-1000-8000-00805F9B34FB")
+    private val characteristicUUID = UUID.fromString("0000FFE1-0000-1000-8000-00805F9B34FB")
+
+    fun setDataListener(listener: BluetoothDataListener) {
+        this.dataListener = listener
+    }
 
     fun connect(): Boolean {
-        bluetoothAdapter?.let {
-            val device = it.getRemoteDevice(hc10MacAddress)
+        bluetoothAdapter?.let { adapter ->
+            val device = adapter.getRemoteDevice(deviceMacAddress)
             bluetoothGatt = device.connectGatt(context, false, gattCallback)
             return true
         }
@@ -24,6 +35,7 @@ class BluetoothController(private val context: Context) {
 
     private val gattCallback = object : BluetoothGattCallback() {
         override fun onConnectionStateChange(gatt: BluetoothGatt, status: Int, newState: Int) {
+            super.onConnectionStateChange(gatt, status, newState)
             if (newState == BluetoothProfile.STATE_CONNECTED) {
                 Log.d("BluetoothController", "Connected to GATT server.")
                 gatt.discoverServices()
@@ -33,46 +45,37 @@ class BluetoothController(private val context: Context) {
         }
 
         override fun onServicesDiscovered(gatt: BluetoothGatt, status: Int) {
+            super.onServicesDiscovered(gatt, status)
             if (status == BluetoothGatt.GATT_SUCCESS) {
-                Log.d("BluetoothController", "Services Discovered.")
-            } else {
-                Log.w("BluetoothController", "onServicesDiscovered received: $status")
+                val service = gatt.getService(serviceUUID)
+                val characteristic = service?.getCharacteristic(characteristicUUID)
+                if (characteristic != null) {
+                    enableNotifications(gatt, characteristic)
+                }
             }
         }
 
-        override fun onCharacteristicWrite(gatt: BluetoothGatt, characteristic: BluetoothGattCharacteristic, status: Int) {
-            if (status == BluetoothGatt.GATT_SUCCESS) {
-                Log.d("BluetoothController", "Characteristic written successfully")
-            } else {
-                Log.d("BluetoothController", "Characteristic write failed: $status")
+        override fun onCharacteristicChanged(gatt: BluetoothGatt, characteristic: BluetoothGattCharacteristic) {
+            super.onCharacteristicChanged(gatt, characteristic)
+            val data = characteristic.value?.toString(Charsets.UTF_8)
+            data?.let {
+                dataListener?.onDataReceived(it)
             }
         }
     }
 
-    fun sendData(data: String) {
-        if (data != "1" && data != "0") {
-            Log.d("BluetoothController", "Invalid data. Only '1' or '0' allowed.")
-            return
-        }
-
-        bluetoothGatt?.let { gatt ->
-            val service = gatt.getService(serviceUUID)
-            val char = service?.getCharacteristic(charUUID)
-            char?.let {
-                if (it.properties and BluetoothGattCharacteristic.PROPERTY_WRITE > 0) {
-                    it.value = data.toByteArray()
-                    val writeSuccess = gatt.writeCharacteristic(it)
-                    Log.d("BluetoothController", "Attempting to write characteristic: $writeSuccess")
-                } else {
-                    Log.d("BluetoothController", "Characteristic not writable")
-                }
-            } ?: Log.d("BluetoothController", "Characteristic not found")
+    private fun enableNotifications(gatt: BluetoothGatt, characteristic: BluetoothGattCharacteristic) {
+        val success = gatt.setCharacteristicNotification(characteristic, true)
+        if (success) {
+            val descriptor = characteristic.getDescriptor(UUID.fromString("00002902-0000-1000-8000-00805F9B34FB"))
+            descriptor.value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
+            gatt.writeDescriptor(descriptor)
         }
     }
 
     fun disconnect() {
-        bluetoothGatt?.apply {
-            close()
+        bluetoothGatt?.let {
+            it.close()
             bluetoothGatt = null
         }
     }
