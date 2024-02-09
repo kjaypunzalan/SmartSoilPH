@@ -26,15 +26,6 @@
         android:layout_width="match_parent"
         android:layout_height="240dp"
         app:srcCompat="@drawable/bg_weather" />
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/icon_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:icon="@drawable/icon_sync"
-        android:drawableTint="@color/transparent"
-        app:iconSize="48dp"
-        app:iconPadding="0dp"
-        style="@style/Widget.MaterialComponents.Button.Icon" />
 
     <!-- SmartSoil Title Text -->
     <TextView
