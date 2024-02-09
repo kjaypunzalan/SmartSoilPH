@@ -38,6 +38,7 @@ class HomeActivity : BaseActivity() {
     private lateinit var tvUsername: TextView
     private lateinit var tvDateToday: TextView
     private lateinit var btnBtConnect: CardView
+    private lateinit var btnSettings: ImageView
 
     // Declare Firebase variables
     private lateinit var auth: FirebaseAuth
@@ -101,12 +102,47 @@ class HomeActivity : BaseActivity() {
         btnSettings.setOnClickListener { view ->
             showPopupMenu(view)
         }
-        
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.popup_menu, menu) // Replace "your_menu_xml_file_name" with the actual file name of your menu
         return true
+    }
+
+    private fun showPopupMenu(view: View?) {
+        val popup = PopupMenu(this, view)
+        popup.menuInflater.inflate(R.menu.popup_menu, popup.menu)
+
+        try {
+            val popupField = PopupMenu::class.java.getDeclaredField("mPopup")
+            popupField.isAccessible = true
+            val menuPopupHelper = popupField.get(popup)
+            val setForceShowIconMethod: Method = menuPopupHelper.javaClass.getDeclaredMethod(
+                "setForceShowIcon", Boolean::class.javaPrimitiveType
+            )
+            setForceShowIconMethod.invoke(menuPopupHelper, true)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        popup.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.btn_sync_database -> {
+                    // Handle sync action
+                    showSyncDatabaseDialog()
+                    true
+                }
+                R.id.btn_language -> {
+                    // Handle change language action
+                    showLanguageDialog()
+                    true
+                }
+                else -> false
+            }
+        }
+
+        popup.show()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
