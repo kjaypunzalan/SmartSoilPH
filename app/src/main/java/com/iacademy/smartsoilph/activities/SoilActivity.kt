@@ -14,7 +14,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.iacademy.smartsoilph.R
 import com.iacademy.smartsoilph.datamodels.SoilData
 import com.iacademy.smartsoilph.datamodels.RecommendationData
-import com.iacademy.smartsoilph.models.DatabaseHelper
+import com.iacademy.smartsoilph.models.SQLiteModel
 import com.iacademy.smartsoilph.models.FirebaseModel
 import com.iacademy.smartsoilph.utils.CheckInternet
 import java.text.SimpleDateFormat
@@ -201,7 +201,10 @@ class SoilActivity : BaseActivity() {
         val dateOfRecommendation = formatter.format(calendar.time)
         //pass values to Datamodel
         val soilData = SoilData(nitrogen, phosphorus, potassium, phLevel, ecLevel, humidity, temperature)
-        val recommendationData = RecommendationData(soilData, fertilizerWeightKg, limeRequirement, dateOfRecommendation, "Cloud Firebase")
+        val recommendationData = RecommendationData(soilData, fertilizerWeightKg, limeRequirement, dateOfRecommendation, "Local SQLite")
+
+        //Create SQLite instance
+        val dbHelper = SQLiteModel(this)
 
 
         /******************************
@@ -209,13 +212,15 @@ class SoilActivity : BaseActivity() {
          * ---------------------------*/
         val checkInternet = CheckInternet(this)
         if (checkInternet.isInternetAvailable()) {
-            // Internet is available - add to Firebase Database
+            // Internet is available - save locally then add to Firebase Database
+            // Save locally first
+            recommendationData.initialStorageType = "Cloud Firebase"
+            dbHelper.addSoilData(recommendationData)
+            // Save in cloud
             FirebaseModel().saveSoilData(soilData, auth)
             FirebaseModel().saveRecommendation(recommendationData, auth)
         } else {
             // Internet is NOT available - add to SQLite
-            recommendationData.initialStorageType = "Local SQLite"
-            val dbHelper = DatabaseHelper(this)             // Instantiate DatabaseHelper
             val result = dbHelper.addSoilData(recommendationData)  // Save the soil data to the SQLite database
 
             //Add toast notification is successful or not
@@ -232,7 +237,6 @@ class SoilActivity : BaseActivity() {
         /***************************
          * Go to FertilizerActivity
          * ---------------------------*/
-        // Pass the computed value to the FertilizerActivity
         val intent = Intent(this, FertilizerActivity::class.java)
         startActivity(intent)
     }

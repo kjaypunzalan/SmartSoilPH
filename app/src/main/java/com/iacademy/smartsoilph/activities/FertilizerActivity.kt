@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -13,7 +14,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.database
 import com.iacademy.smartsoilph.R
-import com.iacademy.smartsoilph.models.DatabaseHelper
+import com.iacademy.smartsoilph.models.SQLiteModel
 import com.iacademy.smartsoilph.models.FirebaseModel
 import com.iacademy.smartsoilph.utils.CheckInternet
 
@@ -25,8 +26,8 @@ class FertilizerActivity : BaseActivity() {
     private lateinit var tvFertilizerAmount1: TextView
     private lateinit var tvLimeAmount: TextView
     private lateinit var tvLimeAmount1: TextView
-    private lateinit var btnPreviousRecommendations: Button
-    private lateinit var btnReturnSoil: Button
+    private lateinit var btnPreviousRecommendations: CardView
+    private lateinit var btnReturnSoil: CardView
 
     //declare Firebase variables
     private lateinit var auth: FirebaseAuth
@@ -54,8 +55,8 @@ class FertilizerActivity : BaseActivity() {
         tvFertilizerAmount1 = findViewById<TextView>(R.id.tv_fertilizer_amount1)
 //        tvLimeAmount = findViewById<TextView>(R.id.tv_lime_amount)
 //        tvLimeAmount1 = findViewById<TextView>(R.id.tv_lime_amount1)
-        btnPreviousRecommendations = findViewById<Button>(R.id.btn_previous);
-        btnReturnSoil = findViewById<Button>(R.id.btn_return_soil);
+        btnPreviousRecommendations = findViewById<CardView>(R.id.btn_previous);
+        btnReturnSoil = findViewById<CardView>(R.id.btn_return_soil);
     }
 
     private fun setupButtonNavigation() {
@@ -81,20 +82,12 @@ class FertilizerActivity : BaseActivity() {
      * A. Initialize Content from Firebase or from SQLite
      *----------------------------------------------------*/
     private fun initializeContent() {
-        // Check Internet Connection
-        val checkInternet = CheckInternet(this)
-        if (checkInternet.isInternetAvailable()) {
-            // Internet is available, fetch data from Firebase
-            fetchFromFirebase()
-        } else {
-            // No internet, fetch data from SQLite
-            fetchFromSQLite()
-        }
+        fetchFromSQLite()
     }
 
     /***********************************
      * B. Fetch content from Firebase Database
-     *---------------------------------*/
+     *---------------------------------
     private fun fetchFromFirebase() {
         // Get FirebaseDatabase Reference
         val firebaseDB = Firebase.database.getReference("SmartSoilPH")
@@ -141,25 +134,25 @@ class FertilizerActivity : BaseActivity() {
                     Toast.makeText(applicationContext, "Failed", Toast.LENGTH_SHORT).show()
                 }
             })
-    }
+    }*/
 
     /***********************************
      * C. Fetch content from SQLite
      *---------------------------------*/
     private fun fetchFromSQLite() {
         // Fetch the latest soil data from SQLite
-        val dbHelper = DatabaseHelper(this)
+        val dbHelper = SQLiteModel(this)
         val latestSoilData = dbHelper.getLatestSoilData()
 
         // Update UI with the latest soil data
         latestSoilData?.let { soilData ->
             val formattedFertilizerAmount = String.format("%.1f", soilData.fertilizerRecommendation)
-            val formattedLimeAmount = String.format("%.1f", soilData.limeRecommendation)
+            //val formattedLimeAmount = String.format("%.1f", soilData.limeRecommendation)
 
             tvFertilizerAmount.text = " $formattedFertilizerAmount kg"
             tvFertilizerAmount1.text = "$formattedFertilizerAmount kg"
-            tvLimeAmount.text = " $formattedLimeAmount pounds"
-            tvLimeAmount1.text = "$formattedLimeAmount pounds"
+            //tvLimeAmount.text = " $formattedLimeAmount pounds"
+            //tvLimeAmount1.text = "$formattedLimeAmount pounds"
         } ?: run {
             Toast.makeText(applicationContext, "No local soil data available", Toast.LENGTH_SHORT).show()
         }

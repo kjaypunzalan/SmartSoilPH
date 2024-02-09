@@ -10,6 +10,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.iacademy.smartsoilph.R
 import com.iacademy.smartsoilph.datamodels.UserData
 import com.iacademy.smartsoilph.models.FirebaseModel
+import com.iacademy.smartsoilph.models.SQLiteModel
 
 class RegisterActivity : BaseActivity() {
 
@@ -136,9 +137,10 @@ class RegisterActivity : BaseActivity() {
                             }
                         }
 
-                    //Add to Firebase Database
+                    //Add to Database
                     val userData = UserData(name, email, number)
-                    FirebaseModel().writeNewUser(userData, auth)
+                    SQLiteModel(this).addUserData(userData)  // Save to SQLite
+                    FirebaseModel().writeNewUser(userData, auth)    // Save to Firebase
                 } else {
                     Toast.makeText(baseContext, "Authentication failed.", Toast.LENGTH_SHORT).show()
                 }

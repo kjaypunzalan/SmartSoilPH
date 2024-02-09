@@ -2,7 +2,6 @@ package com.iacademy.smartsoilph.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -14,7 +13,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.database
 import com.iacademy.smartsoilph.R
-import com.iacademy.smartsoilph.models.DatabaseHelper
+import com.iacademy.smartsoilph.models.SQLiteModel
 import com.iacademy.smartsoilph.models.FirebaseModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -130,7 +129,7 @@ class HomeActivity : BaseActivity() {
             .setCancelable(false)
             .setPositiveButton("Sync Database") { dialog, id ->
                 // Perform the database sync operation
-                val dbHelper = DatabaseHelper(this)
+                val dbHelper = SQLiteModel(this)
                 dbHelper.syncDataWithFirebase(auth, this)
                 Toast.makeText(this, "Database syncing...", Toast.LENGTH_SHORT).show()
             }
@@ -182,7 +181,7 @@ class HomeActivity : BaseActivity() {
     }
 
     private fun resetDatabase() {
-        val dbHelper = DatabaseHelper(this)
+        val dbHelper = SQLiteModel(this)
         dbHelper.deleteDatabase()
         // Show a Toast message confirming the database reset
         Toast.makeText(this, "Database has been reset", Toast.LENGTH_SHORT).show()
