@@ -1,9 +1,10 @@
+
 package com.iacademy.smartsoilph.arduino
 
 import android.bluetooth.*
 import android.content.Context
 import android.util.Log
-import java.util.UUID
+import java.util.*
 
 class BluetoothController(private val context: Context) {
 
@@ -31,6 +32,23 @@ class BluetoothController(private val context: Context) {
             return true
         }
         return false
+    }
+
+    fun sendCommand(command: String) {
+        bluetoothGatt?.let { gatt ->
+            val service = gatt.getService(serviceUUID)
+            val characteristic = service?.getCharacteristic(characteristicUUID)
+            characteristic?.setValue(command)
+            gatt.writeCharacteristic(characteristic)
+        }
+    }
+
+    fun disconnect() {
+        bluetoothGatt?.let {
+            it.disconnect()
+            it.close()
+            bluetoothGatt = null
+        }
     }
 
     private val gattCallback = object : BluetoothGattCallback() {
@@ -70,13 +88,6 @@ class BluetoothController(private val context: Context) {
             val descriptor = characteristic.getDescriptor(UUID.fromString("00002902-0000-1000-8000-00805F9B34FB"))
             descriptor.value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
             gatt.writeDescriptor(descriptor)
-        }
-    }
-
-    fun disconnect() {
-        bluetoothGatt?.let {
-            it.close()
-            bluetoothGatt = null
         }
     }
 }
