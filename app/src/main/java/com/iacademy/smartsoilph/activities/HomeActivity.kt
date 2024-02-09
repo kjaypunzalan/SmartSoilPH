@@ -25,6 +25,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var btnReports: CardView
     private lateinit var btnManual: CardView
     private lateinit var tvUsername: TextView
+    private lateinit var btnBluetooth: CardView
 
     //declare Firebase variables
     private lateinit var auth: FirebaseAuth
@@ -42,12 +43,14 @@ class HomeActivity : AppCompatActivity() {
         btnReports = findViewById<CardView>(R.id.reports_card);
         btnManual = findViewById<CardView>(R.id.manual_card);
         tvUsername = findViewById<TextView>(R.id.tv_username)
+        btnBluetooth = findViewById<CardView>(R.id.bluetooth_card)
 
         // set click listeners for buttons
         setButtonClickListener(btnSoil, SoilActivity::class.java)
         setButtonClickListener(btnWeather, WeatherActivity::class.java)
         setButtonClickListener(btnReports, ReportsActivity::class.java)
         setButtonClickListener(btnManual, RecommendationHistoryActivity::class.java)
+        setButtonClickListener(btnBluetooth, ArduinoController::class.java)
 
         fetchUsername()
     }
