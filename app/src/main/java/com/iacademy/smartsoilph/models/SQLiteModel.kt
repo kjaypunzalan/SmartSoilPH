@@ -224,6 +224,9 @@ class SQLiteModel(private val context: Context) : SQLiteOpenHelper(context, DATA
             put(KEY_IS_SAVED_ONLINE, if (recommendationData.isSavedOnline) 1 else 0)
         }
 
+        val isSaved = recommendationData.isSavedOnline
+        Log.d("", "SAVED THE FOLLOWING INFO $isSaved")
+
         // Inserting Row and returning the row id
         val recommendationIdResult  = db.insert(TABLE_RECOMMENDATION, null, contentValues)
         if (recommendationIdResult  == -1L) {
@@ -250,7 +253,7 @@ class SQLiteModel(private val context: Context) : SQLiteOpenHelper(context, DATA
         // Execute the query and get a cursor to iterate over the results
         val cursor = db.rawQuery(selectQuery, null)
 
-        if (cursor.moveToNext()) {
+        while (cursor.moveToNext()) {
             // Extract data for RecommendationData
             val recommendationID = cursor.getString(cursor.getColumnIndexOrThrow(KEY_RECOMMENDATION_ID))
             val userID = cursor.getString(cursor.getColumnIndexOrThrow(KEY_USER_ID))
@@ -284,7 +287,7 @@ class SQLiteModel(private val context: Context) : SQLiteOpenHelper(context, DATA
             // Constructing RecommendationData object
             val recommendationData = RecommendationData(
                 recommendationID, userID, soilData, fertilizerRecommendation, limeRecommendation,
-                dateOfRecommendation, initialStorageType, true
+                dateOfRecommendation, initialStorageType, isSavedOnline
             )
             recommendationList.add(recommendationData)
         }
@@ -353,24 +356,48 @@ class SQLiteModel(private val context: Context) : SQLiteOpenHelper(context, DATA
      * @return a list of SoilDataModel containing the data from the database
      */
     fun syncDataWithFirebase(auth: FirebaseAuth) {
-        val db = this.readableDatabase
+        Log.d("SQLiteModel", "Starting data sync with Firebase.")
         val firebaseDB = Firebase.database.reference
-        val localDataList = getAllSoilData()
+        val localDataList = getAllSoilData() // Assuming this retrieves the list correctly
 
-        for (recommendationData in localDataList) {
+        if (localDataList.isEmpty()) {
+            Log.d("SQLiteModel", "No data to sync.")
+            return
+        }
+
+        localDataList.forEach { recommendationData ->
             if (!recommendationData.isSavedOnline) {
+                Log.d("SQLiteModel", "Syncing data for recommendationID: ${recommendationData.recommendationID}")
+                // Define Firebase paths
                 val referenceUser = firebaseDB.child("SmartSoilPH").child("Users").child(recommendationData.userID)
                 val referenceDetails = referenceUser.child("RecommendationHistory").child(recommendationData.recommendationID)
-                referenceDetails.setValue(recommendationData).addOnSuccessListener {
-                    // Update the local database to mark this record as synced
-                    val contentValues = ContentValues()
-                    contentValues.put(KEY_IS_SAVED_ONLINE, 1) // Mark as saved online
-                    db.update(TABLE_RECOMMENDATION, contentValues, "recommendationID=?", arrayOf(recommendationData.recommendationID))
+
+                // Push to Firebase
+                referenceDetails.setValue(recommendationData.apply { this.isSavedOnline = true }).addOnSuccessListener {
+                    // Use a method to update local DB flag
+                    updateIsSavedOnlineFlag(recommendationData.recommendationID, true)
+                    Log.d("SQLiteModel", "Successfully synced data for recommendationID: ${recommendationData.recommendationID}")
+                }.addOnFailureListener {
+                    Log.e("DatabaseSync", "Failed to sync recommendationID: ${recommendationData.recommendationID}")
                 }
             }
         }
-        db.close()
     }
+
+    fun updateIsSavedOnlineFlag(recommendationID: String, isSavedOnline: Boolean) {
+        val db = this.writableDatabase // Ensure this is the writable database instance
+
+        try {
+            val contentValues = ContentValues()
+            contentValues.put(KEY_IS_SAVED_ONLINE, if (isSavedOnline) 1 else 0)
+
+            db.update(TABLE_RECOMMENDATION, contentValues, "$KEY_RECOMMENDATION_ID=?", arrayOf(recommendationID))
+        } catch (e: Exception) {
+            Log.e("SQLiteModel", "Error updating isSavedOnline flag: ${e.message}")
+        }
+    }
+
+
 
     fun generateRecommendationID(): String {
         val db = this.readableDatabase

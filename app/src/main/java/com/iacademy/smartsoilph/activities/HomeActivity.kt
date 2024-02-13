@@ -2,6 +2,7 @@ package com.iacademy.smartsoilph.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -57,6 +58,7 @@ class HomeActivity : BaseActivity() {
         // Display Date and Username
         displayCurrentDate()
         fetchUsername()
+        //resetDatabase()
     }
 
     private fun initializeLayout() {
@@ -188,12 +190,14 @@ class HomeActivity : BaseActivity() {
     }
 
     private fun showSyncDatabaseDialog() {
+        Log.d("", "------------------------1. Dialog Showed Up")
         val dialogBuilder = AlertDialog.Builder(this)
         dialogBuilder.setMessage("Do you want to sync database? Make sure you are connected to the internet.")
             .setCancelable(false)
             .setPositiveButton("Sync Database") { dialog, id ->
                 // Perform the database sync operation
                 val dbHelper = SQLiteModel(this)
+                Log.d("", "------------------------2. Dialog Sync Clicked")
                 dbHelper.syncDataWithFirebase(auth)
                 Toast.makeText(this, "Database syncing...", Toast.LENGTH_SHORT).show()
             }

@@ -32,11 +32,13 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.database
 import com.iacademy.smartsoilph.R
 import com.iacademy.smartsoilph.datamodels.SoilData
+import com.iacademy.smartsoilph.models.SQLiteModel
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import kotlin.math.absoluteValue
 
 
 class ReportsActivity : BaseActivity() {
@@ -47,9 +49,10 @@ class ReportsActivity : BaseActivity() {
     private lateinit var lineChart1: LineChart
     private lateinit var lineChart2: LineChart
     private lateinit var barChart1: BarChart
-    private lateinit var btnDownload: CardView
+    private lateinit var btnDownload: ImageView
     private lateinit var btnReturn: ImageView
     private lateinit var scrollView: NestedScrollView
+
 
     //declare Firebase variables
     private lateinit var auth: FirebaseAuth
@@ -91,7 +94,7 @@ class ReportsActivity : BaseActivity() {
         lineChart2 = findViewById<LineChart>(R.id.lineChart2);
         barChart1 = findViewById<BarChart>(R.id.barChart1);
         scrollView = findViewById<NestedScrollView>(R.id.sv_scrollview)
-        btnDownload = findViewById<CardView>(R.id.btnDownload);
+        btnDownload = findViewById<ImageView>(R.id.btnDownload);
         btnReturn = findViewById<ImageView>(R.id.toolbar_back_icon)
     }
 
@@ -111,31 +114,27 @@ class ReportsActivity : BaseActivity() {
      * B. Total Saves
      */
     private fun fetchAndDisplayInitialStorageTypeData() {
-        val reference = Firebase.database.reference.child("SmartSoilPH")
-            .child("Users").child(auth.currentUser!!.uid).child("RecommendationHistory")
+        val sqliteModel = SQLiteModel(this)
+        val recommendationDataList = sqliteModel.getAllSoilData()
 
-        reference.get().addOnSuccessListener { snapshot ->
-            var sqliteCount = 0
-            var firebaseCount = 0
-            var total = 0
+        var sqliteCount = 0
+        var firebaseCount = 0
 
-            // Get Each Data
-            snapshot.children.forEach {
-                val storageType = it.child("initialStorageType").value.toString()
-                if (storageType == "Local SQLite") sqliteCount++
-                if (storageType == "Cloud Firebase") firebaseCount++
-            }
+        recommendationDataList.forEach {
+            if (it.initialStorageType == "Local SQLite") sqliteCount++
+            if (it.initialStorageType == "Cloud Firebase") firebaseCount++
+        }
 
-            // Add Entries
-            total = sqliteCount + firebaseCount
-            val entries = ArrayList<PieEntry>()
-            entries.add(PieEntry(sqliteCount.toFloat(), "SQLite"))
-            entries.add(PieEntry(firebaseCount.toFloat(), "Firebase"))
-            entries.add(PieEntry(total.toFloat(), "Total"))
+        val total = sqliteCount + firebaseCount
+        val entries = ArrayList<PieEntry>().apply {
+            add(PieEntry(sqliteCount.toFloat(), "SQLite"))
+            add(PieEntry(firebaseCount.toFloat(), "Firebase"))
+            add(PieEntry(total.toFloat(), "Total"))
+        }
 
             // Set Description
             val description = Description()
-            description.text = "Recent storage type save"
+            description.text = "Storage Type"
             pieChart1.description = description
 
             // Set Color
@@ -154,36 +153,29 @@ class ReportsActivity : BaseActivity() {
 
             // Refresh Chart
             pieChart1.invalidate()
-
-        }.addOnFailureListener {
-            // Handle any errors
-        }
     }
 
     /**
      * C. pH Level Distribution
      */
     private fun fetchAndDisplayPHLevelDistribution() {
-        val reference = Firebase.database.reference.child("SmartSoilPH")
-            .child("Users").child(auth.currentUser!!.uid).child("RecommendationHistory")
+        val sqliteModel = SQLiteModel(this)
+        val recommendationDataList = sqliteModel.getAllSoilData()
 
-        reference.get().addOnSuccessListener { snapshot ->
-            var acidicCount = 0f
-            var neutralCount = 0f
-            var alkalineCount = 0f
+        var acidicCount = 0f
+        var neutralCount = 0f
+        var alkalineCount = 0f
 
-            // Get Each Data
-            snapshot.children.forEach {
-                val phLevel = it.child("soilData").child("phLevel").value.toString().toFloatOrNull()
-
-                phLevel?.let { level ->
-                    when {
-                        level < 5.5 -> acidicCount++
-                        level <= 7 -> neutralCount++
-                        level > 7 -> alkalineCount++
-                    }
+        recommendationDataList.forEach {
+            val phLevel = it.soilData.phLevel.absoluteValue
+            phLevel?.let { level ->
+                when {
+                    level < 5.5 -> acidicCount++
+                    level <= 7 -> neutralCount++
+                    level > 7 -> alkalineCount++
                 }
             }
+        }
 
             // Add Entries
             val entries = ArrayList<PieEntry>()
@@ -213,9 +205,7 @@ class ReportsActivity : BaseActivity() {
             // Refresh Chart
             pieChart2.invalidate()
 
-        }.addOnFailureListener {
-            // Handle any errors
-        }
+
     }
 
     /**

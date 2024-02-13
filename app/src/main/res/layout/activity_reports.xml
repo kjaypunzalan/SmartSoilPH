@@ -79,7 +79,6 @@
 
                 <!-- Download Button -->
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/btnDownload"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginTop="30dp"
@@ -90,6 +89,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
+                        android:id="@+id/btnDownload"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_gravity="center"
@@ -146,7 +146,7 @@
                     android:layout_marginEnd="30dp"
                     android:gravity="left"
                     android:maxWidth="145dp"
-                    android:text="@string/sub_summary"
+                    android:text="@string/sub_summary1"
                     android:textAppearance="@style/sub_summary"
                     android:textColor="@color/black_50"
                     app:layout_constraintStart_toEndOf="@id/pieChart1"
@@ -196,7 +196,7 @@
                     android:layout_marginEnd="10dp"
                     android:gravity="right"
                     android:maxWidth="145dp"
-                    android:text="@string/sub_summary"
+                    android:text="@string/sub_summary2"
                     android:textAppearance="@style/sub_summary"
                     android:textColor="@color/black_50"
                     app:layout_constraintEnd_toStartOf="@id/pieChart2"
@@ -248,7 +248,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:gravity="center"
-                    android:text="@string/sub_summary"
+                    android:text="@string/sub_summary3"
                     android:textAppearance="@style/sub_summary"
                     android:textColor="@color/black_50"
                     app:layout_constraintEnd_toEndOf="@id/cl_1"
@@ -301,7 +301,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:gravity="center"
-                    android:text="@string/sub_summary"
+                    android:text="@string/sub_summary4"
                     android:textAppearance="@style/sub_summary"
                     android:textColor="@color/black_50"
                     app:layout_constraintEnd_toEndOf="@id/cl_1"
@@ -355,7 +355,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:gravity="center"
-                    android:text="@string/sub_summary"
+                    android:text="@string/sub_summary5"
                     android:textAppearance="@style/sub_summary"
                     android:textColor="@color/black_50"
                     app:layout_constraintBottom_toBottomOf="parent"

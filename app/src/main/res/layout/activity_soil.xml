@@ -103,7 +103,7 @@
 
     <!-- Filter Button -->
     <androidx.cardview.widget.CardView
-        android:id="@+id/btn_filter"
+
         android:layout_width="30dp"
         android:layout_height="30dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -114,6 +114,7 @@
         app:cardBackgroundColor="@color/main_blue">
 
         <ImageView
+            android:id="@+id/btn_filter"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:src="@drawable/icon_filter"

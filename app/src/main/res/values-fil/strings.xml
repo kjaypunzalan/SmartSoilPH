@@ -35,7 +35,6 @@
     <string name="rec_history">Mga Nakaraang Rekomendasyon</string>
     <string name="date_time">Petsa at Oras</string>
     <string name="fertilizer_info">ng<b> Pataba </b>ang ginamit</string>
-    <string name="manu_title">Isang gabay na ginawa para sa iyo...</string>
     <string name="screen_1">Isang app sa pagsubaybay sa lupa upang mapahusay ang iyong sakahan!</string>
     <string name="screen_2">Mabisang sukatin ang mahahalagang sustansya ng lupa para sa isang malusog na lupa!</string>
     <string name="screen_3">Maging alam sa kasalukuyang mga update sa panahon para sa paghahanda!</string>
@@ -53,5 +52,10 @@
     <string name="stat_sub_title3">"Pinagsama-samang Paggamit ng Fertilizer "</string>
     <string name="stat_sub_title4">pH Trend ng Lupa</string>
     <string name="stat_sub_title5">"Buwanang Average na Lupa NPK "</string>
-    <string name="sub_summary">Buod ng mga ulat ng data ng sustansya ng lupa at higit pa.</string>
+    <string name="sub_summary1">Buod ng mga kamakailang pag-save</string>
+    <string name="sub_summary2">Buod ng mga pH acidity ng lupa</string>
+    <string name="sub_summary3">Buod ng mga paggamit ng pataba</string>
+    <string name="sub_summary4">Buod ng takbo ng pH ng lupa</string>
+    <string name="sub_summary5">Buod ng mga buwanang average na NPK ng lupa</string>
+    <string name="manu_title">Isang gabay na ginawa para sa iyo...</string>
 </resources>
