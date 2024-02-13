@@ -143,7 +143,11 @@
     <string name="stat_sub_title3">Cumulative Fertilizer Usage</string>
     <string name="stat_sub_title4">Soil pH Trend</string>
     <string name="stat_sub_title5">Monthly Average Soil NPK</string>
-    <string name="sub_summary">Summary reports of soil nutrient data and more.</string>
+    <string name="sub_summary1">Summary reports of recent saves</string>
+    <string name="sub_summary2">Summary reports of soil pH acidity</string>
+    <string name="sub_summary3">Summary reports of fertilizer usage</string>
+    <string name="sub_summary4">Summary reports of soil pH trend</string>
+    <string name="sub_summary5">Summary reports of monthly average soil NPK</string>
     <!--=================================================================-->
 
     <!--Activity Manual===================================================-->

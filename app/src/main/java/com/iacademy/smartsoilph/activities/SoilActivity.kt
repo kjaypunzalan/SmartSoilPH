@@ -32,9 +32,11 @@ class SoilActivity : BaseActivity() {
     private lateinit var etECLevel: EditText
     private lateinit var etHumidity: EditText
     private lateinit var etTemperature: EditText
-    private lateinit var btnFilter: CardView
+    private lateinit var btnFilter: ImageView
     private lateinit var btnViewRecommendation: CardView
     private lateinit var btnReturn: ImageView
+    private var gradeDialog: Dialog? = null
+
 
     //declare dialog variable
     private lateinit var selectedGradeTextView: TextView
@@ -53,6 +55,7 @@ class SoilActivity : BaseActivity() {
         // initialize layout and button navigations
         initializeLayout()
         setupButtonNavigation()
+        Log.d("STATE", "OMGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG")
     }
 
     private fun initializeLayout() {
@@ -63,7 +66,7 @@ class SoilActivity : BaseActivity() {
         etECLevel = findViewById<EditText>(R.id.ec_level_value);
         etHumidity = findViewById<EditText>(R.id.humidity_soil_value);
         etTemperature = findViewById<EditText>(R.id.temp_soil_value);
-        btnFilter = findViewById<CardView>(R.id.btn_filter);
+        btnFilter = findViewById<ImageView>(R.id.btn_filter);
         btnViewRecommendation = findViewById<CardView>(R.id.btn_view_fertilizer);
         btnReturn = findViewById<ImageView>(R.id.toolbar_back_icon)
         selectedGradeTextView = findViewById<TextView>(R.id.tv_selected_grade)
@@ -72,9 +75,11 @@ class SoilActivity : BaseActivity() {
     private fun setupButtonNavigation() {
         // Button Logistics
         btnFilter.setOnClickListener {
+            Log.d("STATE", "FILTER CLICKEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED")
             showGradeDialog()
         }
         btnViewRecommendation.setOnClickListener {
+            Log.d("STATE", "VIEW RECOMMENDATION CLICKEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED ")
             if (isGradeSelected) {
                 recommendation()
             } else {
@@ -230,6 +235,7 @@ class SoilActivity : BaseActivity() {
             // Internet is available - save locally then add to Firebase Database
             // Save locally first
             recommendationData.initialStorageType = "Cloud Firebase"
+            recommendationData.isSavedOnline = true
             dbHelper.addSoilData(recommendationData)
             // Save in cloud
             FirebaseModel().saveSoilData(soilData, auth)

@@ -8,12 +8,15 @@ import android.widget.Toast
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.iacademy.smartsoilph.R
+import com.iacademy.smartsoilph.models.FirebaseModel
 
 class LoginActivity : BaseActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
+    private lateinit var firebaseModel: FirebaseModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +27,7 @@ class LoginActivity : BaseActivity() {
 
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
+        firebaseModel = FirebaseModel()
 
         // Check if user is already logged in
         if (auth.currentUser != null) {
@@ -70,6 +74,8 @@ class LoginActivity : BaseActivity() {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
+                    // After successful login
+                    firebaseModel.getCurrentUserDetailsAndSaveLocally(auth, this)
                     // Login success, update UI with the signed-in user's information
                     checkIfEmailVerified()
                 } else {
