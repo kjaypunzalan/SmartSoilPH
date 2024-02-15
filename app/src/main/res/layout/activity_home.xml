@@ -51,7 +51,9 @@
             android:layout_gravity="right"
             android:layout_marginEnd="20dp"
             android:clickable="true"
-            android:elevation="14dp"/>
+            android:elevation="14dp"
+            android:focusable="true"
+            android:background="@drawable/ripple_effect"/>
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -465,7 +467,11 @@
                         android:layout_height="50dp"
                         app:cardCornerRadius="14dp"
                         android:layout_gravity="center"
-                        android:layout_marginBottom="30dp">
+                        android:layout_marginBottom="30dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:background="@drawable/ripple_effect2"
+                        android:foreground="?android:attr/selectableItemBackground">
                         <!-- Contents of the additional CardView -->
 
                         <LinearLayout

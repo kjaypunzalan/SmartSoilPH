@@ -21,6 +21,7 @@
 
     <color name="green"> #66A96B </color>
     <color name="dark_green">#3B5F41</color>
+    <color name="seafoam">#3DED97</color>
 
     <!-- Light Colors -->
     <color name="light_green">#DFFFE9</color>

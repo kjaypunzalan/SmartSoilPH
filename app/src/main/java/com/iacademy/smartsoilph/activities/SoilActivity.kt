@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.RadioButton
@@ -14,7 +15,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.iacademy.smartsoilph.R
 import com.iacademy.smartsoilph.datamodels.SoilData
 import com.iacademy.smartsoilph.datamodels.RecommendationData
-import com.iacademy.smartsoilph.models.DatabaseHelper
+import com.iacademy.smartsoilph.models.SQLiteModel
 import com.iacademy.smartsoilph.models.FirebaseModel
 import com.iacademy.smartsoilph.utils.CheckInternet
 import java.text.SimpleDateFormat
@@ -31,9 +32,11 @@ class SoilActivity : BaseActivity() {
     private lateinit var etECLevel: EditText
     private lateinit var etHumidity: EditText
     private lateinit var etTemperature: EditText
-    private lateinit var btnFilter: CardView
+    private lateinit var btnFilter: ImageView
     private lateinit var btnViewRecommendation: CardView
     private lateinit var btnReturn: ImageView
+    private var gradeDialog: Dialog? = null
+
 
     //declare dialog variable
     private lateinit var selectedGradeTextView: TextView
@@ -52,6 +55,7 @@ class SoilActivity : BaseActivity() {
         // initialize layout and button navigations
         initializeLayout()
         setupButtonNavigation()
+        Log.d("STATE", "OMGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG")
     }
 
     private fun initializeLayout() {
@@ -62,7 +66,7 @@ class SoilActivity : BaseActivity() {
         etECLevel = findViewById<EditText>(R.id.ec_level_value);
         etHumidity = findViewById<EditText>(R.id.humidity_soil_value);
         etTemperature = findViewById<EditText>(R.id.temp_soil_value);
-        btnFilter = findViewById<CardView>(R.id.btn_filter);
+        btnFilter = findViewById<ImageView>(R.id.btn_filter);
         btnViewRecommendation = findViewById<CardView>(R.id.btn_view_fertilizer);
         btnReturn = findViewById<ImageView>(R.id.toolbar_back_icon)
         selectedGradeTextView = findViewById<TextView>(R.id.tv_selected_grade)
@@ -71,9 +75,11 @@ class SoilActivity : BaseActivity() {
     private fun setupButtonNavigation() {
         // Button Logistics
         btnFilter.setOnClickListener {
+            Log.d("STATE", "FILTER CLICKEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED")
             showGradeDialog()
         }
         btnViewRecommendation.setOnClickListener {
+            Log.d("STATE", "VIEW RECOMMENDATION CLICKEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED ")
             if (isGradeSelected) {
                 recommendation()
             } else {
@@ -195,44 +201,54 @@ class SoilActivity : BaseActivity() {
         /******************************
          * Pass values to Datamodel
          * ---------------------------*/
-        //get Date
+        //Create SQLite instance
+        val dbHelper = SQLiteModel(this)
+        // Get the current user's UID
+        val currentUserUID = dbHelper.getCurrentUserUID() ?: return // Add appropriate error handling or fallback
+        // Generate a unique recommendationID
+        val recommendationID = dbHelper.generateRecommendationID()
+
+        // Get Date
         val calendar = Calendar.getInstance()
         val formatter = SimpleDateFormat("MMMM dd, yyyy (EEE) '@'hh:mma", Locale.getDefault())
         val dateOfRecommendation = formatter.format(calendar.time)
-        //pass values to Datamodel
-        val soilData = SoilData(nitrogen, phosphorus, potassium, phLevel, ecLevel, humidity, temperature)
-        val recommendationData = RecommendationData(soilData, fertilizerWeightKg, limeRequirement, dateOfRecommendation, "Cloud Firebase")
 
+        // Pass values to Datamodel
+        val soilData = SoilData(nitrogen, phosphorus, potassium, phLevel, ecLevel, humidity, temperature)
+        val storageType = "Local SQLite"
+        val isSavedOnline = false
+        val recommendationData = RecommendationData(recommendationID, currentUserUID, soilData, fertilizerWeightKg, limeRequirement, dateOfRecommendation, storageType, isSavedOnline)
+        Log.d("", "recommendationID: $recommendationID")
+        Log.d("", "currentUserUID: $currentUserUID")
+        Log.d("", "soilData: $soilData")
+        Log.d("", "fertilizer: $fertilizerWeightKg")
+        Log.d("", "lime: $limeRequirement")
+        Log.d("", "dateOfRecommendation: $dateOfRecommendation")
+        Log.d("", "storageType: $storageType")
+        Log.d("", "savedOnline: $isSavedOnline")
 
         /******************************
          * Check Internet Connectivity
          * ---------------------------*/
         val checkInternet = CheckInternet(this)
         if (checkInternet.isInternetAvailable()) {
-            // Internet is available - add to Firebase Database
+            // Internet is available - save locally then add to Firebase Database
+            // Save locally first
+            recommendationData.initialStorageType = "Cloud Firebase"
+            recommendationData.isSavedOnline = true
+            dbHelper.addSoilData(recommendationData)
+            // Save in cloud
             FirebaseModel().saveSoilData(soilData, auth)
             FirebaseModel().saveRecommendation(recommendationData, auth)
         } else {
             // Internet is NOT available - add to SQLite
-            recommendationData.initialStorageType = "Local SQLite"
-            val dbHelper = DatabaseHelper(this)             // Instantiate DatabaseHelper
-            val result = dbHelper.addSoilData(recommendationData)  // Save the soil data to the SQLite database
-
-            //Add toast notification is successful or not
-            if (result != -1L) {
-                // Data saved successfully
-                Toast.makeText(this, "Soil data saved locally", Toast.LENGTH_SHORT).show()
-            } else {
-                // Error occurred in saving data
-                Toast.makeText(this, "Failed to save soil data locally", Toast.LENGTH_SHORT).show()
-            }
+            dbHelper.addSoilData(recommendationData)  // Save the soil data to the SQLite database
 
         }
 
         /***************************
          * Go to FertilizerActivity
          * ---------------------------*/
-        // Pass the computed value to the FertilizerActivity
         val intent = Intent(this, FertilizerActivity::class.java)
         startActivity(intent)
     }
