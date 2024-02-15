@@ -63,6 +63,9 @@ class FertilizerActivity : BaseActivity() {
         tvPotassium = findViewById<TextView>(R.id.potassium_value)
         btnPreviousRecommendations = findViewById<CardView>(R.id.btn_previous);
         btnReturnSoil = findViewById<CardView>(R.id.btn_return_soil);
+
+
+        
     }
 
     private fun setupButtonNavigation() {
