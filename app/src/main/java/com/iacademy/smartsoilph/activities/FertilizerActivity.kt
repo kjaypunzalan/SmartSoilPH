@@ -66,7 +66,8 @@ class FertilizerActivity : BaseActivity() {
 
 
 
-        
+
+
     }
 
     private fun setupButtonNavigation() {
