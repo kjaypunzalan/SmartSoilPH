@@ -65,6 +65,7 @@ class FertilizerActivity : BaseActivity() {
         btnReturnSoil = findViewById<CardView>(R.id.btn_return_soil);
 
 
+
         
     }
 
