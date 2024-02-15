@@ -63,11 +63,6 @@ class FertilizerActivity : BaseActivity() {
         tvPotassium = findViewById<TextView>(R.id.potassium_value)
         btnPreviousRecommendations = findViewById<CardView>(R.id.btn_previous);
         btnReturnSoil = findViewById<CardView>(R.id.btn_return_soil);
-
-
-
-
-
     }
 
     private fun setupButtonNavigation() {
@@ -99,10 +94,6 @@ class FertilizerActivity : BaseActivity() {
     private fun displayNutrientRequirements(nitrogen: Float, phosphorus: Float, potassium: Float) {
         // Retrieve selected crop and detected NPK values from the intent
         val selectedCrop = "Eggplant" // Example crop
-        val detectedN = 3.0f // Example detected nitrogen value
-        val detectedP = 7.0f // Example detected phosphorus value
-        val detectedK = 75.0f // Example detected potassium value
-        //Answer: 100/70/90
 
         // Fetch the nutrient requirements for the selected crop
         val requirements = fertilizerNutrientModel.getNutrientRequirements(selectedCrop)
