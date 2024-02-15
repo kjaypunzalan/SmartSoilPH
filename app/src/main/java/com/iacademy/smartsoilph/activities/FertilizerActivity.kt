@@ -17,6 +17,7 @@ import com.iacademy.smartsoilph.R
 import com.iacademy.smartsoilph.models.SQLiteModel
 import com.iacademy.smartsoilph.models.FirebaseModel
 import com.iacademy.smartsoilph.utils.CheckInternet
+import com.iacademy.smartsoilph.datamodels.FertilizerNutrientModel
 
 class FertilizerActivity : BaseActivity() {
 
@@ -24,13 +25,17 @@ class FertilizerActivity : BaseActivity() {
     private lateinit var tvUserName: TextView
     private lateinit var tvFertilizerAmount: TextView
     private lateinit var tvFertilizerAmount1: TextView
-    private lateinit var tvLimeAmount: TextView
-    private lateinit var tvLimeAmount1: TextView
+    private lateinit var tvNitrogen: TextView
+    private lateinit var tvPhosphorus: TextView
+    private lateinit var tvPotassium: TextView
     private lateinit var btnPreviousRecommendations: CardView
     private lateinit var btnReturnSoil: CardView
 
     //declare Firebase variables
     private lateinit var auth: FirebaseAuth
+
+    //declare and initialize the model
+    private val fertilizerNutrientModel = FertilizerNutrientModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,8 +58,9 @@ class FertilizerActivity : BaseActivity() {
 //        tvUserName = findViewById<TextView>(R.id.tv_user_greeting)
         tvFertilizerAmount = findViewById<TextView>(R.id.tv_fertilizer_amount)
         tvFertilizerAmount1 = findViewById<TextView>(R.id.tv_fertilizer_amount1)
-//        tvLimeAmount = findViewById<TextView>(R.id.tv_lime_amount)
-//        tvLimeAmount1 = findViewById<TextView>(R.id.tv_lime_amount1)
+        tvNitrogen = findViewById<TextView>(R.id.nitrogen_value)
+        tvPhosphorus = findViewById<TextView>(R.id.phosphorus_value)
+        tvPotassium = findViewById<TextView>(R.id.potassium_value)
         btnPreviousRecommendations = findViewById<CardView>(R.id.btn_previous);
         btnReturnSoil = findViewById<CardView>(R.id.btn_return_soil);
     }
@@ -85,69 +91,55 @@ class FertilizerActivity : BaseActivity() {
         fetchFromSQLite()
     }
 
-    /***********************************
-     * B. Fetch content from Firebase Database
-     *---------------------------------
-    private fun fetchFromFirebase() {
-        // Get FirebaseDatabase Reference
-        val firebaseDB = Firebase.database.getReference("SmartSoilPH")
-            .child("Users")
-            .child(auth.currentUser!!.uid)
+    private fun displayNutrientRequirements(nitrogen: Float, phosphorus: Float, potassium: Float) {
+        // Retrieve selected crop and detected NPK values from the intent
+        val selectedCrop = "Eggplant" // Example crop
+        val detectedN = 3.0f // Example detected nitrogen value
+        val detectedP = 7.0f // Example detected phosphorus value
+        val detectedK = 75.0f // Example detected potassium value
+        //Answer: 100/70/90
 
-        //Get User and Soil Reference
-        val userReference = firebaseDB.child("UserDetails")
-        val recommendationReference = firebaseDB.child("RecommendationHistory")
+        // Fetch the nutrient requirements for the selected crop
+        val requirements = fertilizerNutrientModel.getNutrientRequirements(selectedCrop)
 
-        //Get Firebase User Data
-        userReference.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val data = snapshot.getValue(FirebaseModel::class.java) ?: return
+        // Compute required fertilizers and display them
+        requirements?.let {
+            val (requiredN, labelN) = calculateRequiredFertilizer(nitrogen, it.nitrogenRequirements)
+            val (requiredP, labelP) = calculateRequiredFertilizer(phosphorus, it.phosphorusRequirements)
+            val (requiredK, labelK) = calculateRequiredFertilizer(potassium, it.potassiumRequirements)
 
-                //put UserName to TextView
-                tvUserName.text = " " + data.name.toString()
-            }
+            tvNitrogen.text = "$requiredN"
+            tvPhosphorus.text = "$requiredP"
+            tvPotassium.text = "$requiredK"
+        }
+    }
 
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(applicationContext, "Failed", Toast.LENGTH_SHORT).show()
-            }
-        })
+    private fun calculateRequiredFertilizer(detectedValue: Float, requirements: Map<ClosedFloatingPointRange<Float>, Pair<Int, String>>): Pair<Int, String> {
+        // Find the range that the detected value falls into
+        val requirementEntry = requirements.entries.find { detectedValue in it.key }
+        // Return the corresponding fertilizer amount and label
+        return requirementEntry?.value ?: Pair(0, "Unknown")
+    }
 
-        // Get Firebase Recommendation Data
-        recommendationReference.limitToLast(1)  // Fetching the most recent recommendation
-            .addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    // Assuming the most recent recommendation is what we need
-                    val latestRecommendation = snapshot.children.firstOrNull()?.getValue(FirebaseModel::class.java)
 
-                    latestRecommendation?.let { data ->
-                        val formattedFertilizer = String.format("%.2f kg", data.fertilizerRecommendation ?: 0.0f)
-                        val formattedLime = String.format("%.2f pounds", data.limeRecommendation ?: 0.0f)
 
-                        tvFertilizerAmount.text = formattedFertilizer
-                        tvFertilizerAmount1.text = formattedFertilizer
-                        tvLimeAmount.text = formattedLime
-                        tvLimeAmount1.text = formattedLime
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    Toast.makeText(applicationContext, "Failed", Toast.LENGTH_SHORT).show()
-                }
-            })
-    }*/
 
     /***********************************
-     * C. Fetch content from SQLite
+     * B. Fetch content from SQLite
      *---------------------------------*/
     private fun fetchFromSQLite() {
         val dbHelper = SQLiteModel(this)
         val latestSoilData = dbHelper.getLatestSoilData()
 
         if (latestSoilData != null) {
+            //Display Fertilizer
             val formattedFertilizerAmount = String.format("%.1f kg", latestSoilData.fertilizerRecommendation)
             tvFertilizerAmount.text = formattedFertilizerAmount
             tvFertilizerAmount1.text = formattedFertilizerAmount
-            // Do similar for other fields
+
+            //Display Fertilizer Requirement
+            val soil = latestSoilData.soilData
+            displayNutrientRequirements(soil.nitrogen, soil.phosphorus, soil.potassium)
         } else {
             Toast.makeText(applicationContext, "No local soil data available", Toast.LENGTH_SHORT).show()
         }
