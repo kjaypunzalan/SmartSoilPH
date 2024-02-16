@@ -123,7 +123,6 @@
             android:layout_gravity="center"
             android:clickable="true"
             android:focusable="true"
-            android:background="@drawable/ripple_effect2"
             android:foreground="?android:attr/selectableItemBackground"/>
 
     </androidx.cardview.widget.CardView>

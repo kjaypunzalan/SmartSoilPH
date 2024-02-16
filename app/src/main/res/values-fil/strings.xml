@@ -58,4 +58,7 @@
     <string name="sub_summary4">Sa kabuuan, ang iyong kamakailang antas ng pH ng lupa ay ang kalusugan ay %.0f.</string>
     <string name="sub_summary5">Kamakailan, ang NPK nutrient na kinakailangan ng iyong lupa ay %1$s.</string>
     <string name="manu_title">Isang gabay na ginawa para sa iyo...</string>
+
+    <string name="home_txt1">Anong gusto mong gawin?</string>
+    <string name="history_button">Nakaraang Datos ng Pataba</string>
 </resources>

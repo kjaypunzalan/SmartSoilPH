@@ -39,7 +39,7 @@ class HomeActivity : BaseActivity() {
     private lateinit var tvUsername: TextView
     private lateinit var tvDateToday: TextView
     private lateinit var btnBtConnect: CardView
-    private lateinit var btnSettings: ImageView
+    private lateinit var btnSettings: CardView
 
     // Declare Firebase variables
     private lateinit var auth: FirebaseAuth
@@ -67,17 +67,17 @@ class HomeActivity : BaseActivity() {
         btnWeather = findViewById<CardView>(R.id.weather_card)
         btnReports = findViewById<CardView>(R.id.reports_card)
         btnManual = findViewById<CardView>(R.id.manual_card)
-        btnLogout = findViewById<CardView>(R.id.logout_card)
+//        btnLogout = findViewById<CardView>(R.id.logout_card)
         tvUsername = findViewById<TextView>(R.id.tv_username)
         tvDateToday = findViewById<TextView>(R.id.tv_date_today)
 
         //settings
-        btnSettings = findViewById<ImageView>(R.id.btn_settings)
+        btnSettings = findViewById<CardView>(R.id.settings_card)
         btnSoil = findViewById(R.id.soil_card)
         btnWeather = findViewById(R.id.weather_card)
         btnReports = findViewById(R.id.reports_card)
         btnManual = findViewById(R.id.manual_card)
-        btnLogout = findViewById(R.id.logout_card)
+//        btnLogout = findViewById(R.id.logout_card)
         tvUsername = findViewById(R.id.tv_username)
         tvDateToday = findViewById(R.id.tv_date_today)
         btnBtConnect = findViewById(R.id.bluetooth_card)

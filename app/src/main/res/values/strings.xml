@@ -95,10 +95,13 @@
     <string name="username" translatable="false">[Username]</string>
     <string name="exclamation" translatable="false">!</string>
     <string name="soil_button">Soil</string>
+    <string name="home_txt1">What do you want to do?</string>
     <string name="weather_button">Weather</string>
     <string name="reports_button">Reports</string>
+    <string name="history_button">Fertilizer History</string>
+    <string name="settings_button" translatable="false">Settings</string>
     <string name="bluetooth_button">Connect to Bluetooth Device</string>
-    <string name="manual_button">Manual</string>
+    <string name="manual_button">View User Manual</string>
     <string name="manual_button2" translatable="false">(English/Tagalog)</string>
     <string name="logout_button">Logout</string>
     <!--=================================================================-->
