@@ -89,31 +89,12 @@ class FirebaseModel {
 
             referenceDetails.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    val dataList = snapshot.children.mapNotNull { dataSnapshot ->
-                        dataSnapshot.getValue(RecommendationData::class.java)?.apply {
-
-                            /*firebaseModel -> RecommendationData(
-                                SoilData(
-                                    firebaseModel.nitrogen ?: 0.0f,
-                                    firebaseModel.potassium ?: 0.0f,
-                                    firebaseModel.phosphorus ?: 0.0f,
-                                    firebaseModel.phLevel ?: 0.0f,
-                                    firebaseModel.ecLevel ?: 0.0f,
-                                    firebaseModel.humidity ?: 0.0f,
-                                    firebaseModel.temperature ?: 0.0f
-                                ),
-                                firebaseModel.fertilizerRecommendation ?: 0.0f,
-                                firebaseModel.limeRecommendation ?: 0.0f,
-                                firebaseModel.dateOfRecommendation.orEmpty(),
-                                firebaseModel.initialStorageType.orEmpty()
-                            )*/
-                        }
-                    }
+                    val dataList = snapshot.children.mapNotNull { it.getValue(RecommendationData::class.java) }
                     onDataReceived(dataList)
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    // Handle error case
+                    Log.e("FirebaseModel", "Error fetching recommendation history: ${error.message}")
                 }
             })
         }
