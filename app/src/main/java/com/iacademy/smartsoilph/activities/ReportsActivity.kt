@@ -8,8 +8,8 @@ import android.os.Bundle
 import android.os.Environment
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
-import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import com.github.mikephil.charting.animation.Easing
@@ -27,9 +27,7 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
-import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.database
 import com.iacademy.smartsoilph.R
 import com.iacademy.smartsoilph.datamodels.SoilData
 import com.iacademy.smartsoilph.models.SQLiteModel
@@ -49,6 +47,11 @@ class ReportsActivity : BaseActivity() {
     private lateinit var lineChart1: LineChart
     private lateinit var lineChart2: LineChart
     private lateinit var barChart1: BarChart
+    private lateinit var tvPCSummary1: TextView
+    private lateinit var tvPCSummary2: TextView
+    private lateinit var tvLCSummary1: TextView
+    private lateinit var tvLCSummary2: TextView
+    private lateinit var tvBCSummary1: TextView
     private lateinit var btnDownload: ImageView
     private lateinit var btnReturn: ImageView
     private lateinit var scrollView: NestedScrollView
@@ -93,6 +96,11 @@ class ReportsActivity : BaseActivity() {
         lineChart1 = findViewById<LineChart>(R.id.lineChart1);
         lineChart2 = findViewById<LineChart>(R.id.lineChart2);
         barChart1 = findViewById<BarChart>(R.id.barChart1);
+        tvPCSummary1 = findViewById<TextView>(R.id.tv_pc_sum1);
+        tvPCSummary2 = findViewById<TextView>(R.id.tv_pc_sum2);
+        tvLCSummary1 = findViewById<TextView>(R.id.tv_lc_sum1);
+        tvLCSummary2 = findViewById<TextView>(R.id.tv_lc_sum2);
+        tvBCSummary1 = findViewById<TextView>(R.id.tv_bc_sum);
         scrollView = findViewById<NestedScrollView>(R.id.sv_scrollview)
         btnDownload = findViewById<ImageView>(R.id.btnDownload);
         btnReturn = findViewById<ImageView>(R.id.toolbar_back_icon)
@@ -132,27 +140,31 @@ class ReportsActivity : BaseActivity() {
             add(PieEntry(total.toFloat(), "Total"))
         }
 
-            // Set Description
-            val description = Description()
-            description.text = "Storage Type"
-            pieChart1.description = description
+        // Getting the formatted string from resources and inserting the variable values
+        val summaryText = getString(R.string.sub_summary1, firebaseCount, sqliteCount, total)
+        tvPCSummary1.text = summaryText
 
-            // Set Color
-            val dataSet = PieDataSet(entries, "Storage Type")
-            val colorBlue1 = ContextCompat.getColor(applicationContext, R.color.main_blue)
-            val colorBlue2 = ContextCompat.getColor(applicationContext, R.color.ultramarine_blue)
-            val colorRed = ContextCompat.getColor(applicationContext, R.color.infra_red)
-            dataSet.colors = listOf(colorRed, colorBlue1, colorBlue2)
+        // Set Description
+        val description = Description()
+        description.text = "Storage Type"
+        pieChart1.description = description
 
-            // Animate Chart
-            pieChart1.animateXY(2000, 1000)
+        // Set Color
+        val dataSet = PieDataSet(entries, "Storage Type")
+        val colorBlue1 = ContextCompat.getColor(applicationContext, R.color.main_blue)
+        val colorBlue2 = ContextCompat.getColor(applicationContext, R.color.ultramarine_blue)
+        val colorRed = ContextCompat.getColor(applicationContext, R.color.infra_red)
+        dataSet.colors = listOf(colorRed, colorBlue1, colorBlue2)
 
-            // Push Dataset
-            val data = PieData(dataSet)
-            pieChart1.data = data
+        // Animate Chart
+        pieChart1.animateXY(2000, 1000)
 
-            // Refresh Chart
-            pieChart1.invalidate()
+        // Push Dataset
+        val data = PieData(dataSet)
+        pieChart1.data = data
+
+        // Refresh Chart
+        pieChart1.invalidate()
     }
 
     /**
@@ -176,6 +188,11 @@ class ReportsActivity : BaseActivity() {
                 }
             }
         }
+
+        // Getting the formatted string from resources and inserting the variable values
+        val summaryText = getString(R.string.sub_summary2, acidicCount, neutralCount, alkalineCount)
+        tvPCSummary2.text = summaryText
+
 
             // Add Entries
             val entries = ArrayList<PieEntry>()
@@ -212,27 +229,31 @@ class ReportsActivity : BaseActivity() {
      * D. Cumulative Fertilizer Usage
      */
     private fun fetchAndDisplayCumulativeFertilizerUsage() {
-        val reference = Firebase.database.reference.child("SmartSoilPH")
-            .child("Users").child(auth.currentUser!!.uid).child("RecommendationHistory")
+        val sqliteModel = SQLiteModel(this)
+        val recommendationDataList = sqliteModel.getAllSoilData()
 
-        reference.get().addOnSuccessListener { snapshot ->
-            val entries = ArrayList<Entry>()
-            var cumulativeTotal = 0f
-            var total = 0
+        val entries = ArrayList<Entry>()
+        var cumulativeTotal = 0f
 
-            // Get Each Data
-            snapshot.children.forEach { dataSnapshot ->
-                val dateStr = dataSnapshot.child("dateOfRecommendation").value.toString()
-                val dateFormat = SimpleDateFormat("MMMM dd, yyyy (EEE) '@'hh:mma", Locale.US)
-                val date = dateFormat.parse(dateStr)
-                val fertilizerAmount = dataSnapshot.child("fertilizerRecommendation").getValue(Float::class.java) ?: 0f
+        // SimpleDateFormat to parse the stored date strings
+        val dateFormat = SimpleDateFormat("MMMM dd, yyyy (EEE) '@'hh:mma", Locale.US)
 
-                cumulativeTotal += fertilizerAmount
-                total++
-                if (date != null) {
-                    entries.add(Entry(date.time.toFloat(), cumulativeTotal))
-                }
+        recommendationDataList.forEach { recommendationData ->
+            // Assuming your RecommendationData model includes a dateOfRecommendation property in a suitable format
+            val dateStr = recommendationData.dateOfRecommendation
+            val date = dateFormat.parse(dateStr)
+            val fertilizerAmount = recommendationData.fertilizerRecommendation
+
+            cumulativeTotal += fertilizerAmount
+            if (date != null) {
+                // Assuming you're using an Entry class similar to MPAndroidChart's Entry class for plotting
+                entries.add(Entry(date.time.toFloat(), cumulativeTotal))
             }
+        }
+
+        // Getting the formatted string from resources and inserting the variable values
+        val summaryText = getString(R.string.sub_summary3, cumulativeTotal)
+        tvLCSummary1.text = summaryText
 
             // Set Description
             val description = Description()
@@ -258,83 +279,94 @@ class ReportsActivity : BaseActivity() {
             lineChart1.invalidate()
 
 
-        }
+
     }
 
     /**
      * E. pH Level Trend
      */
     private fun fetchAndDisplayPhLevelTrend() {
-        val reference = Firebase.database.reference.child("SmartSoilPH")
-            .child("Users").child(auth.currentUser!!.uid).child("RecommendationHistory")
+        val sqliteModel = SQLiteModel(this)
+        val recommendationDataList = sqliteModel.getAllSoilData()
 
-        reference.get().addOnSuccessListener { snapshot ->
-            val entries = ArrayList<Entry>()
+        val entries = ArrayList<Entry>()
+        val dateFormat = SimpleDateFormat("MMMM dd, yyyy (EEE) '@'hh:mma", Locale.US)
+        var recentPH = 0f
 
-            // Get Each Data
-            snapshot.children.forEach { dataSnapshot ->
-                val dateStr = dataSnapshot.child("dateOfRecommendation").value.toString()
-                val dateFormat = SimpleDateFormat("MMMM dd, yyyy (EEE) '@'hh:mma", Locale.US)
-                val date = dateFormat.parse(dateStr)
-                val phLevel = dataSnapshot.child("soilData").child("phLevel").getValue(Float::class.java) ?: 0f
+        recommendationDataList.forEach { recommendationData ->
+            val dateStr = recommendationData.dateOfRecommendation
+            val date = dateFormat.parse(dateStr)
+            val phLevel = recommendationData.soilData.phLevel
 
-                if (date != null) {
-                    entries.add(Entry(date.time.toFloat(), phLevel))
-                }
+            if (date != null) {
+                // Assuming you're using an Entry class similar to MPAndroidChart's Entry class for plotting
+                entries.add(Entry(date.time.toFloat(), phLevel))
+                recentPH = phLevel
             }
-
-            // Set Description
-            val description = Description()
-            description.text = "Trend of the soil pH Level"
-            lineChart2.description = description
-
-            // Hide X Axis
-            lineChart2.xAxis.setDrawLabels(false)
-            lineChart2.xAxis.setDrawAxisLine(false)
-            lineChart2.axisLeft.setDrawGridLines(false)
-            lineChart2.axisRight.setDrawGridLines(false)
-            lineChart2.xAxis.setDrawGridLines(false)
-
-            // Animate Chart
-            lineChart2.animateXY(3000, 1000)
-
-            // Push Dataset
-            val dataSet = LineDataSet(entries, "Soil pH Trend")
-            val data = LineData(dataSet)
-            lineChart2.data = data
-
-            // Refresh the chart
-            lineChart2.invalidate()
         }
+
+        // Getting the formatted string from resources and inserting the variable values
+        val summaryText = getString(R.string.sub_summary4, recentPH)
+        tvLCSummary2.text = summaryText
+
+        // Set Description
+        val description = Description()
+        description.text = "Trend of the soil pH Level"
+        lineChart2.description = description
+
+        // Hide X Axis
+        lineChart2.xAxis.setDrawLabels(false)
+        lineChart2.xAxis.setDrawAxisLine(false)
+        lineChart2.axisLeft.setDrawGridLines(false)
+        lineChart2.axisRight.setDrawGridLines(false)
+        lineChart2.xAxis.setDrawGridLines(false)
+
+        // Animate Chart
+        lineChart2.animateXY(3000, 1000)
+
+        // Push Dataset
+        val dataSet = LineDataSet(entries, "Soil pH Trend")
+        val data = LineData(dataSet)
+        lineChart2.data = data
+
+        // Refresh the chart
+        lineChart2.invalidate()
+
     }
 
     /**
      * F. Monthly Soil Statistics
      */
     private fun fetchAndDisplayMonthlySoilHealth() {
-        val reference = Firebase.database.reference.child("SmartSoilPH")
-            .child("Users").child(auth.currentUser!!.uid).child("RecommendationHistory")
+        val sqliteModel = SQLiteModel(this)
+        val recommendationDataList = sqliteModel.getAllSoilData()
 
-        reference.get().addOnSuccessListener { snapshot ->
-            val monthlyNPK = mutableMapOf<String, MutableList<SoilData>>()
+        val monthlyNPK = mutableMapOf<String, MutableList<SoilData>>()
+        val dateFormat = SimpleDateFormat("MMMM dd, yyyy (EEE) '@'hh:mma", Locale.US)
 
-            snapshot.children.forEach { dataSnapshot ->
-                val dateStr = dataSnapshot.child("dateOfRecommendation").value.toString()
-                val dateFormat = SimpleDateFormat("MMMM dd, yyyy (EEE) '@'hh:mma", Locale.US)
-                val date = dateFormat.parse(dateStr)
-                val calendar = Calendar.getInstance()
-                date?.let { calendar.time = it }
-                val monthYearKey = "${calendar.get(Calendar.MONTH) + 1}-${calendar.get(Calendar.YEAR)}"
+        recommendationDataList.forEach { recommendationData ->
+            val dateStr = recommendationData.dateOfRecommendation
+            val date = dateFormat.parse(dateStr)
+            val calendar = Calendar.getInstance()
+            date?.let { calendar.time = it }
+            val monthYearKey = "${calendar.get(Calendar.MONTH) + 1}-${calendar.get(Calendar.YEAR)}"
 
-                val nitrogen = dataSnapshot.child("soilData").child("nitrogen").getValue(Float::class.java) ?: 0f
-                val phosphorus = dataSnapshot.child("soilData").child("phosphorus").getValue(Float::class.java) ?: 0f
-                val potassium = dataSnapshot.child("soilData").child("potassium").getValue(Float::class.java) ?: 0f
+            // Extracting NPK values directly from the RecommendationData's SoilData object
+            val nitrogen = recommendationData.soilData.nitrogen
+            val phosphorus = recommendationData.soilData.phosphorus
+            val potassium = recommendationData.soilData.potassium
 
-                val soilData = SoilData(nitrogen, phosphorus, potassium, 0f, 0f, 0f, 0f)
-                monthlyNPK.getOrPut(monthYearKey) { mutableListOf() }.add(soilData)
-            }
+            // Assuming SoilData constructor matches the required structure
+            val soilData = SoilData(nitrogen, phosphorus, potassium, 0f, 0f, 0f, 0f)
 
-            val entries = ArrayList<BarEntry>()
+            // Accumulating data by month and year
+            monthlyNPK.getOrPut(monthYearKey) { mutableListOf() }.add(soilData)
+        }
+
+        // Now, 'monthlyNPK' contains a map of month-year keys to lists of SoilData, similar to the Firebase approach.
+
+        var npkString = ""
+        val entries = ArrayList<BarEntry>()
             val npkLabelsMap = mutableMapOf<String, String>()
             var index = 0f
 
@@ -344,10 +376,14 @@ class ReportsActivity : BaseActivity() {
                 val avgPhosphorus = soils.map { it.phosphorus }.average().toFloat()
                 val avgPotassium = soils.map { it.potassium }.average().toFloat()
 
-                val npkString = "${avgNitrogen.toInt()}-${avgPhosphorus.toInt()}-${avgPotassium.toInt()}"
+                npkString = "${avgNitrogen.toInt()}-${avgPhosphorus.toInt()}-${avgPotassium.toInt()}"
                 entries.add(BarEntry(index++, 1f)) // Dummy height for the bar
                 npkLabelsMap[month] = npkString
             }
+
+        // Getting the formatted string from resources and inserting the variable values
+        val summaryText = getString(R.string.sub_summary5, npkString)
+        tvBCSummary1.text = summaryText
 
             // Set Description
             val description = Description()
@@ -371,7 +407,7 @@ class ReportsActivity : BaseActivity() {
             barChart1.data = barData
 
             barChart1.invalidate() // Refresh the chart
-        }
+
     }
 
     class NpkValueFormatter(private val npkDataMap: Map<String, String>) : ValueFormatter() {
