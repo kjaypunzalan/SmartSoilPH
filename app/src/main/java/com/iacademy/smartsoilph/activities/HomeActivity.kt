@@ -12,7 +12,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
-import androidx.core.widget.NestedScrollView
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -41,8 +40,6 @@ class HomeActivity : BaseActivity() {
     private lateinit var tvDateToday: TextView
     private lateinit var btnBtConnect: CardView
     private lateinit var btnSettings: ImageView
-    private lateinit var ivBGHome: ImageView
-    private lateinit var nestedScrollView: NestedScrollView
 
     // Declare Firebase variables
     private lateinit var auth: FirebaseAuth
@@ -65,9 +62,17 @@ class HomeActivity : BaseActivity() {
     }
 
     private fun initializeLayout() {
-        // Note: btnSyncDatabase and other menu items are handled through onCreateOptionsMenu and onOptionsItemSelected
-        // Initialize Layout Variables
-        btnSettings = findViewById(R.id.btn_settings)
+
+        btnSoil = findViewById<CardView>(R.id.soil_card)
+        btnWeather = findViewById<CardView>(R.id.weather_card)
+        btnReports = findViewById<CardView>(R.id.reports_card)
+        btnManual = findViewById<CardView>(R.id.manual_card)
+        btnLogout = findViewById<CardView>(R.id.logout_card)
+        tvUsername = findViewById<TextView>(R.id.tv_username)
+        tvDateToday = findViewById<TextView>(R.id.tv_date_today)
+
+        //settings
+        btnSettings = findViewById<ImageView>(R.id.btn_settings)
         btnSoil = findViewById(R.id.soil_card)
         btnWeather = findViewById(R.id.weather_card)
         btnReports = findViewById(R.id.reports_card)
@@ -76,31 +81,17 @@ class HomeActivity : BaseActivity() {
         tvUsername = findViewById(R.id.tv_username)
         tvDateToday = findViewById(R.id.tv_date_today)
         btnBtConnect = findViewById(R.id.bluetooth_card)
-        ivBGHome = findViewById(R.id.bg_home)
-        nestedScrollView = findViewById(R.id.nested_scrollView)
+        // Note: btnSyncDatabase and other menu items are handled through onCreateOptionsMenu and onOptionsItemSelected
+    }
 
-        // Add Parallax Effect
-        nestedScrollView.viewTreeObserver.addOnScrollChangedListener {
-            val scrollY = nestedScrollView.scrollY // For ScrollView
-            ivBGHome.translationY = scrollY * 0.5f // Adjust parallax effect speed here
-        }
-    }
-    //Button Function
-    private fun setButtonClickListener(button: CardView, activityClass: Class<*>) {
-        button.setOnClickListener {
-            val intent = Intent(this, activityClass)
-            startActivity(intent)
-        }
-    }
     private fun setupButtonNavigation() {
         // set click listeners for buttons
-        setButtonClickListener(btnSoil, SoilActivity::class.java)
+        setButtonClickListener(btnSoil, SoilActivity_test::class.java)
         setButtonClickListener(btnWeather, WeatherActivity::class.java)
         setButtonClickListener(btnReports, ReportsActivity::class.java)
         setButtonClickListener(btnManual, RecommendationHistoryActivity::class.java)
         setButtonClickListener(btnBtConnect, ArduinoController::class.java) // Ensure BluetoothController exists or adjust as needed
 
-        //logout
         btnLogout.setOnClickListener {
             auth.signOut()
             val intent = Intent(this, LoginActivity::class.java)
@@ -108,10 +99,12 @@ class HomeActivity : BaseActivity() {
             finish()
         }
 
+
         //settings
         btnSettings.setOnClickListener { view ->
             showPopupMenu(view)
         }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -168,6 +161,14 @@ class HomeActivity : BaseActivity() {
         }
     }
 
+
+    //Button Function
+    private fun setButtonClickListener(button: CardView, activityClass: Class<*>) {
+        button.setOnClickListener {
+            val intent = Intent(this, activityClass)
+            startActivity(intent)
+        }
+    }
 
     private fun displayCurrentDate() {
         val dateFormat = SimpleDateFormat("EEEE, MMM d", Locale.getDefault())
