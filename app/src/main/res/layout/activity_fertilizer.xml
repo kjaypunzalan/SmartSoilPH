@@ -347,7 +347,6 @@
         android:layout_marginEnd="30dp"
         android:clickable="true"
         android:focusable="true"
-        android:background="@drawable/ripple_effect2"
         android:foreground="?android:attr/selectableItemBackground">
         <!-- Contents of the additional CardView -->
 
@@ -392,7 +391,6 @@
         android:layout_marginEnd="30dp"
         android:clickable="true"
         android:focusable="true"
-        android:background="@drawable/ripple_effect2"
         android:foreground="?android:attr/selectableItemBackground">
         <!-- Contents of the additional CardView -->
 

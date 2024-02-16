@@ -293,7 +293,6 @@
                 android:layout_marginTop="20dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:background="@drawable/ripple_effect2"
                 android:foreground="?android:attr/selectableItemBackground">
                 <!-- Contents of the additional CardView -->
 

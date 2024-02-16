@@ -58,4 +58,7 @@
     <string name="sub_summary4">Buod ng takbo ng pH ng lupa</string>
     <string name="sub_summary5">Buod ng mga buwanang average na NPK ng lupa</string>
     <string name="manu_title">Isang gabay na ginawa para sa iyo...</string>
+
+    <string name="home_txt1">Anong gusto mong gawin?</string>
+    <string name="history_button">Nakaraang Datos ng Pataba</string>
 </resources>
