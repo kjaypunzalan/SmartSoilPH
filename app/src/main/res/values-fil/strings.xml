@@ -52,11 +52,11 @@
     <string name="stat_sub_title3">"Pinagsama-samang Paggamit ng Fertilizer "</string>
     <string name="stat_sub_title4">pH Trend ng Lupa</string>
     <string name="stat_sub_title5">"Buwanang Average na Lupa NPK "</string>
-    <string name="sub_summary1">Buod ng mga kamakailang pag-save</string>
-    <string name="sub_summary2">Buod ng mga pH acidity ng lupa</string>
-    <string name="sub_summary3">Buod ng mga paggamit ng pataba</string>
-    <string name="sub_summary4">Buod ng takbo ng pH ng lupa</string>
-    <string name="sub_summary5">Buod ng mga buwanang average na NPK ng lupa</string>
+    <string name="sub_summary1">May kabuuang %1$d Firebase save, %2$d SQLite save, at %3$d total save sa loob ng huling 7 araw.</string>
+    <string name="sub_summary2">Mayroon kang %.0f acidic na lupa, %.0f neutral na lupa, at %.0f alkaline na lupa sa loob ng huling 7 araw.</string>
+    <string name="sub_summary3">Sa kabuuan, mayroon kang naipon na %.0f paggamit ng pataba sa iyong buhay.</string>
+    <string name="sub_summary4">Sa kabuuan, ang iyong kamakailang antas ng pH ng lupa ay ang kalusugan ay %.0f.</string>
+    <string name="sub_summary5">Kamakailan, ang NPK nutrient na kinakailangan ng iyong lupa ay %1$s.</string>
     <string name="manu_title">Isang gabay na ginawa para sa iyo...</string>
 
     <string name="home_txt1">Anong gusto mong gawin?</string>

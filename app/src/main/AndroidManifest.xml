@@ -90,6 +90,9 @@
         <activity android:name=".activities.ArduinoController"
             android:exported="true"
             android:theme="@style/Theme.SmartSoilPH" />
+        <activity android:name=".activities.SoilActivity_test"
+            android:exported="true"
+            android:theme="@style/Theme.SmartSoilPH" />
 
     </application>
 

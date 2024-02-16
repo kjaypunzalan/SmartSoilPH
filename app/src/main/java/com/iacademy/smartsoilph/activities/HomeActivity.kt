@@ -86,7 +86,7 @@ class HomeActivity : BaseActivity() {
 
     private fun setupButtonNavigation() {
         // set click listeners for buttons
-        setButtonClickListener(btnSoil, SoilActivity::class.java)
+        setButtonClickListener(btnSoil, SoilActivity_test::class.java)
         setButtonClickListener(btnWeather, WeatherActivity::class.java)
         setButtonClickListener(btnReports, ReportsActivity::class.java)
         setButtonClickListener(btnManual, RecommendationHistoryActivity::class.java)

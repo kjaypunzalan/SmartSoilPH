@@ -186,9 +186,9 @@
     <!-- Soil Image -->
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="147dp"
+        android:layout_height="160dp"
+        android:layout_marginBottom="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:srcCompat="@drawable/bg_sprout"
-        tools:layout_editor_absoluteX="48dp" />
+        app:srcCompat="@drawable/bg_sprout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
