@@ -3,7 +3,9 @@
 
     import android.bluetooth.*
     import android.content.Context
+    import android.content.Intent
     import android.util.Log
+    import androidx.localbroadcastmanager.content.LocalBroadcastManager
     import java.util.*
 
     class BluetoothController(private val context: Context) {
@@ -73,13 +75,69 @@
                 }
             }
 
+            private var buffer = StringBuilder()
+
             override fun onCharacteristicChanged(gatt: BluetoothGatt, characteristic: BluetoothGattCharacteristic) {
                 super.onCharacteristicChanged(gatt, characteristic)
                 val data = characteristic.value?.toString(Charsets.UTF_8)
                 data?.let {
-                    dataListener?.onDataReceived(it)
+                    buffer.append(it)
+                    // Check if the buffer contains the end-of-message delimiter (e.g., newline)
+                    if (buffer.contains("\n")) {
+                        // Extract the complete message up to the delimiter
+                        val completeData = buffer.substring(0, buffer.indexOf("\n") + 1)
+                        // Remove the processed data from the buffer
+                        buffer.delete(0, buffer.indexOf("\n") + 1)
+
+                        // Process the complete message
+                        processCompleteData(completeData.trim())
+                    }
                 }
             }
+
+            private fun processCompleteData(data: String) {
+                // Split the data by commas
+                val values = data.split(",").map { it.trim() }
+
+                // Assign each value to a variable, ensuring there are enough values to avoid IndexOutOfBoundsException
+                val val1 = values.getOrNull(0) ?: "N/A"
+                val val2 = values.getOrNull(1) ?: "N/A"
+                val val3 = values.getOrNull(2) ?: "N/A"
+                val val4 = values.getOrNull(3) ?: "N/A"
+                val val5 = values.getOrNull(4) ?: "N/A"
+                val val6 = values.getOrNull(5) ?: "N/A"
+                val val7 = values.getOrNull(6) ?: "N/A"
+
+
+                // Log or use the values as needed
+                Log.d("BluetoothController", "Values - val1: $val1, val2: $val2, val3: $val3, val4: $val4, val5: $val5, val6: $val6, val7: $val7")
+
+                val dataMap = mapOf(
+                    "val1" to val1,
+                    "val2" to val2,
+                    "val3" to val3,
+                    "val4" to val4,
+                    "val5" to val5,
+                    "val6" to val6,
+                    "val7" to val7,
+                )
+                // Broadcast the data
+                broadcastUpdate("com.iacademy.smartsoilph.arduino.ACTION_UPDATE_DATA", dataMap)
+                dataListener?.onDataReceived(data)
+            }
+
+            private fun broadcastUpdate(action: String, dataMap: Map<String, String>) {
+                Intent(action).also { intent ->
+                    dataMap.forEach { (key, value) ->
+                        intent.putExtra(key, value)
+                    }
+                    LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
+                }
+            }
+
+
+
+
         }
 
         private fun enableNotifications(gatt: BluetoothGatt, characteristic: BluetoothGattCharacteristic) {
