@@ -110,8 +110,8 @@
     <string name="title_recommend">We suggest that...</string>
     <string name="sub_title_rec">For fertilizer</string>
 
-    <string name="fertilizer_sentence1">We recommend using at least  </string>
-    <string name="tv_fertilizer_amount" translatable="false">" 8kg</string>
+    <string name="fertilizer_sentence1">We recommend using:</string>
+    <string name="tv_fertilizer_amount" translatable="false"></string>
     <string name="fertilizer_sentence2"><b>of fertilizer</b> per hectare based on our assessment!</string>
     <string name="fertilizer_title">Fertilizer</string>
 

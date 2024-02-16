@@ -18,6 +18,7 @@ import com.iacademy.smartsoilph.models.SQLiteModel
 import com.iacademy.smartsoilph.models.FirebaseModel
 import com.iacademy.smartsoilph.utils.CheckInternet
 import com.iacademy.smartsoilph.datamodels.FertilizerNutrientModel
+import com.iacademy.smartsoilph.models.FertilizerCalculatorModel
 
 class FertilizerActivity : BaseActivity() {
 
@@ -25,6 +26,7 @@ class FertilizerActivity : BaseActivity() {
     private lateinit var tvUserName: TextView
     private lateinit var tvFertilizerAmount: TextView
     private lateinit var tvFertilizerAmount1: TextView
+    private lateinit var tvFertilizerRecommendation: TextView
     private lateinit var tvNitrogen: TextView
     private lateinit var tvPhosphorus: TextView
     private lateinit var tvPotassium: TextView
@@ -58,6 +60,7 @@ class FertilizerActivity : BaseActivity() {
 //        tvUserName = findViewById<TextView>(R.id.tv_user_greeting)
         tvFertilizerAmount = findViewById<TextView>(R.id.tv_fertilizer_amount)
         tvFertilizerAmount1 = findViewById<TextView>(R.id.tv_fertilizer_amount1)
+        tvFertilizerRecommendation = findViewById<TextView>(R.id.fertilizer_sentence2)
         tvNitrogen = findViewById<TextView>(R.id.nitrogen_value)
         tvPhosphorus = findViewById<TextView>(R.id.phosphorus_value)
         tvPotassium = findViewById<TextView>(R.id.potassium_value)
@@ -107,7 +110,25 @@ class FertilizerActivity : BaseActivity() {
             tvNitrogen.text = "$requiredN"
             tvPhosphorus.text = "$requiredP"
             tvPotassium.text = "$requiredK"
+
+            val calculator = FertilizerCalculatorModel()
+            val fertilizerRequirements = calculator.calculateFertilizerRequirements(
+                nRequirement = 100.toFloat(), // Example value
+                pRequirement = 70.toFloat(), // Example value
+                kRequirement = 90.toFloat(), // Example value
+                initialN = 3.toFloat() // Example value from initial detection
+            )
+
+            // Convert to a readable string format to display
+            val recommendationStr = fertilizerRequirements.entries.joinToString(separator = "\n") {
+                "${it.key}: ${String.format("%.2f kg", it.value)}"
+            }
+
+            // Display in TextView
+            tvFertilizerRecommendation.text = recommendationStr
         }
+
+
     }
 
     private fun calculateRequiredFertilizer(detectedValue: Float, requirements: Map<ClosedFloatingPointRange<Float>, Pair<Int, String>>): Pair<Int, String> {
@@ -130,8 +151,8 @@ class FertilizerActivity : BaseActivity() {
         if (latestSoilData != null) {
             //Display Fertilizer
             val formattedFertilizerAmount = String.format("%.1f kg", latestSoilData.fertilizerRecommendation)
-            tvFertilizerAmount.text = formattedFertilizerAmount
-            tvFertilizerAmount1.text = formattedFertilizerAmount
+            //tvFertilizerAmount.text = formattedFertilizerAmount
+            //tvFertilizerAmount1.text = formattedFertilizerAmount
 
             //Display Fertilizer Requirement
             val soil = latestSoilData.soilData
