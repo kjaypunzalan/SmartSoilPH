@@ -123,6 +123,7 @@
             android:layout_gravity="center"
             android:clickable="true"
             android:focusable="true"
+            android:background="@drawable/ripple_effect2"
             android:foreground="?android:attr/selectableItemBackground"/>
 
     </androidx.cardview.widget.CardView>
@@ -454,8 +455,17 @@
                 android:layout_gravity="bottom"
                 android:layout_margin="10dp"
                 android:src="@drawable/icon_temp" />
-
+  
         </androidx.cardview.widget.CardView>
+    <Button
+        android:id="@+id/btn_above_fertilizer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Retrieve Data"
+    android:layout_marginEnd="30dp"
+    android:layout_marginBottom="10dp"
+    app:layout_constraintEnd_toEndOf="@id/btn_view_fertilizer"
+    app:layout_constraintBottom_toTopOf="@id/btn_view_fertilizer" />
 
 
     <!-- View Recommendation Card -->
@@ -496,5 +506,7 @@
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

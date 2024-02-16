@@ -1,41 +1,51 @@
+// Overwrite the content of this file with the following code
 package com.iacademy.smartsoilph.activities
 
 import android.os.Bundle
 import android.widget.Button
-import android.widget.Toast
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.iacademy.smartsoilph.R
 import com.iacademy.smartsoilph.arduino.BluetoothController
 
-
 class ArduinoController : AppCompatActivity() {
 
     private lateinit var bluetoothController: BluetoothController
-    private var lastReceivedData: String? = null
+    private lateinit var receivedDataTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_arduino_control)
 
+        receivedDataTextView = findViewById(R.id.received_data_text_view)
+
         bluetoothController = BluetoothController(this).apply {
             setDataListener(object : BluetoothController.BluetoothDataListener {
                 override fun onDataReceived(data: String) {
-                    // Update the last received data
-                    lastReceivedData = data
+                    runOnUiThread {
+                        appendReceivedData(data)
+                    }
                 }
             })
         }
 
         if (!bluetoothController.connect()) {
-            Toast.makeText(this, "Failed to connect to the device", Toast.LENGTH_SHORT).show()
+            // Show a message if failed to connect
+            receivedDataTextView.text = "Failed to connect to the device"
         }
 
         val buttonSendOne: Button = findViewById(R.id.button_send_one)
         buttonSendOne.setOnClickListener {
-            // Display the last received data as a toast message
-            lastReceivedData?.let { data ->
-                Toast.makeText(this@ArduinoController, data, Toast.LENGTH_LONG).show()
-            } ?: Toast.makeText(this@ArduinoController, "No data received yet", Toast.LENGTH_SHORT).show()
+            // Send command "1" to Arduino
+            bluetoothController.sendCommand("1")
+        }
+    }
+
+    private fun appendReceivedData(data: String) {
+        receivedDataTextView.append("\n$data")
+        // Scroll to the bottom of the TextView
+        receivedDataTextView.post {
+            receivedDataTextView.scrollTo(0, receivedDataTextView.top)
         }
     }
 
@@ -44,3 +54,4 @@ class ArduinoController : AppCompatActivity() {
         bluetoothController.disconnect()
     }
 }
+
