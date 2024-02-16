@@ -1,4 +1,4 @@
-
+// Overwrite the content of this file with the following code
 package com.iacademy.smartsoilph.activities
 
 import android.os.Bundle
