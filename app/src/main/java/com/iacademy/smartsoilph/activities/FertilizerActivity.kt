@@ -113,10 +113,10 @@ class FertilizerActivity : BaseActivity() {
 
             val calculator = FertilizerCalculatorModel()
             val fertilizerRequirements = calculator.calculateFertilizerRequirements(
-                nRequirement = 100.toFloat(), // Example value
-                pRequirement = 70.toFloat(), // Example value
-                kRequirement = 90.toFloat(), // Example value
-                initialN = 3.toFloat() // Example value from initial detection
+                nRequirement = requiredN.toFloat(), // Example value
+                pRequirement = requiredP.toFloat(), // Example value
+                kRequirement = requiredK.toFloat(), // Example value
+                initialN = nitrogen.toFloat() // Example value from initial detection
             )
 
             // Convert to a readable string format to display

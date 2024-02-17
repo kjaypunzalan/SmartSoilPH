@@ -1,106 +1,97 @@
 package com.iacademy.smartsoilph.models
 
-import kotlin.math.max
-
 data class Fertilizer(val name: String, val nitrogen: Float, val phosphorus: Float, val potassium: Float)
 
 class FertilizerCalculatorModel {
     private val fertilizers = mapOf(
-        "Duophos" to Fertilizer("Duophos", 0f, 22f, 0f),
-        "Urea" to Fertilizer("Urea", 46f, 0f, 0f),
         "Complete" to Fertilizer("Complete", 14f, 14f, 14f),
         "Ammonium Phosphate" to Fertilizer("Ammonium Phosphate", 16f, 20f, 0f),
         "Ammonium Sulfate" to Fertilizer("Ammonium Sulfate", 21f, 0f, 0f),
+        "Urea" to Fertilizer("Urea", 46f, 0f, 0f),
+        "Duophos" to Fertilizer("Duophos", 0f, 22f, 0f),
         "Muriate of Potash" to Fertilizer("Muriate of Potash", 0f, 0f, 60f)
     )
 
-    fun calculateFertilizerRequirements(
-        nRequirement: Float,
-        pRequirement: Float,
-        kRequirement: Float,
-        initialN: Float
-    ): Map<String, Float> {
+    fun calculateFertilizerRequirements(nRequirement: Float, pRequirement: Float, kRequirement: Float, initialN: Float): Map<String, Float> {
         val result = mutableMapOf<String, Float>()
 
-        // Apply "Complete" if all nutrients have requirements and none are zero
+        // Apply "Complete" if all nutrients have requirements and none are zero (Pattern 1)
         if (nRequirement > 0 && pRequirement > 0 && kRequirement > 0) {
             applyComplete(nRequirement, pRequirement, kRequirement, result)
+        } else {
+            // Other patterns: Directly apply specific fertilizers
+            applySpecificFertilizers(nRequirement, pRequirement, kRequirement, initialN, result)
         }
-
-        // Specific logic for Ammonium Phosphate when both N and P have requirements but K does not
-        if (nRequirement > 0 && pRequirement > 0 && kRequirement == 0f) {
-            val ammoniumPhosphate = fertilizers["Ammonium Phosphate"]!!
-            val nRatio = nRequirement / ammoniumPhosphate.nitrogen
-            val pRatio = pRequirement / ammoniumPhosphate.phosphorus
-            val amountNeeded = maxOf(nRatio, pRatio) * 100 // Find the maximum amount needed to satisfy both
-            result[ammoniumPhosphate.name] = amountNeeded
-            // Subtract what's applied from requirements
-            val nApplied = amountNeeded * ammoniumPhosphate.nitrogen / 100
-            val pApplied = amountNeeded * ammoniumPhosphate.phosphorus / 100
-            val nRemaining = maxOf(0f, nRequirement - nApplied)
-            val pRemaining = maxOf(0f, pRequirement - pApplied)
-            // Apply Urea or Ammonium Sulfate if N is still required
-            if (nRemaining > 0) {
-                applyNitrogen(nRemaining, initialN, result)
-            }
-            return result
-        }
-
-        // Direct application for N, P, K if not using "Complete" or "Ammonium Phosphate"
-        applyDirectFertilizers(nRequirement, pRequirement, kRequirement, initialN, result)
 
         return result
     }
 
     private fun applyComplete(n: Float, p: Float, k: Float, result: MutableMap<String, Float>) {
+        val lowestRequirement = minOf(n, p, k)
+        val completeAmount = lowestRequirement / (fertilizers["Complete"]!!.phosphorus / 100)
+        result["Complete"] = completeAmount
+
+        // Subtract the nutrients provided by "Complete" from the requirements
+        subtractNutrientsProvidedByComplete(n, p, k, completeAmount, result)
+    }
+
+    private fun subtractNutrientsProvidedByComplete(n: Float, p: Float, k: Float, amount: Float, result: MutableMap<String, Float>) {
         val complete = fertilizers["Complete"]!!
-        val amounts = calculateAmountsForComplete(n, p, k, complete)
-        result.putAll(amounts)
+        val nAfterComplete = maxOf(0f, n - (amount * complete.nitrogen / 100))
+        val pAfterComplete = maxOf(0f, p - (amount * complete.phosphorus / 100))
+        val kAfterComplete = maxOf(0f, k - (amount * complete.potassium / 100))
+
+        // Reapply specific fertilizers for remaining requirements
+        applySpecificFertilizers(nAfterComplete, pAfterComplete, kAfterComplete, 0f, result) // Assuming initialN not needed here
     }
 
-    private fun applyDirectFertilizers(n: Float, p: Float, k: Float, initialN: Float, result: MutableMap<String, Float>) {
-        if (n > 0) applyNitrogen(n, initialN, result)
-        if (p > 0) applyPhosphorus(p, result)
-        if (k > 0) applyPotassium(k, result)
+    private fun applySpecificFertilizers(n: Float, p: Float, k: Float, initialN: Float, result: MutableMap<String, Float>) {
+        if (n > 0) chooseFertilizerForNutrient(n, "N", initialN, result)
+        if (p > 0) chooseFertilizerForNutrient(p, "P", 0f, result) // initialN not relevant for P and K
+        if (k > 0) chooseFertilizerForNutrient(k, "K", 0f, result)
     }
 
-    private fun applyNitrogen(n: Float, initialN: Float, result: MutableMap<String, Float>) {
-        val fertilizerName = if (initialN <= 6.6f) "Urea" else "Ammonium Sulfate"
-        val fertilizer = fertilizers[fertilizerName]!!
-        val amount = n / (fertilizer.nitrogen / 100)
-        result[fertilizerName] = amount
-    }
+    private fun chooseFertilizerForNutrient(requirement: Float, type: String, initialN: Float, result: MutableMap<String, Float>) {
+        when (type) {
+            "N" -> {
+                // Choose Urea or Ammonium Sulfate based on initialN level
+                val fertilizerName = if (initialN <= 6.6) "Urea" else "Ammonium Sulfate"
+                val fertilizer = fertilizers[fertilizerName]!!
+                val amountNeeded = requirement / (fertilizer.nitrogen / 100)
+                result[fertilizerName] = (result[fertilizerName] ?: 0f) + amountNeeded
+            }
+            "P" -> {
+                // Duophos for P, unless Ammonium Phosphate was already chosen for N
+                if (!result.containsKey("Ammonium Phosphate")) {
+                    val fertilizer = fertilizers["Duophos"]!!
+                    val amountNeeded = requirement / (fertilizer.phosphorus / 100)
+                    result["Duophos"] = (result["Duophos"] ?: 0f) + amountNeeded
+                }
+            }
+            "K" -> {
+                // Muriate of Potash for K
+                val fertilizer = fertilizers["Muriate of Potash"]!!
+                val amountNeeded = requirement / (fertilizer.potassium / 100)
+                result["Muriate of Potash"] = (result["Muriate of Potash"] ?: 0f) + amountNeeded
+            }
+        }
 
-    private fun applyPhosphorus(p: Float, result: MutableMap<String, Float>) {
-        val duophos = fertilizers["Duophos"]!!
-        val amount = p / (duophos.phosphorus / 100)
-        result["Duophos"] = amount
-    }
-
-    private fun applyPotassium(k: Float, result: MutableMap<String, Float>) {
-        val mop = fertilizers["Muriate of Potash"]!!
-        val amount = k / (mop.potassium / 100)
-        result["Muriate of Potash"] = amount
-    }
-
-    // This method is a placeholder for the detailed logic to calculate the amounts when "Complete" is applied
-    private fun calculateAmountsForComplete(n: Float, p: Float, k: Float, complete: Fertilizer): Map<String, Float> {
-        val lowestRequirement = minOf(n / complete.nitrogen, p / complete.phosphorus, k / complete.potassium)
-        val amountOfCompleteNeeded = lowestRequirement * 100 // Assuming the complete fertilizer percentages are based on 100kg basis
-        val nSuppliedByComplete = amountOfCompleteNeeded * complete.nitrogen / 100
-        val pSuppliedByComplete = amountOfCompleteNeeded * complete.phosphorus / 100
-        val kSuppliedByComplete = amountOfCompleteNeeded * complete.potassium / 100
-
-        // Calculate the remaining requirements after applying the complete fertilizer
-        val remainingN = max(0f, n - nSuppliedByComplete)
-        val remainingP = max(0f, p - pSuppliedByComplete)
-        val remainingK = max(0f, k - kSuppliedByComplete)
-
-        // Add the complete fertilizer amount to the result map
-        val result = mutableMapOf("Complete" to amountOfCompleteNeeded)
-
-        // If there are remaining requirements, these should be handled by the logic that calls this function
-        return result
+        // Handle the 1-1-0 pattern specifically where Ammonium Phosphate can cover both N and P
+        if (type == "N" || type == "P") {
+            val nRequirement = result["Urea"] ?: result["Ammonium Sulfate"] ?: 0f
+            val pRequirement = result["Duophos"] ?: 0f
+            if (nRequirement > 0 && pRequirement > 0) {
+                // Check if Ammonium Phosphate is a better option
+                val amp = fertilizers["Ammonium Phosphate"]!!
+                val nCoveredByAmp = nRequirement * (amp.nitrogen / 100)
+                val pCoveredByAmp = pRequirement * (amp.phosphorus / 100)
+                if (nCoveredByAmp >= nRequirement && pCoveredByAmp >= pRequirement) {
+                    // Use Ammonium Phosphate instead of separate N and P fertilizers
+                    result.clear() // Clearing previous entries
+                    result["Ammonium Phosphate"] = maxOf(nRequirement / (amp.nitrogen / 100), pRequirement / (amp.phosphorus / 100))
+                }
+            }
+        }
     }
 
 }
