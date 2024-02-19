@@ -111,7 +111,7 @@
     <!--Activity Home===================================================-->
     <string name="date_today" translatable="false">Monday, 5th</string>
     <string name="welcome_user">Welcome back,</string>
-    <string name="username" translatable="false">[Username]</string>
+    <string name="username" translatable="false">Username</string>
     <string name="exclamation" translatable="false">!</string>
     <string name="soil_button">Soil</string>
     <string name="home_txt1">What do you want to do?</string>
@@ -173,7 +173,10 @@
     <string name="fertilizer_value" translatable="false">000 kg</string>
     <string name="npk_value" translatable="false">00 - 00 - 00</string>
 
-    <string name="fertilizer_info">Of<b> Fertilizer </b>used</string>
+    <string name="fertilizer_info1">of <b>Complete</b> Fertilizer used</string>
+    <string name="fertilizer_info2">of <b>Duophos</b> Fertilizer used</string>
+    <string name="fertilizer_info3">of <b>Potash</b> Fertilizer used</string>
+
     <string name="npk_info">recommended<b> Grade</b></string>
     <!--=================================================================-->
 
