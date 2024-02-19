@@ -2,34 +2,15 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Pressed state -->
     <item android:state_pressed="true">
-        <layer-list>
-            <item>
-                <shape android:shape="rectangle">
-                    <solid android:color="@android:color/transparent" />
-                    <corners android:radius="8dp" />
-                    <!-- Shadow effect for elevation -->
-                    <padding
-                        android:bottom="2dp"
-                        android:left="0dp"
-                        android:right="0dp"
-                        android:top="2dp" />
-                </shape>
-            </item>
-            <item android:bottom="2dp">
-                <shape android:shape="rectangle">
-                    <solid android:color="@color/main_blue" /> <!-- Color when pressed -->
-                    <corners android:radius="8dp" />
-                </shape>
-            </item>
-        </layer-list>
-    </item>
-    <!-- Default state -->
-    <item>
-        <shape android:shape="rectangle">
-            <solid android:color="@android:color/transparent" />
-            <stroke android:width="1dp" android:color="@color/transparent" />
-            <corners android:radius="8dp" />
-        </shape>
+       <shape>
+           <stroke
+               android:color="@color/main_blue"
+               android:width="2dp">
+           </stroke>
+           <corners
+               android:radius="14dp">
+           </corners>
+       </shape>
     </item>
 </selector>
 

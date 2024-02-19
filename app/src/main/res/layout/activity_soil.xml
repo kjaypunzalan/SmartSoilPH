@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorOnPrimary"
-        android:elevation="8dp"
+        android:elevation="4dp"
         app:layout_constraintTop_toTopOf="parent">
 
         <!--Back Button-->
@@ -62,7 +62,10 @@
             android:layout_width="match_parent"
             android:layout_height="308dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:srcCompat="@drawable/bg_soil" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/bg_soil"
+            android:scaleType="fitCenter"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -95,11 +98,36 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="@string/soil_info"
-        android:textAppearance="@style/nutrient_title"
+        android:textAppearance="@style/info_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/hd_1"
         android:layout_marginStart="30dp"
         android:maxWidth="350dp"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+        android:layout_width="220dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="25dp"
+        app:startIconDrawable="@drawable/icon_crop"
+        app:startIconTint="@color/black_50"
+        app:layout_constraintTop_toBottomOf="@id/hd_1"
+        app:layout_constraintStart_toEndOf="@id/tv_selected_grade"
+        app:boxBackgroundColor="@color/semi_light_gray"
+        android:background="@drawable/ripple_effect">
+
+        <AutoCompleteTextView
+            android:id="@+id/autoComplete"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Crop"
+            android:textAppearance="@style/crop_title"
+            android:textColor="@color/black_50"
+            android:paddingStart="40dp"
+            android:padding="0dp"
+            android:inputType="none"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Filter Button -->
     <androidx.cardview.widget.CardView
@@ -111,24 +139,24 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="30dp"
         app:cardCornerRadius="5dp"
-        app:cardBackgroundColor="@color/main_blue">
+        app:cardBackgroundColor="@color/sub_blue">
 
         <ImageView
             android:id="@+id/btn_filter"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:src="@drawable/icon_filter"
-            app:tint="@color/white"
+            android:src="@drawable/icon_dirt"
+            app:tint="@color/black_50"
             android:padding="3dp"
             android:layout_gravity="center"
             android:clickable="true"
             android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground"/>
+            android:background="@drawable/ripple_effect"/>
 
     </androidx.cardview.widget.CardView>
 
         <!-- Nitrogen Card -->
-    <androidx.cardview.widget.CardView
+        <androidx.cardview.widget.CardView
         android:id="@+id/nitrogen_card"
         android:layout_width="110dp"
         android:layout_height="110dp"
@@ -137,7 +165,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/phosphorus_card"
         app:layout_constraintHorizontal_chainStyle="spread"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:layout_marginStart="20dp">
 
             <LinearLayout
@@ -159,11 +187,21 @@
                     android:id="@+id/nitrogen_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="14dp"
                     android:textColor="#80000000"
                     android:text="10"
                     android:inputType="numberDecimal"
-                    android:textAppearance="@style/nutrient_value" />
+                    android:textAppearance="@style/nutrient_value"
+                    android:padding="0dp"
+                    android:background="@null"/>
+
+                <TextView
+                    android:id="@+id/sign1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sign1"
+                    android:textAppearance="@style/nutrient_sign"
+                    android:padding="0dp"/>
 
             </LinearLayout>
 
@@ -205,11 +243,21 @@
                     android:id="@+id/phosphorus_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="14dp"
                     android:text="@string/phosphorus_value"
+                    android:padding="0dp"
                     android:textColor="#80000000"
                     android:inputType="numberDecimal"
-                    android:textAppearance="@style/nutrient_value" />
+                    android:textAppearance="@style/nutrient_value"
+                    android:background="@null"/>
+
+                <TextView
+                    android:id="@+id/sign2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sign2"
+                    android:textAppearance="@style/nutrient_sign"
+                    android:padding="0dp"/>
 
             </LinearLayout>
 
@@ -223,7 +271,7 @@
         </androidx.cardview.widget.CardView>
 
         <!-- Potassium Card -->
-    <androidx.cardview.widget.CardView
+        <androidx.cardview.widget.CardView
         android:id="@+id/potassium_card"
         android:layout_width="110dp"
         android:layout_height="110dp"
@@ -252,11 +300,21 @@
                     android:id="@+id/potassium_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="14dp"
                     android:text="@string/phosphorus_value"
+                    android:background="@null"
+                    android:padding="0dp"
                     android:textColor="#80000000"
                     android:inputType="numberDecimal"
                     android:textAppearance="@style/nutrient_value" />
+
+                <TextView
+                    android:id="@+id/sign3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sign2"
+                    android:textAppearance="@style/nutrient_sign"
+                    android:padding="0dp"/>
 
             </LinearLayout>
 
@@ -299,11 +357,21 @@
                     android:id="@+id/ph_level_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="14dp"
                     android:text="@string/ph_level_value"
+                    android:background="@null"
+                    android:padding="0dp"
                     android:textColor="#80000000"
                     android:inputType="numberDecimal"
                     android:textAppearance="@style/nutrient_value" />
+
+                <TextView
+                    android:id="@+id/sign4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sign3"
+                    android:textAppearance="@style/nutrient_sign"
+                    android:padding="0dp"/>
 
             </LinearLayout>
 
@@ -312,7 +380,8 @@
                 android:layout_height="12dp"
                 android:layout_gravity="bottom"
                 android:layout_margin="10dp"
-                android:src="@drawable/icon_droplet" />
+                android:src="@drawable/icon_meter"
+                app:tint="@color/gray"/>
 
         </androidx.cardview.widget.CardView>
 
@@ -346,11 +415,21 @@
                     android:id="@+id/ec_level_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="14dp"
+                    android:padding="0dp"
+                    android:background="@null"
                     android:text="@string/ec_level_value"
                     android:textColor="#80000000"
                     android:inputType="numberDecimal"
                     android:textAppearance="@style/nutrient_value" />
+
+                <TextView
+                    android:id="@+id/sign5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sign4"
+                    android:textAppearance="@style/nutrient_sign"
+                    android:padding="0dp"/>
 
             </LinearLayout>
 
@@ -393,11 +472,21 @@
                     android:id="@+id/humidity_soil_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="14dp"
+                    android:padding="0dp"
+                    android:background="@null"
                     android:text="@string/humidity_soil_value"
                     android:textColor="#80000000"
                     android:inputType="numberDecimal"
                     android:textAppearance="@style/nutrient_value" />
+
+                <TextView
+                    android:id="@+id/sign6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sign1"
+                    android:textAppearance="@style/nutrient_sign"
+                    android:padding="0dp"/>
 
             </LinearLayout>
 
@@ -440,11 +529,21 @@
                     android:id="@+id/temp_soil_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="14dp"
+                    android:padding="0dp"
+                    android:background="@null"
                     android:text="@string/temp_soil_value"
                     android:textColor="#80000000"
                     android:inputType="numberDecimal"
                     android:textAppearance="@style/nutrient_value" />
+
+                <TextView
+                    android:id="@+id/sign7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sign5"
+                    android:textAppearance="@style/nutrient_sign"
+                    android:padding="0dp"/>
 
             </LinearLayout>
 
@@ -453,48 +552,125 @@
                 android:layout_height="12dp"
                 android:layout_gravity="bottom"
                 android:layout_margin="10dp"
-                android:src="@drawable/icon_temp" />
+                android:src="@drawable/icon_temp"
+                app:tint="@color/black_50"/>
 
         </androidx.cardview.widget.CardView>
 
+    <!-- Overlay -->
+    <View
+        android:id="@+id/overlay_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#AA000000"
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true"
+        android:elevation="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <!-- View Recommendation Card -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/btn_view_fertilizer"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_retrieveData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="10dp"
-        android:layout_marginBottom="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginEnd="30dp">
-        <!-- Contents of the additional CardView -->
+        android:layout_marginVertical="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/icon_sensor"
+        app:tint="@color/sub_blue"
+        app:backgroundTint="@color/gray_68"
+        app:fabSize="mini"
+        app:maxImageSize="20dp"
+        android:background="@drawable/ripple_effect"
+        app:layout_constraintBottom_toTopOf="@id/fab_recommendation"
+        app:layout_constraintStart_toStartOf="@id/fab_recommendation"
+        app:layout_constraintEnd_toEndOf="@id/fab_recommendation"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/btn_retrieveData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="10dp"
+        app:cardBackgroundColor="@color/sub_blue"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="4dp"
+        app:contentPadding="6dp"
+        app:layout_constraintTop_toTopOf="@id/fab_retrieveData"
+        app:layout_constraintBottom_toBottomOf="@id/fab_retrieveData"
+        app:layout_constraintEnd_toStartOf="@id/fab_retrieveData"
+        android:background="@drawable/ripple_effect">
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@color/main_blue"
-            android:orientation="horizontal"
-            android:padding="8dp"
-            android:gravity="center">
+            android:text="@string/retrieve_data"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:textAppearance="@style/sub_buttons"/>
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/icon_like"
-                app:tint="@color/white"
-                android:layout_marginStart="10dp"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/view_recommend"
-                android:textAppearance="@style/sub_buttons"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"/>
-
-        </LinearLayout>
     </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_recommendation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/icon_list"
+        app:tint="@color/sub_blue"
+        app:backgroundTint="@color/gray_68"
+        app:fabSize="mini"
+        app:maxImageSize="20dp"
+        android:background="@drawable/ripple_effect"
+        app:layout_constraintBottom_toTopOf="@id/fab_settings"
+        app:layout_constraintStart_toStartOf="@id/fab_settings"
+        app:layout_constraintEnd_toEndOf="@id/fab_settings"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/btn_recommend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="10dp"
+        app:cardBackgroundColor="@color/sub_blue"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="4dp"
+        app:contentPadding="6dp"
+        app:layout_constraintTop_toTopOf="@id/fab_recommendation"
+        app:layout_constraintBottom_toBottomOf="@id/fab_recommendation"
+        app:layout_constraintEnd_toStartOf="@id/fab_recommendation"
+        android:background="@drawable/ripple_effect">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/view_recommend"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:textAppearance="@style/sub_buttons"/>
+
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_gear"
+        android:layout_margin="25dp"
+        app:tint="@color/black_50"
+        app:maxImageSize="30dp"
+        app:backgroundTint="@color/sub_blue"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@drawable/ripple_effect"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

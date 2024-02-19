@@ -3,8 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <!-- PERMISSIONS -->
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission android:name="android.permission.INTERNET" />                  <!-- For internet conenctivity -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />      <!-- Check if there's internet -->
@@ -92,7 +90,7 @@
         <activity android:name=".activities.ArduinoController"
             android:exported="true"
             android:theme="@style/Theme.SmartSoilPH" />
-        <activity android:name=".activities.SoilActivity_test"
+        <activity android:name=".activities.SoilActivity"
             android:exported="true"
             android:theme="@style/Theme.SmartSoilPH" />
 
