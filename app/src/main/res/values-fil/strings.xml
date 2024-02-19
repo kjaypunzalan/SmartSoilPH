@@ -23,7 +23,7 @@
     <string name="logout_button">Mag Logout</string>
     <string name="title_recommend">Rekomendasyon</string>
     <string name="sub_title_rec">para sa pataba</string>
-    <string name="fertilizer_sentence1">Inirerekomenda namin ang paggamit ng</string>
+    <string name="fertilizer_sentence1">Inirerekomenda namin ang mga patabang ito:</string>
     <string name="fertilizer_sentence2"><b>ng pataba</b> kada ektarya batay sa aming pagtatasa!</string>
     <string name="fertilizer_title">Pataba</string>
     <string name="acidity_title">Asido ng Lupa</string>
@@ -56,6 +56,8 @@
     <string name="sub_summary2">Mayroon kang %.0f acidic na lupa, %.0f neutral na lupa, at %.0f alkaline na lupa sa loob ng huling 7 araw.</string>
     <string name="sub_summary3">Sa kabuuan, mayroon kang naipon na %.0f paggamit ng pataba sa iyong buhay.</string>
     <string name="sub_summary4">Sa kabuuan, ang iyong kamakailang antas ng pH ng lupa ay ang kalusugan ay %.0f.</string>
+    <string name="sub_summary44">Sa kabuuan, ang iyong kamakailang antas ng pH ng lupa ay ang kalusugan ay %.0f.</string>
+
     <string name="sub_summary5">Kamakailan, ang NPK nutrient na kinakailangan ng iyong lupa ay %1$s.</string>
     <string name="manu_title">Isang gabay na ginawa para sa iyo...</string>
 
