@@ -306,15 +306,8 @@ class ReportsActivity : BaseActivity() {
         }
 
         // Getting the formatted string from resources and inserting the variable values
-        if (recentPH > 6.5) {
-            var summaryText = getString(com.iacademy.smartsoilph.R.string.sub_summary4, recentPH)
-            tvLCSummary2.text = summaryText
-        }
-        if (recentPH < 5.5) {
-            var summaryText = getString(com.iacademy.smartsoilph.R.string.sub_summary44, recentPH)
-            tvLCSummary2.text = summaryText
-        }
-
+        val summaryText = getString(R.string.sub_summary4, recentPH)
+        tvLCSummary2.text = summaryText
 
         // Set Description
         val description = Description()

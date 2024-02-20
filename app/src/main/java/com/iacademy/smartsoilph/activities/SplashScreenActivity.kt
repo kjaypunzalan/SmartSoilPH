@@ -17,7 +17,7 @@ class SplashScreenActivity : BaseActivity() {
         setContentView(R.layout.activity_splash_screen)
 
         val randomDelay = Random().nextInt(1000) + 1500
-        Handler().postDelayed({
+        Handler(Looper.getMainLooper()).postDelayed({
             startActivity(Intent(this, OnboardingActivity::class.java))
             finish()
         }, randomDelay.toLong())

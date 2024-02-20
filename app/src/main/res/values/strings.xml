@@ -40,7 +40,16 @@
 
     <!--Activity Soil===================================================-->
     <string name="soil_title">Current soil status</string>
-    <string name="soil_info">Please select a soil grade by clicking the filter button on the right side of the screen.</string>
+    <string name="soil_info">Select a crop: </string>
+
+    <!--Named Crops-->
+    <string-array name="crops">
+        <item>Eggplant</item>
+        <item>Eggplant</item>
+        <item>Eggplant</item>
+        <item>Eggplant</item>
+        <item>Eggplant</item>
+    </string-array>
 
     <string name="nitrogen" translatable="false">Nitrogen</string>
     <string name="phosphorus" translatable="false">Phosphorus</string>
@@ -50,6 +59,12 @@
     <string name="humidity_soil" translatable="false">Humidity</string>
     <string name="temp_soil" translatable="false">Temperature</string>
 
+    <string name="sign1" translatable="false">%</string>
+    <string name="sign2" translatable="false">ppm</string>
+    <string name="sign3" translatable="false">Acidic</string>
+    <string name="sign4" translatable="false">mS/cm</string>
+    <string name="sign5" translatable="false">°C</string>
+
     <string name="nitrogen_value" translatable="false">0</string>
     <string name="phosphorus_value" translatable="false">0</string>
     <string name="potassium_value" translatable="false">0</string>
@@ -58,33 +73,37 @@
     <string name="humidity_soil_value" translatable="false">0</string>
     <string name="temp_soil_value" translatable="false">0</string>
 
-    <string name="view_recommend">View recommendation</string>
+    <string name="view_recommend">View Recommendation</string>
+    <string name="retrieve_data">Retrieve Data</string>
     <!--=================================================================-->
 
     <!--Grade Selection String===========================================-->
-    <string name="gs_1" translatable="false">82 - 0 - 0</string>
+    <string name="soil_texture_title">Select Soil Texture</string>
+    <string name="soil_texture_info">Please choose a soil texture from the options below.</string>
+
+    <string name="st_info1">Does it feel very grainy/rough?</string>
+    <string name="st_info2">Does it feel equally grainy and smooth?</string>
+    <string name="st_info3">Does it feel very smooth?</string>
+
+    <string name="gs_1" translatable="false">Sandy Loam</string>
     //Anhydrous Ammonia
-    <string name="gs_2" translatable="false">46 - 0 - 0</string>
+    <string name="gs_2" translatable="false">Sandy Clay Loam</string>
     //Urea
-    <string name="gs_3" translatable="false">34 - 0 - 0</string>
+    <string name="gs_3" translatable="false">Sandy Clay</string>
     //Ammonium Nitrate
-    <string name="gs_4" translatable="false">28 - 0 - 0</string>
+    <string name="gs_4" translatable="false">Silt Loam</string>
     //28% UAN
-    <string name="gs_5" translatable="false">21 - 0 - 0</string>
+    <string name="gs_5" translatable="false">Silty Clay Loam</string>
     //Ammonium Sulfate
-    <string name="gs_6" translatable="false">12 - 52 - 0</string>
+    <string name="gs_6" translatable="false">Silty Clay</string>
     //MAP
 
-    <string name="gs_7" translatable="false">18 - 46 - 0</string>
+    <string name="gs_7" translatable="false">Loam</string>
     //DAP
-    <string name="gs_8" translatable="false">10 - 34 - 0</string>
+    <string name="gs_8" translatable="false">Clay Loam</string>
     //Ammonium Polyphosphate
-    <string name="gs_9" translatable="false">0 - 0 - 60</string>
+    <string name="gs_9" translatable="false">Clay</string>
     //Potash
-    <string name="gs_10" translatable="false">0 - 45 - 0</string>
-    //Triple Super Phosphate
-    <string name="gs_11" translatable="false">12 - 32 - 16</string>
-    <string name="gs_12" translatable="false">10 - 26 - 26</string>
 
     <string name="btn_apply">Apply</string>
     <!--=================================================================-->
@@ -92,13 +111,13 @@
     <!--Activity Home===================================================-->
     <string name="date_today" translatable="false">Monday, 5th</string>
     <string name="welcome_user">Welcome back,</string>
-    <string name="username" translatable="false">[Username]</string>
+    <string name="username" translatable="false">Username</string>
     <string name="exclamation" translatable="false">!</string>
     <string name="soil_button">Soil</string>
     <string name="home_txt1">What do you want to do?</string>
     <string name="weather_button">Weather</string>
     <string name="reports_button">Reports</string>
-    <string name="history_button">Recommendation History</string>
+    <string name="history_button">Fertilizer History</string>
     <string name="settings_button" translatable="false">Settings</string>
     <string name="bluetooth_button">Connect to Bluetooth Device</string>
     <string name="manual_button">View User Manual</string>
@@ -107,19 +126,38 @@
     <!--=================================================================-->
 
     <!--Activity Fertilizer Recommendation ===========================================-->
-    <string name="title_recommend">We suggest that...</string>
-    <string name="sub_title_rec">For fertilizer</string>
+    <string name="title_recommend">Your nutrient requirements are...</string>
 
-    <string name="fertilizer_sentence1">We recommend using:</string>
-    <string name="tv_fertilizer_amount" translatable="false"></string>
-    <string name="fertilizer_sentence2"><b>of fertilizer</b> per hectare based on our assessment!</string>
-    <string name="fertilizer_title">Fertilizer</string>
+    <string name="npk_1" translatable="false">N</string>
 
-    <string name="acidity_title">Acidity</string>
-    <string name="tv_lime_amount" translatable="false">" 2kg</string>
-    <string name="acidity_sentence1">We recommend using at least </string>
-    <string name="acidity_sentence2"><b>of lime</b> per hectare for a better soil health!</string>
-    <string name="for_acidity">For acidity,</string>
+    <string name="npk_2" translatable="false">P</string>
+    <string name="npk_2_1" translatable="false"><sub>2</sub></string>
+    <string name="npk_2_2" translatable="false">O</string>
+    <string name="npk_2_3" translatable="false"><sub>5</sub></string>
+
+    <string name="npk_3" translatable="false">K</string>
+
+    <string name="npk_rating1">Low</string>
+    <string name="npk_rating2">Moderately High</string>
+    <string name="npk_rating3">Sufficient</string>
+
+    <string name="recommend_fertilizer">We recommend the fertilizers below -</string>
+    <string name="fertilizer_1">kg of Complete</string>
+    <string name="fertilizer_2">kg of Duophos</string>
+    <string name="fertilizer_3">kg of Potash</string>
+
+    <string name="fertilizer_cvalue" translatable="false"><b>0</b></string>
+    <string name="fertilizer_gvalue1" translatable="false">(14-14-14)</string>
+    <string name="fertilizer_gvalue2" translatable="false">(0-22-0)</string>
+    <string name="fertilizer_gvalue3" translatable="false">(0-0-60)</string>
+
+    <string name="phLevel" translatable="false">For pH Level</string>
+
+    <string name="ph_sentence">Your pH level is </string>
+    <string name="ph_sentence_value" translatable="false"><b>acidic</b></string>
+    <string name="ph_info">We recommend to correct your soil pH by consulting with an agriculture expert.</string>
+
+    <string name="phLevel_title" translatable="false">pH Level</string>
 
     <string name="return_soil">Return to Soil Data</string>
     <string name="previous_data">View Previous Recommendations</string>
@@ -135,7 +173,10 @@
     <string name="fertilizer_value" translatable="false">000 kg</string>
     <string name="npk_value" translatable="false">00 - 00 - 00</string>
 
-    <string name="fertilizer_info">Of<b> Fertilizer </b>used</string>
+    <string name="fertilizer_info1">of <b>Complete</b> Fertilizer used</string>
+    <string name="fertilizer_info2">of <b>Duophos</b> Fertilizer used</string>
+    <string name="fertilizer_info3">of <b>Potash</b> Fertilizer used</string>
+
     <string name="npk_info">recommended<b> Grade</b></string>
     <!--=================================================================-->
 
@@ -147,11 +188,10 @@
     <string name="stat_sub_title4">Soil pH Trend</string>
     <string name="stat_sub_title5">Monthly Average Soil NPK</string>
     <string name="sub_summary1">There are a total of %1$d Firebase saves, %2$d SQLite saves, and %3$d total saves within the last 7 days.</string>
-    <string name="sub_summary2">You have %.0f acidic soils, %.0f neutral soils, and %.0f alkaline soils within the last 30 days. Your soil seems to be acidic, you may want to consult with a professional for your soil health.</string>
-    <string name="sub_summary3">In total, you have accumulated %.0f fertilizers during your lifetime.</string>
-    <string name="sub_summary4">Your recent soil pH level health is %.0f, indicating Alkaline. It\'s not bad for your soil but you might want to aim for an average 5.5-6.5. </string>
-    <string name="sub_summary44">Your recent soil pH level health is %.0f, indicating Acidity. It\'s bad for your soil and you might want to consult on how to get it to average 5.5-6.5. </string>
-    <string name="sub_summary5">Your average soil\'s NPK nutrient requirement is %1$s for the month of February.</string>
+    <string name="sub_summary2">You have %.0f acidic soils, %.0f neutral soils, and %.0f alkaline soils within the last 7 days.</string>
+    <string name="sub_summary3">In total, you have accumulated %.0f fertilizer usage during your lifetime.</string>
+    <string name="sub_summary4">Your recent soil pH level health is %.0f.</string>
+    <string name="sub_summary5">Recently, your soil\'s NPK nutrient requirement is %1$s.</string>
     <!--=================================================================-->
 
     <!--Activity Manual===================================================-->

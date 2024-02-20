@@ -11,8 +11,7 @@
     <string name="temperature2">Temperature</string>
     <string name="wind">Bilis ng Hangin</string>
     <string name="soil_title">Kasalukuyang lupa...</string>
-    <string name="soil_info">Mangyaring pumili ng grado ng lupa sa pamamagitan ng pag-click sa pindutan ng filter sa kanang bahagi ng screen.</string>
-    <string name="view_recommend">Tingnan ang Rekomendasyon</string>
+    <string name="soil_info">Pumili ng grado ng lupa sa pamamagitan ng pag-click sa pindutan ng filter sa kanang bahagi ng screen.</string>
     <string name="btn_apply">Piliin</string>
     <string name="welcome_user">Maligayang pagbalik,</string>
     <string name="soil_button">Lupa</string>
@@ -23,7 +22,7 @@
     <string name="logout_button">Mag Logout</string>
     <string name="title_recommend">Rekomendasyon</string>
     <string name="sub_title_rec">para sa pataba</string>
-    <string name="fertilizer_sentence1">Inirerekomenda namin ang mga patabang ito:</string>
+    <string name="fertilizer_sentence1">Inirerekomenda namin ang paggamit ng</string>
     <string name="fertilizer_sentence2"><b>ng pataba</b> kada ektarya batay sa aming pagtatasa!</string>
     <string name="fertilizer_title">Pataba</string>
     <string name="acidity_title">Asido ng Lupa</string>
@@ -56,11 +55,41 @@
     <string name="sub_summary2">Mayroon kang %.0f acidic na lupa, %.0f neutral na lupa, at %.0f alkaline na lupa sa loob ng huling 7 araw.</string>
     <string name="sub_summary3">Sa kabuuan, mayroon kang naipon na %.0f paggamit ng pataba sa iyong buhay.</string>
     <string name="sub_summary4">Sa kabuuan, ang iyong kamakailang antas ng pH ng lupa ay ang kalusugan ay %.0f.</string>
-    <string name="sub_summary44">Sa kabuuan, ang iyong kamakailang antas ng pH ng lupa ay ang kalusugan ay %.0f.</string>
-
     <string name="sub_summary5">Kamakailan, ang NPK nutrient na kinakailangan ng iyong lupa ay %1$s.</string>
     <string name="manu_title">Isang gabay na ginawa para sa iyo...</string>
 
     <string name="home_txt1">Anong gusto mong gawin?</string>
     <string name="history_button">Nakaraang Datos ng Pataba</string>
+
+<!--Soil Texture-->
+    <string name="soil_texture_title">Pumili ng Tekstura ng Lupa</string>
+    <string name="soil_texture_info">Pumili ng tekstura ng lupa sa mga pag-pipilian sa ibaba.</string>
+
+    <string name="st_info1">Mabutil ba o Magaspang sa pakiramdam?</string>
+    <string name="st_info2">Mabutil at Makinis ba sa pakiramdam</string>
+    <string name="st_info3">Makinis ba sa pakiramdam?</string>
+
+    <!--Soil Texture-->
+    <string name="retrieve_data">Kunin ang Datos</string>
+    <string name="view_recommend">Tingnan ang Rekomendasyon</string>
+
+    <!--NPK Rating-->
+    <string name="npk_rating1">Mababa</string>
+    <string name="npk_rating2">Medyo Mataas</string>
+    <string name="npk_rating3">Katamtaman</string>
+
+    <string name="recommend_fertilizer">Nirerekomenda namin ang mga sumusunod na pataba -</string>
+    <string name="fertilizer_1">kg ng Complete</string>
+    <string name="fertilizer_2">kg ng Duophos</string>
+    <string name="fertilizer_3">kg ng Potash</string>
+
+    <string name="ph_sentence">Ang iyong pH level ay </string>
+    <string name="ph_info">Nirerekomenda namin na itama ang pH level ng iyong lupa sa pagkonsulta sa isang eksperto ng agrikultura.</string>
+
+<!--Recommendation History Item-->
+    <string name="fertilizer_info1">ng <b>Complete</b> na Pataba ang nagamit</string>
+    <string name="fertilizer_info2">ng <b>Duophos</b> na Pataba ang nagamit</string>
+    <string name="fertilizer_info3">ng <b>Potash</b> na Pataba ang nagamit</string>
+
+
 </resources>

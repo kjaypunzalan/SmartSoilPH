@@ -1,18 +1,29 @@
 package com.iacademy.smartsoilph.activities
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.RadioButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.iacademy.smartsoilph.R
+import com.iacademy.smartsoilph.arduino.BluetoothController
 import com.iacademy.smartsoilph.datamodels.SoilData
 import com.iacademy.smartsoilph.datamodels.RecommendationData
 import com.iacademy.smartsoilph.models.SQLiteModel
@@ -34,9 +45,14 @@ class SoilActivity : BaseActivity() {
     private lateinit var etTemperature: EditText
     private lateinit var btnFilter: ImageView
     private lateinit var btnViewRecommendation: CardView
+    private lateinit var btnRetrieveData: CardView
     private lateinit var btnReturn: ImageView
     private var gradeDialog: Dialog? = null
 
+    //floating action button
+    private lateinit var fabViewRecommend: FloatingActionButton
+    private lateinit var fabRetrieveData: FloatingActionButton
+    private var rotate = false
 
     //declare dialog variable
     private lateinit var selectedGradeTextView: TextView
@@ -45,6 +61,48 @@ class SoilActivity : BaseActivity() {
     //declare Firebase variables
     private lateinit var auth: FirebaseAuth
 
+    //declare btcontroller
+    private lateinit var bluetoothController: BluetoothController
+
+    //broadcast receiver btcontroller
+    private val updateReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (intent?.action == "com.iacademy.smartsoilph.arduino.ACTION_UPDATE_DATA") {
+                val val1 = intent.getStringExtra("val1") ?: ""
+                val val2 = intent.getStringExtra("val2") ?: ""
+                val val3 = intent.getStringExtra("val3") ?: ""
+                val val4 = intent.getStringExtra("val4") ?: ""
+                val val5 = intent.getStringExtra("val5") ?: ""
+                val val6 = intent.getStringExtra("val6") ?: ""
+                val val7 = intent.getStringExtra("val7") ?: ""
+
+                etNitrogen.setText(val1)
+                etPhosphorus.setText(val2)
+                etPotassium.setText(val3)
+                etPHLevel.setText(val4)
+                etECLevel.setText(val5)
+                etHumidity.setText(val6)
+                etTemperature.setText(val7)
+
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        LocalBroadcastManager.getInstance(this).registerReceiver(updateReceiver, IntentFilter("com.iacademy.smartsoilph.arduino.ACTION_UPDATE_DATA"))
+
+        //dropdown
+        val crops = resources.getStringArray(R.array.crops)
+        val arrayAdapter = ArrayAdapter(this, R.layout.dropdown_item, crops)
+        val autoCompleteTextView = findViewById<AutoCompleteTextView>(R.id.autoComplete)
+        autoCompleteTextView.setAdapter(arrayAdapter)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(updateReceiver)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_soil)
@@ -56,6 +114,112 @@ class SoilActivity : BaseActivity() {
         initializeLayout()
         setupButtonNavigation()
         Log.d("STATE", "OMGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG")
+
+        //dropdown
+        val crops = resources.getStringArray(R.array.crops)
+        val arrayAdapter = ArrayAdapter(this, R.layout.dropdown_item, crops)
+        val autoCompleteTextView = findViewById<AutoCompleteTextView>(R.id.autoComplete)
+        autoCompleteTextView.setAdapter(arrayAdapter)
+
+        bluetoothController = BluetoothController(this).apply {
+            setDataListener(object : BluetoothController.BluetoothDataListener {
+                override fun onDataReceived(data: String) {
+                    runOnUiThread {
+                    }
+                }
+            })
+        }
+
+        if (!bluetoothController.connect()) {
+            // Show a message if failed to connect
+        }
+
+        //fab setting
+        val overlayView = findViewById<View>(R.id.overlay_bg)
+        val settingFab = findViewById<FloatingActionButton>(R.id.fab_settings)
+        settingFab.setOnClickListener {
+            // If the overlay is visible, hide it, otherwise show it
+            if (overlayView.visibility == View.VISIBLE) {
+                overlayView.visibility = View.GONE
+            } else {
+                overlayView.visibility = View.VISIBLE
+            }
+            toggleFabMode(it)
+        }
+
+        overlayView.setOnClickListener {
+            overlayView.visibility = View.GONE
+        }
+
+        //sensor retrieve button
+        val fabRetrieveData = findViewById<FloatingActionButton>(R.id.fab_retrieveData)
+        fabRetrieveData.setOnClickListener {
+            bluetoothController.sendCommand("1")
+        }
+    }
+
+    //show overlay
+    private fun initShowOut(v: View){
+        v.apply {
+            visibility = View.GONE
+            translationY = height.toFloat()
+            alpha = 0f
+        }
+    }
+
+    //shows other fabs
+    private fun toggleFabMode(v: View) {
+        rotate = rotateFab(v,!rotate)
+        if (rotate){
+            showIn(fabViewRecommend)
+            showIn(fabRetrieveData)
+        }else{
+            showOut(fabViewRecommend)
+            showOut(fabRetrieveData)
+        }
+    }
+
+    //animates settings fab when clicked
+    private fun showOut(view: View) {
+        view.apply {
+            visibility = View.VISIBLE
+            alpha = 1f
+            translationY = 0f
+            animate()
+                .setDuration(200)
+                .translationY(height.toFloat())
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        visibility = View.GONE
+                        super.onAnimationEnd(animation)
+                    }
+                })
+                .alpha(0f)
+                .start()
+        }
+    }
+
+    private fun showIn(view: View) {
+        view.apply {
+            visibility = View.VISIBLE
+            alpha = 0f
+            translationY = height.toFloat()
+            animate()
+                .setDuration(200)
+                .translationY(0f)
+                .setListener(object : AnimatorListenerAdapter() {})
+                .alpha(1f)
+                .start()
+        }
+    }
+
+    //rotation animation for setitngs fab
+    private fun rotateFab(v: View, rotate: Boolean): Boolean {
+        v.animate()
+            .setDuration(200)
+            .setListener(object : AnimatorListenerAdapter() {})
+            .rotation(if (rotate) 180f else 0f)
+        return rotate
     }
 
     private fun initializeLayout() {
@@ -67,9 +231,13 @@ class SoilActivity : BaseActivity() {
         etHumidity = findViewById<EditText>(R.id.humidity_soil_value);
         etTemperature = findViewById<EditText>(R.id.temp_soil_value);
         btnFilter = findViewById<ImageView>(R.id.btn_filter);
-        btnViewRecommendation = findViewById<CardView>(R.id.btn_view_fertilizer);
+        btnViewRecommendation = findViewById<CardView>(R.id.btn_recommend);
+        btnRetrieveData = findViewById<CardView>(R.id.btn_retrieveData);
         btnReturn = findViewById<ImageView>(R.id.toolbar_back_icon)
         selectedGradeTextView = findViewById<TextView>(R.id.tv_selected_grade)
+
+        fabViewRecommend = findViewById<FloatingActionButton>(R.id.fab_recommendation);
+
     }
 
     private fun setupButtonNavigation() {
@@ -78,6 +246,18 @@ class SoilActivity : BaseActivity() {
             Log.d("STATE", "FILTER CLICKEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED")
             showGradeDialog()
         }
+
+        //fab view recommendation
+        fabViewRecommend.setOnClickListener {
+            Log.d("STATE", "VIEW RECOMMENDATION CLICKEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED ")
+            if (isGradeSelected) {
+                recommendation()
+            } else {
+                Toast.makeText(this, "Please select a grade first", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        //cardview view recommendation
         btnViewRecommendation.setOnClickListener {
             Log.d("STATE", "VIEW RECOMMENDATION CLICKEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED ")
             if (isGradeSelected) {
@@ -86,6 +266,12 @@ class SoilActivity : BaseActivity() {
                 Toast.makeText(this, "Please select a grade first", Toast.LENGTH_SHORT).show()
             }
         }
+
+        //cardview retrieve data
+        btnRetrieveData.setOnClickListener {
+            bluetoothController.sendCommand("1")
+        }
+
         btnReturn.setOnClickListener{
             val intent = Intent(this, HomeActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
@@ -251,5 +437,10 @@ class SoilActivity : BaseActivity() {
          * ---------------------------*/
         val intent = Intent(this, FertilizerActivity::class.java)
         startActivity(intent)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        bluetoothController.disconnect()
     }
 }
