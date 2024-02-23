@@ -100,30 +100,7 @@ class FirebaseModel {
             })
         }
     }
-
-    fun getCurrentUserDetailsAndSaveLocally(auth: FirebaseAuth, context: Context) {
-        val userID = auth.currentUser?.uid ?: return
-        val firebaseDB = Firebase.database.reference
-        val referenceUser = firebaseDB.child("SmartSoilPH").child("Users").child(userID)
-        val referenceDetails = referenceUser.child("UserDetails")
-
-        referenceDetails.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val name = snapshot.child("name").value.toString()
-                val email = snapshot.child("email").value.toString()
-                val number = snapshot.child("number").value.toString().toDoubleOrNull() ?: 0.0
-
-                // Now save these details locally using SQLiteModel
-                val userData = UserData(userID, name, email, number)
-                val dbHelper = SQLiteModel(context)
-                dbHelper.addUserData(userData)
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.e("FirebaseModel", "Failed to fetch user details: ${error.message}")
-            }
-        })
-    }
+    
 
     fun getAllUserDataFromFirebase(auth: FirebaseAuth, context: Context) {
         val userId = auth.currentUser?.uid ?: return
