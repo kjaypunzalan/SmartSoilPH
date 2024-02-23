@@ -15,6 +15,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.database
+import com.iacademy.smartsoilph.activities.SoilActivityTest
 import java.util.Calendar
 
 class FirebaseModel {
@@ -123,6 +124,73 @@ class FirebaseModel {
             }
         })
     }
+
+    fun getAllUserDataFromFirebase(auth: FirebaseAuth, context: Context) {
+        val userId = auth.currentUser?.uid ?: return
+        val firebaseDB = Firebase.database.reference
+        val referenceUser = firebaseDB.child("SmartSoilPH").child("Users").child(userId)
+        val dbHelper = SQLiteModel(context)
+
+        // Fetch and save user details
+        // Fetch and save user details
+        referenceUser.child("UserDetails").addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val name = snapshot.child("name").value.toString()
+                val email = snapshot.child("email").value.toString()
+                val number = snapshot.child("number").value.toString().toDoubleOrNull() ?: 0.0
+                val userData = UserData(userId, name, email, number)
+                dbHelper.addUserData(userData)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("FirebaseModel", "Failed to fetch user details: ${error.message}")
+            }
+        })
+
+
+        // Fetch and save recommendation data
+        referenceUser.child("RecommendationHistory").addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                snapshot.children.forEach { child ->
+                    val recommendationID = child.key ?: return
+
+                    // Extract nested soil data
+                    val soilSnapshot = child.child("soilData")
+                    val nitrogen = soilSnapshot.child("nitrogen").value.toString().toFloatOrNull() ?: 0f
+                    val phosphorus = soilSnapshot.child("phosphorus").value.toString().toFloatOrNull() ?: 0f
+                    val potassium = soilSnapshot.child("potassium").value.toString().toFloatOrNull() ?: 0f
+                    val phLevel = soilSnapshot.child("phLevel").value.toString().toFloatOrNull() ?: 0f
+                    val ecLevel = soilSnapshot.child("ecLevel").value.toString().toFloatOrNull() ?: 0f
+                    val humidity = soilSnapshot.child("humidity").value.toString().toFloatOrNull() ?: 0f
+                    val temperature = soilSnapshot.child("temperature").value.toString().toFloatOrNull() ?: 0f
+
+                    val fertilizerRecommendation = child.child("fertilizerRecommendation").value.toString().toFloatOrNull() ?: 0f
+                    val limeRecommendation = child.child("limeRecommendation").value.toString().toFloatOrNull() ?: 0f
+                    val dateOfRecommendation = child.child("dateOfRecommendation").value.toString()
+                    val initialStorageType = child.child("initialStorageType").value.toString()
+                    val isSavedOnline = true
+
+                    Log.d("", "recommendationID: $recommendationID")
+                    Log.d("", "soilData: $nitrogen")
+                    Log.d("", "fertilizer: $fertilizerRecommendation")
+                    Log.d("", "lime: $limeRecommendation")
+                    Log.d("", "dateOfRecommendation: $dateOfRecommendation")
+                    Log.d("", "storageType: $initialStorageType")
+                    Log.d("", "savedOnline: $isSavedOnline")
+
+                    val soilData = SoilData(nitrogen, phosphorus, potassium, phLevel, ecLevel, humidity, temperature)
+                    val recommendationData = RecommendationData(recommendationID, userId, soilData, fertilizerRecommendation, limeRecommendation, dateOfRecommendation, initialStorageType, isSavedOnline)
+
+                    dbHelper.addSoilData(recommendationData) // Assuming a method to save individual recommendation data
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("FirebaseModel", "Failed to fetch recommendation history: ${error.message}")
+            }
+        })
+    }
+
 
 
 

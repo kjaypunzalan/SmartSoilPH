@@ -60,7 +60,7 @@ class HomeActivity : BaseActivity() {
         // Display Date and Username
         displayCurrentDate()
         fetchUsername()
-        //resetDatabase()
+
     }
 
     private fun initializeLayout() {
@@ -257,12 +257,5 @@ class HomeActivity : BaseActivity() {
         val editor = sharedPreferences.edit()
         editor.putString("My_Lang", languageCode)
         editor.apply()
-    }
-
-    private fun resetDatabase() {
-        val dbHelper = SQLiteModel(this)
-        dbHelper.deleteDatabase()
-        // Show a Toast message confirming the database reset
-        Toast.makeText(this, "Database has been reset", Toast.LENGTH_SHORT).show()
     }
 }
