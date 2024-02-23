@@ -21,19 +21,10 @@
     <string name="manual_button">Tulong</string>
     <string name="logout_button">Mag Logout</string>
     <string name="title_recommend">Rekomendasyon</string>
-    <string name="sub_title_rec">para sa pataba</string>
-    <string name="fertilizer_sentence1">Inirerekomenda namin ang paggamit ng</string>
-    <string name="fertilizer_sentence2"><b>ng pataba</b> kada ektarya batay sa aming pagtatasa!</string>
-    <string name="fertilizer_title">Pataba</string>
-    <string name="acidity_title">Asido ng Lupa</string>
-    <string name="acidity_sentence1">Inirerekomenda namin ang paggamit ng</string>
-    <string name="acidity_sentence2"><b>ng kalamansi</b> kada ektarya batay sa aming pagtatasa!</string>
-    <string name="for_acidity">Para sa asido ng lupa,</string>
     <string name="return_soil">Bumalik sa Data ng Lupa</string>
     <string name="previous_data">Mga Nakaraang Rekomendasyon</string>
     <string name="rec_history">Mga Nakaraang Rekomendasyon</string>
     <string name="date_time">Petsa at Oras</string>
-    <string name="fertilizer_info">ng<b> Pataba </b>ang ginamit</string>
     <string name="screen_1">Isang app sa pagsubaybay sa lupa upang mapahusay ang iyong sakahan!</string>
     <string name="screen_2">Mabisang sukatin ang mahahalagang sustansya ng lupa para sa isang malusog na lupa!</string>
     <string name="screen_3">Maging alam sa kasalukuyang mga update sa panahon para sa paghahanda!</string>
@@ -55,6 +46,7 @@
     <string name="sub_summary2">Mayroon kang %.0f acidic na lupa, %.0f neutral na lupa, at %.0f alkaline na lupa sa loob ng huling 7 araw.</string>
     <string name="sub_summary3">Sa kabuuan, mayroon kang naipon na %.0f paggamit ng pataba sa iyong buhay.</string>
     <string name="sub_summary4">Sa kabuuan, ang iyong kamakailang antas ng pH ng lupa ay ang kalusugan ay %.0f.</string>
+    <string name="sub_summary44">Your recent soil pH level health is %.0f.</string>
     <string name="sub_summary5">Kamakailan, ang NPK nutrient na kinakailangan ng iyong lupa ay %1$s.</string>
     <string name="manu_title">Isang gabay na ginawa para sa iyo...</string>
 
@@ -84,9 +76,11 @@
     <string name="fertilizer_3">kg ng Potash</string>
 
     <string name="ph_sentence">Ang iyong pH level ay </string>
-    <string name="ph_info">Nirerekomenda namin na itama ang pH level ng iyong lupa sa pagkonsulta sa isang eksperto ng agrikultura.</string>
+    <string name="ph_info1">Nirerekomenda namin na itama ang pH level ng iyong lupa sa pagkonsulta sa isang eksperto ng agrikultura.</string>
+    <string name="ph_info2">Ang iyong lupa ay neutral at nasa mabuting kalusugan! :)</string>
+    <string name="ph_info3">Nirerekomenda namin na itama ang pH level ng iyong lupa sa pagkonsulta sa isang eksperto ng agrikultura.</string>
 
-<!--Recommendation History Item-->
+    <!--Recommendation History Item-->
     <string name="fertilizer_info1">ng <b>Complete</b> na Pataba ang nagamit</string>
     <string name="fertilizer_info2">ng <b>Duophos</b> na Pataba ang nagamit</string>
     <string name="fertilizer_info3">ng <b>Potash</b> na Pataba ang nagamit</string>

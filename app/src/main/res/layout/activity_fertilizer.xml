@@ -333,86 +333,14 @@
                     android:id="@+id/complete_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:maxWidth="320dp"
                     android:text="@string/fertilizer_cvalue"
-                    android:textAppearance="@style/recommend_sentence"
-                    android:maxWidth="320dp"
-                    android:layout_marginEnd="5dp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/fertilizer_1"
-                    android:textAppearance="@style/recommend_sentence"
-                    android:maxWidth="320dp"
-                    android:layout_marginEnd="5dp"/>
-                <TextView
-                    android:id="@+id/complete_grade"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/fertilizer_gvalue1"
-                    android:textAppearance="@style/recommend_sentence"
-                    android:maxWidth="320dp"/>
+                    android:textAppearance="@style/recommend_sentence" />
 
             </LinearLayout>
-            <!-- Horizontal LinearLayout for the first part of the sentence -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/duophos_value"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/fertilizer_cvalue"
-                    android:textAppearance="@style/recommend_sentence"
-                    android:maxWidth="320dp"
-                    android:layout_marginEnd="5dp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/fertilizer_2"
-                    android:textAppearance="@style/recommend_sentence"
-                    android:maxWidth="320dp"
-                    android:layout_marginEnd="5dp"/>
-                <TextView
-                    android:id="@+id/duophos_grade"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/fertilizer_gvalue2"
-                    android:textAppearance="@style/recommend_sentence"
-                    android:maxWidth="320dp"/>
 
-            </LinearLayout>
-            <!-- Horizontal LinearLayout for the first part of the sentence -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/potash_value"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/fertilizer_cvalue"
-                    android:textAppearance="@style/recommend_sentence"
-                    android:maxWidth="320dp"
-                    android:layout_marginEnd="5dp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/fertilizer_3"
-                    android:textAppearance="@style/recommend_sentence"
-                    android:maxWidth="320dp"
-                    android:layout_marginEnd="5dp"/>
-                <TextView
-                    android:id="@+id/potash_grade"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/fertilizer_gvalue3"
-                    android:textAppearance="@style/recommend_sentence"
-                    android:maxWidth="320dp"/>
-
-            </LinearLayout>
 
         </LinearLayout>
 
@@ -474,7 +402,7 @@
                     android:id="@+id/ph_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/ph_sentence_value"
+                    android:text="@string/ph_sentence_value1"
                     android:textAppearance="@style/recommend_sentence"
                     android:maxWidth="320dp"/>
                 <TextView
@@ -495,7 +423,7 @@
                     android:id="@+id/ph_recommend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/ph_info"
+                    android:text="@string/ph_info1"
                     android:textAppearance="@style/recommend_sentence"
                     android:maxWidth="320dp"/>
             </LinearLayout>
@@ -531,7 +459,7 @@
                 android:text="@string/phLevel_title"
                 android:textAppearance="@style/fertilizer_title" />
             <TextView
-                android:id="@+id/tv_fertilizer_amount1"
+                android:id="@+id/tv_ph_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/fertilizer_cvalue"

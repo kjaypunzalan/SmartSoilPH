@@ -33,7 +33,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-class SoilActivity : BaseActivity() {
+class SoilActivityTest : BaseActivity() {
 
     //declare layout variables
     private lateinit var etNitrogen: EditText
@@ -44,6 +44,7 @@ class SoilActivity : BaseActivity() {
     private lateinit var etHumidity: EditText
     private lateinit var etTemperature: EditText
     private lateinit var btnFilter: ImageView
+    private lateinit var btnViewRecommendation: CardView
     private lateinit var btnRetrieveData: CardView
     private lateinit var btnReturn: ImageView
     private var gradeDialog: Dialog? = null
@@ -51,7 +52,6 @@ class SoilActivity : BaseActivity() {
     //floating action button
     private lateinit var fabViewRecommend: FloatingActionButton
     private lateinit var fabRetrieveData: FloatingActionButton
-    private lateinit var fabSettings: FloatingActionButton
     private var rotate = false
 
     //declare dialog variable
@@ -61,12 +61,39 @@ class SoilActivity : BaseActivity() {
     //declare Firebase variables
     private lateinit var auth: FirebaseAuth
 
+    //declare btcontroller
+    private lateinit var bluetoothController: BluetoothController
+
+    //broadcast receiver btcontroller
+    private val updateReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (intent?.action == "com.iacademy.smartsoilph.arduino.ACTION_UPDATE_DATA") {
+                val val1 = intent.getStringExtra("val1") ?: ""
+                val val2 = intent.getStringExtra("val2") ?: ""
+                val val3 = intent.getStringExtra("val3") ?: ""
+                val val4 = intent.getStringExtra("val4") ?: ""
+                val val5 = intent.getStringExtra("val5") ?: ""
+                val val6 = intent.getStringExtra("val6") ?: ""
+                val val7 = intent.getStringExtra("val7") ?: ""
+
+                etNitrogen.setText(val1)
+                etPhosphorus.setText(val2)
+                etPotassium.setText(val3)
+                etPHLevel.setText(val4)
+                etECLevel.setText(val5)
+                etHumidity.setText(val6)
+                etTemperature.setText(val7)
+
+            }
+        }
+    }
+
     override fun onResume() {
         super.onResume()
+        LocalBroadcastManager.getInstance(this).registerReceiver(updateReceiver, IntentFilter("com.iacademy.smartsoilph.arduino.ACTION_UPDATE_DATA"))
 
         //dropdown
         val crops = resources.getStringArray(R.array.crops)
-        // Specify the custom layout and the ID of the TextView within that layout
         val arrayAdapter = ArrayAdapter(this, R.layout.dropdown_item, R.id.tv_1, crops)
         val autoCompleteTextView = findViewById<AutoCompleteTextView>(R.id.autoComplete)
         autoCompleteTextView.setAdapter(arrayAdapter)
@@ -74,8 +101,8 @@ class SoilActivity : BaseActivity() {
 
     override fun onPause() {
         super.onPause()
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(updateReceiver)
     }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_soil)
@@ -86,6 +113,49 @@ class SoilActivity : BaseActivity() {
         // initialize layout and button navigations
         initializeLayout()
         setupButtonNavigation()
+        Log.d("STATE", "OMGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG")
+
+        //dropdown
+        val crops = resources.getStringArray(R.array.crops)
+        val arrayAdapter = ArrayAdapter(this, R.layout.dropdown_item, crops)
+        val autoCompleteTextView = findViewById<AutoCompleteTextView>(R.id.autoComplete)
+        autoCompleteTextView.setAdapter(arrayAdapter)
+
+        bluetoothController = BluetoothController(this).apply {
+            setDataListener(object : BluetoothController.BluetoothDataListener {
+                override fun onDataReceived(data: String) {
+                    runOnUiThread {
+                    }
+                }
+            })
+        }
+
+        if (!bluetoothController.connect()) {
+            // Show a message if failed to connect
+        }
+
+        //fab setting
+        val overlayView = findViewById<View>(R.id.overlay_bg)
+        val settingFab = findViewById<FloatingActionButton>(R.id.fab_settings)
+        settingFab.setOnClickListener {
+            // If the overlay is visible, hide it, otherwise show it
+            if (overlayView.visibility == View.VISIBLE) {
+                overlayView.visibility = View.GONE
+            } else {
+                overlayView.visibility = View.VISIBLE
+            }
+            toggleFabMode(it)
+        }
+
+        overlayView.setOnClickListener {
+            overlayView.visibility = View.GONE
+        }
+
+        //sensor retrieve button
+        val fabRetrieveData = findViewById<FloatingActionButton>(R.id.fab_retrieveData)
+        fabRetrieveData.setOnClickListener {
+            bluetoothController.sendCommand("1")
+        }
     }
 
     //show overlay
@@ -161,13 +231,12 @@ class SoilActivity : BaseActivity() {
         etHumidity = findViewById<EditText>(R.id.humidity_soil_value);
         etTemperature = findViewById<EditText>(R.id.temp_soil_value);
         btnFilter = findViewById<ImageView>(R.id.btn_filter);
+        btnViewRecommendation = findViewById<CardView>(R.id.btn_recommend);
         btnRetrieveData = findViewById<CardView>(R.id.btn_retrieveData);
         btnReturn = findViewById<ImageView>(R.id.toolbar_back_icon)
         selectedGradeTextView = findViewById<TextView>(R.id.tv_selected_grade)
 
-        fabViewRecommend = findViewById<FloatingActionButton>(R.id.fab_recommendation)
-        fabRetrieveData = findViewById<FloatingActionButton>(R.id.fab_retrieveData)
-        fabSettings = findViewById<FloatingActionButton>(R.id.fab_settings)
+        fabViewRecommend = findViewById<FloatingActionButton>(R.id.fab_recommendation);
 
     }
 
@@ -188,22 +257,20 @@ class SoilActivity : BaseActivity() {
             }
         }
 
-        //fab setting
-        val overlayView = findViewById<View>(R.id.overlay_bg)
-        fabSettings.setOnClickListener {
-            // If the overlay is visible, hide it, otherwise show it
-            if (overlayView.visibility == View.VISIBLE) {
-                overlayView.visibility = View.GONE
+        //cardview view recommendation
+        btnViewRecommendation.setOnClickListener {
+            Log.d("STATE", "VIEW RECOMMENDATION CLICKEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED ")
+            if (isGradeSelected) {
+                recommendation()
             } else {
-                overlayView.visibility = View.VISIBLE
+                Toast.makeText(this, "Please select a grade first", Toast.LENGTH_SHORT).show()
             }
-            toggleFabMode(it)
         }
 
-        overlayView.setOnClickListener {
-            overlayView.visibility = View.GONE
+        //cardview retrieve data
+        btnRetrieveData.setOnClickListener {
+            bluetoothController.sendCommand("1")
         }
-
 
         btnReturn.setOnClickListener{
             val intent = Intent(this, HomeActivity::class.java)
@@ -211,12 +278,6 @@ class SoilActivity : BaseActivity() {
             startActivity(intent)
             finish()
         }
-
-        //dropdown
-        val crops = resources.getStringArray(R.array.crops)
-        val arrayAdapter = ArrayAdapter(this, R.layout.dropdown_item, crops)
-        val autoCompleteTextView = findViewById<AutoCompleteTextView>(R.id.autoComplete)
-        autoCompleteTextView.setAdapter(arrayAdapter)
     }
 
     @SuppressLint("MissingSuperCall")
@@ -236,7 +297,7 @@ class SoilActivity : BaseActivity() {
 
         // Initialize RadioButtons using Loop
         val radioButtons = mutableListOf<RadioButton>()
-        for (i in 1..9) {
+        for (i in 1..12) {
             val resId = resources.getIdentifier("gs_$i", "id", packageName)
             radioButtons.add(dialog.findViewById(resId))
         }
@@ -376,5 +437,10 @@ class SoilActivity : BaseActivity() {
          * ---------------------------*/
         val intent = Intent(this, FertilizerActivity::class.java)
         startActivity(intent)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        bluetoothController.disconnect()
     }
 }

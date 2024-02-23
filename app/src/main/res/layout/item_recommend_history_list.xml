@@ -25,7 +25,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/tv_date_time"
         app:layout_constraintBottom_toBottomOf="@id/tv_date_time">
-
     </ImageView>
 
     <HorizontalScrollView
@@ -106,7 +105,7 @@
 
                         <!--NPK Amount-->
                         <TextView
-                            android:id="@+id/tv_fertilizer_amount"
+                            android:id="@+id/tv_fertilizer_amount2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/fertilizer_value"
@@ -141,7 +140,7 @@
 
                     <!--NPK Amount-->
                     <TextView
-                        android:id="@+id/tv_fertilizer_amount"
+                        android:id="@+id/tv_fertilizer_amount3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/fertilizer_value"
@@ -185,16 +184,16 @@
                     android:src="@drawable/icon_npk"
                     app:tint="#80000000"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/cl_2"
-                    app:layout_constraintBottom_toBottomOf="@id/cl_2"/>
+                    app:layout_constraintTop_toTopOf="@id/cl_3"
+                    app:layout_constraintBottom_toBottomOf="@id/cl_3"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     app:layout_constraintStart_toEndOf="@id/iv_npk"
-                    app:layout_constraintTop_toTopOf="@id/cl_2"
-                    app:layout_constraintBottom_toBottomOf="@id/cl_2"
+                    app:layout_constraintTop_toTopOf="@id/cl_3"
+                    app:layout_constraintBottom_toBottomOf="@id/cl_3"
                     android:layout_margin="10dp">
 
                     <!--NPK Amount-->
