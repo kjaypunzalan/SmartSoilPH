@@ -163,7 +163,7 @@ class RegisterActivity : BaseActivity() {
         user?.let {
             if (user.isEmailVerified) {
                 // Email is verified, proceed to the next activity
-                val intent = Intent(this, LoginActivity::class.java) // Replace with your next activity
+                val intent = Intent(this, HomeActivity::class.java) // Replace with your next activity
                 startActivity(intent)
                 finish()
             } else {

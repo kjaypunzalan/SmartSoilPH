@@ -1,16 +1,22 @@
 package com.iacademy.smartsoilph.activities
 
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import android.widget.PopupMenu
+import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
+import androidx.core.app.ActivityCompat
+import androidx.core.widget.NestedScrollView
 import com.google.firebase.auth.FirebaseAuth
 import com.iacademy.smartsoilph.R
 import com.iacademy.smartsoilph.models.SQLiteModel
@@ -18,6 +24,7 @@ import java.lang.reflect.Method
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import java.util.jar.Manifest
 
 
 class HomeActivity : BaseActivity() {
@@ -27,11 +34,14 @@ class HomeActivity : BaseActivity() {
     private lateinit var btnWeather: CardView
     private lateinit var btnReports: CardView
     private lateinit var btnManual: CardView
-    private lateinit var btnLogout: CardView
     private lateinit var tvUsername: TextView
     private lateinit var tvDateToday: TextView
     private lateinit var btnBtConnect: CardView
     private lateinit var btnSettings: CardView
+    private lateinit var btnRecommendationHistory: CardView
+    private lateinit var ivBGHome: ImageView
+    private lateinit var btnSwitch: Switch
+    private lateinit var nestedScrollView: NestedScrollView
 
     // Declare Firebase variables
     private lateinit var auth: FirebaseAuth
@@ -50,46 +60,48 @@ class HomeActivity : BaseActivity() {
         // Display Date and Username
         displayCurrentDate()
         fetchUsername()
-//        resetDatabase()
+
     }
 
     private fun initializeLayout() {
 
-        btnSoil = findViewById<CardView>(R.id.soil_card)
-        btnWeather = findViewById<CardView>(R.id.weather_card)
-        btnReports = findViewById<CardView>(R.id.reports_card)
-        btnManual = findViewById<CardView>(R.id.manual_card)
-//        btnLogout = findViewById<CardView>(R.id.logout_card)
-        tvUsername = findViewById<TextView>(R.id.tv_username)
-        tvDateToday = findViewById<TextView>(R.id.tv_date_today)
-
-        //settings
+        // Note: btnSyncDatabase and other menu items are handled through onCreateOptionsMenu and onOptionsItemSelected
         btnSettings = findViewById<CardView>(R.id.settings_card)
         btnSoil = findViewById(R.id.soil_card)
         btnWeather = findViewById(R.id.weather_card)
         btnReports = findViewById(R.id.reports_card)
         btnManual = findViewById(R.id.manual_card)
-//        btnLogout = findViewById(R.id.logout_card)
         tvUsername = findViewById(R.id.tv_username)
         tvDateToday = findViewById(R.id.tv_date_today)
         btnBtConnect = findViewById(R.id.bluetooth_card)
-        // Note: btnSyncDatabase and other menu items are handled through onCreateOptionsMenu and onOptionsItemSelected
+        btnRecommendationHistory = findViewById(R.id.fertilizer_card)
+        btnSettings = findViewById(R.id.settings_card)
+        btnSwitch = findViewById(R.id.switch_button)
+        ivBGHome = findViewById(R.id.bg_home)
+        nestedScrollView = findViewById(R.id.nested_scrollView)
+
+        // Add Parallax Effect
+        nestedScrollView.viewTreeObserver.addOnScrollChangedListener {
+            val scrollY = nestedScrollView.scrollY // For ScrollView
+            ivBGHome.translationY = scrollY * 0.5f // Adjust parallax effect speed here
+        }
     }
 
+    //Button Function
+    private fun setButtonClickListener(button: CardView, activityClass: Class<*>) {
+        button.setOnClickListener {
+            val intent = Intent(this, activityClass)
+            startActivity(intent)
+        }
+    }
     private fun setupButtonNavigation() {
         // set click listeners for buttons
         setButtonClickListener(btnSoil, SoilActivity::class.java)
         setButtonClickListener(btnWeather, WeatherActivity::class.java)
         setButtonClickListener(btnReports, ReportsActivity::class.java)
-        setButtonClickListener(btnManual, RecommendationHistoryActivity::class.java)
-        setButtonClickListener(btnBtConnect, ArduinoController::class.java) // Ensure BluetoothController exists or adjust as needed
-
-        btnLogout.setOnClickListener {
-            auth.signOut()
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+        setButtonClickListener(btnRecommendationHistory, RecommendationHistoryActivity::class.java)
+        setButtonClickListener(btnManual, SoilActivityTest::class.java)
+        setButtonClickListener(btnBtConnect, SoilActivityTest::class.java) // Ensure BluetoothController exists or adjust as needed
 
 
         //settings
@@ -97,6 +109,17 @@ class HomeActivity : BaseActivity() {
             showPopupMenu(view)
         }
 
+        btnBtConnect.setOnClickListener {
+            // Toggle the switch's checked state
+            btnSwitch.isChecked = !btnSwitch.isChecked
+
+            // Optionally, perform actions based on the new state of the switch
+            if (btnSwitch.isChecked) {
+                // Code to execute when the switch is turned ON
+            } else {
+                // Code to execute when the switch is turned OFF
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -154,14 +177,6 @@ class HomeActivity : BaseActivity() {
     }
 
 
-    //Button Function
-    private fun setButtonClickListener(button: CardView, activityClass: Class<*>) {
-        button.setOnClickListener {
-            val intent = Intent(this, activityClass)
-            startActivity(intent)
-        }
-    }
-
     private fun displayCurrentDate() {
         val dateFormat = SimpleDateFormat("EEEE, MMM d", Locale.getDefault())
         val currentDate = dateFormat.format(Calendar.getInstance().time)
@@ -203,6 +218,10 @@ class HomeActivity : BaseActivity() {
         alert.show()
     }
 
+
+
+
+
     private fun showLanguageDialog() {
         val dialogBuilder = AlertDialog.Builder(this)
         val languages = arrayOf("English", "Tagalog")
@@ -238,12 +257,5 @@ class HomeActivity : BaseActivity() {
         val editor = sharedPreferences.edit()
         editor.putString("My_Lang", languageCode)
         editor.apply()
-    }
-
-    private fun resetDatabase() {
-        val dbHelper = SQLiteModel(this)
-        dbHelper.deleteDatabase()
-        // Show a Toast message confirming the database reset
-        Toast.makeText(this, "Database has been reset", Toast.LENGTH_SHORT).show()
     }
 }

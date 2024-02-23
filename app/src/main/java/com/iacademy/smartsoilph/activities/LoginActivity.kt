@@ -9,6 +9,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.iacademy.smartsoilph.R
 import com.iacademy.smartsoilph.models.FirebaseModel
+import com.iacademy.smartsoilph.models.SQLiteModel
 
 class LoginActivity : BaseActivity() {
 
@@ -28,6 +29,7 @@ class LoginActivity : BaseActivity() {
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
         firebaseModel = FirebaseModel()
+        resetDatabase()
 
         // Check if user is already logged in
         if (auth.currentUser != null) {
@@ -74,8 +76,9 @@ class LoginActivity : BaseActivity() {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // After successful login
-                    firebaseModel.getCurrentUserDetailsAndSaveLocally(auth, this)
+                    // Fetch and save all user data from Firebase
+                    firebaseModel.getAllUserDataFromFirebase(auth, this)
+
                     // Login success, update UI with the signed-in user's information
                     checkIfEmailVerified()
                 } else {
@@ -121,5 +124,12 @@ class LoginActivity : BaseActivity() {
         } else {
             Toast.makeText(baseContext, "Please verify your email first.", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun resetDatabase() {
+        val dbHelper = SQLiteModel(this)
+        dbHelper.deleteDatabase()
+        // Show a Toast message confirming the database reset
+        Toast.makeText(this, "Database has been reset", Toast.LENGTH_SHORT).show()
     }
 }

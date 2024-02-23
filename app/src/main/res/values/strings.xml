@@ -44,11 +44,24 @@
 
     <!--Named Crops-->
     <string-array name="crops">
+        <item>Ampalaya</item>
+        <item>Asparagus</item>
+        <item>Beans - Dwarf (Variety)</item>
+        <item>Beans - Lima (Patani)</item>
+        <item>Beans - String (Pole Sitao)</item>
+        <item>Beans - Tree (Type)</item>
+        <item>Beans - Winged (Segiduillas)</item>
+        <item>Broccoli</item>
+        <item>Cabbage (Chinese)</item>
+        <item>Cabbage (Head)</item>
+        <item>Cabbage (Local)</item>
+        <item>Carrot</item>
+        <item>Cauliflower</item>
+        <item>Celery</item>
+        <item>Chayote</item>
+        <item>Cucumber</item>
         <item>Eggplant</item>
-        <item>Eggplant</item>
-        <item>Eggplant</item>
-        <item>Eggplant</item>
-        <item>Eggplant</item>
+        <item>Garlic</item>
     </string-array>
 
     <string name="nitrogen" translatable="false">Nitrogen</string>
@@ -117,7 +130,7 @@
     <string name="home_txt1">What do you want to do?</string>
     <string name="weather_button">Weather</string>
     <string name="reports_button">Reports</string>
-    <string name="history_button">Fertilizer History</string>
+    <string name="history_button">Recommendation History</string>
     <string name="settings_button" translatable="false">Settings</string>
     <string name="bluetooth_button">Connect to Bluetooth Device</string>
     <string name="manual_button">View User Manual</string>
@@ -154,8 +167,12 @@
     <string name="phLevel" translatable="false">For pH Level</string>
 
     <string name="ph_sentence">Your pH level is </string>
-    <string name="ph_sentence_value" translatable="false"><b>acidic</b></string>
-    <string name="ph_info">We recommend to correct your soil pH by consulting with an agriculture expert.</string>
+    <string name="ph_sentence_value1" translatable="false"><b>acidic</b></string>
+    <string name="ph_sentence_value2" translatable="false"><b>neutral</b></string>
+    <string name="ph_sentence_value3" translatable="false"><b>alkaline</b></string>
+    <string name="ph_info1">We recommend to correct your soil pH by consulting with an agriculture expert.</string>
+    <string name="ph_info2">Your soil is in perfectly good health!</string>
+    <string name="ph_info3">We recommend to correct your soil pH to normal levels by consulting with an agriculture expert.</string>
 
     <string name="phLevel_title" translatable="false">pH Level</string>
 
@@ -190,7 +207,8 @@
     <string name="sub_summary1">There are a total of %1$d Firebase saves, %2$d SQLite saves, and %3$d total saves within the last 7 days.</string>
     <string name="sub_summary2">You have %.0f acidic soils, %.0f neutral soils, and %.0f alkaline soils within the last 7 days.</string>
     <string name="sub_summary3">In total, you have accumulated %.0f fertilizer usage during your lifetime.</string>
-    <string name="sub_summary4">Your recent soil pH level health is %.0f.</string>
+    <string name="sub_summary4">Your recent soil pH level health is %.0f, indicating Alkaline. It\'s not bad for your soil but you might want to aim for an average 5.5-6.5.</string>
+    <string name="sub_summary44">Your recent soil pH level health is %.0f, indicating Acidity. It\'s bad for your soil and you might want to consult on how to get it to average 5.5-6.5.</string>
     <string name="sub_summary5">Recently, your soil\'s NPK nutrient requirement is %1$s.</string>
     <!--=================================================================-->
 

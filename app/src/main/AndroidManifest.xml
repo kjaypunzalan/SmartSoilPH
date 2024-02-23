@@ -3,7 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <!-- PERMISSIONS -->
-    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />            <!-- Required for apps targeting Android 12 (API level 31) and higher -->
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />         <!-- Required for apps targeting Android 12 (API level 31) and higher -->
     <uses-permission android:name="android.permission.INTERNET" />                  <!-- For internet conenctivity -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />      <!-- Check if there's internet -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />     <!-- Firebase Read and Write -->
@@ -90,7 +93,7 @@
         <activity android:name=".activities.ArduinoController"
             android:exported="true"
             android:theme="@style/Theme.SmartSoilPH" />
-        <activity android:name=".activities.SoilActivity"
+        <activity android:name=".activities.SoilActivityTest"
             android:exported="true"
             android:theme="@style/Theme.SmartSoilPH" />
 

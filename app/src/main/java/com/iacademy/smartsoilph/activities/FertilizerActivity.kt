@@ -18,16 +18,19 @@ import com.iacademy.smartsoilph.models.SQLiteModel
 import com.iacademy.smartsoilph.models.FirebaseModel
 import com.iacademy.smartsoilph.utils.CheckInternet
 import com.iacademy.smartsoilph.datamodels.FertilizerNutrientModel
+import com.iacademy.smartsoilph.models.FertilizerCalculatorModel
 
 class FertilizerActivity : BaseActivity() {
 
     //declare layout variables
     private lateinit var tvUserName: TextView
-    private lateinit var tvFertilizerAmount: TextView
-    private lateinit var tvFertilizerAmount1: TextView
+    private lateinit var tvFertilizerRecommendation: TextView
     private lateinit var tvNitrogen: TextView
     private lateinit var tvPhosphorus: TextView
     private lateinit var tvPotassium: TextView
+    private lateinit var tvPHLevel: TextView
+    private lateinit var tvPHLevelLabel: TextView
+    private lateinit var tvPHLevelDescription: TextView
     private lateinit var btnPreviousRecommendations: CardView
     private lateinit var btnReturnSoil: CardView
 
@@ -55,12 +58,13 @@ class FertilizerActivity : BaseActivity() {
     }
 
     private fun initializeLayout() {
-//        tvUserName = findViewById<TextView>(R.id.tv_user_greeting)
-        tvFertilizerAmount = findViewById<TextView>(R.id.tv_fertilizer_amount)
-        tvFertilizerAmount1 = findViewById<TextView>(R.id.tv_fertilizer_amount1)
-        tvNitrogen = findViewById<TextView>(R.id.nitrogen_value)
-        tvPhosphorus = findViewById<TextView>(R.id.phosphorus_value)
-        tvPotassium = findViewById<TextView>(R.id.potassium_value)
+        tvFertilizerRecommendation = findViewById<TextView>(R.id.complete_value)
+        tvNitrogen = findViewById<TextView>(R.id.npk_value1)
+        tvPhosphorus = findViewById<TextView>(R.id.npk_value2)
+        tvPotassium = findViewById<TextView>(R.id.npk_value3)
+        tvPHLevel = findViewById<TextView>(R.id.tv_ph_amount)
+        tvPHLevelLabel = findViewById<TextView>(R.id.ph_value)
+        tvPHLevelDescription = findViewById<TextView>(R.id.ph_recommend)
         btnPreviousRecommendations = findViewById<CardView>(R.id.btn_previous);
         btnReturnSoil = findViewById<CardView>(R.id.btn_return_soil);
     }
@@ -107,6 +111,22 @@ class FertilizerActivity : BaseActivity() {
             tvNitrogen.text = "$requiredN"
             tvPhosphorus.text = "$requiredP"
             tvPotassium.text = "$requiredK"
+
+            val calculator = FertilizerCalculatorModel()
+            val fertilizerRequirements = calculator.calculateFertilizerRequirements(
+                nRequirement = requiredN.toFloat(),
+                pRequirement = requiredP.toFloat(),
+                kRequirement = requiredK.toFloat(),
+                initialN = nitrogen
+            )
+
+            // Convert to a readable string format to display
+            val recommendationStr = fertilizerRequirements.entries.joinToString(separator = "\n") {
+                "${it.key}: ${String.format("%.2f kg", it.value)}"
+            }
+
+            // Display in TextView
+            tvFertilizerRecommendation.text = recommendationStr
         }
     }
 
@@ -128,14 +148,32 @@ class FertilizerActivity : BaseActivity() {
         val latestSoilData = dbHelper.getLatestSoilData()
 
         if (latestSoilData != null) {
-            //Display Fertilizer
-            val formattedFertilizerAmount = String.format("%.1f kg", latestSoilData.fertilizerRecommendation)
-            tvFertilizerAmount.text = formattedFertilizerAmount
-            tvFertilizerAmount1.text = formattedFertilizerAmount
-
             //Display Fertilizer Requirement
             val soil = latestSoilData.soilData
             displayNutrientRequirements(soil.nitrogen, soil.phosphorus, soil.potassium)
+
+            //Display pH Level
+            val phLevelValue = latestSoilData.soilData.phLevel
+            val phLevelString = String.format("%.1f", phLevelValue)
+            tvPHLevel.text = phLevelString
+
+            //Display pH Level Label
+            val phLevelLabelText: String = when {
+                phLevelValue < 5.5 -> getString(com.iacademy.smartsoilph.R.string.ph_sentence_value1)
+                phLevelValue > 6.5 -> getString(com.iacademy.smartsoilph.R.string.ph_sentence_value3)
+                else -> getString(com.iacademy.smartsoilph.R.string.ph_sentence_value2)
+            }
+            tvPHLevelLabel.text = phLevelLabelText
+
+            //Display pH Level Description
+            val phLevelDescriptionText: String = when {
+                phLevelValue < 5.5 -> getString(com.iacademy.smartsoilph.R.string.ph_info1)
+                phLevelValue > 6.5 -> getString(com.iacademy.smartsoilph.R.string.ph_info3)
+                else -> getString(com.iacademy.smartsoilph.R.string.ph_info2)
+            }
+            tvPHLevelDescription.text = phLevelDescriptionText
+
+
         } else {
             Toast.makeText(applicationContext, "No local soil data available", Toast.LENGTH_SHORT).show()
         }
