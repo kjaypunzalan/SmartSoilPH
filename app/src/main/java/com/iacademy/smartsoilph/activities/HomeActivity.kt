@@ -46,6 +46,18 @@ class HomeActivity : BaseActivity() {
     // Declare Firebase variables
     private lateinit var auth: FirebaseAuth
 
+
+    fun refreshActivityOnce() {
+        val alreadyRefreshed = intent.getBooleanExtra("alreadyRefreshed", false)
+        if (!alreadyRefreshed) {
+            intent.putExtra("alreadyRefreshed", true)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION) // Optional: to disable the animation
+            finish()
+            overridePendingTransition(0, 0) // Optional: to disable the animation
+            startActivity(intent)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -92,6 +104,7 @@ class HomeActivity : BaseActivity() {
         button.setOnClickListener {
             val intent = Intent(this, activityClass)
             startActivity(intent)
+            finish()
         }
     }
     private fun setupButtonNavigation() {
@@ -192,7 +205,7 @@ class HomeActivity : BaseActivity() {
             tvUsername.text = " $username"
         } else {
             // Handle case where username is null, maybe set a default name or prompt user
-            tvUsername.text = " User"
+            tvUsername.text = " Farmer"
         }
     }
 

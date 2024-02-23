@@ -1,5 +1,7 @@
 package com.iacademy.smartsoilph.activities
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -44,6 +46,14 @@ class RecommendationHistoryActivity : BaseActivity(), RecyclerOnItemClickListene
     override fun onItemClick(recommendationData: RecommendationData) {
         // Handle item click event
         // Implement what should happen when an item is clicked
+    }
+
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
+        val intent = Intent(this, HomeActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        startActivity(intent)
+        finish()
     }
 
 }
