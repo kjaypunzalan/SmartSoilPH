@@ -661,7 +661,7 @@
         android:id="@+id/fab_settings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/icon_gear"
+        android:src="@drawable/icon_planting"
         android:layout_margin="25dp"
         app:tint="@color/black_50"
         app:maxImageSize="30dp"
