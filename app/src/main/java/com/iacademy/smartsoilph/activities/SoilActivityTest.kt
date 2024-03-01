@@ -173,9 +173,13 @@ class SoilActivityTest : BaseActivity() {
         if (rotate){
             showIn(fabViewRecommend)
             showIn(fabRetrieveData)
+            showIn(btnViewRecommendation)
+            showIn(btnRetrieveData)
         }else{
             showOut(fabViewRecommend)
             showOut(fabRetrieveData)
+            showOut(btnViewRecommendation)
+            showOut(btnRetrieveData)
         }
     }
 
