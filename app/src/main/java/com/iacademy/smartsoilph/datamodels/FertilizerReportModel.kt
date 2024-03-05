@@ -52,6 +52,58 @@ class FertilizerNutrientModel {
             phosphorusRequirements = zipPhosphorusRequirements(listOf(60, 40, 30, 20, 0), NutrientRanges.phosphorusLabels),
             potassiumRequirements = zipPotassiumRequirements(listOf(75, 60, 30, 0), NutrientRanges.potassiumLabels)
         )
+        ,
+        "Ampalaya" to CropNutrientRequirements(
+            nitrogenRequirements = zipNitrogenRequirements(listOf(90, 50, 40, 30), NutrientRanges.nitrogenLabels),
+            phosphorusRequirements = zipPhosphorusRequirements(listOf(80, 60, 40, 20, 0), NutrientRanges.phosphorusLabels),
+            potassiumRequirements = zipPotassiumRequirements(listOf(60, 45, 30, 0), NutrientRanges.potassiumLabels)
+        ),
+        "Asparagus" to CropNutrientRequirements(
+            nitrogenRequirements = zipNitrogenRequirements(listOf(90, 60, 45, 30), NutrientRanges.nitrogenLabels),
+            phosphorusRequirements = zipPhosphorusRequirements(listOf(40, 30, 20, 10, 0), NutrientRanges.phosphorusLabels),
+            potassiumRequirements = zipPotassiumRequirements(listOf(60, 45, 30, 0), NutrientRanges.potassiumLabels)
+        ),
+        "Broccoli" to CropNutrientRequirements(
+            nitrogenRequirements = zipNitrogenRequirements(listOf(60, 50, 40, 30), NutrientRanges.nitrogenLabels),
+            phosphorusRequirements = zipPhosphorusRequirements(listOf(60, 40, 30, 20, 0), NutrientRanges.phosphorusLabels),
+            potassiumRequirements = zipPotassiumRequirements(listOf(60, 45, 30, 0), NutrientRanges.potassiumLabels)
+        ),
+        "Cabbage (Chinese)" to CropNutrientRequirements(
+            nitrogenRequirements = zipNitrogenRequirements(listOf(150, 140, 120, 100), NutrientRanges.nitrogenLabels),
+            phosphorusRequirements = zipPhosphorusRequirements(listOf(60, 40, 30, 20, 0), NutrientRanges.phosphorusLabels),
+            potassiumRequirements = zipPotassiumRequirements(listOf(75, 60, 30, 0), NutrientRanges.potassiumLabels)
+        ),
+        "Cabbage (Local)" to CropNutrientRequirements(
+            nitrogenRequirements = zipNitrogenRequirements(listOf(150, 140, 120, 100), NutrientRanges.nitrogenLabels),
+            phosphorusRequirements = zipPhosphorusRequirements(listOf(60, 40, 30, 20, 0), NutrientRanges.phosphorusLabels),
+            potassiumRequirements = zipPotassiumRequirements(listOf(75, 60, 30, 0), NutrientRanges.potassiumLabels)
+        )
+        ,
+        "Ampalaya" to CropNutrientRequirements(
+            nitrogenRequirements = zipNitrogenRequirements(listOf(90, 50, 40, 30), NutrientRanges.nitrogenLabels),
+            phosphorusRequirements = zipPhosphorusRequirements(listOf(80, 60, 40, 20, 0), NutrientRanges.phosphorusLabels),
+            potassiumRequirements = zipPotassiumRequirements(listOf(60, 45, 30, 0), NutrientRanges.potassiumLabels)
+        ),
+        "Asparagus" to CropNutrientRequirements(
+            nitrogenRequirements = zipNitrogenRequirements(listOf(90, 60, 45, 30), NutrientRanges.nitrogenLabels),
+            phosphorusRequirements = zipPhosphorusRequirements(listOf(40, 30, 20, 10, 0), NutrientRanges.phosphorusLabels),
+            potassiumRequirements = zipPotassiumRequirements(listOf(60, 45, 30, 0), NutrientRanges.potassiumLabels)
+        ),
+        "Broccoli" to CropNutrientRequirements(
+            nitrogenRequirements = zipNitrogenRequirements(listOf(60, 50, 40, 30), NutrientRanges.nitrogenLabels),
+            phosphorusRequirements = zipPhosphorusRequirements(listOf(60, 40, 30, 20, 0), NutrientRanges.phosphorusLabels),
+            potassiumRequirements = zipPotassiumRequirements(listOf(60, 45, 30, 0), NutrientRanges.potassiumLabels)
+        ),
+        "Cabbage (Chinese)" to CropNutrientRequirements(
+            nitrogenRequirements = zipNitrogenRequirements(listOf(150, 140, 120, 100), NutrientRanges.nitrogenLabels),
+            phosphorusRequirements = zipPhosphorusRequirements(listOf(60, 40, 30, 20, 0), NutrientRanges.phosphorusLabels),
+            potassiumRequirements = zipPotassiumRequirements(listOf(75, 60, 30, 0), NutrientRanges.potassiumLabels)
+        ),
+        "Cabbage (Local)" to CropNutrientRequirements(
+            nitrogenRequirements = zipNitrogenRequirements(listOf(150, 140, 120, 100), NutrientRanges.nitrogenLabels),
+            phosphorusRequirements = zipPhosphorusRequirements(listOf(60, 40, 30, 20, 0), NutrientRanges.phosphorusLabels),
+            potassiumRequirements = zipPotassiumRequirements(listOf(75, 60, 30, 0), NutrientRanges.potassiumLabels)
+        )
     )
 
     // Utility function to zip the nutrient requirements with their labels
