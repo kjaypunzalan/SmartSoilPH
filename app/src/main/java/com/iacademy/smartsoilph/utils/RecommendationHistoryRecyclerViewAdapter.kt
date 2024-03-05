@@ -22,10 +22,12 @@ class RecommendationHistoryRecyclerViewAdapter(
 
         fun bind(recommendationData: RecommendationData, onItemClick: (RecommendationData) -> Unit) {
             tvDateTime.text = recommendationData.dateOfRecommendation
-            tvFertilizer1.text = String.format("%.2f kg", recommendationData.fertilizerRecommendation)
 
-            val soilData = recommendationData.soilData
-            tvNpkAmount.text = "${soilData.nitrogen}-${soilData.phosphorus}-${soilData.potassium}"
+            val fertilizerData = recommendationData.requiredFertilizerData
+            tvFertilizer1.text = String.format("%.2f kg", fertilizerData.kgFertilizer1)
+            tvFertilizer2.text = String.format("%.2f kg", fertilizerData.kgFertilizer2)
+            tvFertilizer3.text = String.format("%.2f kg", fertilizerData.kgFertilizer3)
+            tvNpkAmount.text = "${fertilizerData.requiredN}-${fertilizerData.requiredP}-${fertilizerData.requiredK}"
             itemView.setOnClickListener { onItemClick(recommendationData) }
         }
     }

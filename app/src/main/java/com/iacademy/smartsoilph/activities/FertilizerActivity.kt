@@ -95,51 +95,6 @@ class FertilizerActivity : BaseActivity() {
         fetchFromSQLite()
     }
 
-    private fun displayNutrientRequirements(nitrogen: Float, phosphorus: Float, potassium: Float) {
-        // Retrieve selected crop and detected NPK values from the intent
-        val selectedCrop = "Eggplant" // Example crop
-
-        // Fetch the nutrient requirements for the selected crop
-        val requirements = fertilizerNutrientModel.getNutrientRequirements(selectedCrop)
-
-        // Compute required fertilizers and display them
-        requirements?.let {
-            val (requiredN, labelN) = calculateRequiredFertilizer(nitrogen, it.nitrogenRequirements)
-            val (requiredP, labelP) = calculateRequiredFertilizer(phosphorus, it.phosphorusRequirements)
-            val (requiredK, labelK) = calculateRequiredFertilizer(potassium, it.potassiumRequirements)
-
-            tvNitrogen.text = "$requiredN"
-            tvPhosphorus.text = "$requiredP"
-            tvPotassium.text = "$requiredK"
-
-            val calculator = FertilizerCalculatorModel()
-            val fertilizerRequirements = calculator.calculateFertilizerRequirements(
-                nRequirement = requiredN.toFloat(),
-                pRequirement = requiredP.toFloat(),
-                kRequirement = requiredK.toFloat(),
-                initialN = nitrogen
-            )
-
-            // Convert to a readable string format to display
-            val recommendationStr = fertilizerRequirements.entries.joinToString(separator = "\n") {
-                "${it.key}: ${String.format("%.2f kg", it.value)}"
-            }
-
-            // Display in TextView
-            tvFertilizerRecommendation.text = recommendationStr
-        }
-    }
-
-    private fun calculateRequiredFertilizer(detectedValue: Float, requirements: Map<ClosedFloatingPointRange<Float>, Pair<Int, String>>): Pair<Int, String> {
-        // Find the range that the detected value falls into
-        val requirementEntry = requirements.entries.find { detectedValue in it.key }
-        // Return the corresponding fertilizer amount and label
-        return requirementEntry?.value ?: Pair(0, "Unknown")
-    }
-
-
-
-
     /***********************************
      * B. Fetch content from SQLite
      *---------------------------------*/
@@ -150,7 +105,15 @@ class FertilizerActivity : BaseActivity() {
         if (latestSoilData != null) {
             //Display Fertilizer Requirement
             val soil = latestSoilData.soilData
-            displayNutrientRequirements(soil.nitrogen, soil.phosphorus, soil.potassium)
+            val fertilizer = latestSoilData.requiredFertilizerData
+            tvNitrogen.text = fertilizer.requiredN.toString()
+            tvPhosphorus.text = fertilizer.requiredP.toString()
+            tvPotassium.text = fertilizer.requiredK.toString()
+            val fertilizer1String = "${fertilizer.kgFertilizer1} kg of ${fertilizer.fertilizer1}\n"
+            val fertilizer2String = "${fertilizer.kgFertilizer2} kg of ${fertilizer.fertilizer2}\n"
+            val fertilizer3String = "${fertilizer.kgFertilizer3} kg of ${fertilizer.fertilizer3}"
+            val fertilizerString = fertilizer1String + fertilizer2String + fertilizer3String
+            tvFertilizerRecommendation.text = fertilizerString
 
             //Display pH Level
             val phLevelValue = latestSoilData.soilData.phLevel
