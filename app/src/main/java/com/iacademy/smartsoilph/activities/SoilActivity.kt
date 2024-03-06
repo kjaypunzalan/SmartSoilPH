@@ -4,10 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
 import android.app.Dialog
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -19,13 +16,14 @@ import android.widget.RadioButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.iacademy.smartsoilph.R
-import com.iacademy.smartsoilph.arduino.BluetoothController
+import com.iacademy.smartsoilph.datamodels.FertilizerNutrientModel
 import com.iacademy.smartsoilph.datamodels.SoilData
 import com.iacademy.smartsoilph.datamodels.RecommendationData
+import com.iacademy.smartsoilph.datamodels.RequiredFertilizerData
+import com.iacademy.smartsoilph.models.FertilizerCalculatorModel
 import com.iacademy.smartsoilph.models.SQLiteModel
 import com.iacademy.smartsoilph.models.FirebaseModel
 import com.iacademy.smartsoilph.utils.CheckInternet
@@ -36,6 +34,7 @@ import java.util.Locale
 class SoilActivity : BaseActivity() {
 
     //declare layout variables
+    private lateinit var actvCropType: AutoCompleteTextView
     private lateinit var etNitrogen: EditText
     private lateinit var etPhosphorus: EditText
     private lateinit var etPotassium: EditText
@@ -56,8 +55,8 @@ class SoilActivity : BaseActivity() {
     private var rotate = false
 
     //declare dialog variable
-    private lateinit var selectedGradeTextView: TextView
-    private var isGradeSelected = false
+    private lateinit var tvSoilTexture: TextView
+    private var isSoilTextureSelected = false
 
     //declare Firebase variables
     private lateinit var auth: FirebaseAuth
@@ -69,8 +68,8 @@ class SoilActivity : BaseActivity() {
         val crops = resources.getStringArray(R.array.crops)
         // Specify the custom layout and the ID of the TextView within that layout
         val arrayAdapter = ArrayAdapter(this, R.layout.dropdown_item, R.id.tv_1, crops)
-        val autoCompleteTextView = findViewById<AutoCompleteTextView>(R.id.autoComplete)
-        autoCompleteTextView.setAdapter(arrayAdapter)
+        actvCropType = findViewById<AutoCompleteTextView>(R.id.actv_crop_type)
+        actvCropType.setAdapter(arrayAdapter)
     }
 
     override fun onPause() {
@@ -169,7 +168,7 @@ class SoilActivity : BaseActivity() {
         btnViewRecommendation = findViewById<CardView>(R.id.btn_recommend);
         btnRetrieveData = findViewById<CardView>(R.id.btn_retrieveData);
         btnReturn = findViewById<ImageView>(R.id.toolbar_back_icon)
-        selectedGradeTextView = findViewById<TextView>(R.id.tv_selected_grade)
+        tvSoilTexture = findViewById<TextView>(R.id.tv_soil_texture)
 
         fabViewRecommend = findViewById<FloatingActionButton>(R.id.fab_recommendation)
         fabRetrieveData = findViewById<FloatingActionButton>(R.id.fab_retrieveData)
@@ -187,7 +186,7 @@ class SoilActivity : BaseActivity() {
         //fab view recommendation
         fabViewRecommend.setOnClickListener {
             Log.d("STATE", "VIEW RECOMMENDATION CLICKEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED ")
-            if (isGradeSelected) {
+            if (isSoilTextureSelected) {
                 recommendation()
             } else {
                 Toast.makeText(this, "Please select a grade first", Toast.LENGTH_SHORT).show()
@@ -220,9 +219,10 @@ class SoilActivity : BaseActivity() {
 
         //dropdown
         val crops = resources.getStringArray(R.array.crops)
-        val arrayAdapter = ArrayAdapter(this, R.layout.dropdown_item, crops)
-        val autoCompleteTextView = findViewById<AutoCompleteTextView>(R.id.autoComplete)
-        autoCompleteTextView.setAdapter(arrayAdapter)
+        // Specify the custom layout and the ID of the TextView within that layout
+        val arrayAdapter = ArrayAdapter(this, R.layout.dropdown_item, R.id.tv_1, crops)
+        actvCropType = findViewById<AutoCompleteTextView>(R.id.actv_crop_type)
+        actvCropType.setAdapter(arrayAdapter)
     }
 
     @SuppressLint("MissingSuperCall")
@@ -270,12 +270,12 @@ class SoilActivity : BaseActivity() {
             val selectedRadioButton = radioButtons.find { it.isChecked }
             if (selectedRadioButton != null) {
                 // Mark true that a grade has been selected
-                isGradeSelected = true
-                val selectedGrade = selectedRadioButton.text.toString()
-                selectedGradeTextView.text = "Selected Grade: $selectedGrade"
+                isSoilTextureSelected = true
+                val selectedTexture = selectedRadioButton.text.toString()
+                tvSoilTexture.text = "$selectedTexture"
                 dialog.dismiss()
             } else {
-                Toast.makeText(this, "Please select a grade", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Please select a soil texture", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -292,7 +292,9 @@ class SoilActivity : BaseActivity() {
      * B. View Recommendation Button
      ***************************/
     private fun recommendation() {
+        Log.d("STATE", "1 INSIDE")
         // Get values from EditText fields
+        val cropType = actvCropType.text.toString()
         val nitrogen = etNitrogen.text.toString().toFloatOrNull() ?: 0.0F
         val phosphorus = etPhosphorus.text.toString().toFloatOrNull() ?: 0.0F
         val potassium = etPotassium.text.toString().toFloatOrNull() ?: 0.0F
@@ -300,87 +302,118 @@ class SoilActivity : BaseActivity() {
         val ecLevel = etECLevel.text.toString().toFloatOrNull() ?: 0.0F
         val humidity = etHumidity.text.toString().toFloatOrNull() ?: 0.0F
         val temperature = etTemperature.text.toString().toFloatOrNull() ?: 0.0F
+        val soilTexture = tvSoilTexture.text.toString()
 
         /******************************
          * Computations
          * ---------------------------*/
-        /* SOIL NPK COMPUTATIONS */
-        // Calculate fertilizer application rate
-        val desiredNApplicationRate = 43.0F // Example N application rate in lbs/acre
-        val fertilizerApplicationRate =
-            desiredNApplicationRate / ((nitrogen / 100.0F).takeIf { it > 0 } ?: 1.0F)
+        // Retrieve selected crop and detected NPK values from the intent
+        val selectedCrop = cropType
+        // Fetch the nutrient requirements for the selected crop
+        val fertilizerNutrientModel = FertilizerNutrientModel()
+        val requirements = fertilizerNutrientModel.getNutrientRequirements(selectedCrop)
 
-        // Calculate fertilizer weight required for 1 acre
-        val lawnArea = 1.0F // Example lawn area in acres
-        val fertilizerWeightRequired = fertilizerApplicationRate * lawnArea
-        val fertilizerWeightKg = fertilizerWeightRequired * 0.453592F // Convert weight to kilograms
+        // Compute required fertilizers
+        requirements?.let {
+            // Calculate Crop Nutrient Requirement
+            val (requiredN, labelN) = calculateRequiredFertilizer(nitrogen, it.nitrogenRequirements)
+            val (requiredP, labelP) = calculateRequiredFertilizer(phosphorus, it.phosphorusRequirements)
+            val (requiredK, labelK) = calculateRequiredFertilizer(potassium, it.potassiumRequirements)
 
-        /* LIME COMPUTATIONS */
-        // Calculate lime requirement
-        val targetPH = 5.5F // Example target pH
-        val currentPH = phLevel
-        val soilTextureFactor =
-            when {
-                currentPH >= 5.5F -> 0.0F // No lime needed if current pH is already above target
-                phLevel <= 7.0F -> 4.0F // Loam to clay loam
-                phLevel <= 8.0F -> 3.0F // Sandy loam
-                else -> 2.0F // Sand
+            // Calculate Amount of Fertilizer Recommendation
+            val calculator = FertilizerCalculatorModel()
+            val data  = calculator.calculateFertilizerRequirements(
+                requiredN.toFloat(),requiredP.toFloat(),requiredK.toFloat(),nitrogen
+            )
+
+            // Calculate Bags of Fertilizer Recommendation
+
+
+            /******************************
+             * Pass values to Soil DataModel
+             * ---------------------------*/
+            val soilData = SoilData(cropType, nitrogen, phosphorus, potassium, phLevel, ecLevel, humidity, temperature, soilTexture)
+            Log.d("", "5. SOIL DATA: $soilData")
+
+            /******************************************************
+             * Pass computed values to RequiredFertilizer DataModel
+             * --------------------------------------------------*/
+            val requiredFertilizerData = RequiredFertilizerData(
+                requiredN.toFloat(), requiredP.toFloat(), requiredK.toFloat(),
+                data.fertilizer1, data.fertilizer2, data.fertilizer3,
+                data.kgFertilizer1, data.kgFertilizer2, data.kgFertilizer3,
+                data.bagFertilizer1, data.bagFertilizer2, data.bagFertilizer3
+            )
+
+            /******************************
+             * Pass values to Datamodel
+             * ---------------------------*/
+            //Create SQLite instance
+            val dbHelper = SQLiteModel(this)
+            // Get the current user's UID
+            val currentUserUID = dbHelper.getCurrentUserUID() ?: return // Add appropriate error handling or fallback
+            // Generate a unique recommendationID
+            val recommendationID = dbHelper.generateRecommendationID()
+
+            // Get Date
+            val calendar = Calendar.getInstance()
+            val formatter = SimpleDateFormat("MMMM dd, yyyy (EEE) '@'hh:mma", Locale.getDefault())
+            val dateOfRecommendation = formatter.format(calendar.time)
+
+            /********************************************
+             * Pass values to Recommendation DataModel
+             * ------------------------------------------*/
+            Log.d("", "11. Passing to Recommendation DataModel")
+            val storageType = "Local SQLite"
+            val isSavedOnline = false
+            val recommendationData = RecommendationData(recommendationID, currentUserUID, soilData, requiredFertilizerData, dateOfRecommendation, storageType, isSavedOnline)
+
+            Log.d("", "12. RECOMMENDATION DATA")
+            Log.d("", "recommendationID: $recommendationID")
+            Log.d("", "currentUserUID: $currentUserUID")
+            Log.d("", "cropType: $cropType")
+            Log.d("", "soilData: $soilData")
+            Log.d("", "soilTexture: $soilTexture")
+            Log.d("", "requiredFertilizerData: $requiredFertilizerData")
+            Log.d("", "dateOfRecommendation: $dateOfRecommendation")
+            Log.d("", "storageType: $storageType")
+            Log.d("", "savedOnline: $isSavedOnline")
+
+            /******************************
+             * Check Internet Connectivity
+             * ---------------------------*/
+            val checkInternet = CheckInternet(this)
+            if (checkInternet.isInternetAvailable()) {
+                // Internet is available - save locally then add to Firebase Database
+                // Save locally first
+                recommendationData.initialStorageType = "Cloud Firebase"
+                recommendationData.isSavedOnline = true
+                dbHelper.addSoilData(recommendationData)
+                // Save in cloud
+                FirebaseModel().saveSoilData(soilData, auth)
+                FirebaseModel().saveRecommendation(recommendationData, auth)
+            } else {
+                // Internet is NOT available - add to SQLite
+                dbHelper.addSoilData(recommendationData)  // Save the soil data to the SQLite database
             }
-        val limeRequirement = (targetPH - currentPH) * soilTextureFactor
 
-
-        /******************************
-         * Pass values to Datamodel
-         * ---------------------------*/
-        //Create SQLite instance
-        val dbHelper = SQLiteModel(this)
-        // Get the current user's UID
-        val currentUserUID = dbHelper.getCurrentUserUID() ?: return // Add appropriate error handling or fallback
-        // Generate a unique recommendationID
-        val recommendationID = dbHelper.generateRecommendationID()
-
-        // Get Date
-        val calendar = Calendar.getInstance()
-        val formatter = SimpleDateFormat("MMMM dd, yyyy (EEE) '@'hh:mma", Locale.getDefault())
-        val dateOfRecommendation = formatter.format(calendar.time)
-
-        // Pass values to Datamodel
-        val soilData = SoilData(nitrogen, phosphorus, potassium, phLevel, ecLevel, humidity, temperature)
-        val storageType = "Local SQLite"
-        val isSavedOnline = false
-        val recommendationData = RecommendationData(recommendationID, currentUserUID, soilData, fertilizerWeightKg, limeRequirement, dateOfRecommendation, storageType, isSavedOnline)
-        Log.d("", "recommendationID: $recommendationID")
-        Log.d("", "currentUserUID: $currentUserUID")
-        Log.d("", "soilData: $soilData")
-        Log.d("", "fertilizer: $fertilizerWeightKg")
-        Log.d("", "lime: $limeRequirement")
-        Log.d("", "dateOfRecommendation: $dateOfRecommendation")
-        Log.d("", "storageType: $storageType")
-        Log.d("", "savedOnline: $isSavedOnline")
-
-        /******************************
-         * Check Internet Connectivity
-         * ---------------------------*/
-        val checkInternet = CheckInternet(this)
-        if (checkInternet.isInternetAvailable()) {
-            // Internet is available - save locally then add to Firebase Database
-            // Save locally first
-            recommendationData.initialStorageType = "Cloud Firebase"
-            recommendationData.isSavedOnline = true
-            dbHelper.addSoilData(recommendationData)
-            // Save in cloud
-            FirebaseModel().saveSoilData(soilData, auth)
-            FirebaseModel().saveRecommendation(recommendationData, auth)
-        } else {
-            // Internet is NOT available - add to SQLite
-            dbHelper.addSoilData(recommendationData)  // Save the soil data to the SQLite database
-
+            /***************************
+             * Go to FertilizerActivity
+             * ---------------------------*/
+            val intent = Intent(this, FertilizerActivity::class.java).apply {
+                putExtra("labelN", labelN)
+                putExtra("labelP", labelP)
+                putExtra("labelK", labelK)
+            }
+            startActivity(intent)
         }
 
-        /***************************
-         * Go to FertilizerActivity
-         * ---------------------------*/
-        val intent = Intent(this, FertilizerActivity::class.java)
-        startActivity(intent)
+    }
+
+    private fun calculateRequiredFertilizer(detectedValue: Float, requirements: Map<ClosedFloatingPointRange<Float>, Pair<Int, String>>): Pair<Int, String> {
+        // Find the range that the detected value falls into
+        val requirementEntry = requirements.entries.find { detectedValue in it.key }
+        // Return the corresponding fertilizer amount and label
+        return requirementEntry?.value ?: Pair(0, "Unknown")
     }
 }

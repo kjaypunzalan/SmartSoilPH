@@ -29,7 +29,6 @@ class RegisterActivity : BaseActivity() {
 
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
-        //resetDatabase() //FOR TESTING PURPOSES ONLY
 
         // Initialize EditTexts and Button
         nameEditText = findViewById(R.id.editTextName) // Update ID as per your layout
@@ -51,12 +50,6 @@ class RegisterActivity : BaseActivity() {
             startActivity(intent)
             finish()
         }
-    }
-    private fun resetDatabase() {
-        val dbHelper = SQLiteModel(this)
-        dbHelper.deleteDatabase()
-        // Show a Toast message confirming the database reset
-        Toast.makeText(this, "Database has been reset", Toast.LENGTH_SHORT).show()
     }
 
     private fun validateInput() {

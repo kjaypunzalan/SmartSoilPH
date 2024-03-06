@@ -242,7 +242,7 @@ class ReportsActivity : BaseActivity() {
             // Assuming your RecommendationData model includes a dateOfRecommendation property in a suitable format
             val dateStr = recommendationData.dateOfRecommendation
             val date = dateFormat.parse(dateStr)
-            val fertilizerAmount = recommendationData.fertilizerRecommendation
+            val fertilizerAmount = recommendationData.requiredFertilizerData.kgFertilizer1
 
             cumulativeTotal += fertilizerAmount
             if (date != null) {
@@ -361,12 +361,17 @@ class ReportsActivity : BaseActivity() {
             val monthYearKey = "${calendar.get(Calendar.MONTH) + 1}-${calendar.get(Calendar.YEAR)}"
 
             // Extracting NPK values directly from the RecommendationData's SoilData object
+            val cropType = recommendationData.soilData.cropType
             val nitrogen = recommendationData.soilData.nitrogen
             val phosphorus = recommendationData.soilData.phosphorus
             val potassium = recommendationData.soilData.potassium
 
             // Assuming SoilData constructor matches the required structure
-            val soilData = SoilData(nitrogen, phosphorus, potassium, 0f, 0f, 0f, 0f)
+            //TODO: FIX
+            val soilData = SoilData(
+                cropType, nitrogen, phosphorus, potassium,
+                0f, 0f, 0f, 0f,
+                "clay")
 
             // Accumulating data by month and year
             monthlyNPK.getOrPut(monthYearKey) { mutableListOf() }.add(soilData)

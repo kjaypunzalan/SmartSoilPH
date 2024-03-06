@@ -76,9 +76,6 @@ class LoginActivity : BaseActivity() {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Fetch and save all user data from Firebase
-                    firebaseModel.getAllUserDataFromFirebase(auth, this)
-
                     // Login success, update UI with the signed-in user's information
                     checkIfEmailVerified()
                 } else {
@@ -117,8 +114,12 @@ class LoginActivity : BaseActivity() {
         val user = auth.currentUser
 
         if (user != null && user.isEmailVerified) {
+            // Fetch and save all user data from Firebase
+            firebaseModel.getAllUserDataFromFirebase(auth, this)
+
             // Email is verified, proceed to the main activity
             val intent = Intent(this, HomeActivity::class.java) // Replace with your main activity
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
             finish()
         } else {
