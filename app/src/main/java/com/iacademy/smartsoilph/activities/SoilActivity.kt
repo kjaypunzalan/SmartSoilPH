@@ -44,6 +44,7 @@ class SoilActivity : BaseActivity() {
     private lateinit var etHumidity: EditText
     private lateinit var etTemperature: EditText
     private lateinit var btnFilter: ImageView
+    private lateinit var btnViewRecommendation: CardView
     private lateinit var btnRetrieveData: CardView
     private lateinit var btnReturn: ImageView
     private var gradeDialog: Dialog? = null
@@ -103,9 +104,13 @@ class SoilActivity : BaseActivity() {
         if (rotate){
             showIn(fabViewRecommend)
             showIn(fabRetrieveData)
+            showIn(btnViewRecommendation)
+            showIn(btnRetrieveData)
         }else{
             showOut(fabViewRecommend)
             showOut(fabRetrieveData)
+            showOut(btnViewRecommendation)
+            showOut(btnRetrieveData)
         }
     }
 
@@ -161,6 +166,7 @@ class SoilActivity : BaseActivity() {
         etHumidity = findViewById<EditText>(R.id.humidity_soil_value);
         etTemperature = findViewById<EditText>(R.id.temp_soil_value);
         btnFilter = findViewById<ImageView>(R.id.btn_filter);
+        btnViewRecommendation = findViewById<CardView>(R.id.btn_recommend);
         btnRetrieveData = findViewById<CardView>(R.id.btn_retrieveData);
         btnReturn = findViewById<ImageView>(R.id.toolbar_back_icon)
         selectedGradeTextView = findViewById<TextView>(R.id.tv_selected_grade)
