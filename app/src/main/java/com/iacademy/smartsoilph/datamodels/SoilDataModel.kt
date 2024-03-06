@@ -41,7 +41,7 @@ data class RequiredFertilizerData(
     var kgFertilizer1: Float = 0f,
     var kgFertilizer2: Float = 0f,
     var kgFertilizer3: Float = 0f,
-    val bagFertilizer1: Float = 0f,
-    val bagFertilizer2: Float = 0f,
-    val bagFertilizer3: Float = 0f
+    var bagFertilizer1: Float = 0f,
+    var bagFertilizer2: Float = 0f,
+    var bagFertilizer3: Float = 0f
 )

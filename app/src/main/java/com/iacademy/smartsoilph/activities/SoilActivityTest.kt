@@ -36,6 +36,7 @@ import java.util.Locale
 class SoilActivityTest : BaseActivity() {
 
     //declare layout variables
+    private lateinit var actvCropType: AutoCompleteTextView
     private lateinit var etNitrogen: EditText
     private lateinit var etPhosphorus: EditText
     private lateinit var etPotassium: EditText
@@ -52,11 +53,12 @@ class SoilActivityTest : BaseActivity() {
     //floating action button
     private lateinit var fabViewRecommend: FloatingActionButton
     private lateinit var fabRetrieveData: FloatingActionButton
+    private lateinit var fabSettings: FloatingActionButton
     private var rotate = false
 
     //declare dialog variable
-    private lateinit var selectedGradeTextView: TextView
-    private var isGradeSelected = false
+    private lateinit var tvSoilTexture: TextView
+    private var isSoilTextureSelected = false
 
     //declare Firebase variables
     private lateinit var auth: FirebaseAuth
@@ -76,7 +78,11 @@ class SoilActivityTest : BaseActivity() {
                 val val6 = intent.getStringExtra("val6") ?: ""
                 val val7 = intent.getStringExtra("val7") ?: ""
 
+
                 etNitrogen.setText(val1)
+                val nitrogenPPM = etNitrogen.text.toString().toFloatOrNull() ?: 0.0F
+                val nitrogen = nitrogenPPM * 0.0001F
+
                 etPhosphorus.setText(val2)
                 etPotassium.setText(val3)
                 etPHLevel.setText(val4)
@@ -94,9 +100,10 @@ class SoilActivityTest : BaseActivity() {
 
         //dropdown
         val crops = resources.getStringArray(R.array.crops)
+        // Specify the custom layout and the ID of the TextView within that layout
         val arrayAdapter = ArrayAdapter(this, R.layout.dropdown_item, R.id.tv_1, crops)
-        val autoCompleteTextView = findViewById<AutoCompleteTextView>(R.id.autoComplete)
-        autoCompleteTextView.setAdapter(arrayAdapter)
+        actvCropType = findViewById<AutoCompleteTextView>(R.id.actv_crop_type)
+        actvCropType.setAdapter(arrayAdapter)
     }
 
     override fun onPause() {
@@ -118,8 +125,8 @@ class SoilActivityTest : BaseActivity() {
         //dropdown
         val crops = resources.getStringArray(R.array.crops)
         val arrayAdapter = ArrayAdapter(this, R.layout.dropdown_item, crops)
-        //val autoCompleteTextView = findViewById<AutoCompleteTextView>(R.id.autoComplete)
-        //autoCompleteTextView.setAdapter(arrayAdapter)
+        val autoCompleteTextView = findViewById<AutoCompleteTextView>(R.id.autoComplete)
+        autoCompleteTextView.setAdapter(arrayAdapter)
 
         bluetoothController = BluetoothController(this).apply {
             setDataListener(object : BluetoothController.BluetoothDataListener {

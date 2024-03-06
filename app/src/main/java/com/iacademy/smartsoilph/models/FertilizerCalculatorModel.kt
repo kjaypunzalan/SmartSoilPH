@@ -30,14 +30,14 @@ class FertilizerCalculatorModel {
     }
 
     private fun applyComplete(datamodel: RequiredFertilizerData, n: Float, p: Float, k: Float, initialN: Float) : RequiredFertilizerData {
-        Log.d("NPK", "$n $p $k")
         val lowestRequirement = minOf(n, p, k)
-        Log.d("Lowest", "$lowestRequirement")
         val completeAmount = lowestRequirement / (fertilizers["Complete"]!!.phosphorus / 100)
-        Log.d("Complete", "$completeAmount")
+        val bagOfFertilizer = (completeAmount / 50)
 
         // Subtract the nutrients provided by "Complete" from the requirements
-        return subtractNutrientsProvidedByComplete(assignValue(datamodel, "Complete", completeAmount), n, p, k, initialN, completeAmount)
+        return subtractNutrientsProvidedByComplete(
+            assignValue(datamodel, "Complete", completeAmount, bagOfFertilizer),
+            n, p, k, initialN, completeAmount)
     }
 
     private fun subtractNutrientsProvidedByComplete(datamodel: RequiredFertilizerData, n: Float, p: Float, k: Float, initialN: Float, amount: Float) : RequiredFertilizerData {
@@ -72,8 +72,8 @@ class FertilizerCalculatorModel {
                 val fertilizerName = if (initialN <= 6.6) "Urea" else "Ammonium Sulfate"
                 val fertilizer = fertilizers[fertilizerName]!!
                 val amountNeeded = nRequirement / (fertilizer.nitrogen / 100)
-                //result[fertilizerName] = (result[fertilizerName] ?: 0f) + amountNeeded //TODO: Remove
-                return assignValue(datamodel, fertilizerName, amountNeeded)
+                val bagOfFertilizer = (amountNeeded / 50)
+                assignValue(datamodel, "Duophos", amountNeeded, bagOfFertilizer)
             }
             "P" -> {
                 // Duophos for P, unless Ammonium Phosphate was already chosen for N
@@ -81,16 +81,16 @@ class FertilizerCalculatorModel {
                     || !datamodel.fertilizer2.contentEquals("Ammonium Phosphate")) {
                     val fertilizer = fertilizers["Duophos"]!!
                     val amountNeeded = pRequirement / (fertilizer.phosphorus / 100)
-                    //result["Duophos"] = (result["Duophos"] ?: 0f) + amountNeeded //TODO: Remove
-                    assignValue(datamodel, "Duophos", amountNeeded)
+                    val bagOfFertilizer = (amountNeeded / 50)
+                    assignValue(datamodel, "Duophos", amountNeeded, bagOfFertilizer)
                 }
             }
             "K" -> {
                 // Muriate of Potash for K
                 val fertilizer = fertilizers["Muriate of Potash"]!!
                 val amountNeeded = kRequirement / (fertilizer.potassium / 100)
-                //result["Muriate of Potash"] = (result["Muriate of Potash"] ?: 0f) + amountNeeded //TODO: Remove
-                assignValue(datamodel, "Muriate of Potash", amountNeeded)
+                val bagOfFertilizer = (amountNeeded / 50)
+                assignValue(datamodel, "Muriate of Potash", amountNeeded, bagOfFertilizer)
             }
             "NP" -> {
                 //TODO: CALCULATION FOR AMMONIUM SULFATE
@@ -103,24 +103,28 @@ class FertilizerCalculatorModel {
                 if (nRequirement < pRequirement) {
                     nCoveredByAmp = nRequirement / (ammoniumPhosphate.nitrogen / 100)
                     pCoveredByAmp = (ammoniumPhosphate.phosphorus/100) * nCoveredByAmp
-                    assignValue(datamodel, "Ammonium Phosphate", nCoveredByAmp)
+                    val bagOfFertilizerN = (nCoveredByAmp / 50)
+                    assignValue(datamodel, "Ammonium Phosphate", nCoveredByAmp, bagOfFertilizerN)
 
                     val newPRequirement = pRequirement-pCoveredByAmp
                     val fertilizer = fertilizers["Duophos"]!!
                     val amountNeeded = newPRequirement / (fertilizer.phosphorus / 100)
-                    assignValue(datamodel, "Duophos", amountNeeded)
+                    val bagOfFertilizerP = (amountNeeded / 50)
+                    assignValue(datamodel, "Duophos", amountNeeded, bagOfFertilizerP)
                 }
 
                 if (pRequirement < nRequirement) {
                     pCoveredByAmp = pRequirement / (ammoniumPhosphate.phosphorus / 100)
                     nCoveredByAmp = (ammoniumPhosphate.nitrogen/100) * pCoveredByAmp
-                    assignValue(datamodel, "Ammonium Phosphate", pCoveredByAmp)
+                    val bagOfFertilizerP = (pCoveredByAmp / 50)
+                    assignValue(datamodel, "Ammonium Phosphate", pCoveredByAmp, bagOfFertilizerP)
 
                     val newNRequirement = nRequirement-nCoveredByAmp
                     val fertilizerName = if (initialN <= 6.6) "Urea" else "Ammonium Sulfate"
                     val fertilizer = fertilizers[fertilizerName]!!
                     val amountNeeded = newNRequirement / (fertilizer.nitrogen / 100)
-                    return assignValue(datamodel, fertilizerName, amountNeeded)
+                    val bagOfFertilizerN = (amountNeeded / 50)
+                    assignValue(datamodel, fertilizerName, amountNeeded, bagOfFertilizerN)
                 }
 
                 // Use Ammonium Phosphate instead of separate N and P fertilizers
@@ -133,17 +137,20 @@ class FertilizerCalculatorModel {
         return datamodel
     }
 
-    private fun assignValue(datamodel: RequiredFertilizerData, fertilizerName: String, amountNeeded: Float): RequiredFertilizerData {
+    private fun assignValue(datamodel: RequiredFertilizerData, fertilizerName: String, amountNeeded: Float, bagOfFertilizer: Float): RequiredFertilizerData {
         // Dynamically assign to the first available slot
         if (datamodel.fertilizer1.isEmpty()) {
             datamodel.fertilizer1 = fertilizerName
             datamodel.kgFertilizer1 = amountNeeded
+            datamodel.bagFertilizer1 = bagOfFertilizer
         } else if (datamodel.fertilizer2.isEmpty()) {
             datamodel.fertilizer2 = fertilizerName
             datamodel.kgFertilizer2 = amountNeeded
+            datamodel.bagFertilizer2 = bagOfFertilizer
         } else if (datamodel.fertilizer3.isEmpty()) {
             datamodel.fertilizer3 = fertilizerName
             datamodel.kgFertilizer3 = amountNeeded
+            datamodel.bagFertilizer3 = bagOfFertilizer
         }
 
         return datamodel

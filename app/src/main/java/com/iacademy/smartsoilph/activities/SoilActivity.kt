@@ -303,28 +303,24 @@ class SoilActivity : BaseActivity() {
          * ---------------------------*/
         // Retrieve selected crop and detected NPK values from the intent
         val selectedCrop = cropType
-
         // Fetch the nutrient requirements for the selected crop
         val fertilizerNutrientModel = FertilizerNutrientModel()
         val requirements = fertilizerNutrientModel.getNutrientRequirements(selectedCrop)
 
         // Compute required fertilizers
         requirements?.let {
-            Log.d("STATE", "2 COMPUTING NUTRIENT REQUIREMENTS")
+            // Calculate Crop Nutrient Requirement
             val (requiredN, labelN) = calculateRequiredFertilizer(nitrogen, it.nitrogenRequirements)
             val (requiredP, labelP) = calculateRequiredFertilizer(phosphorus, it.phosphorusRequirements)
             val (requiredK, labelK) = calculateRequiredFertilizer(potassium, it.potassiumRequirements)
 
-            Log.d("", "requiredN: $requiredN")
-            Log.d("", "requiredP: $requiredP")
-            Log.d("", "requiredK: $requiredK")
-
-            Log.d("STATE", "3 CALCULATING FERTILIZER RECOMMENDATION")
+            // Calculate Amount of Fertilizer Recommendation
             val calculator = FertilizerCalculatorModel()
             val data  = calculator.calculateFertilizerRequirements(
                 requiredN.toFloat(),requiredP.toFloat(),requiredK.toFloat(),nitrogen
             )
-            Log.d("", "4. CALCULATOR DATA: $data")
+
+            // Calculate Bags of Fertilizer Recommendation
 
 
             /******************************
@@ -340,26 +336,18 @@ class SoilActivity : BaseActivity() {
                 requiredN.toFloat(), requiredP.toFloat(), requiredK.toFloat(),
                 data.fertilizer1, data.fertilizer2, data.fertilizer3,
                 data.kgFertilizer1, data.kgFertilizer2, data.kgFertilizer3,
-                1f, 1f, 1f //TODO: CALCULATION FOR BAGS
+                data.bagFertilizer1, data.bagFertilizer2, data.bagFertilizer3
             )
-            Log.d("", "6. Data: $requiredFertilizerData")
-            Log.d("", "7. Fertilizer1: ${requiredFertilizerData.fertilizer1} ${requiredFertilizerData.kgFertilizer1}")
-            Log.d("", "8. Fertilizer2: ${requiredFertilizerData.fertilizer2} ${requiredFertilizerData.kgFertilizer2}")
-            Log.d("", "9. Fertilizer3: ${requiredFertilizerData.fertilizer3} ${requiredFertilizerData.kgFertilizer3}")
 
             /******************************
              * Pass values to Datamodel
              * ---------------------------*/
-            Log.d("", "10. Opening SQLite")
             //Create SQLite instance
             val dbHelper = SQLiteModel(this)
-            Log.d("", "10.1 Getting ID")
             // Get the current user's UID
             val currentUserUID = dbHelper.getCurrentUserUID() ?: return // Add appropriate error handling or fallback
-            Log.d("", "10.2 Got ID")
             // Generate a unique recommendationID
             val recommendationID = dbHelper.generateRecommendationID()
-            Log.d("", "10.3 Generated Unique ID")
 
             // Get Date
             val calendar = Calendar.getInstance()
@@ -406,9 +394,12 @@ class SoilActivity : BaseActivity() {
             /***************************
              * Go to FertilizerActivity
              * ---------------------------*/
-            val intent = Intent(this, FertilizerActivity::class.java)
+            val intent = Intent(this, FertilizerActivity::class.java).apply {
+                putExtra("labelN", labelN)
+                putExtra("labelP", labelP)
+                putExtra("labelK", labelK)
+            }
             startActivity(intent)
-
         }
 
     }

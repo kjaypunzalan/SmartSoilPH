@@ -46,6 +46,8 @@
     <string-array name="crops">
         <item>Ampalaya</item>
         <item>Asparagus</item>
+        <item>Beans - Batao</item>
+        <item>Beans - Baguio</item>
         <item>Beans - Dwarf (Variety)</item>
         <item>Beans - Lima (Patani)</item>
         <item>Beans - String (Pole Sitao)</item>
@@ -59,9 +61,37 @@
         <item>Cauliflower</item>
         <item>Celery</item>
         <item>Chayote</item>
+        <item>Chili (Bell Pepper)</item>
+        <item>Chili (Green) (Sinigang)</item>
+        <item>Chili (Pepper)</item>
+        <item>Condiments (Mint Herb)</item>
         <item>Cucumber</item>
         <item>Eggplant</item>
-        <item>Garlic</item>
+        <item>Garlic/Onion</item>
+        <item>Ginger (Improved)</item>
+        <item>Ginger (Local)</item>
+        <item>Lettuce (Head)</item>
+        <item>Mustard</item>
+        <item>Okra (Hybrid)</item>
+        <item>Okra (Local)</item>
+        <item>Parsnip</item>
+        <item>Patola</item>
+        <item>Peas</item>
+        <item>Pechay</item>
+        <item>Potato</item>
+        <item>Radish/Turnips</item>
+        <item>Squash</item>
+        <item>Tomatoes</item>
+        <item>Rice: Inbred Light Soils (Wet Season)</item>
+        <item>Rice: Inbred Light Soils (Dry Season)</item>
+        <item>Rice: Inbred Med-Heavy Soils (Wet Season)</item>
+        <item>Rice: Inbred Med-Heavy Soils (Dry Season)</item>
+        <item>Rice: Hybrid Light Soils (Wet Season)</item>
+        <item>Rice: Hybrid Light Soils (Dry Season)</item>
+        <item>Rice: Hybrid Med-Heavy Soils (Wet Season)</item>
+        <item>Rice: Hybrid Med-Heavy Soils (Dry Season)</item>
+        <item>Rice: Upland (Light Soils)</item>
+        <item>Rice: Upland (Med-Heavy Soils)</item>
     </string-array>
 
     <string name="nitrogen" translatable="false">Nitrogen</string>

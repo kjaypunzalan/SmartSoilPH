@@ -18,6 +18,7 @@ import com.iacademy.smartsoilph.models.SQLiteModel
 import com.iacademy.smartsoilph.models.FirebaseModel
 import com.iacademy.smartsoilph.utils.CheckInternet
 import com.iacademy.smartsoilph.datamodels.FertilizerNutrientModel
+import com.iacademy.smartsoilph.models.Fertilizer
 import com.iacademy.smartsoilph.models.FertilizerCalculatorModel
 
 class FertilizerActivity : BaseActivity() {
@@ -28,6 +29,9 @@ class FertilizerActivity : BaseActivity() {
     private lateinit var tvNitrogen: TextView
     private lateinit var tvPhosphorus: TextView
     private lateinit var tvPotassium: TextView
+    private lateinit var tvNLabel: TextView
+    private lateinit var tvPLabel: TextView
+    private lateinit var tvKLabel: TextView
     private lateinit var tvPHLevel: TextView
     private lateinit var tvPHLevelLabel: TextView
     private lateinit var tvPHLevelDescription: TextView
@@ -62,6 +66,9 @@ class FertilizerActivity : BaseActivity() {
         tvNitrogen = findViewById<TextView>(R.id.npk_value1)
         tvPhosphorus = findViewById<TextView>(R.id.npk_value2)
         tvPotassium = findViewById<TextView>(R.id.npk_value3)
+        tvNLabel = findViewById<TextView>(R.id.npk_rating1)
+        tvPLabel = findViewById<TextView>(R.id.npk_rating2)
+        tvKLabel = findViewById<TextView>(R.id.npk_rating3)
         tvPHLevel = findViewById<TextView>(R.id.tv_ph_amount)
         tvPHLevelLabel = findViewById<TextView>(R.id.ph_value)
         tvPHLevelDescription = findViewById<TextView>(R.id.ph_recommend)
@@ -103,24 +110,40 @@ class FertilizerActivity : BaseActivity() {
         val latestSoilData = dbHelper.getLatestSoilData()
 
         if (latestSoilData != null) {
-            //Display Fertilizer Requirement
+            // Display Fertilizer Requirement
             val soil = latestSoilData.soilData
             val fertilizer = latestSoilData.requiredFertilizerData
-            tvNitrogen.text = fertilizer.requiredN.toString()
-            tvPhosphorus.text = fertilizer.requiredP.toString()
-            tvPotassium.text = fertilizer.requiredK.toString()
-            val fertilizer1String = "${fertilizer.kgFertilizer1} kg of ${fertilizer.fertilizer1}\n"
-            val fertilizer2String = "${fertilizer.kgFertilizer2} kg of ${fertilizer.fertilizer2}\n"
-            val fertilizer3String = "${fertilizer.kgFertilizer3} kg of ${fertilizer.fertilizer3}"
+
+            // Display Required NPK
+            val n = String.format("%.0f", fertilizer.requiredN)
+            val p = String.format("%.0f", fertilizer.requiredP)
+            val k = String.format("%.0f", fertilizer.requiredK)
+            tvNitrogen.text = n
+            tvPhosphorus.text = p
+            tvPotassium.text = k
+
+            // Display Label
+            tvNLabel.text = intent.getStringExtra("labelN") ?: ""
+            tvPLabel.text = intent.getStringExtra("labelP") ?: ""
+            tvKLabel.text = intent.getStringExtra("labelK") ?: ""
+
+            // Display Fertilizer Recommendation
+            val fertilizer1String = "${fertilizerString(fertilizer.kgFertilizer1, fertilizer.fertilizer1, fertilizer.bagFertilizer1)}\n"
+            val fertilizer2String =
+                if (fertilizer.fertilizer2.isNotEmpty()) "${fertilizerString(fertilizer.kgFertilizer2, fertilizer.fertilizer2, fertilizer.bagFertilizer2)}\n"
+                else ""
+            val fertilizer3String =
+                if (fertilizer.fertilizer3.isNotEmpty()) "${fertilizerString(fertilizer.kgFertilizer3, fertilizer.fertilizer3, fertilizer.bagFertilizer3)}"
+                else ""
             val fertilizerString = fertilizer1String + fertilizer2String + fertilizer3String
             tvFertilizerRecommendation.text = fertilizerString
 
-            //Display pH Level
+            // Display pH Level
             val phLevelValue = latestSoilData.soilData.phLevel
             val phLevelString = String.format("%.1f", phLevelValue)
             tvPHLevel.text = phLevelString
 
-            //Display pH Level Label
+            // Display pH Level Label
             val phLevelLabelText: String = when {
                 phLevelValue < 5.5 -> getString(com.iacademy.smartsoilph.R.string.ph_sentence_value1)
                 phLevelValue > 6.5 -> getString(com.iacademy.smartsoilph.R.string.ph_sentence_value3)
@@ -128,7 +151,7 @@ class FertilizerActivity : BaseActivity() {
             }
             tvPHLevelLabel.text = phLevelLabelText
 
-            //Display pH Level Description
+            // Display pH Level Description
             val phLevelDescriptionText: String = when {
                 phLevelValue < 5.5 -> getString(com.iacademy.smartsoilph.R.string.ph_info1)
                 phLevelValue > 6.5 -> getString(com.iacademy.smartsoilph.R.string.ph_info3)
@@ -141,5 +164,20 @@ class FertilizerActivity : BaseActivity() {
             Toast.makeText(applicationContext, "No local soil data available", Toast.LENGTH_SHORT).show()
         }
     }
+
+    private fun fertilizerString(fertilizerAmount: Float, fertilizerName: String, fertilizerBag: Float) : String {
+        val convertedFertilizerAmount = String.format("%.2f", fertilizerAmount)
+        val convertedFertilizerBag = String.format("%.1f", fertilizerBag)
+        return when (fertilizerName) {
+            "Complete" -> { "$convertedFertilizerAmount kg of $fertilizerName (14-14-14). ($convertedFertilizerBag bag)" }
+            "Ammonium Phosphate" -> { "$convertedFertilizerAmount kg of $fertilizerName (16-20-14) ($convertedFertilizerBag bag)" }
+            "Ammonium Sulfate" -> { "$convertedFertilizerAmount kg of $fertilizerName (21-0-0) ($convertedFertilizerBag bag)" }
+            "Urea" -> { "$convertedFertilizerAmount kg of $fertilizerName (46-0-0) ($convertedFertilizerBag bag)" }
+            "Duophos" -> { "$convertedFertilizerAmount kg of $fertilizerName (0-22-0) ($convertedFertilizerBag bag)" }
+            "Muriate of Potash" -> { "$convertedFertilizerAmount kg of $fertilizerName (0-0-60) ($convertedFertilizerBag bag)" }
+            else -> ""
+        }
+    }
+
 
 }
