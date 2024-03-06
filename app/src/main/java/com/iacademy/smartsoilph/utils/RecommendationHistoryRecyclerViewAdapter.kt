@@ -1,5 +1,6 @@
 package com.iacademy.smartsoilph.utils
 
+import android.provider.Settings.Global.getString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +19,9 @@ class RecommendationHistoryRecyclerViewAdapter(
         private val tvFertilizer1: TextView = view.findViewById(R.id.tv_fertilizer_amount1)
         private val tvFertilizer2: TextView = view.findViewById(R.id.tv_fertilizer_amount2)
         private val tvFertilizer3: TextView = view.findViewById(R.id.tv_fertilizer_amount3)
+        private val tvFertilizerName1: TextView = view.findViewById(R.id.tv_fertilizer_name1)
+        private val tvFertilizerName2: TextView = view.findViewById(R.id.tv_fertilizer_name2)
+        private val tvFertilizerName3: TextView = view.findViewById(R.id.tv_fertilizer_name3)
         private val tvNpkAmount: TextView = view.findViewById(R.id.tv_npk_amount)
 
         fun bind(recommendationData: RecommendationData, onItemClick: (RecommendationData) -> Unit) {
@@ -27,6 +31,11 @@ class RecommendationHistoryRecyclerViewAdapter(
             tvFertilizer1.text = String.format("%.2f kg", fertilizerData.kgFertilizer1)
             tvFertilizer2.text = String.format("%.2f kg", fertilizerData.kgFertilizer2)
             tvFertilizer3.text = String.format("%.2f kg", fertilizerData.kgFertilizer3)
+
+            tvFertilizerName1.text = String.format("%.1f bag of ${fertilizerData.fertilizer1} is recommended", fertilizerData.bagFertilizer1)
+            tvFertilizerName2.text = String.format("%.1f bag of ${fertilizerData.fertilizer2} is recommended", fertilizerData.bagFertilizer2)
+            tvFertilizerName3.text = String.format("%.1f bag of ${fertilizerData.fertilizer3} is recommended", fertilizerData.bagFertilizer3)
+
             tvNpkAmount.text = "${fertilizerData.requiredN}-${fertilizerData.requiredP}-${fertilizerData.requiredK}"
             itemView.setOnClickListener { onItemClick(recommendationData) }
         }

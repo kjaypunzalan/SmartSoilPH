@@ -220,11 +220,11 @@
     <string name="fertilizer_value" translatable="false">000 kg</string>
     <string name="npk_value" translatable="false">00 - 00 - 00</string>
 
-    <string name="fertilizer_info1">of <b>Complete</b> Fertilizer used</string>
-    <string name="fertilizer_info2">of <b>Duophos</b> Fertilizer used</string>
-    <string name="fertilizer_info3">of <b>Potash</b> Fertilizer used</string>
+    <string name="fertilizer_info1"></string>
+    <string name="fertilizer_info2"></string>
+    <string name="fertilizer_info3"></string>
 
-    <string name="npk_info">recommended<b> Grade</b></string>
+    <string name="npk_info">Required Nutrient<b>Requirements</b></string>
     <!--=================================================================-->
 
     <!--Activity Reports===================================================-->

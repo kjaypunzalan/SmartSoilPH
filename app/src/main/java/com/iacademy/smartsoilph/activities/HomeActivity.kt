@@ -113,8 +113,8 @@ class HomeActivity : BaseActivity() {
         setButtonClickListener(btnWeather, WeatherActivity::class.java)
         setButtonClickListener(btnReports, ReportsActivity::class.java)
         setButtonClickListener(btnRecommendationHistory, RecommendationHistoryActivity::class.java)
-        setButtonClickListener(btnManual, SoilActivityTest::class.java)
-        setButtonClickListener(btnBtConnect, SoilActivityTest::class.java) // Ensure BluetoothController exists or adjust as needed
+        setButtonClickListener(btnManual, LoadScreenActivity::class.java)
+        //setButtonClickListener(btnBtConnect, SoilActivityTest::class.java) // Ensure BluetoothController exists or adjust as needed
 
 
         //settings
@@ -129,6 +129,27 @@ class HomeActivity : BaseActivity() {
             // Optionally, perform actions based on the new state of the switch
             if (btnSwitch.isChecked) {
                 // Code to execute when the switch is turned ON
+                try {
+                    // Your Bluetooth connection code here...
+                    requestBluetoothPermissions()
+                    val intent = Intent(this, SoilActivityTest::class.java)
+                    startActivity(intent)
+                } catch (e: SecurityException) {
+                    AlertDialog.Builder(this)
+                        .setTitle("Bluetooth Connection Required")
+                        .setMessage("Please connect to the Bluetooth device.")
+                        .setPositiveButton("OK") { dialog, _ ->
+                            dialog.dismiss()
+                            // You might want to navigate the user to enable Bluetooth or directly request permissions if targeting Android 12 and above
+                        }
+                        .setNegativeButton("Cancel") { dialog, _ ->
+                            dialog.dismiss()
+                            // Optional: handle cancellation.
+                        }
+                        .create()
+                        .show()
+                }
+
             } else {
                 // Code to execute when the switch is turned OFF
             }
@@ -271,4 +292,48 @@ class HomeActivity : BaseActivity() {
         editor.putString("My_Lang", languageCode)
         editor.apply()
     }
+
+    private fun requestBluetoothPermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            // Check if the BLUETOOTH_CONNECT permission is already granted
+            if (checkSelfPermission(android.Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                // Request the BLUETOOTH_CONNECT permission
+                requestPermissions(arrayOf(android.Manifest.permission.BLUETOOTH_CONNECT), REQUEST_BLUETOOTH_PERMISSION)
+            } else {
+                // Permission is granted, you can initiate Bluetooth operations here
+                connectToBluetoothDevice()
+            }
+        } else {
+            // For older versions, you can directly initiate Bluetooth operations as BLUETOOTH_CONNECT permission is not required
+            connectToBluetoothDevice()
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_BLUETOOTH_PERMISSION) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission was granted, initiate Bluetooth operations
+                connectToBluetoothDevice()
+            } else {
+                // Permission was denied, show an AlertDialog
+                AlertDialog.Builder(this)
+                    .setTitle("Bluetooth Permission Required")
+                    .setMessage("This app requires Bluetooth permissions to function. Please allow in App Settings.")
+                    .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
+                    .create()
+                    .show()
+            }
+        }
+    }
+
+    companion object {
+        private const val REQUEST_BLUETOOTH_PERMISSION = 101
+    }
+
+    private fun connectToBluetoothDevice() {
+        // Your code to connect to the Bluetooth device goes here.
+        // This should replace the place where you directly attempt to connect without checking permissions.
+    }
+
 }

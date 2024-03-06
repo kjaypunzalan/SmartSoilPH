@@ -76,6 +76,7 @@
                             android:textAppearance="@style/recommendation_value"
                             android:layout_gravity="center"/>
                         <TextView
+                            android:id="@+id/tv_fertilizer_name1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:maxWidth="60dp"
@@ -112,6 +113,7 @@
                             android:textAppearance="@style/recommendation_value"
                             android:layout_gravity="center"/>
                         <TextView
+                            android:id="@+id/tv_fertilizer_name2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:maxWidth="60dp"
@@ -147,6 +149,7 @@
                         android:textAppearance="@style/recommendation_value"
                         android:layout_gravity="center"/>
                     <TextView
+                        android:id="@+id/tv_fertilizer_name3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxWidth="60dp"
