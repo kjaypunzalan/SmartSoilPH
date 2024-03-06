@@ -141,7 +141,7 @@
         app:startIconTint="@color/black_50"
         app:layout_constraintTop_toBottomOf="@id/hd_1"
         app:layout_constraintStart_toEndOf="@id/tv_selected_grade"
-        app:boxBackgroundColor="@color/semi_light_gray"
+        app:boxBackgroundColor="@color/black_10"
         android:background="@drawable/ripple_effect"
         android:maxWidth="150dp">
 
