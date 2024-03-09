@@ -41,6 +41,7 @@
     <!--Activity Soil===================================================-->
     <string name="soil_title">Current soil status</string>
     <string name="soil_info">Select a crop: </string>
+    <string name="soil_name">Soil Texture: </string>
 
     <!--Named Crops-->
     <string-array name="crops">
@@ -165,7 +166,11 @@
     <string name="bluetooth_button">Connect to Bluetooth Device</string>
     <string name="manual_button">View User Manual</string>
     <string name="manual_button2" translatable="false">(English/Tagalog)</string>
-    <string name="logout_button">Logout</string>
+    <string name="logout_button">🚪 Logout</string>
+
+    <string name="sync_button">🔄 Sync Database</string>
+    <string name="language_button">🌏 Change Language</string>
+
     <!--=================================================================-->
 
     <!--Activity Fertilizer Recommendation ===========================================-->

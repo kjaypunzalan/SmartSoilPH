@@ -85,5 +85,11 @@
     <string name="fertilizer_info2">ng <b>Duophos</b> na Pataba ang nagamit</string>
     <string name="fertilizer_info3">ng <b>Potash</b> na Pataba ang nagamit</string>
 
+    <!--Setting options-->
+    <string name="sync_button">I-sync ang Database</string>
+    <string name="language_button">Palitan ang Lengwahe</string>
+
+    <!--Soil name-->
+    <string name="soil_name">Tekstura ng Lupa: </string>
 
 </resources>
