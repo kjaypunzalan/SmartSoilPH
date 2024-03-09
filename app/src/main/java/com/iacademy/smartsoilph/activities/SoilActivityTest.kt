@@ -83,10 +83,11 @@ class SoilActivityTest : BaseActivity() {
                 val val7 = intent.getStringExtra("val7") ?: ""
 
                 etNitrogen.setText(val1)
-                val nitrogenPPM = etNitrogen.text.toString().toFloatOrNull() ?: 0.0F
-                val nitrogen = nitrogenPPM * 0.0001F
-                val nitrogenString = nitrogen.toString()
-                etNitrogen.setText(nitrogenString)
+//                val nitrogenPPM = etNitrogen.text.toString().toFloatOrNull() ?: 0.0F
+//                val nitrogen = nitrogenPPM * 0.0001F
+//                val nitrogenString = nitrogen.toString()
+//                etNitrogen.setText(nitrogenString)
+
                 etPhosphorus.setText(val2)
                 etPotassium.setText(val3)
                 etPHLevel.setText(val4)
