@@ -179,7 +179,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:background="@color/semi_light_blue"
+            android:background="@color/light_blue"
             android:gravity="center">
 
             <!-- Vertical LinearLayout for Humidity -->
@@ -188,8 +188,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
                 android:layout_margin="20dp">
 
                 <ImageView
@@ -233,8 +233,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
                 android:layout_margin="20dp">
 
                 <ImageView
@@ -256,7 +256,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/temperature2"
-                    android:maxWidth="60dp"
+                    android:maxWidth="70dp"
                     android:gravity="center"
                     android:textColor="@color/main_blue"
                     android:textAppearance="@style/temperature2"  />
@@ -278,8 +278,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
                 android:layout_margin="20dp">
 
                 <ImageView
@@ -293,7 +293,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/value_wind"
-                    android:maxWidth="60dp"
+                    android:maxWidth="150dp"
                     android:gravity="center"
                     android:textAppearance="@style/value_wind"/>
 
@@ -302,7 +302,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/wind"
                     android:textAppearance="@style/wind"
-                    android:maxWidth="60dp"
+                    android:maxWidth="150dp"
                     android:textColor="@color/main_blue"
                     android:gravity="center"/>
             </LinearLayout>

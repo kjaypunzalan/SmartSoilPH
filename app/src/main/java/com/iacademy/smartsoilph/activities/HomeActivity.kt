@@ -165,18 +165,6 @@ class HomeActivity : BaseActivity() {
         val popup = PopupMenu(this, view)
         popup.menuInflater.inflate(R.menu.popup_menu, popup.menu)
 
-        try {
-            val popupField = PopupMenu::class.java.getDeclaredField("mPopup")
-            popupField.isAccessible = true
-            val menuPopupHelper = popupField.get(popup)
-            val setForceShowIconMethod: Method = menuPopupHelper.javaClass.getDeclaredMethod(
-                "setForceShowIcon", Boolean::class.javaPrimitiveType
-            )
-            setForceShowIconMethod.invoke(menuPopupHelper, true)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
         popup.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.btn_sync_database -> {

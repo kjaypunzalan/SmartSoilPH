@@ -54,19 +54,18 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="16dp">
+        android:fitsSystemWindows="true">
 
         <ImageView
             android:id="@+id/bg_weather"
             android:layout_width="match_parent"
             android:layout_height="308dp"
-            android:scaleType="fitCenter"
+            android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/bg_soil" />
+            app:srcCompat="@drawable/bg_soil"
+            android:fitsSystemWindows="true"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -122,28 +121,29 @@
             android:id="@+id/tv_soil_texture"
             android:layout_width="150dp"
             android:layout_height="24dp"
-            android:layout_marginStart="40dp"
-            android:maxWidth="100dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="20dp"
+            android:maxWidth="150dp"
             android:text="Soil Texture: Clay"
-            android:textAppearance="@style/info_title"
+            android:textAppearance="@style/soil_name"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/temp_card"
-            app:layout_constraintVertical_bias="0.475" />
+            app:layout_constraintStart_toStartOf="parent"/>
 
         <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+            android:id="@+id/tv_cropSelection"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
         android:layout_width="220dp"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_marginStart="25dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="30dp"
         app:startIconDrawable="@drawable/icon_crop"
         app:startIconTint="@color/black_50"
         app:layout_constraintTop_toBottomOf="@id/hd_1"
         app:layout_constraintStart_toEndOf="@id/tv_selected_grade"
-        app:boxBackgroundColor="@color/white"
+        app:boxBackgroundColor="@color/light_gray"
         android:background="@drawable/ripple_effect"
-        android:maxWidth="150dp">
+        android:maxWidth="200dp">
 
         <AutoCompleteTextView
             android:id="@+id/actv_crop_type"
@@ -167,7 +167,10 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="30dp"
         app:cardCornerRadius="5dp"
-        app:cardBackgroundColor="@color/sub_blue">
+        app:cardBackgroundColor="@color/sub_blue"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@drawable/ripple_effect">
 
         <ImageView
             android:id="@+id/btn_filter"
@@ -189,7 +192,7 @@
         android:layout_width="110dp"
         android:layout_height="110dp"
         app:cardCornerRadius="14dp"
-        app:layout_constraintTop_toBottomOf="@id/tv_selected_grade"
+        app:layout_constraintTop_toBottomOf="@id/tv_cropSelection"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/phosphorus_card"
         app:layout_constraintHorizontal_chainStyle="spread"
