@@ -67,8 +67,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/bg_weather" />
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/bg_weather"
+            android:fitsSystemWindows="true"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

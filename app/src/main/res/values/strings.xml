@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">SmartSoilPH</string>
+    <string name="app_name" translatable="false">Smart SoilPH</string>
     <string name="open_nav" translatable="false">Open Navigation Drawer</string>
     <string name="close_nav" translatable="false">Close Navigation Drawer</string>
 
