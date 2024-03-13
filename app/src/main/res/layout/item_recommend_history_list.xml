@@ -41,7 +41,140 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_rh_1"
+                android:textAppearance="@style/recommendation_info"
+                android:layout_marginTop="5dp"
+                android:textSize="10sp">
+            </TextView>
+
+<!--Crop & Soil info-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp">
+
+                <ImageView
+                    android:id="@+id/iv_crop"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:padding="5dp"
+                    android:src="@drawable/icon_crop_type"
+                    app:tint="#80000000"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <LinearLayout
+                    android:id="@+id/ll_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toEndOf="@id/iv_crop"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_margin="10dp">
+
+                    <!--Crop Name-->
+                    <TextView
+                        android:id="@+id/tv_selected_crop"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxWidth="140dp"
+                        android:textAlignment="center"
+                        android:text="@string/selected_crop"
+                        android:textAppearance="@style/recommendation_value"
+                        android:layout_gravity="center"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxWidth="100dp"
+                        android:layout_gravity="center"
+                        android:text="@string/selected_crop_desc"
+                        android:textAppearance="@style/recommendation_info"
+                        android:textAlignment="center"/>
+
+                </LinearLayout>
+
+                <!-- Vertical Divider -->
+                <View
+                    android:id="@+id/vd_1"
+                    android:layout_width="1dp"
+                    android:layout_height="40dp"
+                    android:background="@color/light_gray"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/ll_2"
+                    android:layout_marginStart="10dp"/>
+
+                <ImageView
+                    android:id="@+id/iv_soil"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/icon_soil_type"
+                    app:tint="#80000000"
+                    android:layout_marginStart="10dp"
+                    app:layout_constraintStart_toEndOf="@id/vd_1"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <LinearLayout
+                    android:id="@+id/ll_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toEndOf="@id/iv_soil"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_margin="10dp">
+
+                    <!--Crop Name-->
+                    <TextView
+                        android:id="@+id/tv_selected_soil"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxWidth="140dp"
+                        android:textAlignment="center"
+                        android:text="@string/selected_soil"
+                        android:textAppearance="@style/recommendation_value"
+                        android:layout_gravity="center"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxWidth="100dp"
+                        android:layout_gravity="center"
+                        android:text="@string/selected_soil_desc"
+                        android:textAppearance="@style/recommendation_info"
+                        android:textAlignment="center"/>
+
+                </LinearLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/hd_3"
+                android:layout_width="200dp"
+                android:layout_height="1dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/custom_scroll_bar_divider"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_rh_2"
+                android:textAppearance="@style/recommendation_info"
+                android:layout_marginTop="5dp"
+                android:textSize="10sp"/>
+
             <LinearLayout
                 android:id="@+id/ll_1"
                 android:layout_width="wrap_content"
@@ -49,13 +182,15 @@
                 android:orientation="horizontal"
                 android:layout_gravity="center"
                 android:paddingStart="10dp"
-                android:paddingEnd="10dp">
+                android:paddingEnd="10dp"
+                android:layout_marginBottom="5dp">
 
 
                     <ImageView
                         android:id="@+id/iv_fertilizer"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:padding="2dp"
                         android:src="@drawable/icon_fertilizer"
                         app:tint="#80000000"
                         android:layout_marginEnd="20dp"
@@ -74,12 +209,12 @@
                             android:layout_height="wrap_content"
                             android:text="@string/fertilizer_value"
                             android:textAppearance="@style/recommendation_value"
-                            android:layout_gravity="center"/>
+                            android:layout_gravity="center" />
                         <TextView
                             android:id="@+id/tv_fertilizer_name1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:maxWidth="60dp"
+                            android:maxWidth="90dp"
                             android:layout_gravity="center"
                             android:text="@string/fertilizer_info1"
                             android:textAppearance="@style/recommendation_info"
@@ -116,7 +251,7 @@
                             android:id="@+id/tv_fertilizer_name2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:maxWidth="60dp"
+                            android:maxWidth="90dp"
                             android:layout_gravity="center"
                             android:text="@string/fertilizer_info2"
                             android:textAppearance="@style/recommendation_info"
@@ -152,7 +287,7 @@
                         android:id="@+id/tv_fertilizer_name3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:maxWidth="60dp"
+                        android:maxWidth="90dp"
                         android:layout_gravity="center"
                         android:text="@string/fertilizer_info3"
                         android:textAppearance="@style/recommendation_info"
@@ -168,29 +303,38 @@
                 android:layout_width="200dp"
                 android:layout_height="1dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/custom_scroll_bar_divider"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_rh_3"
+                android:textAppearance="@style/recommendation_info"
+                android:layout_marginTop="5dp"
+                android:textSize="10sp"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="15dp"
-                android:layout_gravity="center">
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="10dp">
 
                 <ImageView
                     android:id="@+id/iv_npk"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:src="@drawable/icon_npk"
+                    android:padding="5dp"
                     app:tint="#80000000"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/cl_3"
                     app:layout_constraintBottom_toBottomOf="@id/cl_3"/>
 
                 <LinearLayout
+                    android:id="@+id/ll_4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -210,7 +354,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:maxWidth="60dp"
+                        android:maxWidth="80dp"
                         android:layout_gravity="center"
                         android:text="@string/npk_info"
                         android:textAppearance="@style/recommendation_info"
@@ -218,6 +362,59 @@
 
                 </LinearLayout>
 
+                <!-- Vertical Divider -->
+                <View
+                    android:id="@+id/vd_2"
+                    android:layout_width="1dp"
+                    android:layout_height="40dp"
+                    android:background="@color/light_gray"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/ll_4"
+                    android:layout_marginStart="10dp"/>
+
+                <ImageView
+                    android:id="@+id/iv_phlevel"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/icon_ph_amount"
+                    app:tint="#80000000"
+                    android:padding="5dp"
+                    android:layout_marginStart="10dp"
+                    app:layout_constraintStart_toEndOf="@id/vd_2"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <LinearLayout
+                    android:id="@+id/ll_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toEndOf="@id/iv_phlevel"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_margin="10dp">
+
+                    <!--Crop Name-->
+                    <TextView
+                        android:id="@+id/tv_ph_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxWidth="140dp"
+                        android:textAlignment="center"
+                        android:text="@string/phlevel_amount"
+                        android:textAppearance="@style/recommendation_value"
+                        android:layout_gravity="center"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxWidth="100dp"
+                        android:layout_gravity="center"
+                        android:text="@string/phlevel_desc"
+                        android:textAppearance="@style/recommendation_info"
+                        android:textAlignment="center"/>
+
+                </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
 
