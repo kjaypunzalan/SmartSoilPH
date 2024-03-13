@@ -8,15 +8,31 @@ import com.iacademy.smartsoilph.R
 import java.util.Random
 
 class LoadScreenActivity : BaseActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_load_screen)
+        companion object {
+            const val EXTRA_TARGET_ACTIVITY = "extra_target_activity"
+        }
+        override fun onCreate(savedInstanceState: Bundle?) {
+            super.onCreate(savedInstanceState)
+            setContentView(R.layout.activity_load_screen)
 
-        val randomDelay = Random().nextInt(1000) + 1500
-        Handler(Looper.getMainLooper()).postDelayed({
-            startActivity(Intent(this, HomeActivity::class.java))
-            finish()
-        }, randomDelay.toLong())
+            val targetActivityClassName = intent.getStringExtra(EXTRA_TARGET_ACTIVITY)
+            Handler(Looper.getMainLooper()).postDelayed({
+                try {
+                    val targetActivityClass = Class.forName(targetActivityClassName)
+                    val targetIntent = Intent(this, targetActivityClass)
+                    startActivity(targetIntent)
+                    finish() // Finish LoadScreenActivity so the user can't return to it.
+                } catch (e: ClassNotFoundException) {
+                    e.printStackTrace()
+                    finish() // In case of error, finish the LoadScreenActivity.
+                }
+            }, 2500) // Delay for the load screen, here set to 2 seconds
+
+//        val randomDelay = Random().nextInt(1000) + 1500
+//        Handler(Looper.getMainLooper()).postDelayed({
+//            startActivity(Intent(this, HomeActivity::class.java))
+//            finish()
+//        }, randomDelay.toLong())
 
     }
 }
