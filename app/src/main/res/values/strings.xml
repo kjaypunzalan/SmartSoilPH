@@ -222,14 +222,28 @@
     <!--Activity Recommendation History Item===========================================-->
     <string name="date_time">Date and Time</string>
 
+    <string name="title_rh_1">Crop &amp; Soil Info</string>
+    <string name="title_rh_2">Fertilizer Recommedantion Info</string>
+    <string name="title_rh_3">NPK &amp; pH Level Info</string>
+
+    <string name="selected_crop">Crop Name</string>
+    <string name="selected_crop_desc">Selected Crop</string>
+
+    <string name="selected_soil">Soil Type Name</string>
+    <string name="selected_soil_desc">Selected Soil Type</string>
+
     <string name="fertilizer_value" translatable="false">000 kg</string>
     <string name="npk_value" translatable="false">00 - 00 - 00</string>
 
-    <string name="fertilizer_info1"></string>
-    <string name="fertilizer_info2"></string>
-    <string name="fertilizer_info3"></string>
+    <string name="fertilizer_info1">0 amount of Complete fertilizer used</string>
+    <string name="fertilizer_info2">0 amount of Duophos fertilizer used</string>
+    <string name="fertilizer_info3">0 amount of Potash fertilizer used</string>
 
-    <string name="npk_info">Required Nutrient<b>Requirements</b></string>
+    <string name="npk_info">Required Nutrient<b> Requirements</b></string>
+
+    <string name="phlevel_amount" translatable="false">0</string>
+    <string name="phlevel_desc">Amount of pH Level detected in the soil</string>
+
     <!--=================================================================-->
 
     <!--Activity Reports===================================================-->

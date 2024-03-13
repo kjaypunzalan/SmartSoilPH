@@ -85,6 +85,18 @@
     <string name="fertilizer_info2">ng <b>Duophos</b> na Pataba ang nagamit</string>
     <string name="fertilizer_info3">ng <b>Potash</b> na Pataba ang nagamit</string>
 
+    <string name="title_rh_1">Impormasyon ng Pananim &amp; Lupa</string>
+    <string name="title_rh_2">Impormasyon ng inirerekomendang Pataba</string>
+    <string name="title_rh_3">Impormasyon ng NPK &amp; pH Level</string>
+
+    <string name="selected_crop">Pangalan ng Pananim</string>
+    <string name="selected_crop_desc">Napiling Pananim</string>
+
+    <string name="selected_soil">Pangalan ng klase ng Lupa</string>
+    <string name="selected_soil_desc">Napiling klase ng Lupa</string>
+
+    <string name="phlevel_desc">Laki ng ph Level na nakita sa Lupa</string>
+
     <!--Setting options-->
     <string name="sync_button">I-sync ang Database</string>
     <string name="language_button">Palitan ang Lengwahe</string>
