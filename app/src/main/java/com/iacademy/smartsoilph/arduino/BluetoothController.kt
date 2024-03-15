@@ -100,12 +100,12 @@
                 val values = data.split(",").map { it.trim() }
 
                 // Assign each value to a variable, ensuring there are enough values to avoid IndexOutOfBoundsException
-                val val1 = values.getOrNull(0) ?: "N/A"
-                val val2 = values.getOrNull(1) ?: "N/A"
-                val val3 = values.getOrNull(2) ?: "N/A"
-                val val4 = values.getOrNull(3) ?: "N/A"
-                val val5 = values.getOrNull(4) ?: "N/A"
-                val val6 = values.getOrNull(5) ?: "N/A"
+                val val1 = values.getOrNull(0) ?: "0.0"
+                val val2 = values.getOrNull(1) ?: "0.0"
+                val val3 = values.getOrNull(2) ?: "0.0"
+                val val4 = values.getOrNull(3) ?: "0.0"
+                val val5 = values.getOrNull(4) ?: "0.0"
+                val val6 = values.getOrNull(5) ?: "0.0"
                 val val7 = values.getOrNull(6) ?: "N/A"
 
 

@@ -24,8 +24,14 @@ class RecommendationHistoryRecyclerViewAdapter(
         private val tvFertilizerName3: TextView = view.findViewById(R.id.tv_fertilizer_name3)
         private val tvNpkAmount: TextView = view.findViewById(R.id.tv_npk_amount)
 
+        private val tvPHAmount: TextView = view.findViewById(R.id.tv_ph_amount)
+        private val tvCrop: TextView = view.findViewById(R.id.tv_selected_crop)
+        private val tvSoilTexture: TextView = view.findViewById(R.id.tv_selected_soil)
+
         fun bind(recommendationData: RecommendationData, onItemClick: (RecommendationData) -> Unit) {
             tvDateTime.text = recommendationData.dateOfRecommendation
+            tvCrop.text = recommendationData.soilData.cropType
+            tvSoilTexture.text = recommendationData.soilData.soilTexture
 
             val fertilizerData = recommendationData.requiredFertilizerData
             tvFertilizer1.text = String.format("%.2f kg", fertilizerData.kgFertilizer1)
@@ -37,6 +43,7 @@ class RecommendationHistoryRecyclerViewAdapter(
             tvFertilizerName3.text = String.format("%.1f bag of ${fertilizerData.fertilizer3} is recommended", fertilizerData.bagFertilizer3)
 
             tvNpkAmount.text = "${fertilizerData.requiredN}-${fertilizerData.requiredP}-${fertilizerData.requiredK}"
+            tvPHAmount.text = recommendationData.soilData.phLevel.toString()
             itemView.setOnClickListener { onItemClick(recommendationData) }
         }
     }

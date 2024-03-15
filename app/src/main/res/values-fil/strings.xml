@@ -11,13 +11,13 @@
     <string name="temperature2">Temperature</string>
     <string name="wind">Bilis ng Hangin</string>
     <string name="soil_title">Kasalukuyang lupa...</string>
-    <string name="soil_info">Pumili ng grado ng lupa sa pamamagitan ng pag-click sa pindutan ng filter sa kanang bahagi ng screen.</string>
+    <string name="soil_info">Pananim</string>
     <string name="btn_apply">Piliin</string>
     <string name="welcome_user">Maligayang pagbalik,</string>
     <string name="soil_button">Lupa</string>
     <string name="weather_button">Panahon</string>
     <string name="reports_button">Ulat</string>
-    <string name="bluetooth_button">"Kumonekta sa Bluetooth device "</string>
+    <string name="bluetooth_button">"Kumonekta sa Bluetooth"</string>
     <string name="manual_button">Tulong</string>
     <string name="logout_button">Mag Logout</string>
     <string name="title_recommend">Rekomendasyon</string>

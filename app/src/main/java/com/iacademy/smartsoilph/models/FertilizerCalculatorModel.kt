@@ -69,11 +69,11 @@ class FertilizerCalculatorModel {
         when (type) {
             "N" -> {
                 // Choose Urea or Ammonium Sulfate based on initialN level
-                val fertilizerName = if (initialN <= 6.6) "Urea" else "Ammonium Sulfate"
+                val fertilizerName = if (initialN < 6.6) "Urea" else "Ammonium Sulfate"
                 val fertilizer = fertilizers[fertilizerName]!!
                 val amountNeeded = nRequirement / (fertilizer.nitrogen / 100)
                 val bagOfFertilizer = (amountNeeded / 50)
-                assignValue(datamodel, "Duophos", amountNeeded, bagOfFertilizer)
+                assignValue(datamodel, fertilizerName, amountNeeded, bagOfFertilizer)
             }
             "P" -> {
                 // Duophos for P, unless Ammonium Phosphate was already chosen for N
