@@ -48,7 +48,7 @@
     <!--Main Features CardView-->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="540dp"
         app:cardElevation="0dp"
         app:cardCornerRadius="0dp"
         app:cardBackgroundColor="@color/transparent"
@@ -60,311 +60,318 @@
             android:layout_height="match_parent"
             android:background="@drawable/custom_upper_round_corners"
             android:elevation="4dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/tv_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:text="Sign Up"
+                    android:textAppearance="@style/login_welcome"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginStart="30dp">
+                </TextView>
+
+                <!-- Text Instruction -->
+                <TextView
+                    android:id="@+id/tv_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Please register your information"
+                    android:textAppearance="@style/login_h2"
+                    app:layout_constraintTop_toBottomOf="@id/tv_1"
+                    android:layout_marginStart="30dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="5dp"/>
+
+                <!-- Name Input -->
+                <EditText
+                    android:id="@+id/editTextName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_input"
+                    android:hint="Name"
+                    android:inputType="textPersonName"
+                    android:padding="10dp"
+                    android:paddingStart="15dp"
+                    android:textColorHint="@color/light_gray"
+                    android:textColor="@color/black_50"
+                    android:textAppearance="@style/login_input"
+                    app:layout_constraintTop_toBottomOf="@id/tv_description"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginTop="30dp"
+                    android:elevation="2dp"/>
+                <ImageView
+                    android:id="@+id/iv_name"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/icon_name"
+                    android:elevation="4dp"
+                    app:tint="@color/black_50"
+                    app:layout_constraintTop_toTopOf="@id/editTextName"
+                    app:layout_constraintBottom_toBottomOf="@id/editTextName"
+                    app:layout_constraintStart_toEndOf="@id/editTextName"
+                    android:layout_marginStart="-35dp">
+                </ImageView>
+                <androidx.cardview.widget.CardView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="11dp"
+                    app:cardElevation="3dp"
+                    app:layout_constraintTop_toTopOf="@id/editTextName"
+                    app:layout_constraintBottom_toBottomOf="@id/editTextName"
+                    app:layout_constraintStart_toEndOf="@id/editTextName"
+                    android:layout_marginStart="-35dp">
+                </androidx.cardview.widget.CardView>
+                <!--=====================-->
+
+                <!-- Mobile Number Input -->
+                <EditText
+                    android:id="@+id/editTextMobileNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/custom_input"
+                    android:hint="Mobile Number"
+                    android:inputType="number"
+                    android:padding="10dp"
+                    android:paddingStart="15dp"
+                    android:textColorHint="@color/light_gray"
+                    android:textColor="@color/black_50"
+                    android:textAppearance="@style/login_input"
+                    app:layout_constraintTop_toBottomOf="@id/editTextName"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:elevation="2dp"/>
+                <ImageView
+                    android:id="@+id/iv_phone"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/icon_phone2"
+                    android:elevation="4dp"
+                    app:tint="@color/black_50"
+                    app:layout_constraintTop_toTopOf="@id/editTextMobileNumber"
+                    app:layout_constraintBottom_toBottomOf="@id/editTextMobileNumber"
+                    app:layout_constraintStart_toEndOf="@id/editTextMobileNumber"
+                    android:layout_marginStart="-35dp">
+                </ImageView>
+                <androidx.cardview.widget.CardView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="11dp"
+                    app:cardElevation="3dp"
+                    app:layout_constraintTop_toTopOf="@id/editTextMobileNumber"
+                    app:layout_constraintBottom_toBottomOf="@id/editTextMobileNumber"
+                    app:layout_constraintStart_toEndOf="@id/editTextMobileNumber"
+                    android:layout_marginStart="-35dp">
+                </androidx.cardview.widget.CardView>
+                <!--=====================-->
+
+                <!-- Email Input -->
+                <EditText
+                    android:id="@+id/editTextEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_input"
+                    android:hint="Email Address"
+                    android:inputType="textPassword"
+                    android:padding="10dp"
+                    android:paddingStart="15dp"
+                    android:textAppearance="@style/login_input"
+                    android:textColorHint="@color/light_gray"
+                    android:textColor="@color/black_50"
+                    app:layout_constraintTop_toBottomOf="@id/editTextMobileNumber"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginTop="15dp"
+                    android:elevation="2dp"/>
+                <ImageView
+                    android:id="@+id/iv_email"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/icon_email2"
+                    android:elevation="4dp"
+                    app:tint="@color/black_50"
+                    app:layout_constraintTop_toTopOf="@id/editTextEmail"
+                    app:layout_constraintBottom_toBottomOf="@id/editTextEmail"
+                    app:layout_constraintStart_toEndOf="@id/editTextEmail"
+                    android:layout_marginStart="-35dp">
+                </ImageView>
+                <androidx.cardview.widget.CardView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="11dp"
+                    app:cardElevation="3dp"
+                    app:layout_constraintTop_toTopOf="@id/editTextEmail"
+                    app:layout_constraintBottom_toBottomOf="@id/editTextEmail"
+                    app:layout_constraintStart_toEndOf="@id/editTextEmail"
+                    android:layout_marginStart="-35dp">
+                </androidx.cardview.widget.CardView>
+                <!--=====================-->
+
+                <!-- Password Input -->
+                <EditText
+                    android:id="@+id/editTextPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/custom_input"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:padding="10dp"
+                    android:paddingStart="15dp"
+                    android:textColorHint="@color/light_gray"
+                    android:textColor="@color/black_50"
+                    android:textAppearance="@style/login_input"
+                    app:layout_constraintTop_toBottomOf="@id/editTextEmail"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:elevation="2dp"/>
+                <ImageView
+                    android:id="@+id/iv_password"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/icon_password"
+                    android:elevation="4dp"
+                    app:tint="@color/black_50"
+                    app:layout_constraintTop_toTopOf="@id/editTextPassword"
+                    app:layout_constraintBottom_toBottomOf="@id/editTextPassword"
+                    app:layout_constraintStart_toEndOf="@id/editTextPassword"
+                    android:layout_marginStart="-35dp">
+                </ImageView>
+                <androidx.cardview.widget.CardView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="11dp"
+                    app:cardElevation="3dp"
+                    app:layout_constraintTop_toTopOf="@id/editTextPassword"
+                    app:layout_constraintBottom_toBottomOf="@id/editTextPassword"
+                    app:layout_constraintStart_toEndOf="@id/editTextPassword"
+                    android:layout_marginStart="-35dp">
+                </androidx.cardview.widget.CardView>
+                <!--=====================-->
+
+                <!-- Password Confirmation -->
+                <EditText
+                    android:id="@+id/editTextConfirmPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/custom_input"
+                    android:hint="Confirm Password"
+                    android:inputType="textPassword"
+                    android:padding="10dp"
+                    android:paddingStart="15dp"
+                    android:textColorHint="@color/light_gray"
+                    android:textColor="@color/black_50"
+                    android:textAppearance="@style/login_input"
+                    app:layout_constraintTop_toBottomOf="@id/editTextPassword"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:elevation="2dp"/>
+                <ImageView
+                    android:id="@+id/iv_confirm"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/icon_confirm"
+                    android:elevation="4dp"
+                    app:tint="@color/black_50"
+                    app:layout_constraintTop_toTopOf="@id/editTextConfirmPassword"
+                    app:layout_constraintBottom_toBottomOf="@id/editTextConfirmPassword"
+                    app:layout_constraintStart_toEndOf="@id/editTextConfirmPassword"
+                    android:layout_marginStart="-35dp">
+                </ImageView>
+                <androidx.cardview.widget.CardView
+                    android:layout_width="23dp"
+                    android:layout_height="23dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="3dp"
+                    app:layout_constraintTop_toTopOf="@id/editTextConfirmPassword"
+                    app:layout_constraintBottom_toBottomOf="@id/editTextConfirmPassword"
+                    app:layout_constraintStart_toEndOf="@id/editTextConfirmPassword"
+                    android:layout_marginStart="-35dp">
+                </androidx.cardview.widget.CardView>
+                <!--=====================-->
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/buttonSignUp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="10dp"
+                    android:layout_marginTop="30dp"
+                    app:layout_constraintTop_toBottomOf="@id/editTextConfirmPassword"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginStart="30dp"
+                    android:clickable="true"
+                    android:focusable="true">
+                    <!-- Contents of the additional CardView -->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/gray_68"
+                        android:orientation="horizontal"
+                        android:padding="8dp"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sign Up"
+                            android:textAppearance="@style/sub_buttons"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:textSize="14sp"
+                            android:textColor="@color/white"/>
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/icon_login"
+                            app:tint="@color/white"/>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- have an account? -->
+                <TextView
+                    android:id="@+id/tv_log"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Already have an account?"
+                    android:textAppearance="@style/login_h2"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintTop_toBottomOf="@id/buttonSignUp"
+                    app:layout_constraintStart_toStartOf="@id/buttonSignUp"/>
+                <!-- Sign Up Link -->
+                <TextView
+                    android:id="@+id/textViewSignIn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/tv_log"
+                    android:text="Sign In"
+                    android:textAppearance="@style/login_h2"
+                    android:textColor="@color/main_blue"
+                    app:layout_constraintStart_toEndOf="@id/tv_log"
+                    app:layout_constraintTop_toTopOf="@id/tv_log"
+                    android:layout_marginStart="5dp"
+                    android:textStyle="bold"/>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-
-    <TextView
-        android:id="@+id/tv_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="255dp"
-        android:text="Sign Up"
-        android:textAppearance="@style/login_welcome"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="30dp">
-    </TextView>
-
-    <!-- Text Instruction -->
-    <TextView
-        android:id="@+id/tv_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Please register your information"
-        android:textAppearance="@style/login_h2"
-        app:layout_constraintTop_toBottomOf="@id/tv_1"
-        android:layout_marginStart="30dp"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="5dp"/>
-
-    <!-- Name Input -->
-    <EditText
-        android:id="@+id/editTextName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/custom_input"
-        android:hint="Name"
-        android:inputType="textPersonName"
-        android:padding="10dp"
-        android:paddingStart="15dp"
-        android:textColorHint="@color/light_gray"
-        android:textColor="@color/black_50"
-        android:textAppearance="@style/login_input"
-        app:layout_constraintTop_toBottomOf="@id/tv_description"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginTop="30dp"
-        android:elevation="2dp"/>
-    <ImageView
-        android:id="@+id/iv_name"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/icon_name"
-        android:elevation="4dp"
-        app:tint="@color/black_50"
-        app:layout_constraintTop_toTopOf="@id/editTextName"
-        app:layout_constraintBottom_toBottomOf="@id/editTextName"
-        app:layout_constraintStart_toEndOf="@id/editTextName"
-        android:layout_marginStart="-35dp">
-    </ImageView>
-    <androidx.cardview.widget.CardView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="11dp"
-        app:cardElevation="3dp"
-        app:layout_constraintTop_toTopOf="@id/editTextName"
-        app:layout_constraintBottom_toBottomOf="@id/editTextName"
-        app:layout_constraintStart_toEndOf="@id/editTextName"
-        android:layout_marginStart="-35dp">
-    </androidx.cardview.widget.CardView>
-    <!--=====================-->
-
-    <!-- Mobile Number Input -->
-    <EditText
-        android:id="@+id/editTextMobileNumber"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/custom_input"
-        android:hint="Mobile Number"
-        android:inputType="number"
-        android:padding="10dp"
-        android:paddingStart="15dp"
-        android:textColorHint="@color/light_gray"
-        android:textColor="@color/black_50"
-        android:textAppearance="@style/login_input"
-        app:layout_constraintTop_toBottomOf="@id/editTextName"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:elevation="2dp"/>
-    <ImageView
-        android:id="@+id/iv_phone"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/icon_phone2"
-        android:elevation="4dp"
-        app:tint="@color/black_50"
-        app:layout_constraintTop_toTopOf="@id/editTextMobileNumber"
-        app:layout_constraintBottom_toBottomOf="@id/editTextMobileNumber"
-        app:layout_constraintStart_toEndOf="@id/editTextMobileNumber"
-        android:layout_marginStart="-35dp">
-    </ImageView>
-    <androidx.cardview.widget.CardView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="11dp"
-        app:cardElevation="3dp"
-        app:layout_constraintTop_toTopOf="@id/editTextMobileNumber"
-        app:layout_constraintBottom_toBottomOf="@id/editTextMobileNumber"
-        app:layout_constraintStart_toEndOf="@id/editTextMobileNumber"
-        android:layout_marginStart="-35dp">
-    </androidx.cardview.widget.CardView>
-    <!--=====================-->
-
-    <!-- Email Input -->
-    <EditText
-        android:id="@+id/editTextEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/custom_input"
-        android:hint="Email Address"
-        android:inputType="textPassword"
-        android:padding="10dp"
-        android:paddingStart="15dp"
-        android:textAppearance="@style/login_input"
-        android:textColorHint="@color/light_gray"
-        android:textColor="@color/black_50"
-        app:layout_constraintTop_toBottomOf="@id/editTextMobileNumber"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginTop="15dp"
-        android:elevation="2dp"/>
-    <ImageView
-        android:id="@+id/iv_email"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/icon_email2"
-        android:elevation="4dp"
-        app:tint="@color/black_50"
-        app:layout_constraintTop_toTopOf="@id/editTextEmail"
-        app:layout_constraintBottom_toBottomOf="@id/editTextEmail"
-        app:layout_constraintStart_toEndOf="@id/editTextEmail"
-        android:layout_marginStart="-35dp">
-    </ImageView>
-    <androidx.cardview.widget.CardView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="11dp"
-        app:cardElevation="3dp"
-        app:layout_constraintTop_toTopOf="@id/editTextEmail"
-        app:layout_constraintBottom_toBottomOf="@id/editTextEmail"
-        app:layout_constraintStart_toEndOf="@id/editTextEmail"
-        android:layout_marginStart="-35dp">
-    </androidx.cardview.widget.CardView>
-    <!--=====================-->
-
-    <!-- Password Input -->
-    <EditText
-        android:id="@+id/editTextPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/custom_input"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:padding="10dp"
-        android:paddingStart="15dp"
-        android:textColorHint="@color/light_gray"
-        android:textColor="@color/black_50"
-        android:textAppearance="@style/login_input"
-        app:layout_constraintTop_toBottomOf="@id/editTextEmail"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:elevation="2dp"/>
-    <ImageView
-        android:id="@+id/iv_password"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/icon_password"
-        android:elevation="4dp"
-        app:tint="@color/black_50"
-        app:layout_constraintTop_toTopOf="@id/editTextPassword"
-        app:layout_constraintBottom_toBottomOf="@id/editTextPassword"
-        app:layout_constraintStart_toEndOf="@id/editTextPassword"
-        android:layout_marginStart="-35dp">
-    </ImageView>
-    <androidx.cardview.widget.CardView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="11dp"
-        app:cardElevation="3dp"
-        app:layout_constraintTop_toTopOf="@id/editTextPassword"
-        app:layout_constraintBottom_toBottomOf="@id/editTextPassword"
-        app:layout_constraintStart_toEndOf="@id/editTextPassword"
-        android:layout_marginStart="-35dp">
-    </androidx.cardview.widget.CardView>
-    <!--=====================-->
-
-    <!-- Password Confirmation -->
-    <EditText
-        android:id="@+id/editTextConfirmPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/custom_input"
-        android:hint="Confirm Password"
-        android:inputType="textPassword"
-        android:padding="10dp"
-        android:paddingStart="15dp"
-        android:textColorHint="@color/light_gray"
-        android:textColor="@color/black_50"
-        android:textAppearance="@style/login_input"
-        app:layout_constraintTop_toBottomOf="@id/editTextPassword"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:elevation="2dp"/>
-    <ImageView
-        android:id="@+id/iv_confirm"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/icon_confirm"
-        android:elevation="4dp"
-        app:tint="@color/black_50"
-        app:layout_constraintTop_toTopOf="@id/editTextConfirmPassword"
-        app:layout_constraintBottom_toBottomOf="@id/editTextConfirmPassword"
-        app:layout_constraintStart_toEndOf="@id/editTextConfirmPassword"
-        android:layout_marginStart="-35dp">
-    </ImageView>
-    <androidx.cardview.widget.CardView
-        android:layout_width="23dp"
-        android:layout_height="23dp"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="3dp"
-        app:layout_constraintTop_toTopOf="@id/editTextConfirmPassword"
-        app:layout_constraintBottom_toBottomOf="@id/editTextConfirmPassword"
-        app:layout_constraintStart_toEndOf="@id/editTextConfirmPassword"
-        android:layout_marginStart="-35dp">
-    </androidx.cardview.widget.CardView>
-    <!--=====================-->
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/buttonSignUp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="10dp"
-        android:layout_marginTop="30dp"
-        app:layout_constraintTop_toBottomOf="@id/editTextConfirmPassword"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginEnd="30dp"
-        android:layout_marginStart="30dp"
-        android:clickable="true"
-        android:focusable="true">
-        <!-- Contents of the additional CardView -->
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/black_50"
-            android:orientation="horizontal"
-            android:padding="8dp"
-            android:gravity="center">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sign Up"
-                android:textAppearance="@style/sub_buttons"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:textSize="14sp"
-                android:textColor="@color/white"/>
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/icon_login"
-                app:tint="@color/white"/>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
-    <!-- have an account? -->
-    <TextView
-        android:id="@+id/tv_log"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Already have an account?"
-        android:textAppearance="@style/login_h2"
-        android:layout_marginTop="5dp"
-        app:layout_constraintTop_toBottomOf="@id/buttonSignUp"
-        app:layout_constraintStart_toStartOf="@id/buttonSignUp"/>
-    <!-- Sign Up Link -->
-    <TextView
-        android:id="@+id/textViewSignIn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/tv_log"
-        android:text="Sign In"
-        android:textAppearance="@style/login_h2"
-        android:textColor="@color/main_blue"
-        app:layout_constraintStart_toEndOf="@id/tv_log"
-        app:layout_constraintTop_toTopOf="@id/tv_log"
-        android:layout_marginStart="5dp"
-        android:textStyle="bold"/>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
