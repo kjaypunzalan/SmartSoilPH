@@ -289,7 +289,7 @@ class FertilizerNutrientModel {
          *------------------------*/
         "Corn: Hybrid" to CropNutrientRequirements(
             nitrogenRequirements = zipCornNitrogenRequirements(listOf(120, 100, 80, 60, 60), RiceRanges.nitrogenLabels),
-            phosphorusRequirements = zipCornPhosphorusRequirements(listOf(60, 40, 20, 7, 0), RiceRanges.phosphorusLabels),
+            phosphorusRequirements = zipCornPhosphorusRequirements(listOf(60, 50, 20, 7, 0), RiceRanges.phosphorusLabels),
             potassiumRequirements = zipCornPotassiumRequirements(listOf(60, 45, 30, 7, 0), RiceRanges.potassiumLabels)
         ),
         "Corn: OPV (High Yielding Variety)" to CropNutrientRequirements(
