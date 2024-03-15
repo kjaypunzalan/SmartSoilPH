@@ -93,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/custom_input"
-                android:drawableLeft="@drawable/icon_email"
+                android:drawableLeft="@drawable/icon_email2"
                 android:drawableStart="@drawable/custom_email_icon"
                 android:drawablePadding="8dp"
                 android:hint="Email Address"
