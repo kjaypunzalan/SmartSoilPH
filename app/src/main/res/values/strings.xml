@@ -17,7 +17,7 @@
 
     <!--Activity Weather===================================================-->
     <string name="location_info">Current weather at...</string>
-    <string name="location" translatable="false">Lipa, Batangas City</string>
+    <string name="location" translatable="false">Dasmariñas City, Cavite</string>
     <string name="date" translatable="false">Fri, Mar 07</string>
     <string name="temperature" translatable="false">24</string>
     <string name="tv_temperature_symbol" translatable="false">°C</string>
@@ -106,7 +106,7 @@
 
     <string name="sign1" translatable="false">%</string>
     <string name="sign2" translatable="false">ppm</string>
-    <string name="sign3" translatable="false">Acidic</string>
+    <string name="sign3" translatable="false"></string>
     <string name="sign4" translatable="false">mS/cm</string>
     <string name="sign5" translatable="false">°C</string>
 
