@@ -4,8 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
+import androidx.core.widget.ImageViewCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.iacademy.smartsoilph.R
 import com.iacademy.smartsoilph.datamodels.UserData
@@ -20,12 +24,18 @@ class RegisterActivity : BaseActivity() {
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
     private lateinit var confirmPasswordEditText: EditText
-    private lateinit var registerButton: Button // Assuming there is a register button
+    private lateinit var registerButton: CardView // Assuming there is a register button
     private lateinit var loginButton: TextView
+
+    private lateinit var ivName: ImageView
+    private lateinit var ivPhone: ImageView
+    private lateinit var ivEmail: ImageView
+    private lateinit var ivPass: ImageView
+    private lateinit var ivConfirm: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.register_page)
+        setContentView(R.layout.register_page2)
 
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
@@ -38,6 +48,13 @@ class RegisterActivity : BaseActivity() {
         confirmPasswordEditText = findViewById(R.id.editTextConfirmPassword) // Update ID as per your layout
         registerButton = findViewById(R.id.buttonSignUp) // Update ID as per your layout
         loginButton = findViewById(R.id.textViewSignIn)
+
+        ivName = findViewById(R.id.iv_name)
+        ivPhone = findViewById(R.id.iv_phone)
+        ivEmail = findViewById(R.id.iv_email)
+        ivPass = findViewById(R.id.iv_password)
+        ivConfirm = findViewById(R.id.iv_confirm)
+
 
         // Register User
         registerButton.setOnClickListener {
@@ -121,6 +138,61 @@ class RegisterActivity : BaseActivity() {
 
         // Proceed with registration if all validations pass
         registerUser(name, number.toDouble(), email, password)
+
+        // Set focus change listener on the EditTextName
+        nameEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                // EditText has gained focus, change the ImageView tint
+                ImageViewCompat.setImageTintList(ivName, ContextCompat.getColorStateList(this, R.color.main_blue))
+            } else {
+                // EditText has lost focus, revert the ImageView tint
+                ImageViewCompat.setImageTintList(ivName, ContextCompat.getColorStateList(this, R.color.black_50))
+            }
+        }
+
+        // Set focus change listener on the EditTextPhone
+        numberEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                // EditText has gained focus, change the ImageView tint
+                ImageViewCompat.setImageTintList(ivPhone, ContextCompat.getColorStateList(this, R.color.main_blue))
+            } else {
+                // EditText has lost focus, revert the ImageView tint
+                ImageViewCompat.setImageTintList(ivPhone, ContextCompat.getColorStateList(this, R.color.black_50))
+            }
+        }
+
+        // Set focus change listener on the EditTextEmail
+        emailEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                // EditText has gained focus, change the ImageView tint
+                ImageViewCompat.setImageTintList(ivEmail, ContextCompat.getColorStateList(this, R.color.main_blue))
+            } else {
+                // EditText has lost focus, revert the ImageView tint
+                ImageViewCompat.setImageTintList(ivEmail, ContextCompat.getColorStateList(this, R.color.black_50))
+            }
+        }
+
+        // Set focus change listener on the EditTextPassword
+        passwordEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                // EditText has gained focus, change the ImageView tint
+                ImageViewCompat.setImageTintList(ivPass, ContextCompat.getColorStateList(this, R.color.main_blue))
+            } else {
+                // EditText has lost focus, revert the ImageView tint
+                ImageViewCompat.setImageTintList(ivPass, ContextCompat.getColorStateList(this, R.color.black_50))
+            }
+        }
+
+        // Set focus change listener on the EditTextConfirmPassword
+        confirmPasswordEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                // EditText has gained focus, change the ImageView tint
+                ImageViewCompat.setImageTintList(ivConfirm, ContextCompat.getColorStateList(this, R.color.main_blue))
+            } else {
+                // EditText has lost focus, revert the ImageView tint
+                ImageViewCompat.setImageTintList(ivConfirm, ContextCompat.getColorStateList(this, R.color.black_50))
+            }
+        }
     }
 
     private fun registerUser(name: String, number: Double, email: String, password: String) {

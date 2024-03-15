@@ -3,8 +3,12 @@ package com.iacademy.smartsoilph.activities
 import android.content.Intent
 import android.os.Bundle
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
+import androidx.core.widget.ImageViewCompat
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.iacademy.smartsoilph.R
@@ -18,10 +22,12 @@ class LoginActivity : BaseActivity() {
     private lateinit var passwordEditText: EditText
     private lateinit var firebaseModel: FirebaseModel
 
+    private lateinit var ivLock: ImageView
+    private lateinit var ivEmail: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.login_page)
+        setContentView(R.layout.login_page2)
 
         setupRegisterTextView()
         setupForgotTextView()
@@ -38,9 +44,11 @@ class LoginActivity : BaseActivity() {
         }
 
         // Initialize views
+        ivLock = findViewById(R.id.iv_lock)
+        ivEmail = findViewById(R.id.iv_email)
         emailEditText = findViewById(R.id.editTextMobileNumber)  // Replace with your actual EditText ID for email
         passwordEditText = findViewById(R.id.editTextPassword)  // Replace with your actual EditText ID for password
-        val loginButton = findViewById<MaterialButton>(R.id.buttonSignIn)  // Replace with your actual Button ID
+        val loginButton = findViewById<CardView>(R.id.buttonSignIn)  // Replace with your actual Button ID
 
         loginButton.setOnClickListener {
             loginUser()
@@ -84,6 +92,28 @@ class LoginActivity : BaseActivity() {
                         Toast.LENGTH_SHORT).show()
                 }
             }
+
+        // Set focus change listener on the EditTextEmail
+        emailEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                // EditText has gained focus, change the ImageView tint
+                ImageViewCompat.setImageTintList(ivLock, ContextCompat.getColorStateList(this, R.color.main_blue))
+            } else {
+                // EditText has lost focus, revert the ImageView tint
+                ImageViewCompat.setImageTintList(ivLock, ContextCompat.getColorStateList(this, R.color.black_50))
+            }
+        }
+
+        // Set focus change listener on the EditTextPassword
+        passwordEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                // EditText has gained focus, change the ImageView tint
+                ImageViewCompat.setImageTintList(ivEmail, ContextCompat.getColorStateList(this, R.color.main_blue))
+            } else {
+                // EditText has lost focus, revert the ImageView tint
+                ImageViewCompat.setImageTintList(ivEmail, ContextCompat.getColorStateList(this, R.color.black_50))
+            }
+        }
     }
     private fun setupRegisterTextView() {
         val registerTextView = findViewById<TextView>(R.id.tv_sign)
