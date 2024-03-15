@@ -2,6 +2,7 @@ package com.iacademy.smartsoilph.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -53,6 +54,29 @@ class LoginActivity : BaseActivity() {
         loginButton.setOnClickListener {
             loginUser()
         }
+
+
+        // Set focus change listener on the EditTextEmail
+        emailEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                // EditText is focused, change the ImageView tint
+                ivEmail.setColorFilter(ContextCompat.getColor(this, R.color.main_blue), android.graphics.PorterDuff.Mode.SRC_IN)
+            } else {
+                // EditText lost focus, remove the tint or set it to default
+                ivEmail.clearColorFilter()
+            }
+        }
+
+        // Set focus change listener on the EditTextPassword
+        passwordEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                // EditText is focused, change the ImageView tint
+                ivLock.setColorFilter(ContextCompat.getColor(this, R.color.main_blue), android.graphics.PorterDuff.Mode.SRC_IN)
+            } else {
+                // EditText lost focus, remove the tint or set it to default
+                ivLock.clearColorFilter()
+            }
+        }
     }
 
     private fun loginUser() {
@@ -92,29 +116,8 @@ class LoginActivity : BaseActivity() {
                         Toast.LENGTH_SHORT).show()
                 }
             }
-
-        // Set focus change listener on the EditTextEmail
-        emailEditText.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                // EditText has gained focus, change the ImageView tint
-                ImageViewCompat.setImageTintList(ivLock, ContextCompat.getColorStateList(this, R.color.main_blue))
-            } else {
-                // EditText has lost focus, revert the ImageView tint
-                ImageViewCompat.setImageTintList(ivLock, ContextCompat.getColorStateList(this, R.color.black_50))
-            }
-        }
-
-        // Set focus change listener on the EditTextPassword
-        passwordEditText.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                // EditText has gained focus, change the ImageView tint
-                ImageViewCompat.setImageTintList(ivEmail, ContextCompat.getColorStateList(this, R.color.main_blue))
-            } else {
-                // EditText has lost focus, revert the ImageView tint
-                ImageViewCompat.setImageTintList(ivEmail, ContextCompat.getColorStateList(this, R.color.black_50))
-            }
-        }
     }
+
     private fun setupRegisterTextView() {
         val registerTextView = findViewById<TextView>(R.id.tv_sign)
         registerTextView.setOnClickListener {

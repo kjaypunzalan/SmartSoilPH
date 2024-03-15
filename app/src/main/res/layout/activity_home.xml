@@ -176,7 +176,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/custom_upper_round_corners">
+                    android:background="@drawable/custom_upper_round_corners"
+                    android:elevation="4dp">
                     <!-- Your contents for the CardView go here -->
 
 <androidx.constraintlayout.widget.ConstraintLayout
