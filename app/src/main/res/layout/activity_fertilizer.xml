@@ -119,7 +119,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/npk_rating1"
                 android:textAppearance="@style/npk_rating"
-                android:textColor="#E28F19"
+                android:textColor="@color/black_50"
                 android:layout_gravity="center"/>
 
         </LinearLayout>
@@ -198,7 +198,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/npk_rating2"
                 android:textAppearance="@style/npk_rating"
-                android:textColor="@color/infra_red"
+                android:textColor="@color/black_50"
                 android:layout_gravity="center"/>
 
         </LinearLayout>
@@ -272,7 +272,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/npk_rating3"
                 android:textAppearance="@style/npk_rating"
-                android:textColor="#64BB2B"
+                android:textColor="@color/black_50"
                 android:layout_gravity="center"/>
 
         </LinearLayout>

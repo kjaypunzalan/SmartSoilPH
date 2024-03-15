@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".onboarding.screens.FirstScreen"
-    android:background="@drawable/icon_bg">
+    android:background="@color/white">
 
     <ImageView
         android:id="@+id/img_sc1"

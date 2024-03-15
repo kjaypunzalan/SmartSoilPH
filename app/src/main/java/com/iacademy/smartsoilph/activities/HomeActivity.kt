@@ -15,16 +15,13 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
-import androidx.core.app.ActivityCompat
 import androidx.core.widget.NestedScrollView
 import com.google.firebase.auth.FirebaseAuth
 import com.iacademy.smartsoilph.R
 import com.iacademy.smartsoilph.models.SQLiteModel
-import java.lang.reflect.Method
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
-import java.util.jar.Manifest
 
 
 class HomeActivity : BaseActivity() {
@@ -46,18 +43,6 @@ class HomeActivity : BaseActivity() {
     // Declare Firebase variables
     private lateinit var auth: FirebaseAuth
 
-
-    fun refreshActivityOnce() {
-        val alreadyRefreshed = intent.getBooleanExtra("alreadyRefreshed", false)
-        if (!alreadyRefreshed) {
-            intent.putExtra("alreadyRefreshed", true)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION) // Optional: to disable the animation
-            finish()
-            overridePendingTransition(0, 0) // Optional: to disable the animation
-            startActivity(intent)
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -72,9 +57,11 @@ class HomeActivity : BaseActivity() {
         // Display Date and Username
         displayCurrentDate()
         fetchUsername()
-
     }
 
+    /*********************************
+     * A. Initializing Layout
+     *-------------------------------*/
     private fun initializeLayout() {
 
         // Note: btnSyncDatabase and other menu items are handled through onCreateOptionsMenu and onOptionsItemSelected
@@ -99,15 +86,32 @@ class HomeActivity : BaseActivity() {
         }
     }
 
-    //Button Function
-//    private fun setButtonClickListener(button: CardView, activityClass: Class<*>) {
-//        button.setOnClickListener {
-//            val intent = Intent(this, activityClass)
-//            startActivity(intent)
-//            finish()
-//        }
-//    }
+    /*********************************
+     * B. Display Date and Username
+     *-------------------------------*/
+    private fun displayCurrentDate() {
+        val dateFormat = SimpleDateFormat("EEEE, MMM d", Locale.getDefault())
+        val currentDate = dateFormat.format(Calendar.getInstance().time)
+        tvDateToday.text = currentDate
+    }
 
+    private fun fetchUsername() {
+        val dbHelper = SQLiteModel(this)
+        val username = dbHelper.getCurrentUserName()
+        // Check if username is not null
+        if (username != null) {
+            // Set the username to the TextView
+            tvUsername.text = " $username"
+        } else {
+            // Handle case where username is null, maybe set a default name or prompt user
+            tvUsername.text = " Farmer"
+        }
+    }
+
+
+    /*********************************
+     * C. Button Logistics
+     *-------------------------------*/
     private fun setButtonClickListener(button: CardView, activityClass: Class<*>) {
         button.setOnClickListener {
             val intent = Intent(this, LoadScreenActivity::class.java)
@@ -116,6 +120,7 @@ class HomeActivity : BaseActivity() {
             finish()
         }
     }
+
     private fun setupButtonNavigation() {
         // set click listeners for buttons
         setButtonClickListener(btnSoil, SoilActivity::class.java)
@@ -128,7 +133,7 @@ class HomeActivity : BaseActivity() {
 
         //settings
         btnSettings.setOnClickListener { view ->
-            showPopupMenu(view)
+            showSettingsMenu(view)
         }
 
         btnBtConnect.setOnClickListener {
@@ -165,14 +170,17 @@ class HomeActivity : BaseActivity() {
         }
     }
 
+    /*********************************
+     * D. Settings Menu Logistics
+     *-------------------------------*/
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.popup_menu, menu) // Replace "your_menu_xml_file_name" with the actual file name of your menu
+        menuInflater.inflate(R.menu.settings_menu, menu)
         return true
     }
 
-    private fun showPopupMenu(view: View?) {
+    private fun showSettingsMenu(view: View?) {
         val popup = PopupMenu(this, view)
-        popup.menuInflater.inflate(R.menu.popup_menu, popup.menu)
+        popup.menuInflater.inflate(R.menu.settings_menu, popup.menu)
 
         popup.setOnMenuItemClickListener { item ->
             when (item.itemId) {
@@ -184,6 +192,11 @@ class HomeActivity : BaseActivity() {
                 R.id.btn_language -> {
                     // Handle change language action
                     showLanguageDialog()
+                    true
+                }
+                R.id.btn_logout -> {
+                    // Handle logout action
+                    logoutUser()
                     true
                 }
                 else -> false
@@ -203,30 +216,17 @@ class HomeActivity : BaseActivity() {
                 showLanguageDialog()
                 true
             }
+            R.id.btn_logout -> {
+                logoutUser()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-
-    private fun displayCurrentDate() {
-        val dateFormat = SimpleDateFormat("EEEE, MMM d", Locale.getDefault())
-        val currentDate = dateFormat.format(Calendar.getInstance().time)
-        tvDateToday.text = currentDate
-    }
-
-    private fun fetchUsername() {
-        val dbHelper = SQLiteModel(this)
-        val username = dbHelper.getCurrentUserName()
-        // Check if username is not null
-        if (username != null) {
-            // Set the username to the TextView
-            tvUsername.text = " $username"
-        } else {
-            // Handle case where username is null, maybe set a default name or prompt user
-            tvUsername.text = " Farmer"
-        }
-    }
-
+    /*********************************
+     * D.1 Settings - Sync Database
+     *-------------------------------*/
     private fun showSyncDatabaseDialog() {
         Log.d("", "------------------------1. Dialog Showed Up")
         val dialogBuilder = AlertDialog.Builder(this)
@@ -249,10 +249,17 @@ class HomeActivity : BaseActivity() {
         alert.show()
     }
 
-
-
-
-
+    /*********************************
+     * D.2 Settings - Change Language
+     *-------------------------------*/
+    private fun setLocale(languageCode: String) {
+        // Save the chosen language in SharedPreferences or any persistent storage
+        // so you can load it on app start next time.
+        val sharedPreferences = getSharedPreferences("Settings", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("My_Lang", languageCode)
+        editor.apply()
+    }
     private fun showLanguageDialog() {
         val dialogBuilder = AlertDialog.Builder(this)
         val languages = arrayOf("English", "Tagalog")
@@ -281,15 +288,19 @@ class HomeActivity : BaseActivity() {
         alert.show()
     }
 
-    private fun setLocale(languageCode: String) {
-        // Save the chosen language in SharedPreferences or any persistent storage
-        // so you can load it on app start next time.
-        val sharedPreferences = getSharedPreferences("Settings", MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.putString("My_Lang", languageCode)
-        editor.apply()
+    /*********************************
+     * D.3 Settings - Logout User
+     *-------------------------------*/
+    private fun logoutUser() {
+        auth.signOut()
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
+    /*********************************
+     * E. Bluetooth Permission TODO
+     *-------------------------------*/
     private fun requestBluetoothPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             // Check if the BLUETOOTH_CONNECT permission is already granted
