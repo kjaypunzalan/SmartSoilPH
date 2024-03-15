@@ -1,11 +1,15 @@
 package com.iacademy.smartsoilph.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.iacademy.smartsoilph.R
@@ -16,10 +20,13 @@ class ResetPasswordActivity : BaseActivity() {
     private lateinit var emailEditText: EditText
     private lateinit var tvSignIn: TextView
     private lateinit var sendVerificationButton: MaterialButton
+    private lateinit var btnReturn: ImageView
+
+    private lateinit var ivEmail: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.forgotpassword_page)
+        setContentView(R.layout.forgotpassword_page2)
 
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
@@ -28,6 +35,8 @@ class ResetPasswordActivity : BaseActivity() {
         emailEditText = findViewById(R.id.et_email)
         sendVerificationButton = findViewById(R.id.btn_submit)
         tvSignIn = findViewById(R.id.tv_sign_in)
+        btnReturn = findViewById(R.id.toolbar_back_icon)
+        ivEmail = findViewById(R.id.iv_email)
 
         sendVerificationButton.setOnClickListener {
             validateInput()
@@ -38,6 +47,24 @@ class ResetPasswordActivity : BaseActivity() {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish() // Close the current activity
+        }
+
+        btnReturn.setOnClickListener{
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            startActivity(intent)
+            finish()
+        }
+
+        // Set focus change listener on the EditTextEmail
+        emailEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                // EditText is focused, change the ImageView tint
+                ivEmail.setColorFilter(ContextCompat.getColor(this, R.color.main_blue), android.graphics.PorterDuff.Mode.SRC_IN)
+            } else {
+                // EditText lost focus, remove the tint or set it to default
+                ivEmail.clearColorFilter()
+            }
         }
     }
 
@@ -65,7 +92,7 @@ class ResetPasswordActivity : BaseActivity() {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Toast.makeText(this, "Verification email sent \nPlease login using your new password", Toast.LENGTH_LONG).show()
-                    Handler().postDelayed({
+                    Handler(Looper.getMainLooper()).postDelayed({
                         // Intent to start new Activity
                         val intent = Intent(this, LoginActivity::class.java)
                         startActivity(intent)
@@ -75,5 +102,13 @@ class ResetPasswordActivity : BaseActivity() {
                     Toast.makeText(this, "Failed to send verification email", Toast.LENGTH_SHORT).show()
                 }
             }
+    }
+
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        startActivity(intent)
+        finish()
     }
 }

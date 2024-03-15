@@ -1,5 +1,6 @@
 package com.iacademy.smartsoilph.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -26,6 +27,7 @@ class RegisterActivity : BaseActivity() {
     private lateinit var confirmPasswordEditText: EditText
     private lateinit var registerButton: CardView // Assuming there is a register button
     private lateinit var loginButton: TextView
+    private lateinit var btnReturn: ImageView
 
     private lateinit var ivName: ImageView
     private lateinit var ivPhone: ImageView
@@ -48,6 +50,7 @@ class RegisterActivity : BaseActivity() {
         confirmPasswordEditText = findViewById(R.id.editTextConfirmPassword) // Update ID as per your layout
         registerButton = findViewById(R.id.buttonSignUp) // Update ID as per your layout
         loginButton = findViewById(R.id.textViewSignIn)
+        btnReturn = findViewById(R.id.toolbar_back_icon)
 
         ivName = findViewById(R.id.iv_name)
         ivPhone = findViewById(R.id.iv_phone)
@@ -64,6 +67,68 @@ class RegisterActivity : BaseActivity() {
         // Sign In Button
         loginButton.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java) // Replace with your next activity
+            startActivity(intent)
+            finish()
+        }
+
+        // Set focus change listener on the EditTextName
+        nameEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                // EditText is focused, change the ImageView tint
+                ivName.setColorFilter(ContextCompat.getColor(this, R.color.main_blue), android.graphics.PorterDuff.Mode.SRC_IN)
+            } else {
+                // EditText lost focus, remove the tint or set it to default
+                ivName.clearColorFilter()
+            }
+        }
+
+        // Set focus change listener on the EditTextPhone
+        numberEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                // EditText is focused, change the ImageView tint
+                ivPhone.setColorFilter(ContextCompat.getColor(this, R.color.main_blue), android.graphics.PorterDuff.Mode.SRC_IN)
+            } else {
+                // EditText lost focus, remove the tint or set it to default
+                ivPhone.clearColorFilter()
+            }
+        }
+
+        // Set focus change listener on the EditTextEmail
+        emailEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                // EditText is focused, change the ImageView tint
+                ivEmail.setColorFilter(ContextCompat.getColor(this, R.color.main_blue), android.graphics.PorterDuff.Mode.SRC_IN)
+            } else {
+                // EditText lost focus, remove the tint or set it to default
+                ivEmail.clearColorFilter()
+            }
+        }
+
+        // Set focus change listener on the EditTextPassword
+        passwordEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                // EditText is focused, change the ImageView tint
+                ivPass.setColorFilter(ContextCompat.getColor(this, R.color.main_blue), android.graphics.PorterDuff.Mode.SRC_IN)
+            } else {
+                // EditText lost focus, remove the tint or set it to default
+                ivPass.clearColorFilter()
+            }
+        }
+
+        // Set focus change listener on the EditTextConfirmPassword
+        confirmPasswordEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                // EditText is focused, change the ImageView tint
+                ivConfirm.setColorFilter(ContextCompat.getColor(this, R.color.main_blue), android.graphics.PorterDuff.Mode.SRC_IN)
+            } else {
+                // EditText lost focus, remove the tint or set it to default
+                ivConfirm.clearColorFilter()
+            }
+        }
+
+        btnReturn.setOnClickListener{
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
             finish()
         }
@@ -138,61 +203,6 @@ class RegisterActivity : BaseActivity() {
 
         // Proceed with registration if all validations pass
         registerUser(name, number.toDouble(), email, password)
-
-        // Set focus change listener on the EditTextName
-        nameEditText.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                // EditText has gained focus, change the ImageView tint
-                ImageViewCompat.setImageTintList(ivName, ContextCompat.getColorStateList(this, R.color.main_blue))
-            } else {
-                // EditText has lost focus, revert the ImageView tint
-                ImageViewCompat.setImageTintList(ivName, ContextCompat.getColorStateList(this, R.color.black_50))
-            }
-        }
-
-        // Set focus change listener on the EditTextPhone
-        numberEditText.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                // EditText has gained focus, change the ImageView tint
-                ImageViewCompat.setImageTintList(ivPhone, ContextCompat.getColorStateList(this, R.color.main_blue))
-            } else {
-                // EditText has lost focus, revert the ImageView tint
-                ImageViewCompat.setImageTintList(ivPhone, ContextCompat.getColorStateList(this, R.color.black_50))
-            }
-        }
-
-        // Set focus change listener on the EditTextEmail
-        emailEditText.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                // EditText has gained focus, change the ImageView tint
-                ImageViewCompat.setImageTintList(ivEmail, ContextCompat.getColorStateList(this, R.color.main_blue))
-            } else {
-                // EditText has lost focus, revert the ImageView tint
-                ImageViewCompat.setImageTintList(ivEmail, ContextCompat.getColorStateList(this, R.color.black_50))
-            }
-        }
-
-        // Set focus change listener on the EditTextPassword
-        passwordEditText.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                // EditText has gained focus, change the ImageView tint
-                ImageViewCompat.setImageTintList(ivPass, ContextCompat.getColorStateList(this, R.color.main_blue))
-            } else {
-                // EditText has lost focus, revert the ImageView tint
-                ImageViewCompat.setImageTintList(ivPass, ContextCompat.getColorStateList(this, R.color.black_50))
-            }
-        }
-
-        // Set focus change listener on the EditTextConfirmPassword
-        confirmPasswordEditText.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                // EditText has gained focus, change the ImageView tint
-                ImageViewCompat.setImageTintList(ivConfirm, ContextCompat.getColorStateList(this, R.color.main_blue))
-            } else {
-                // EditText has lost focus, revert the ImageView tint
-                ImageViewCompat.setImageTintList(ivConfirm, ContextCompat.getColorStateList(this, R.color.black_50))
-            }
-        }
     }
 
     private fun registerUser(name: String, number: Double, email: String, password: String) {
@@ -235,6 +245,14 @@ class RegisterActivity : BaseActivity() {
                 Toast.makeText(baseContext, "Please verify your email first.", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        startActivity(intent)
+        finish()
     }
 
 }
