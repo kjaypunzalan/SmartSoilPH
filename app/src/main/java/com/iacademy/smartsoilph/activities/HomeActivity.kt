@@ -100,9 +100,18 @@ class HomeActivity : BaseActivity() {
     }
 
     //Button Function
+//    private fun setButtonClickListener(button: CardView, activityClass: Class<*>) {
+//        button.setOnClickListener {
+//            val intent = Intent(this, activityClass)
+//            startActivity(intent)
+//            finish()
+//        }
+//    }
+
     private fun setButtonClickListener(button: CardView, activityClass: Class<*>) {
         button.setOnClickListener {
-            val intent = Intent(this, activityClass)
+            val intent = Intent(this, LoadScreenActivity::class.java)
+            intent.putExtra(LoadScreenActivity.EXTRA_TARGET_ACTIVITY, activityClass.name) // loads loading screen before targetActivity
             startActivity(intent)
             finish()
         }
@@ -113,7 +122,7 @@ class HomeActivity : BaseActivity() {
         setButtonClickListener(btnWeather, WeatherActivity::class.java)
         setButtonClickListener(btnReports, ReportsActivity::class.java)
         setButtonClickListener(btnRecommendationHistory, RecommendationHistoryActivity::class.java)
-        setButtonClickListener(btnManual, LoadScreenActivity::class.java)
+        setButtonClickListener(btnManual, ManualActivity::class.java)
         //setButtonClickListener(btnBtConnect, SoilActivityTest::class.java) // Ensure BluetoothController exists or adjust as needed
 
 
@@ -164,18 +173,6 @@ class HomeActivity : BaseActivity() {
     private fun showPopupMenu(view: View?) {
         val popup = PopupMenu(this, view)
         popup.menuInflater.inflate(R.menu.popup_menu, popup.menu)
-
-        try {
-            val popupField = PopupMenu::class.java.getDeclaredField("mPopup")
-            popupField.isAccessible = true
-            val menuPopupHelper = popupField.get(popup)
-            val setForceShowIconMethod: Method = menuPopupHelper.javaClass.getDeclaredMethod(
-                "setForceShowIcon", Boolean::class.javaPrimitiveType
-            )
-            setForceShowIconMethod.invoke(menuPopupHelper, true)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
 
         popup.setOnMenuItemClickListener { item ->
             when (item.itemId) {

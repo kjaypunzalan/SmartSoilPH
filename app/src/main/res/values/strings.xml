@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">SmartSoilPH</string>
+    <string name="app_name" translatable="false">Smart SoilPH</string>
     <string name="open_nav" translatable="false">Open Navigation Drawer</string>
     <string name="close_nav" translatable="false">Close Navigation Drawer</string>
 
@@ -41,6 +41,7 @@
     <!--Activity Soil===================================================-->
     <string name="soil_title">Current soil status</string>
     <string name="soil_info">Select a crop: </string>
+    <string name="soil_name">Soil Texture: </string>
 
     <!--Named Crops-->
     <string-array name="crops">
@@ -167,7 +168,11 @@
     <string name="bluetooth_button">Connect to Bluetooth Device</string>
     <string name="manual_button">View User Manual</string>
     <string name="manual_button2" translatable="false">(English/Tagalog)</string>
-    <string name="logout_button">Logout</string>
+    <string name="logout_button">🚪 Logout</string>
+
+    <string name="sync_button">🔄 Sync Database</string>
+    <string name="language_button">🌏 Change Language</string>
+
     <!--=================================================================-->
 
     <!--Activity Fertilizer Recommendation ===========================================-->
@@ -219,14 +224,28 @@
     <!--Activity Recommendation History Item===========================================-->
     <string name="date_time">Date and Time</string>
 
+    <string name="title_rh_1">Crop &amp; Soil Info</string>
+    <string name="title_rh_2">Fertilizer Recommedantion Info</string>
+    <string name="title_rh_3">NPK &amp; pH Level Info</string>
+
+    <string name="selected_crop">Crop Name</string>
+    <string name="selected_crop_desc">Selected Crop</string>
+
+    <string name="selected_soil">Soil Type Name</string>
+    <string name="selected_soil_desc">Selected Soil Type</string>
+
     <string name="fertilizer_value" translatable="false">000 kg</string>
     <string name="npk_value" translatable="false">00 - 00 - 00</string>
 
-    <string name="fertilizer_info1"></string>
-    <string name="fertilizer_info2"></string>
-    <string name="fertilizer_info3"></string>
+    <string name="fertilizer_info1">0 amount of Complete fertilizer used</string>
+    <string name="fertilizer_info2">0 amount of Duophos fertilizer used</string>
+    <string name="fertilizer_info3">0 amount of Potash fertilizer used</string>
 
-    <string name="npk_info">Required Nutrient<b>Requirements</b></string>
+    <string name="npk_info">Required Nutrient<b> Requirements</b></string>
+
+    <string name="phlevel_amount" translatable="false">0</string>
+    <string name="phlevel_desc">Amount of pH Level detected in the soil</string>
+
     <!--=================================================================-->
 
     <!--Activity Reports===================================================-->

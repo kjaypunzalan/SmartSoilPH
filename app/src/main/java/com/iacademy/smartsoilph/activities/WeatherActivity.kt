@@ -141,7 +141,7 @@ class WeatherActivity : BaseActivity() {
                 forecast.time.startsWith(currentDate)
             }?.maxTemperature?.toInt() ?: temperature
             // Assuming maxTemperature calculation is moved or adjusted as necessary
-            binding.tvTemperatureNumber.text = "$temperature°C"
+            binding.tvTemperatureNumber.text = "$temperature"
             binding.tvValueHumidity.text = "$humidity%"
             binding.tvValueWind.text = "${windSpeed}km/h"
             binding.tvValueTemp.text = "$maxTemperatureToday°C"

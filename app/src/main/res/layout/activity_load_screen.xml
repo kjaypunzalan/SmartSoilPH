@@ -8,34 +8,33 @@
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/gifImageView"
-        android:layout_width="580dp"
-        android:layout_height="448dp"
-        android:src="@drawable/animated_farmer"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:src="@drawable/animated_scanner4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        android:layout_marginBottom="50dp"/>
 
-    <pl.droidsonroids.gif.GifImageView
-        android:id="@+id/gifImageView2"
-        android:layout_width="150dp"
-        android:layout_height="100dp"
-        android:src="@drawable/animated_loading"
-        app:layout_constraintTop_toBottomOf="@id/gifImageView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+<!--    <pl.droidsonroids.gif.GifImageView-->
+<!--        android:id="@+id/gifImageView2"-->
+<!--        android:layout_width="150dp"-->
+<!--        android:layout_height="100dp"-->
+<!--        android:src="@drawable/animated_loading"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/gifImageView"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"/>-->
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="50dp"
-        android:layout_height="40dp"
+        android:layout_width="45dp"
+        android:layout_height="30dp"
         android:src="@drawable/icon_smartsoil"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/gifImageView2"/>
+        app:layout_constraintTop_toBottomOf="@id/gifImageView"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
