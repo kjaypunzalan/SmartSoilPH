@@ -6,7 +6,6 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,10 +14,11 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.iacademy.smartsoilph.R
 import com.iacademy.smartsoilph.databinding.ActivityWeatherBinding
-import com.iacademy.smartsoilph.datamodels.DailyForecast
-import com.iacademy.smartsoilph.datamodels.WeatherResponse
-import com.iacademy.smartsoilph.utils.OpenMeteoAPIService
+import com.iacademy.smartsoilph.weather.DailyForecast
+import com.iacademy.smartsoilph.weather.WeatherResponse
+import com.iacademy.smartsoilph.weather.OpenMeteoAPIService
 import com.iacademy.smartsoilph.utils.RetrofitClient
+import com.iacademy.smartsoilph.weather.WeatherForecastAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -29,46 +29,44 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class WeatherActivity : BaseActivity() {
+
+    //declare layout variables
     private lateinit var binding: ActivityWeatherBinding
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private val LOCATION_PERMISSION_REQ_CODE = 1000
-    private lateinit var forecastAdapter: ForecastAdapter
-    private lateinit var recyclerView: RecyclerView
+    private lateinit var forecastAdapter: WeatherForecastAdapter
+    private lateinit var rvWeatherForecast: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityWeatherBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        recyclerView = findViewById(R.id.rv_weather) // Ensure you have a RecyclerView in your layout
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        initializeRecyclerView()
 
-        forecastAdapter = ForecastAdapter(emptyList())
-        recyclerView.adapter = forecastAdapter
-
-        initializeReturnButton()
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         checkPermissions()
+        initializeReturnButton()
     }
 
-    private fun initializeReturnButton() {
-        val btnReturn: ImageView = findViewById(R.id.toolbar_back_icon)
-        btnReturn.setOnClickListener {
-            val intent = Intent(this, HomeActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-            startActivity(intent)
-            finish()
-        }
+    /*********************************
+     * A. Initializing RecyclerView
+     *-------------------------------*/
+    private fun initializeRecyclerView() {
+        // initialize recyclerview
+        rvWeatherForecast = findViewById(R.id.rv_weather)
+
+        // initialize Location Services
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+        // update recyclerview
+        forecastAdapter = WeatherForecastAdapter(emptyList())
+        rvWeatherForecast.adapter = forecastAdapter
+        rvWeatherForecast.layoutManager = LinearLayoutManager(this)
     }
 
-    @SuppressLint("MissingSuperCall")
-    override fun onBackPressed() {
-        val intent = Intent(this, HomeActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-        startActivity(intent)
-        finish()
-    }
-
+    /*********************************
+     * B. Get Date
+     *-------------------------------*/
     private fun getCurrentFormattedDate(): String {
         val dateFormat = SimpleDateFormat("EEE, MMM dd", Locale.getDefault())
         return dateFormat.format(Date())
@@ -108,7 +106,8 @@ class WeatherActivity : BaseActivity() {
             current = "temperature_2m,relative_humidity_2m,wind_speed_10m",
             hourly = "wind_speed_80m",
             daily = "temperature_2m_max",
-            timezone = "Asia/Singapore"
+            timezone = "Asia/Singapore",
+            forecast_days = 7
         )
 
         call.enqueue(object : Callback<WeatherResponse> {
@@ -163,8 +162,8 @@ class WeatherActivity : BaseActivity() {
             )
         } ?: listOf()
 
-        forecastAdapter = ForecastAdapter(forecasts)
-        recyclerView.adapter = forecastAdapter
+        forecastAdapter = WeatherForecastAdapter(forecasts)
+        rvWeatherForecast.adapter = forecastAdapter
     }
 
     private fun interpretWeatherCode(code: Int): String {
@@ -184,5 +183,22 @@ class WeatherActivity : BaseActivity() {
             else -> "Unknown"
         }
     }
-    // Additional methods and logic for your activity
+
+    private fun initializeReturnButton() {
+        val btnReturn: ImageView = findViewById(R.id.toolbar_back_icon)
+        btnReturn.setOnClickListener {
+            val intent = Intent(this, HomeActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            startActivity(intent)
+            finish()
+        }
+    }
+
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
+        val intent = Intent(this, HomeActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        startActivity(intent)
+        finish()
+    }
 }

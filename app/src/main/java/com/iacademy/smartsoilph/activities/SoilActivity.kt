@@ -19,7 +19,7 @@ import androidx.cardview.widget.CardView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.iacademy.smartsoilph.R
-import com.iacademy.smartsoilph.datamodels.FertilizerNutrientModel
+import com.iacademy.smartsoilph.models.FertilizerNutrientModel
 import com.iacademy.smartsoilph.datamodels.SoilData
 import com.iacademy.smartsoilph.datamodels.RecommendationData
 import com.iacademy.smartsoilph.datamodels.RequiredFertilizerData

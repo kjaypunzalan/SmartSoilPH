@@ -1,4 +1,4 @@
-package com.iacademy.smartsoilph.datamodels
+package com.iacademy.smartsoilph.weather
 
 data class CurrentConditionsResponse(
     val LocalObservationDateTime: String,
