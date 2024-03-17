@@ -27,8 +27,8 @@
     <string name="humidity">Humidity</string>
     <string name="value_humidity" translatable="false">0%</string>
 
-    <string name="temperature2">Temperature</string>
-    <string name="value_temp" translatable="false">0°C</string>
+    <string name="temperature2">Precipitation</string>
+    <string name="value_temp" translatable="false">0%</string>
 
     <string name="wind">Wind Speed</string>
     <string name="value_wind" translatable="false">0km/h</string>

@@ -1,4 +1,4 @@
-package com.iacademy.smartsoilph.utils
+package com.iacademy.smartsoilph.weather
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

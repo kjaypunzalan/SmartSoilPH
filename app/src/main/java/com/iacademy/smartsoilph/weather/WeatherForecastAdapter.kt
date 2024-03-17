@@ -9,9 +9,21 @@ import com.iacademy.smartsoilph.R
 import java.text.SimpleDateFormat
 import java.util.*
 
-class WeatherForecastAdapter(
-    private val forecasts: List<DailyForecast>
-) : RecyclerView.Adapter<WeatherForecastAdapter.ForecastViewHolder>() {
+class WeatherForecastAdapter(private val forecasts: List<DailyWeather>) : RecyclerView.Adapter<WeatherForecastAdapter.ForecastViewHolder>() {
+
+    class ForecastViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun bind(forecast: DailyWeather) {
+            itemView.findViewById<TextView>(R.id.tv_date_rv).text = forecast.time // Adjust according to your date formatting
+            itemView.findViewById<TextView>(R.id.tv_temp_rv).text = "${forecast.maxTemperature}"
+
+            val dateString = forecast.time
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("EEEE", Locale.getDefault())
+            val date = inputFormat.parse(dateString)
+            val dayToday = date?.let { outputFormat.format(it) } ?: "Unknown Day"
+            itemView.findViewById<TextView>(R.id.tv_day_rv).text = "$dayToday"
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ForecastViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_weather_list, parent, false)
@@ -19,26 +31,8 @@ class WeatherForecastAdapter(
     }
 
     override fun onBindViewHolder(holder: ForecastViewHolder, position: Int) {
-        val forecast = forecasts[position]
-        holder.bind(forecast)
+        holder.bind(forecasts[position])
     }
 
     override fun getItemCount() = forecasts.size
-
-    class ForecastViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val tvDate: TextView = itemView.findViewById(R.id.tv_date_rv)
-        private val tvMaxTemp: TextView = itemView.findViewById(R.id.tv_temp_rv)
-
-        fun bind(forecast: DailyForecast) {
-            tvDate.text = formatDate(forecast.time)
-            tvMaxTemp.text = "Max Temp: ${forecast.maxTemperature}°C"
-        }
-
-        private fun formatDate(dateString: String): String {
-            val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            val outputFormat = SimpleDateFormat("EEE, MMM dd", Locale.getDefault())
-            val date = inputFormat.parse(dateString) ?: return dateString
-            return outputFormat.format(date)
-        }
-    }
 }

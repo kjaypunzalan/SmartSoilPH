@@ -3,13 +3,10 @@ package com.iacademy.smartsoilph.weather
 import com.google.gson.annotations.SerializedName
 
 // Main response class
-data class DailyForecastWrapper(
-    @SerializedName("forecasts") val forecasts: List<DailyForecast>?
-)
 data class WeatherResponse(
     val current: CurrentWeather?,
     val hourly: HourlyWeather?,
-    val daily: DailyForecastWrapper? // Use the wrapper class
+    val daily: DailyForecast? // Use the wrapper class
 )
 
 // Current weather data
@@ -17,6 +14,7 @@ data class CurrentWeather(
     @SerializedName("temperature_2m") val temperature: Double,
     @SerializedName("relative_humidity_2m") val humidity: Double,
     @SerializedName("wind_speed_10m") val windSpeed: Double,
+    @SerializedName("precipitation") val precipitation: Double,
     @SerializedName("weather_code") val weatherCode: Int
 )
 
@@ -27,10 +25,10 @@ data class HourlyWeather(
 
 // Updated Daily forecast data to include detailed 5-day forecast information
 data class DailyForecast(
-    @SerializedName("time") val time: String,
-    @SerializedName("temperature_2m_max") val maxTemperature: Double,
-    @SerializedName("temperature_2m_min") val minTemperature: Double,
-    @SerializedName("precipitation_sum") val precipitationSum: Double,
-    @SerializedName("weather_code") val weatherCode: Int,
+    @SerializedName("time") val time: List<String>,
+    @SerializedName("temperature_2m_max") val maxTemperature: List<Double>,
+    @SerializedName("temperature_2m_min") val minTemperature: List<Double>,
+    @SerializedName("precipitation_sum") val precipitationSum: List<Double>,
+    @SerializedName("weather_code") val weatherCode: List<Int>,
     // Add more fields as needed based on the Open-Meteo API documentation
 )

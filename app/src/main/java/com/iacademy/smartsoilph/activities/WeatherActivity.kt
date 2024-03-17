@@ -3,6 +3,8 @@ package com.iacademy.smartsoilph.activities
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
@@ -15,9 +17,10 @@ import com.google.android.gms.location.LocationServices
 import com.iacademy.smartsoilph.R
 import com.iacademy.smartsoilph.databinding.ActivityWeatherBinding
 import com.iacademy.smartsoilph.weather.DailyForecast
+import com.iacademy.smartsoilph.weather.DailyWeather
 import com.iacademy.smartsoilph.weather.WeatherResponse
 import com.iacademy.smartsoilph.weather.OpenMeteoAPIService
-import com.iacademy.smartsoilph.utils.RetrofitClient
+import com.iacademy.smartsoilph.weather.RetrofitClient
 import com.iacademy.smartsoilph.weather.WeatherForecastAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -25,6 +28,7 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -57,11 +61,6 @@ class WeatherActivity : BaseActivity() {
 
         // initialize Location Services
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-
-        // update recyclerview
-        forecastAdapter = WeatherForecastAdapter(emptyList())
-        rvWeatherForecast.adapter = forecastAdapter
-        rvWeatherForecast.layoutManager = LinearLayoutManager(this)
     }
 
     /*********************************
@@ -98,26 +97,35 @@ class WeatherActivity : BaseActivity() {
         }
     }
 
+    private fun getCityName(lat: Double, lon: Double): String {
+        val geocoder = Geocoder(this, Locale.getDefault())
+        val addresses: List<Address>
+
+        try {
+            addresses = geocoder.getFromLocation(lat, lon, 1)!!
+            if (addresses.isNotEmpty()) {
+                return addresses[0].locality ?: "Unknown Location"
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+
+        return "Unknown Location"
+    }
+
     private fun getWeatherData(latitude: Double, longitude: Double) {
         val service = RetrofitClient.instance.create(OpenMeteoAPIService::class.java)
-        val call = service.getWeatherForecast(
-            latitude = latitude,
-            longitude = longitude,
-            current = "temperature_2m,relative_humidity_2m,wind_speed_10m",
-            hourly = "wind_speed_80m",
-            daily = "temperature_2m_max",
-            timezone = "Asia/Singapore",
-            forecast_days = 7
-        )
+        val call = service.getWeatherForecast(latitude, longitude)
 
         call.enqueue(object : Callback<WeatherResponse> {
             override fun onResponse(call: Call<WeatherResponse>, response: Response<WeatherResponse>) {
                 if (response.isSuccessful && response.body() != null) {
                     Log.d("WeatherActivity", "API Response Success: ${response.body()}")
-                    val weatherData = response.body()!!
-                    runOnUiThread {
-                        // Update UI with the weather data
-                        updateUIWithWeatherData(weatherData)
+                    val weatherData = response.body()
+                    weatherData?.daily?.let { dailyForecast ->
+                        runOnUiThread {
+                            updateUIWithWeatherData(weatherData, dailyForecast, latitude, longitude)
+                        }
                     }
                 } else {
                     Log.e("WeatherActivity", "Response not successful")
@@ -130,40 +138,36 @@ class WeatherActivity : BaseActivity() {
         })
     }
 
-    private fun updateUIWithWeatherData(weatherData: WeatherResponse) {
+    private fun updateUIWithWeatherData(weatherData: WeatherResponse, dailyForecast: DailyForecast, latitude: Double, longitude: Double) {
         weatherData.current?.let {
+
             val temperature = it.temperature.toInt() // Convert to Int
             val humidity = it.humidity.toInt()       // Convert to Int
             val windSpeed = it.windSpeed.toInt()     // Convert to Int
+            val precipitation = it.precipitation.toInt() // Convert to Int
             val currentDate = getCurrentFormattedDate()
-            val maxTemperatureToday = weatherData.daily?.forecasts?.find { forecast ->
-                forecast.time.startsWith(currentDate)
-            }?.maxTemperature?.toInt() ?: temperature
-            // Assuming maxTemperature calculation is moved or adjusted as necessary
+            val location = getCityName(latitude, longitude)
+
             binding.tvTemperatureNumber.text = "$temperature"
             binding.tvValueHumidity.text = "$humidity%"
             binding.tvValueWind.text = "${windSpeed}km/h"
-            binding.tvValueTemp.text = "$maxTemperatureToday°C"
+            binding.tvValuePrecipitation.text = "$precipitation%"
+            binding.tvDate.text = "$currentDate"
+            binding.tvLocation.text = "$location"
         }
 
         weatherData.current?.weatherCode?.let {
             val weatherCondition = interpretWeatherCode(it)
             binding.tvWeather.text = weatherCondition
+
+            val forecasts = dailyForecast.time.zip(dailyForecast.maxTemperature).map { (time, temp) ->
+                    DailyWeather(time, temp)
+                }
+
+            forecastAdapter = WeatherForecastAdapter(forecasts)
+            rvWeatherForecast.adapter = forecastAdapter
+            rvWeatherForecast.layoutManager = LinearLayoutManager(this)
         }
-
-        // Adjusted to access the forecasts within DailyForecastWrapper
-        val forecasts = weatherData.daily?.forecasts?.map { dailyForecast ->
-            DailyForecast(
-                time = dailyForecast.time,
-                maxTemperature = dailyForecast.maxTemperature,
-                minTemperature = dailyForecast.minTemperature,
-                precipitationSum = dailyForecast.precipitationSum,
-                weatherCode = dailyForecast.weatherCode
-            )
-        } ?: listOf()
-
-        forecastAdapter = WeatherForecastAdapter(forecasts)
-        rvWeatherForecast.adapter = forecastAdapter
     }
 
     private fun interpretWeatherCode(code: Int): String {
