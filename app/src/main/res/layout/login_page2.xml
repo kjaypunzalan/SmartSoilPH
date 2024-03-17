@@ -39,27 +39,94 @@
 
     </LinearLayout>
 
+
+    <ImageView
+        android:id="@+id/bg_blue"
+        android:layout_width="match_parent"
+        android:layout_height="405dp"
+        android:src="@drawable/bg_blue"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gif_1"/>
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/gif_1"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:src="@drawable/animated_trucker"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/cv_1"/>
+
+    <pl.droidsonroids.gif.GifImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/animated_sun"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="@+id/tv_1"
+        app:layout_constraintBottom_toTopOf="@+id/tv_1"
+        android:layout_marginEnd="-40dp"
+        android:layout_marginBottom="-20dp"/>
+
     <TextView
         android:id="@+id/tv_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/toolbar_icon"
-        app:layout_constraintStart_toStartOf="@id/toolbar_icon"
-        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"
         android:text="Welcome Back!"
+        android:fontFamily="@font/montserrat"
         android:textAppearance="@style/login_welcome" >
     </TextView>
+
+    <!--Main Features CardView-->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_1"
+        android:layout_width="match_parent"
+        android:layout_height="380dp"
+        app:cardElevation="0dp"
+        app:cardCornerRadius="0dp"
+        app:cardBackgroundColor="@color/transparent"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/custom_upper_round_corners"
+        android:elevation="4dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/tv_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:textAppearance="@style/login_h2"
-        app:layout_constraintTop_toBottomOf="@id/tv_1"
-        app:layout_constraintStart_toStartOf="@id/tv_1"
-        android:text="Please login your credentials">
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="30dp"
+        android:textAppearance="@style/login_welcome"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="Log In">
     </TextView>
+            <TextView
+                android:id="@+id/tv_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="30dp"
+                android:textAppearance="@style/login_h2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_2"
+                android:text="Please login your credentials">
+            </TextView>
 
     <!-- Email Input -->
     <EditText
@@ -74,8 +141,8 @@
         android:textAppearance="@style/login_input"
         android:textColorHint="@color/light_gray"
         android:textColor="@color/black_50"
-        app:layout_constraintTop_toBottomOf="@id/tv_2"
-        app:layout_constraintStart_toStartOf="@id/tv_2"
+        app:layout_constraintTop_toBottomOf="@id/tv_3"
+        app:layout_constraintStart_toStartOf="@id/tv_3"
         android:layout_marginEnd="30dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="10dp"
@@ -246,23 +313,9 @@
         android:layout_marginStart="5dp"
         android:textStyle="bold"/>
 
-<!--GIFs-->
-    <pl.droidsonroids.gif.GifImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/animated_sun"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toTopOf="@id/gif_1"
-        app:layout_constraintEnd_toEndOf="parent"/>
 
-    <pl.droidsonroids.gif.GifImageView
-        android:id="@+id/gif_1"
-        android:layout_width="match_parent"
-        android:layout_height="240dp"
-        android:src="@drawable/animated_trucker"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
