@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.pdf.PdfDocument
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.view.View
@@ -33,6 +35,7 @@ import com.iacademy.smartsoilph.datamodels.SoilData
 import com.iacademy.smartsoilph.models.SQLiteModel
 import java.io.File
 import java.io.FileOutputStream
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -87,9 +90,9 @@ class ReportsActivity : BaseActivity() {
         finish()
     }
 
-    /**
+    /*******************************
      * A. Initialize Layout
-     */
+     *-----------------------------*/
     private fun initializeLayout() {
         pieChart1 = findViewById<PieChart>(R.id.pieChart1);
         pieChart2 = findViewById<PieChart>(R.id.pieChart2);
@@ -106,6 +109,9 @@ class ReportsActivity : BaseActivity() {
         btnReturn = findViewById<ImageView>(R.id.toolbar_back_icon)
     }
 
+    /*******************************
+     * B. Button Logistics
+     *-----------------------------*/
     private fun setupButtonNavigation() {
         btnReturn.setOnClickListener{
             val intent = Intent(this, HomeActivity::class.java)
@@ -115,12 +121,13 @@ class ReportsActivity : BaseActivity() {
         }
         btnDownload.setOnClickListener {
             captureScrollView(scrollView)
+            captureScrollViewAndSaveAsPdf(scrollView)
         }
     }
 
-    /**
-     * B. Total Saves
-     */
+    /*******************************
+     * C. Recent Saves
+     *-----------------------------*/
     private fun fetchAndDisplayInitialStorageTypeData() {
         val sqliteModel = SQLiteModel(this)
         val recommendationDataList = sqliteModel.getAllSoilData()
@@ -167,9 +174,9 @@ class ReportsActivity : BaseActivity() {
         pieChart1.invalidate()
     }
 
-    /**
-     * C. pH Level Distribution
-     */
+    /*******************************
+     * D. pH Level Distribution
+     *-----------------------------*/
     private fun fetchAndDisplayPHLevelDistribution() {
         val sqliteModel = SQLiteModel(this)
         val recommendationDataList = sqliteModel.getAllSoilData()
@@ -225,9 +232,9 @@ class ReportsActivity : BaseActivity() {
 
     }
 
-    /**
-     * D. Cumulative Fertilizer Usage
-     */
+    /***********************************
+     * E. Cumulative Fertilizer Usage
+     *---------------------------------*/
     private fun fetchAndDisplayCumulativeFertilizerUsage() {
         val sqliteModel = SQLiteModel(this)
         val recommendationDataList = sqliteModel.getAllSoilData()
@@ -282,9 +289,9 @@ class ReportsActivity : BaseActivity() {
 
     }
 
-    /**
-     * E. pH Level Trend
-     */
+    /***********************************
+     * F. pH Level Trend
+     *---------------------------------*/
     private fun fetchAndDisplayPhLevelTrend() {
         val sqliteModel = SQLiteModel(this)
         val recommendationDataList = sqliteModel.getAllSoilData()
@@ -343,9 +350,9 @@ class ReportsActivity : BaseActivity() {
 
     }
 
-    /**
-     * F. Monthly Soil Statistics
-     */
+    /***********************************
+     * G. Monthly Soil Statistics
+     *---------------------------------*/
     private fun fetchAndDisplayMonthlySoilHealth() {
         val sqliteModel = SQLiteModel(this)
         val recommendationDataList = sqliteModel.getAllSoilData()
@@ -424,6 +431,9 @@ class ReportsActivity : BaseActivity() {
 
     }
 
+    /***********************************
+     * H. NpkValueFormatter
+     *---------------------------------*/
     class NpkValueFormatter(private val npkDataMap: Map<String, String>) : ValueFormatter() {
         override fun getBarLabel(barEntry: BarEntry): String {
             // Assuming barEntry.x is the index for month
@@ -434,12 +444,9 @@ class ReportsActivity : BaseActivity() {
         }
     }
 
-
-
-
-    /**
-     * G. Download Reports
-     */
+    /***********************************
+     * I. Save as JPG
+     *---------------------------------*/
     private fun captureScrollView(scrollView: NestedScrollView) {
         // Measure the view at its full height
         scrollView.measure(
@@ -468,9 +475,64 @@ class ReportsActivity : BaseActivity() {
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
             outputStream.flush()
             outputStream.close()
+
+            // Notify media scanner
+            notifyMediaScanner(file)
+
             // Notify the user or update UI
-            Toast.makeText(this, "Report saved to Downloads folder as $fileName", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "JPG Report saved to Downloads folder as $fileName", Toast.LENGTH_LONG).show()
         } catch (e: Exception) {
+            e.printStackTrace()
+            Toast.makeText(this, "Failed to save the report", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun notifyMediaScanner(file: File) {
+        val intent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
+        intent.data = Uri.fromFile(file)
+        sendBroadcast(intent)
+    }
+
+    /***********************************
+     * J. Save as PDF
+     *---------------------------------*/
+    private fun captureScrollViewAndSaveAsPdf(scrollView: NestedScrollView) {
+        // Measure the view at its full height
+        scrollView.measure(
+            View.MeasureSpec.makeMeasureSpec(scrollView.width, View.MeasureSpec.EXACTLY),
+            View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+        )
+        scrollView.layout(0, 0, scrollView.measuredWidth, scrollView.measuredHeight)
+
+        // Create a PdfDocument with the scrollView's dimensions
+        val pdfDocument = PdfDocument()
+        val pageInfo = PdfDocument.PageInfo.Builder(scrollView.width, scrollView.measuredHeight, 1).create()
+        val page = pdfDocument.startPage(pageInfo)
+
+        // Draw the scrollView content onto the PDF page
+        scrollView.draw(page.canvas)
+
+        // Finish and write the page
+        pdfDocument.finishPage(page)
+
+        // Save the pdf document to storage
+        savePdfToStorage(pdfDocument)
+    }
+
+    private fun savePdfToStorage(pdfDocument: PdfDocument) {
+        val path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString()
+        val fileName = "Reports_${System.currentTimeMillis()}.pdf"
+        val file = File(path, fileName)
+
+        try {
+            val outputStream = FileOutputStream(file)
+            pdfDocument.writeTo(outputStream)
+            pdfDocument.close()
+            outputStream.close()
+
+            // Notify the user or update UI
+            Toast.makeText(this, "PDF Report saved to Downloads folder as $fileName", Toast.LENGTH_LONG).show()
+        } catch (e: IOException) {
             e.printStackTrace()
             Toast.makeText(this, "Failed to save the report", Toast.LENGTH_LONG).show()
         }
