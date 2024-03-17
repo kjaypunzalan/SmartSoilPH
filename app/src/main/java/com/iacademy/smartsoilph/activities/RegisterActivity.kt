@@ -238,7 +238,9 @@ class RegisterActivity : BaseActivity() {
         user?.let {
             if (user.isEmailVerified) {
                 // Email is verified, proceed to the next activity
-                val intent = Intent(this, HomeActivity::class.java) // Replace with your next activity
+                val intent = Intent(this, LoadScreenActivity::class.java)
+                intent.putExtra(LoadScreenActivity.EXTRA_TARGET_ACTIVITY, HomeActivity::class.java.name) // loads loading screen before targetActivity
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                 startActivity(intent)
                 finish()
             } else {
