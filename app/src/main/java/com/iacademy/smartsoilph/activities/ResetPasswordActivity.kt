@@ -9,6 +9,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
@@ -19,7 +20,7 @@ class ResetPasswordActivity : BaseActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var emailEditText: EditText
     private lateinit var tvSignIn: TextView
-    private lateinit var sendVerificationButton: MaterialButton
+    private lateinit var sendVerificationButton: CardView
     private lateinit var btnReturn: ImageView
 
     private lateinit var ivEmail: ImageView
