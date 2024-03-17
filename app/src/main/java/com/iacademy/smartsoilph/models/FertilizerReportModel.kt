@@ -1,4 +1,4 @@
-package com.iacademy.smartsoilph.datamodels
+package com.iacademy.smartsoilph.models
 
 // Define nutrient requirement ranges as constants
 object VegetableRanges {

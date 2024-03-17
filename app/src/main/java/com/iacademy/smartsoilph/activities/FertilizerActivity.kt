@@ -3,23 +3,13 @@ package com.iacademy.smartsoilph.activities
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
-import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.database
 import com.iacademy.smartsoilph.R
 import com.iacademy.smartsoilph.models.SQLiteModel
-import com.iacademy.smartsoilph.models.FirebaseModel
-import com.iacademy.smartsoilph.utils.CheckInternet
-import com.iacademy.smartsoilph.datamodels.FertilizerNutrientModel
-import com.iacademy.smartsoilph.models.Fertilizer
-import com.iacademy.smartsoilph.models.FertilizerCalculatorModel
+import com.iacademy.smartsoilph.models.FertilizerNutrientModel
 
 class FertilizerActivity : BaseActivity() {
 

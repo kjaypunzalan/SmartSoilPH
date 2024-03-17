@@ -17,25 +17,25 @@
 
     <!--Activity Weather===================================================-->
     <string name="location_info">Current weather at...</string>
-    <string name="location" translatable="false">Dasmariñas City, Cavite</string>
-    <string name="date" translatable="false">Fri, Mar 07</string>
-    <string name="temperature" translatable="false">29</string>
+    <string name="location" translatable="false">City</string>
+    <string name="date" translatable="false">Date</string>
+    <string name="temperature" translatable="false">0</string>
     <string name="tv_temperature_symbol" translatable="false">°C</string>
 
     <string name="weather" translatable="false">Partly Cloudy</string>
 
     <string name="humidity">Humidity</string>
-    <string name="value_humidity" translatable="false">58%</string>
+    <string name="value_humidity" translatable="false">0%</string>
 
-    <string name="temperature2">Temperature</string>
-    <string name="value_temp" translatable="false">29°C</string>
+    <string name="temperature2">Precipitation</string>
+    <string name="value_temp" translatable="false">0%</string>
 
     <string name="wind">Wind Speed</string>
-    <string name="value_wind" translatable="false">23km/h</string>
+    <string name="value_wind" translatable="false">0km/h</string>
 
     <string name="day_name" translatable="false">Monday</string>
     <string name="week_date" translatable="false">1 Jan 2024</string>
-    <string name="value_temp2" translatable="false">31</string>
+    <string name="value_temp2" translatable="false">0</string>
     <!--=================================================================-->
 
     <!--Activity Soil===================================================-->

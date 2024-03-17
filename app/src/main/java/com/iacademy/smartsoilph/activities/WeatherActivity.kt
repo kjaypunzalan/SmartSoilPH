@@ -3,10 +3,11 @@ package com.iacademy.smartsoilph.activities
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,60 +16,56 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.iacademy.smartsoilph.R
 import com.iacademy.smartsoilph.databinding.ActivityWeatherBinding
-import com.iacademy.smartsoilph.datamodels.DailyForecast
-import com.iacademy.smartsoilph.datamodels.WeatherResponse
-import com.iacademy.smartsoilph.utils.OpenMeteoAPIService
-import com.iacademy.smartsoilph.utils.RetrofitClient
+import com.iacademy.smartsoilph.weather.DailyForecast
+import com.iacademy.smartsoilph.weather.DailyWeather
+import com.iacademy.smartsoilph.weather.WeatherResponse
+import com.iacademy.smartsoilph.weather.OpenMeteoAPIService
+import com.iacademy.smartsoilph.weather.RetrofitClient
+import com.iacademy.smartsoilph.weather.WeatherForecastAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
 class WeatherActivity : BaseActivity() {
+
+    //declare layout variables
     private lateinit var binding: ActivityWeatherBinding
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private val LOCATION_PERMISSION_REQ_CODE = 1000
-    private lateinit var forecastAdapter: ForecastAdapter
-    private lateinit var recyclerView: RecyclerView
+    private lateinit var forecastAdapter: WeatherForecastAdapter
+    private lateinit var rvWeatherForecast: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityWeatherBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        recyclerView = findViewById(R.id.rv_weather) // Ensure you have a RecyclerView in your layout
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        initializeRecyclerView()
 
-        forecastAdapter = ForecastAdapter(emptyList())
-        recyclerView.adapter = forecastAdapter
-
-        initializeReturnButton()
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         checkPermissions()
+        initializeReturnButton()
     }
 
-    private fun initializeReturnButton() {
-        val btnReturn: ImageView = findViewById(R.id.toolbar_back_icon)
-        btnReturn.setOnClickListener {
-            val intent = Intent(this, HomeActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-            startActivity(intent)
-            finish()
-        }
+    /*********************************
+     * A. Initializing RecyclerView
+     *-------------------------------*/
+    private fun initializeRecyclerView() {
+        // initialize recyclerview
+        rvWeatherForecast = findViewById(R.id.rv_weather)
+
+        // initialize Location Services
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
     }
 
-    @SuppressLint("MissingSuperCall")
-    override fun onBackPressed() {
-        val intent = Intent(this, HomeActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-        startActivity(intent)
-        finish()
-    }
-
+    /*********************************
+     * B. Get Date
+     *-------------------------------*/
     private fun getCurrentFormattedDate(): String {
         val dateFormat = SimpleDateFormat("EEE, MMM dd", Locale.getDefault())
         return dateFormat.format(Date())
@@ -100,25 +97,35 @@ class WeatherActivity : BaseActivity() {
         }
     }
 
+    private fun getCityName(lat: Double, lon: Double): String {
+        val geocoder = Geocoder(this, Locale.getDefault())
+        val addresses: List<Address>
+
+        try {
+            addresses = geocoder.getFromLocation(lat, lon, 1)!!
+            if (addresses.isNotEmpty()) {
+                return addresses[0].locality ?: "Unknown Location"
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+
+        return "Unknown Location"
+    }
+
     private fun getWeatherData(latitude: Double, longitude: Double) {
         val service = RetrofitClient.instance.create(OpenMeteoAPIService::class.java)
-        val call = service.getWeatherForecast(
-            latitude = latitude,
-            longitude = longitude,
-            current = "temperature_2m,relative_humidity_2m,wind_speed_10m",
-            hourly = "wind_speed_80m",
-            daily = "temperature_2m_max",
-            timezone = "Asia/Singapore"
-        )
+        val call = service.getWeatherForecast(latitude, longitude)
 
         call.enqueue(object : Callback<WeatherResponse> {
             override fun onResponse(call: Call<WeatherResponse>, response: Response<WeatherResponse>) {
                 if (response.isSuccessful && response.body() != null) {
                     Log.d("WeatherActivity", "API Response Success: ${response.body()}")
-                    val weatherData = response.body()!!
-                    runOnUiThread {
-                        // Update UI with the weather data
-                        updateUIWithWeatherData(weatherData)
+                    val weatherData = response.body()
+                    weatherData?.daily?.let { dailyForecast ->
+                        runOnUiThread {
+                            updateUIWithWeatherData(weatherData, dailyForecast, latitude, longitude)
+                        }
                     }
                 } else {
                     Log.e("WeatherActivity", "Response not successful")
@@ -131,40 +138,36 @@ class WeatherActivity : BaseActivity() {
         })
     }
 
-    private fun updateUIWithWeatherData(weatherData: WeatherResponse) {
+    private fun updateUIWithWeatherData(weatherData: WeatherResponse, dailyForecast: DailyForecast, latitude: Double, longitude: Double) {
         weatherData.current?.let {
+
             val temperature = it.temperature.toInt() // Convert to Int
             val humidity = it.humidity.toInt()       // Convert to Int
             val windSpeed = it.windSpeed.toInt()     // Convert to Int
+            val precipitation = it.precipitation.toInt() // Convert to Int
             val currentDate = getCurrentFormattedDate()
-            val maxTemperatureToday = weatherData.daily?.forecasts?.find { forecast ->
-                forecast.time.startsWith(currentDate)
-            }?.maxTemperature?.toInt() ?: temperature
-            // Assuming maxTemperature calculation is moved or adjusted as necessary
+            val location = getCityName(latitude, longitude)
+
             binding.tvTemperatureNumber.text = "$temperature"
             binding.tvValueHumidity.text = "$humidity%"
             binding.tvValueWind.text = "${windSpeed}km/h"
-            binding.tvValueTemp.text = "$maxTemperatureToday°C"
+            binding.tvValuePrecipitation.text = "$precipitation%"
+            binding.tvDate.text = "$currentDate"
+            binding.tvLocation.text = "$location"
         }
 
         weatherData.current?.weatherCode?.let {
             val weatherCondition = interpretWeatherCode(it)
             binding.tvWeather.text = weatherCondition
+
+            val forecasts = dailyForecast.time.zip(dailyForecast.maxTemperature).map { (time, temp) ->
+                    DailyWeather(time, temp)
+                }
+
+            forecastAdapter = WeatherForecastAdapter(forecasts)
+            rvWeatherForecast.adapter = forecastAdapter
+            rvWeatherForecast.layoutManager = LinearLayoutManager(this)
         }
-
-        // Adjusted to access the forecasts within DailyForecastWrapper
-        val forecasts = weatherData.daily?.forecasts?.map { dailyForecast ->
-            DailyForecast(
-                time = dailyForecast.time,
-                maxTemperature = dailyForecast.maxTemperature,
-                minTemperature = dailyForecast.minTemperature,
-                precipitationSum = dailyForecast.precipitationSum,
-                weatherCode = dailyForecast.weatherCode
-            )
-        } ?: listOf()
-
-        forecastAdapter = ForecastAdapter(forecasts)
-        recyclerView.adapter = forecastAdapter
     }
 
     private fun interpretWeatherCode(code: Int): String {
@@ -184,5 +187,22 @@ class WeatherActivity : BaseActivity() {
             else -> "Unknown"
         }
     }
-    // Additional methods and logic for your activity
+
+    private fun initializeReturnButton() {
+        val btnReturn: ImageView = findViewById(R.id.toolbar_back_icon)
+        btnReturn.setOnClickListener {
+            val intent = Intent(this, HomeActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            startActivity(intent)
+            finish()
+        }
+    }
+
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
+        val intent = Intent(this, HomeActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        startActivity(intent)
+        finish()
+    }
 }

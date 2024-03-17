@@ -90,7 +90,7 @@
         <activity android:name=".activities.ResetPasswordActivity"
             android:exported="true"
             android:theme="@style/Theme.SmartSoilPH" />
-        <activity android:name=".activities.ArduinoController"
+        <activity android:name=".arduino.ArduinoController"
             android:exported="true"
             android:theme="@style/Theme.SmartSoilPH" />
         <activity android:name=".activities.SoilActivityTest"
