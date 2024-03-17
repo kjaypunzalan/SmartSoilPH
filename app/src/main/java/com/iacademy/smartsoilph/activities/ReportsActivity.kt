@@ -243,7 +243,7 @@ class ReportsActivity : BaseActivity() {
         var cumulativeTotal = 0f
 
         // SimpleDateFormat to parse the stored date strings
-        val dateFormat = SimpleDateFormat("MMMM dd, yyyy (EEE) '@'hh:mma", Locale.US)
+        val dateFormat = SimpleDateFormat("MM-dd-yyyy '@'hh:mma", Locale.US)
 
         recommendationDataList.forEach { recommendationData ->
             // Assuming your RecommendationData model includes a dateOfRecommendation property in a suitable format
@@ -297,7 +297,7 @@ class ReportsActivity : BaseActivity() {
         val recommendationDataList = sqliteModel.getAllSoilData()
 
         val entries = ArrayList<Entry>()
-        val dateFormat = SimpleDateFormat("MMMM dd, yyyy (EEE) '@'hh:mma", Locale.US)
+        val dateFormat = SimpleDateFormat("MM-dd-yyyy '@'hh:mma", Locale.US)
         var recentPH = 0f
 
         recommendationDataList.forEach { recommendationData ->
@@ -358,7 +358,7 @@ class ReportsActivity : BaseActivity() {
         val recommendationDataList = sqliteModel.getAllSoilData()
 
         val monthlyNPK = mutableMapOf<String, MutableList<SoilData>>()
-        val dateFormat = SimpleDateFormat("MMMM dd, yyyy (EEE) '@'hh:mma", Locale.US)
+        val dateFormat = SimpleDateFormat("MM-dd-yyyy '@'hh:mma", Locale.US)
 
         recommendationDataList.forEach { recommendationData ->
             val dateStr = recommendationData.dateOfRecommendation
@@ -421,7 +421,7 @@ class ReportsActivity : BaseActivity() {
             // Animate Chart
             barChart1.animateXY(3000, 1000)
 
-            val barDataSet = BarDataSet(entries, "February")
+            val barDataSet = BarDataSet(entries, "March")
             barDataSet.valueFormatter = NpkValueFormatter(npkLabelsMap)
 
             val barData = BarData(barDataSet)

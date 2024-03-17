@@ -7,6 +7,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.iacademy.smartsoilph.R
 import com.iacademy.smartsoilph.datamodels.RecommendationData
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class RecommendationHistoryAdapter(
     private val recommendationDataList: ArrayList<RecommendationData>,
@@ -28,7 +30,23 @@ class RecommendationHistoryAdapter(
         private val tvSoilTexture: TextView = view.findViewById(R.id.tv_selected_soil)
 
         fun bind(recommendationData: RecommendationData, onItemClick: (RecommendationData) -> Unit) {
-            tvDateTime.text = recommendationData.dateOfRecommendation
+
+            // Date Logistics
+            val dateString = recommendationData.dateOfRecommendation
+
+            // Parse the date string into a Date object
+            val parser = SimpleDateFormat("MM-dd-yyyy '@'hh:mma", Locale.getDefault())
+            val date = parser.parse(dateString) ?: return // Or handle the case where parsing fails
+
+            // Format the Date object into the new format
+            val formatter = SimpleDateFormat("MMMM dd, yyyy (EEE) '@'hh:mma", Locale.getDefault())
+            val convertedDate = formatter.format(date)
+
+            // Display the converted date in a TextView
+            tvDateTime.text = convertedDate
+
+
+
             tvCrop.text = recommendationData.soilData.cropType
             tvSoilTexture.text = recommendationData.soilData.soilTexture
 
