@@ -155,7 +155,6 @@ class LoginActivity : BaseActivity() {
             intent.putExtra(LoadScreenActivity.EXTRA_TARGET_ACTIVITY, HomeActivity::class.java.name) // loads loading screen before targetActivity
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
-
             finish()
         } else {
             Toast.makeText(baseContext, "Please verify your email first.", Toast.LENGTH_SHORT).show()

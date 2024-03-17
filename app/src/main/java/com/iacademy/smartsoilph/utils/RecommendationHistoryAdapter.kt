@@ -41,7 +41,7 @@ class RecommendationHistoryAdapter(
             tvFertilizerName2.text = String.format("%.1f bag of ${fertilizerData.fertilizer2} is recommended", fertilizerData.bagFertilizer2)
             tvFertilizerName3.text = String.format("%.1f bag of ${fertilizerData.fertilizer3} is recommended", fertilizerData.bagFertilizer3)
 
-            tvNpkAmount.text = "${fertilizerData.requiredN}-${fertilizerData.requiredP}-${fertilizerData.requiredK}"
+            tvNpkAmount.text = String.format("%.0f-%.0f-%.0f", fertilizerData.requiredN, fertilizerData.requiredP, fertilizerData.requiredK)
             tvPHAmount.text = recommendationData.soilData.phLevel.toString()
             itemView.setOnClickListener { onItemClick(recommendationData) }
         }

@@ -1,5 +1,7 @@
 package com.iacademy.smartsoilph.activities
 
+import android.Manifest
+import android.bluetooth.BluetoothAdapter
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -15,10 +17,13 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
+import androidx.core.app.ActivityCompat
 import androidx.core.widget.NestedScrollView
 import com.google.firebase.auth.FirebaseAuth
 import com.iacademy.smartsoilph.R
 import com.iacademy.smartsoilph.models.SQLiteModel
+import com.iacademy.smartsoilph.utils.CheckInternet
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -124,48 +129,50 @@ class HomeActivity : BaseActivity() {
     private fun setupButtonNavigation() {
         // set click listeners for buttons
         setButtonClickListener(btnSoil, SoilActivity::class.java)
-        setButtonClickListener(btnWeather, WeatherActivity::class.java)
         setButtonClickListener(btnReports, ReportsActivity::class.java)
         setButtonClickListener(btnRecommendationHistory, RecommendationHistoryActivity::class.java)
         setButtonClickListener(btnManual, ManualActivity::class.java)
-        //setButtonClickListener(btnBtConnect, SoilActivityTest::class.java) // Ensure BluetoothController exists or adjust as needed
 
+        //weather
+        btnWeather.setOnClickListener {
+            if (CheckInternet(this).isInternetAvailable()) {
+                val intent = Intent(this, LoadScreenActivity::class.java)
+                intent.putExtra(LoadScreenActivity.EXTRA_TARGET_ACTIVITY, WeatherActivity::class.java.name) // loads loading screen before targetActivity
+                startActivity(intent)
+                finish()
+            } else {
+                showAlertThatInternetIsNotAvailable()
+            }
+        }
 
         //settings
         btnSettings.setOnClickListener { view ->
             showSettingsMenu(view)
         }
 
+        //bluetooth connect
         btnBtConnect.setOnClickListener {
-            // Toggle the switch's checked state
-            btnSwitch.isChecked = !btnSwitch.isChecked
 
-            // Optionally, perform actions based on the new state of the switch
-            if (btnSwitch.isChecked) {
+            // Perform actions based on the new state of the switch
+            if (!btnSwitch.isChecked) {
                 // Code to execute when the switch is turned ON
                 try {
                     // Your Bluetooth connection code here...
                     requestBluetoothPermissions()
+                } catch (e: RuntimeException) {
+                    showAlertToTurnOnBluetooth()
+                } catch (e: SecurityException) {
+                    showAlertToTurnOnBluetooth()
+                }
+            } else {
+                val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+
+                if (!bluetoothAdapter.isEnabled) {
+                    btnSwitch.isChecked = !btnSwitch.isChecked
+                } else {
                     val intent = Intent(this, SoilActivityTest::class.java)
                     startActivity(intent)
-                } catch (e: SecurityException) {
-                    AlertDialog.Builder(this)
-                        .setTitle("Bluetooth Connection Required")
-                        .setMessage("Please connect to the Bluetooth device.")
-                        .setPositiveButton("OK") { dialog, _ ->
-                            dialog.dismiss()
-                            // You might want to navigate the user to enable Bluetooth or directly request permissions if targeting Android 12 and above
-                        }
-                        .setNegativeButton("Cancel") { dialog, _ ->
-                            dialog.dismiss()
-                            // Optional: handle cancellation.
-                        }
-                        .create()
-                        .show()
                 }
-
-            } else {
-                // Code to execute when the switch is turned OFF
             }
         }
     }
@@ -186,7 +193,8 @@ class HomeActivity : BaseActivity() {
             when (item.itemId) {
                 R.id.btn_sync_database -> {
                     // Handle sync action
-                    showSyncDatabaseDialog()
+                    if (CheckInternet(this).isInternetAvailable()) { showSyncDatabaseDialog() }
+                    else { showAlertThatInternetIsNotAvailable() }
                     true
                 }
                 R.id.btn_language -> {
@@ -209,7 +217,8 @@ class HomeActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.btn_sync_database -> {
-                showSyncDatabaseDialog()
+                if (CheckInternet(this).isInternetAvailable()) { showSyncDatabaseDialog() }
+                else { showAlertThatInternetIsNotAvailable() }
                 true
             }
             R.id.btn_language -> {
@@ -299,14 +308,21 @@ class HomeActivity : BaseActivity() {
     }
 
     /*********************************
-     * E. Bluetooth Permission TODO
+     * E. BLUETOOTH LOGISTICS
      *-------------------------------*/
+    companion object {
+        private const val REQUEST_BLUETOOTH_PERMISSION = 101
+        private const val REQUEST_ENABLE_BT = 1
+    }
+
+    /**-----------------------------------
+     * E.1 Request Bluetooth Permission */
     private fun requestBluetoothPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             // Check if the BLUETOOTH_CONNECT permission is already granted
             if (checkSelfPermission(android.Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
                 // Request the BLUETOOTH_CONNECT permission
-                requestPermissions(arrayOf(android.Manifest.permission.BLUETOOTH_CONNECT), REQUEST_BLUETOOTH_PERMISSION)
+                showAlertAskingForBluetoothPermission()
             } else {
                 // Permission is granted, you can initiate Bluetooth operations here
                 connectToBluetoothDevice()
@@ -325,23 +341,124 @@ class HomeActivity : BaseActivity() {
                 connectToBluetoothDevice()
             } else {
                 // Permission was denied, show an AlertDialog
-                AlertDialog.Builder(this)
-                    .setTitle("Bluetooth Permission Required")
-                    .setMessage("This app requires Bluetooth permissions to function. Please allow in App Settings.")
-                    .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
-                    .create()
-                    .show()
+                showAlertForDenyingBluetoothPermission()
             }
         }
     }
 
-    companion object {
-        private const val REQUEST_BLUETOOTH_PERMISSION = 101
+    /**-----------------------------------
+     * E.2 Turn On Bluetooth Permission */
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_ENABLE_BT && resultCode == RESULT_OK) {
+            // User agreed to enable Bluetooth, start the activity and toggle the switch
+            btnSwitch.isChecked = true
+            val intent = Intent(this, SoilActivityTest::class.java)
+            startActivity(intent)
+        } else if (requestCode == REQUEST_ENABLE_BT && resultCode == RESULT_CANCELED) {
+            // User refused to enable Bluetooth, toggle the switch back to off
+            btnSwitch.isChecked = false
+        }
     }
 
+
+    /**-----------------------------------
+     * E.3 Connect to Bluetooth Device  */
     private fun connectToBluetoothDevice() {
-        // Your code to connect to the Bluetooth device goes here.
-        // This should replace the place where you directly attempt to connect without checking permissions.
+        val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+
+        if (bluetoothAdapter == null) {
+            Toast.makeText(this, "Bluetooth is not supported on this device", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (!bluetoothAdapter.isEnabled) {
+            showAlertToTurnOnBluetooth()
+            return
+        } else {
+            btnSwitch.isChecked = !btnSwitch.isChecked
+        }
+
+        //TODO: Add MAC Address if possible. Remove if not.
+        val deviceAddress = "00:11:22:33:AA:BB" // MAC address of the Bluetooth device
+        val device = bluetoothAdapter.getRemoteDevice(deviceAddress)
+
+        try {
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.BLUETOOTH_CONNECT
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                // Consider calling ActivityCompat#requestPermissions to request the missing permissions.
+                return
+            }
+
+            // Here you would actually connect to the device. This could involve creating a socket, for example.
+            // For simplicity, we're just showing a message.
+            Toast.makeText(this, "Connecting to device: $deviceAddress", Toast.LENGTH_SHORT).show()
+
+            // Assuming you have a method to connect to the device
+            // connectToDevice(device)
+        } catch (e: IOException) {
+            Toast.makeText(this, "Error connecting to device: $e", Toast.LENGTH_SHORT).show()
+        }
     }
 
+    /**----------------------------
+     * E.4 Alerts for Bluetooth  */
+    private fun showAlertAskingForBluetoothPermission() {
+        AlertDialog.Builder(this)
+            .setTitle("Bluetooth Permission Required")
+            .setMessage("We need your permission to allow us to connect to Bluetooth devices. Please accept the permission to connect. Thank you!")
+            .setPositiveButton("I UNDERSTAND") { dialog, _ ->
+                requestPermissions(arrayOf(android.Manifest.permission.BLUETOOTH_CONNECT), REQUEST_BLUETOOTH_PERMISSION)
+                dialog.dismiss()
+            }
+            .create()
+            .show()
+    }
+
+    private fun showAlertForDenyingBluetoothPermission() {
+        AlertDialog.Builder(this)
+            .setTitle("You have Denied the Permission")
+            .setMessage("It seems you have denied the permission. You won't be able to connect to the SmartSoilPH device.")
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+                // Optional: handle cancellation.
+            }
+            .create()
+            .show()
+    }
+
+    private fun showAlertToTurnOnBluetooth() {
+        AlertDialog.Builder(this)
+            .setTitle("Your Bluetooth is Turned Off")
+            .setMessage("Please turn on your device's Bluetooth. Thank you!")
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
+                val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                    // Request the Bluetooth connect permission
+                    requestPermissions(arrayOf(Manifest.permission.BLUETOOTH_CONNECT), REQUEST_ENABLE_BT)
+                } else {
+                    startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT)
+                }
+            }
+            .create()
+            .show()
+    }
+
+    private fun showAlertThatInternetIsNotAvailable() {
+        AlertDialog.Builder(this)
+            .setTitle("You are not connected to the internet.")
+            .setMessage("Please connect to the internet before proceeding. Thank you!")
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
+    }
 }

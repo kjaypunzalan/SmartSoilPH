@@ -16,7 +16,8 @@
         android:paddingStart="15dp"
         android:paddingEnd="15dp"
         android:paddingTop="15dp"
-        android:paddingBottom="15dp">
+        android:paddingBottom="15dp"
+        android:background="@color/white">
 
     <TextView
         android:id="@+id/tv_date_time"
