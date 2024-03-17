@@ -117,7 +117,7 @@ class SoilActivityTest : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_soil_test)
+        setContentView(R.layout.activity_soil_test2)
 
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()

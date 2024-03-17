@@ -172,11 +172,9 @@ class WeatherActivity : BaseActivity() {
                 DailyWeather(time, temp, code)
             }
 
-            runOnUiThread {
-                forecastAdapter = WeatherForecastAdapter(forecasts)
-                rvWeatherForecast.adapter = forecastAdapter
-                rvWeatherForecast.layoutManager = LinearLayoutManager(this)
-            }
+            forecastAdapter = WeatherForecastAdapter(forecasts)
+            rvWeatherForecast.adapter = forecastAdapter
+            rvWeatherForecast.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         }
     }
 
