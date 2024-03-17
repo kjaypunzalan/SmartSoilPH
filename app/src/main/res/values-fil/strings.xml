@@ -103,5 +103,25 @@
 
     <!--Soil name-->
     <string name="soil_name">Tekstura ng Lupa: </string>
+    <string name="dialog_sync_database">Gusto mo bang i-sync ang database? Tiyaking nakakonekta ka sa internet.</string>
+    <string name="dialog_sync_database_button">i-Sync ang Database</string>
+    <string name="dialog_cancel_button">i-Cancel</string>
+    <string name="dialog_set_language">Ibahin Ang Lengguwahe</string>
+    <string name="dialog_bluetooth_not_supported">"Hindi sinusuportahan ang Bluetooth sa device na ito "</string>
+    <string name="dialog_bluetooth_permission_title">"Kinakailangan ang Permiso sa Bluetooth "</string>
+    <string name="dialog_bluetooth_permission_content">"Kailangan namin ang iyong pahintulot upang payagan kaming kumonekta sa Bluetooth device. Mangyaring tanggapin ang pahintulot na kumonekta. Salamat! "</string>
+    <string name="dialog_i_understand">"NAIINTINDIHAN KO "</string>
+    <string name="dialog_bluetooth_denied_title">"Tinanggihan mo ang Pahintulot "</string>
+    <string name="dialog_bluetooth_denied_content">"Mukhang tinanggihan mo ang pahintulot. Hindi ka makakakonekta sa SmartSoilPH device. "</string>
+    <string name="dialog_bluetooth_off_title">"Naka-off ang iyong Bluetooth "</string>
+    <string name="dialog_bluetooth_off_content">"Maaaring mong i-on ang Bluetooth ng iyong device. Salamat! "</string>
+    <string name="dialog_internet_connection_title">"Hindi ka nakakonekta sa internet. "</string>
+    <string name="dialog_internet_connection_content">Mangyaring kumonekta sa internet bago magpatuloy. Salamat!</string>
+    <string name="dialog_email_verification_sent_title">"Ipinadala ang Beripikasyon sa Iyong Email! "</string>
+    <string name="dialog_authentication_failed">Failed ang authentication.</string>
+    <string name="dialog_login_verification_failed">"Paki-verify muna ang iyong email. "</string>
+    <string name="dialog_verification_email_sent_content">"Nagpadala kami ng email ng pagpapatunay sa iyong email address: %1$s. Paki-verify para makapag-log in! :) "</string>
+    <string name="dialog_verification_email_sent_content2">"Ipinadala ang email ng pagpapatunay sa: %1$s "</string>
+    <string name="dialog_soil_texture1">"Mangyaring pumili muna ng texture ng lupa "</string>
 
 </resources>

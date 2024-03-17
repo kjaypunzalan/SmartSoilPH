@@ -247,7 +247,7 @@ class SoilActivityTest : BaseActivity() {
             if (isSoilTextureSelected) {
                 recommendation()
             } else {
-                Toast.makeText(this, "Please select a grade first", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.dialog_soil_texture1, Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -338,7 +338,7 @@ class SoilActivityTest : BaseActivity() {
                 tvSoilTexture.text = "$selectedTexture"
                 dialog.dismiss()
             } else {
-                Toast.makeText(this, "Please select a soil texture", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.dialog_soil_texture1, Toast.LENGTH_SHORT).show()
             }
         }
 

@@ -245,18 +245,16 @@ class HomeActivity : BaseActivity() {
      * D.1 Settings - Sync Database
      *-------------------------------*/
     private fun showSyncDatabaseDialog() {
-        Log.d("", "------------------------1. Dialog Showed Up")
         val dialogBuilder = AlertDialog.Builder(this)
-        dialogBuilder.setMessage("Do you want to sync database? Make sure you are connected to the internet.")
+        dialogBuilder.setMessage(R.string.dialog_sync_database)
             .setCancelable(false)
-            .setPositiveButton("Sync Database") { dialog, id ->
+            .setPositiveButton(R.string.dialog_sync_database_button) { dialog, id ->
                 // Perform the database sync operation
                 val dbHelper = SQLiteModel(this)
-                Log.d("", "------------------------2. Dialog Sync Clicked")
                 dbHelper.syncDataWithFirebase(auth)
-                Toast.makeText(this, "Database syncing...", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.dialog_sync_database_result, Toast.LENGTH_SHORT).show()
             }
-            .setNegativeButton("Cancel") { dialog, id ->
+            .setNegativeButton(R.string.dialog_cancel_button) { dialog, id ->
                 // Close the dialog
                 dialog.dismiss()
             }
@@ -287,7 +285,7 @@ class HomeActivity : BaseActivity() {
         }
 
         dialogBuilder.setCancelable(false)
-            .setPositiveButton("OK") { dialog, id ->
+            .setPositiveButton(R.string.dialog_ok_button) { dialog, id ->
                 if (chosenLanguage == 1) {
                     setLocale("fil") // Tagalog
                     recreate() // Recreate the activity to apply the language change
@@ -296,12 +294,12 @@ class HomeActivity : BaseActivity() {
                     recreate()
                 }
             }
-            .setNegativeButton("Cancel") { dialog, id ->
+            .setNegativeButton(R.string.dialog_cancel_button) { dialog, id ->
                 dialog.dismiss()
             }
 
         val alert = dialogBuilder.create()
-        alert.setTitle("Set SmartSoilPH Language")
+        alert.setTitle(R.string.dialog_set_language)
         alert.show()
     }
 
@@ -379,7 +377,7 @@ class HomeActivity : BaseActivity() {
         val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
 
         if (bluetoothAdapter == null) {
-            Toast.makeText(this, "Bluetooth is not supported on this device", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.dialog_bluetooth_not_supported, Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -419,9 +417,9 @@ class HomeActivity : BaseActivity() {
      * E.4 Alerts for Bluetooth  */
     private fun showAlertAskingForBluetoothPermission() {
         AlertDialog.Builder(this, R.style.RoundedAlertDialog)
-            .setTitle("Bluetooth Permission Required")
-            .setMessage("We need your permission to allow us to connect to Bluetooth devices. Please accept the permission to connect. Thank you!")
-            .setPositiveButton("I UNDERSTAND") { dialog, _ ->
+            .setTitle(R.string.dialog_bluetooth_permission_title)
+            .setMessage(R.string.dialog_bluetooth_permission_content)
+            .setPositiveButton(R.string.dialog_i_understand) { dialog, _ ->
                 requestPermissions(arrayOf(android.Manifest.permission.BLUETOOTH_CONNECT), REQUEST_BLUETOOTH_PERMISSION)
                 dialog.dismiss()
             }
@@ -431,12 +429,12 @@ class HomeActivity : BaseActivity() {
 
     private fun showAlertForDenyingBluetoothPermission() {
         AlertDialog.Builder(this, R.style.RoundedAlertDialog)
-            .setTitle("You have Denied the Permission")
-            .setMessage("It seems you have denied the permission. You won't be able to connect to the SmartSoilPH device.")
-            .setPositiveButton("OK") { dialog, _ ->
+            .setTitle(R.string.dialog_bluetooth_denied_title)
+            .setMessage(R.string.dialog_bluetooth_denied_content)
+            .setPositiveButton(R.string.dialog_ok_button) { dialog, _ ->
                 dialog.dismiss()
             }
-            .setNegativeButton("Cancel") { dialog, _ ->
+            .setNegativeButton(R.string.dialog_cancel_button) { dialog, _ ->
                 dialog.dismiss()
                 // Optional: handle cancellation.
             }
@@ -446,9 +444,9 @@ class HomeActivity : BaseActivity() {
 
     private fun showAlertToTurnOnBluetooth() {
         AlertDialog.Builder(this, R.style.RoundedAlertDialog)
-            .setTitle("Your Bluetooth is Turned Off")
-            .setMessage("Please turn on your device's Bluetooth. Thank you!")
-            .setPositiveButton("OK") { dialog, _ ->
+            .setTitle(R.string.dialog_bluetooth_off_title)
+            .setMessage(R.string.dialog_bluetooth_off_content)
+            .setPositiveButton(R.string.dialog_ok_button) { dialog, _ ->
                 dialog.dismiss()
                 val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
@@ -464,9 +462,9 @@ class HomeActivity : BaseActivity() {
 
     private fun showAlertThatInternetIsNotAvailable() {
         AlertDialog.Builder(this, R.style.RoundedAlertDialog)
-            .setTitle("You are not connected to the internet.")
-            .setMessage("Please connect to the internet before proceeding. Thank you!")
-            .setPositiveButton("OK") { dialog, _ ->
+            .setTitle(R.string.dialog_internet_connection_title)
+            .setMessage(R.string.dialog_internet_connection_content)
+            .setPositiveButton(R.string.dialog_ok_button) { dialog, _ ->
                 dialog.dismiss()
             }
             .create()

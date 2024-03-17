@@ -122,9 +122,9 @@ class LoginActivity : BaseActivity() {
                 }
         } else {
             AlertDialog.Builder(this, R.style.RoundedAlertDialog)
-                .setTitle("You are not connected to the internet.")
-                .setMessage("Please connect to the internet before logging in. Thank you!")
-                .setPositiveButton("OK") { dialog, _ ->
+                .setTitle(R.string.dialog_internet_connection_title)
+                .setMessage(R.string.dialog_internet_connection_content)
+                .setPositiveButton(R.string.dialog_ok_button) { dialog, _ ->
                     dialog.dismiss()
                 }
                 .create()
@@ -174,7 +174,7 @@ class LoginActivity : BaseActivity() {
             startActivity(intent)
             finish()
         } else {
-            Toast.makeText(baseContext, "Please verify your email first.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(baseContext, R.string.dialog_login_verification_failed, Toast.LENGTH_SHORT).show()
         }
     }
 

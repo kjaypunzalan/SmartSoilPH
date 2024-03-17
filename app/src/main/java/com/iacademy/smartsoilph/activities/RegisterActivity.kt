@@ -210,9 +210,9 @@ class RegisterActivity : BaseActivity() {
             registerUser(name, number.toDouble(), email, password)
         } else {
             AlertDialog.Builder(this, R.style.RoundedAlertDialog)
-                .setTitle("You are not connected to the internet.")
-                .setMessage("Please connect to the internet before registering. Thank you!")
-                .setPositiveButton("OK") { dialog, _ ->
+                .setTitle(R.string.dialog_internet_connection_title)
+                .setMessage(R.string.dialog_internet_connection_content)
+                .setPositiveButton(R.string.dialog_ok_button) { dialog, _ ->
                     dialog.dismiss()
                 }
                 .create()
@@ -239,11 +239,11 @@ class RegisterActivity : BaseActivity() {
                     user?.sendEmailVerification()
                         ?.addOnCompleteListener { verificationTask ->
                             if (verificationTask.isSuccessful) {
-                                Toast.makeText(baseContext, "Verification email sent to $email", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(baseContext, getString(R.string.dialog_verification_email_sent_content, email), Toast.LENGTH_SHORT).show()
 
                                 AlertDialog.Builder(this, R.style.RoundedAlertDialog)
-                                    .setTitle("Verification Sent to Your Email!")
-                                    .setMessage("We have sent a verification email to your email address: $email. Please verify to login! :)")
+                                    .setTitle(R.string.dialog_email_verification_sent_title)
+                                    .setMessage(getString(R.string.dialog_verification_email_sent_content, email))
                                     .setPositiveButton("OK") { dialog, _ ->
                                         dialog.dismiss()
 
@@ -258,7 +258,7 @@ class RegisterActivity : BaseActivity() {
                             }
                         }
                 } else {
-                    Toast.makeText(baseContext, "Authentication failed.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(baseContext, R.string.dialog_authentication_failed, Toast.LENGTH_SHORT).show()
                 }
             }
     }

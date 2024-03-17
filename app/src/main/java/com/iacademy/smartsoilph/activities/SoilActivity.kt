@@ -186,10 +186,11 @@ class SoilActivity : BaseActivity() {
         //fab view recommendation
         fabViewRecommend.setOnClickListener {
             Log.d("STATE", "VIEW RECOMMENDATION CLICKEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED ")
+            isSoilTextureSelected = true
             if (isSoilTextureSelected) {
                 recommendation()
             } else {
-                Toast.makeText(this, "Please select a grade first", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Please select a soil texture first", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -276,6 +277,11 @@ class SoilActivity : BaseActivity() {
             }
         }
 
+        // Auto select "Clay" or "gs_9"
+        val clayRadioButton = dialog.findViewById<RadioButton>(R.id.gs_9)
+        clayRadioButton.isChecked = true
+        selectedRadioButton = clayRadioButton
+
         // Initialize Apply button
         val btnApply = dialog.findViewById<CardView>(R.id.btn_apply)
         btnApply.setOnClickListener {
@@ -287,7 +293,7 @@ class SoilActivity : BaseActivity() {
                 tvSoilTexture.text = "$selectedTexture"
                 dialog.dismiss()
             } else {
-                Toast.makeText(this, "Please select a soil texture", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.dialog_soil_texture1, Toast.LENGTH_SHORT).show()
             }
         }
 

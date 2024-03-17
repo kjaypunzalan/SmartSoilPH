@@ -483,7 +483,7 @@ class ReportsActivity : BaseActivity() {
             Toast.makeText(this, "JPG Report saved to Downloads folder as $fileName", Toast.LENGTH_LONG).show()
         } catch (e: Exception) {
             e.printStackTrace()
-            Toast.makeText(this, "Failed to save the report", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Failed to save JPG report", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -534,7 +534,7 @@ class ReportsActivity : BaseActivity() {
             Toast.makeText(this, "PDF Report saved to Downloads folder as $fileName", Toast.LENGTH_LONG).show()
         } catch (e: IOException) {
             e.printStackTrace()
-            Toast.makeText(this, "Failed to save the report", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Failed to save PDF report", Toast.LENGTH_LONG).show()
         }
     }
 
