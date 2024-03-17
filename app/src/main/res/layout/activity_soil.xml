@@ -142,7 +142,7 @@
         app:layout_constraintTop_toBottomOf="@id/hd_1"
         app:layout_constraintStart_toEndOf="@id/tv_selected_grade"
         app:layout_constraintEnd_toEndOf="@+id/potassium_card"
-        app:boxBackgroundColor="@color/black_10"
+        app:boxBackgroundColor="@color/white_95"
         android:background="@drawable/ripple_effect"
         android:maxWidth="200dp">
 

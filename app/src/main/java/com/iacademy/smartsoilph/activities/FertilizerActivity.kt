@@ -69,11 +69,15 @@ class FertilizerActivity : BaseActivity() {
     private fun setupButtonNavigation() {
         btnReturnSoil.setOnClickListener {
             val Intent = Intent(this, SoilActivity::class.java);
+            intent.flags = android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP or android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(Intent);
+            finish()
         }
         btnPreviousRecommendations.setOnClickListener {
             val Intent = Intent(this, RecommendationHistoryActivity::class.java);
+            intent.flags = android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP or android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(Intent);
+            finish()
         }
     }
 

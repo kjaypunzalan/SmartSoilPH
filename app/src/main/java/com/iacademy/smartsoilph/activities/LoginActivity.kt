@@ -122,6 +122,7 @@ class LoginActivity : BaseActivity() {
         val registerTextView = findViewById<TextView>(R.id.tv_sign)
         registerTextView.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
             finish()
         }
@@ -131,6 +132,7 @@ class LoginActivity : BaseActivity() {
         val registerTextView = findViewById<TextView>(R.id.tv_forgot)
         registerTextView.setOnClickListener {
             val intent = Intent(this, ResetPasswordActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
             finish()
         }
@@ -139,6 +141,7 @@ class LoginActivity : BaseActivity() {
     private fun navigateToMainActivity() {
         // Navigate to Main Activity
         val intent = Intent(this, HomeActivity::class.java)  // Replace MainActivity with your main activity class
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
         startActivity(intent)
         finish()
     }

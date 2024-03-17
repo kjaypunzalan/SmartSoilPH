@@ -246,7 +246,7 @@ class SoilActivity : BaseActivity() {
     }
 
     /*****************************
-     * A. Show Grade Dialog
+     * A. Show Soil Texture
      ***************************/
     private fun showGradeDialog() {
         val dialog = Dialog(this)
@@ -417,7 +417,9 @@ class SoilActivity : BaseActivity() {
                 putExtra("labelP", labelP)
                 putExtra("labelK", labelK)
             }
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
+            finish()
         }
 
     }

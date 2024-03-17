@@ -45,6 +45,7 @@ class OnboardingActivity : BaseActivity() {
     private fun navigateToMainActivity() {
         // Navigate to Main Activity
         val intent = Intent(this, HomeActivity::class.java)  // Replace MainActivity with your main activity class
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
         startActivity(intent)
         finish()
     }
