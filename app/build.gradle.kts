@@ -68,14 +68,6 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.play.services.location)
 
-    //ViewPager2
-    implementation("androidx.viewpager2:viewpager2:1.0.0")
-
-    //Circle Indicator
-    implementation ("com.tbuonomo:dotsindicator:4.3")
-    implementation(libs.androidx.navigation.fragment.ktx)
-    implementation(libs.androidx.navigation.ui.ktx)
-
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -84,17 +76,15 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
-    //Onboarding
-    implementation("androidx.viewpager2:viewpager2:1.0.0")
-    implementation("com.tbuonomo:dotsindicator:5.0")
-
-    //Circle Image View
-    implementation ("de.hdodenhof:circleimageview:3.1.0")
-    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
-
-    //Flexbox
-    implementation ("com.google.android.flexbox:flexbox:3.0.0")
+    implementation(libs.appcompat)
+    implementation(libs.constraintlayout)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.ui.test.junit4)
+    debugImplementation(libs.androidx.ui.tooling)
+    debugImplementation(libs.androidx.ui.test.manifest)
 
     //Android UI
     implementation(libs.androidx.core.ktx)
@@ -107,6 +97,28 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.cardview)
     implementation(libs.material)
+
+    //ViewPager2
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
+
+    //Circle Indicator
+    implementation ("com.tbuonomo:dotsindicator:4.3")
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
+
+    //Onboarding
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
+    implementation("com.tbuonomo:dotsindicator:5.0")
+
+    //Circle Image View
+    implementation ("de.hdodenhof:circleimageview:3.1.0")
+
+    //Retrofit for Weather API
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    //Flexbox
+    implementation ("com.google.android.flexbox:flexbox:3.0.0")
 
     //FIREBASE DATABASE
     implementation(libs.firebase.auth.ktx)
@@ -121,15 +133,5 @@ dependencies {
     //GIF
     implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.28")
     implementation("com.squareup.picasso:picasso:2.71828")
-
-    implementation(libs.appcompat)
-    implementation(libs.constraintlayout)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
 
 }

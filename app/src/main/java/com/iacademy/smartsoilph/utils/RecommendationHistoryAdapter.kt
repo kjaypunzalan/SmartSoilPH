@@ -1,6 +1,5 @@
 package com.iacademy.smartsoilph.utils
 
-import android.provider.Settings.Global.getString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.iacademy.smartsoilph.R
 import com.iacademy.smartsoilph.datamodels.RecommendationData
 
-class RecommendationHistoryRecyclerViewAdapter(
+class RecommendationHistoryAdapter(
     private val recommendationDataList: ArrayList<RecommendationData>,
     private val onItemClick: (RecommendationData) -> Unit
-) : RecyclerView.Adapter<RecommendationHistoryRecyclerViewAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<RecommendationHistoryAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val tvDateTime: TextView = view.findViewById(R.id.tv_date_time)

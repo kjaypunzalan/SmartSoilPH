@@ -151,9 +151,11 @@ class LoginActivity : BaseActivity() {
             firebaseModel.getAllUserDataFromFirebase(auth, this)
 
             // Email is verified, proceed to the main activity
-            val intent = Intent(this, HomeActivity::class.java) // Replace with your main activity
+            val intent = Intent(this, LoadScreenActivity::class.java)
+            intent.putExtra(LoadScreenActivity.EXTRA_TARGET_ACTIVITY, HomeActivity::class.java.name) // loads loading screen before targetActivity
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
+
             finish()
         } else {
             Toast.makeText(baseContext, "Please verify your email first.", Toast.LENGTH_SHORT).show()
@@ -163,7 +165,5 @@ class LoginActivity : BaseActivity() {
     private fun resetDatabase() {
         val dbHelper = SQLiteModel(this)
         dbHelper.deleteDatabase()
-        // Show a Toast message confirming the database reset
-        Toast.makeText(this, "Database has been reset", Toast.LENGTH_SHORT).show()
     }
 }

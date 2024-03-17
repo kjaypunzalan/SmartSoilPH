@@ -24,7 +24,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.iacademy.smartsoilph.R
 import com.iacademy.smartsoilph.arduino.BluetoothController
-import com.iacademy.smartsoilph.datamodels.FertilizerNutrientModel
+import com.iacademy.smartsoilph.models.FertilizerNutrientModel
 import com.iacademy.smartsoilph.datamodels.SoilData
 import com.iacademy.smartsoilph.datamodels.RecommendationData
 import com.iacademy.smartsoilph.datamodels.RequiredFertilizerData
@@ -32,7 +32,6 @@ import com.iacademy.smartsoilph.models.FertilizerCalculatorModel
 import com.iacademy.smartsoilph.models.SQLiteModel
 import com.iacademy.smartsoilph.models.FirebaseModel
 import com.iacademy.smartsoilph.utils.CheckInternet
-import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale

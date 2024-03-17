@@ -1,12 +1,11 @@
 // Overwrite the content of this file with the following code
-package com.iacademy.smartsoilph.activities
+package com.iacademy.smartsoilph.arduino
 
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.iacademy.smartsoilph.R
-import com.iacademy.smartsoilph.arduino.BluetoothController
 
 class ArduinoController : AppCompatActivity() {
 
