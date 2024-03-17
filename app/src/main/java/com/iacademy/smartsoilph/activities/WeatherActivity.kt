@@ -167,7 +167,7 @@ class WeatherActivity : BaseActivity() {
 
             forecastAdapter = WeatherForecastAdapter(forecasts)
             rvWeatherForecast.adapter = forecastAdapter
-            rvWeatherForecast.layoutManager = LinearLayoutManager(this)
+            rvWeatherForecast.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         }
     }
 
