@@ -245,7 +245,7 @@ class HomeActivity : BaseActivity() {
      * D.1 Settings - Sync Database
      *-------------------------------*/
     private fun showSyncDatabaseDialog() {
-        val dialogBuilder = AlertDialog.Builder(this)
+        val dialogBuilder = AlertDialog.Builder(this, R.style.RoundedAlertDialog)
         dialogBuilder.setMessage(R.string.dialog_sync_database)
             .setCancelable(false)
             .setPositiveButton(R.string.dialog_sync_database_button) { dialog, id ->
@@ -276,7 +276,7 @@ class HomeActivity : BaseActivity() {
         editor.apply()
     }
     private fun showLanguageDialog() {
-        val dialogBuilder = AlertDialog.Builder(this)
+        val dialogBuilder = AlertDialog.Builder(this, R.style.RoundedAlertDialog)
         val languages = arrayOf("English", "Tagalog")
         var chosenLanguage = 0 // 0 for English, 1 for Tagalog
 
