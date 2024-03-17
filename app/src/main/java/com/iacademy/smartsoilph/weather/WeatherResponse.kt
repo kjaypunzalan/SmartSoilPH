@@ -23,12 +23,11 @@ data class HourlyWeather(
     val windSpeed80m: List<Double> // Assuming it's a list of wind speeds
 )
 
-// Updated Daily forecast data to include detailed 5-day forecast information
+// Updated Daily forecast data to include detailed 7-day forecast information
 data class DailyForecast(
     @SerializedName("time") val time: List<String>,
     @SerializedName("temperature_2m_max") val maxTemperature: List<Double>,
     @SerializedName("temperature_2m_min") val minTemperature: List<Double>,
     @SerializedName("precipitation_sum") val precipitationSum: List<Double>,
     @SerializedName("weather_code") val weatherCode: List<Int>,
-    // Add more fields as needed based on the Open-Meteo API documentation
 )

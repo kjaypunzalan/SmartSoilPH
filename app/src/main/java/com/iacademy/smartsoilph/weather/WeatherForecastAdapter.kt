@@ -3,6 +3,7 @@ package com.iacademy.smartsoilph.weather
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.iacademy.smartsoilph.R
@@ -12,16 +13,45 @@ import java.util.*
 class WeatherForecastAdapter(private val forecasts: List<DailyWeather>) : RecyclerView.Adapter<WeatherForecastAdapter.ForecastViewHolder>() {
 
     class ForecastViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(forecast: DailyWeather) {
-            itemView.findViewById<TextView>(R.id.tv_date_rv).text = forecast.time // Adjust according to your date formatting
-            itemView.findViewById<TextView>(R.id.tv_temp_rv).text = "${forecast.maxTemperature}"
 
-            val dateString = forecast.time
+        //initialize layout
+        private val tvDay: TextView = itemView.findViewById(R.id.tv_day_rv)
+        private val tvDate: TextView = itemView.findViewById(R.id.tv_date_rv)
+        private val tvMaxTemp: TextView = itemView.findViewById(R.id.tv_temp_rv)
+        private val ivWeather: ImageView = itemView.findViewById(R.id.iv_weather_rv)
+
+        //bind data
+        fun bind(forecast: DailyWeather) {
+            tvDay.text = getDayOfWeek(forecast.time)
+            tvDate.text = formatDate(forecast.time)
+            tvMaxTemp.text = "${forecast.maxTemperature}"
+            ivWeather.setImageResource(getWeatherIcon(forecast.weatherCode))
+        }
+
+        private fun getDayOfWeek(dateString: String): String {
+            val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val date = format.parse(dateString) ?: return ""
+            val dayFormat = SimpleDateFormat("EEEE", Locale.getDefault())
+            return dayFormat.format(date)
+        }
+
+        private fun formatDate(dateString: String): String {
             val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            val outputFormat = SimpleDateFormat("EEEE", Locale.getDefault())
-            val date = inputFormat.parse(dateString)
-            val dayToday = date?.let { outputFormat.format(it) } ?: "Unknown Day"
-            itemView.findViewById<TextView>(R.id.tv_day_rv).text = "$dayToday"
+            val outputFormat = SimpleDateFormat("EEE, MMM dd", Locale.getDefault())
+            val date = inputFormat.parse(dateString) ?: return dateString
+            return outputFormat.format(date)
+        }
+
+
+
+        private fun getWeatherIcon(weatherCode: Int): Int {
+            return when (weatherCode) {
+                0 -> R.drawable.img_sun
+                1, 2, 3 -> R.drawable.img_partly_cloudy
+                61, 63, 65 -> R.drawable.img_rain
+                95, 96, 99 -> R.drawable.img_thunderstorm
+                else -> R.drawable.img_weather
+            }
         }
     }
 

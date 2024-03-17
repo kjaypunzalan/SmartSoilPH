@@ -22,7 +22,7 @@
     <string name="temperature" translatable="false">0</string>
     <string name="tv_temperature_symbol" translatable="false">°C</string>
 
-    <string name="weather" translatable="false">Partly Cloudy</string>
+    <string name="weather" translatable="false"></string>
 
     <string name="humidity">Humidity</string>
     <string name="value_humidity" translatable="false">0%</string>

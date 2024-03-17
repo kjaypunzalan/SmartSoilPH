@@ -159,9 +159,10 @@ class WeatherActivity : BaseActivity() {
         weatherData.current?.weatherCode?.let {
             val weatherCondition = interpretWeatherCode(it)
             binding.tvWeather.text = weatherCondition
+            binding.ivWeatherIcon.setImageResource(getWeatherIcon(it))
 
             val forecasts = dailyForecast.time.zip(dailyForecast.maxTemperature).map { (time, temp) ->
-                    DailyWeather(time, temp)
+                    DailyWeather(time, temp, it)
                 }
 
             forecastAdapter = WeatherForecastAdapter(forecasts)
@@ -185,6 +186,16 @@ class WeatherActivity : BaseActivity() {
             85, 86 -> "Snow Showers"
             95, 96, 99 -> "Thunderstorm"
             else -> "Unknown"
+        }
+    }
+
+    private fun getWeatherIcon(weatherCode: Int): Int {
+        return when (weatherCode) {
+            0 -> R.drawable.img_sun
+            1, 2, 3 -> R.drawable.img_partly_cloudy
+            61, 63, 65 -> R.drawable.img_rain
+            95, 96, 99 -> R.drawable.img_thunderstorm
+            else -> R.drawable.img_weather
         }
     }
 
