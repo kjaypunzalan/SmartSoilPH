@@ -6,21 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-<!--Hold Splash Screen and continue to login page after-->
-    <fragment
-        android:id="@+id/fragment"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:defaultNavHost="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:navGraph="@navigation/navigation"
-        android:visibility="invisible"/>
-
     <ImageView
         android:id="@+id/toolbar_icon"
         android:layout_width="40dp"
@@ -65,12 +50,11 @@
         android:textAppearance="@style/login_welcome" >
     </TextView>
 
-
     <TextView
         android:id="@+id/tv_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="40dp"
         android:textAppearance="@style/login_h2"
         app:layout_constraintTop_toBottomOf="@id/tv_1"
         app:layout_constraintStart_toStartOf="@id/tv_1"
@@ -84,7 +68,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/custom_input"
         android:hint="Email Address"
-        android:inputType="textPassword"
+        android:inputType="textEmailAddress"
         android:padding="10dp"
         android:paddingStart="15dp"
         android:textAppearance="@style/login_input"
@@ -139,7 +123,7 @@
         app:layout_constraintTop_toBottomOf="@id/editTextMobileNumber"
         android:layout_marginEnd="30dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:elevation="2dp"/>
 
     <ImageView
