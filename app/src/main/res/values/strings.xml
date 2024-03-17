@@ -168,8 +168,8 @@
     <string name="bluetooth_button">Connect to Bluetooth Device</string>
     <string name="manual_button">View User Manual</string>
     <string name="manual_button2" translatable="false">(English/Tagalog)</string>
-    <string name="logout_button">🚪 Logout</string>
 
+    <string name="logout_button">🚪 Logout</string>
     <string name="sync_button">🔄 Sync Database</string>
     <string name="language_button">🌏 Change Language</string>
 
@@ -281,6 +281,28 @@
     <string name="scr_5">Connect with Device</string>
 
     <string name="btn_start">Get Started</string>
+    <string name="dialog_sync_database">Do you want to sync database? Make sure you are connected to the internet.</string>
+    <string name="dialog_sync_database_button">Sync Database</string>
+    <string name="dialog_sync_database_result" translatable="false">Database syncing...</string>
+    <string name="dialog_cancel_button">Cancel</string>
+    <string name="dialog_ok_button" translatable="false">OK</string>
+    <string name="dialog_set_language">Set SmartSoilPH Language</string>
+    <string name="dialog_bluetooth_not_supported">Bluetooth is not supported on this device</string>
+    <string name="dialog_bluetooth_permission_title">Bluetooth Permission Required</string>
+    <string name="dialog_bluetooth_permission_content">We need your permission to allow us to connect to Bluetooth devices. Please accept the permission to connect. Thank you!</string>
+    <string name="dialog_i_understand">I UNDERSTAND</string>
+    <string name="dialog_bluetooth_denied_title">You have Denied the Permission</string>
+    <string name="dialog_bluetooth_denied_content">It seems you have denied the permission. You won\'t be able to connect to the SmartSoilPH device.</string>
+    <string name="dialog_bluetooth_off_title">Your Bluetooth is Turned Off</string>
+    <string name="dialog_bluetooth_off_content">Please turn on your device\'s Bluetooth. Thank you!</string>
+    <string name="dialog_internet_connection_title">You are not connected to the internet.</string>
+    <string name="dialog_internet_connection_content">Please connect to the internet before proceeding. Thank you!</string>
+    <string name="dialog_email_verification_sent_title">Verification Sent to Your Email!</string>
+    <string name="dialog_authentication_failed">Authentication failed.</string>
+    <string name="dialog_login_verification_failed">Please verify your email first.</string>
+    <string name="dialog_verification_email_sent_content">We have sent a verification email to your email address: %1$s. Please verify to login! :)</string>
+    <string name="dialog_verification_email_sent_content2">Verification email sent to:  %1$s</string>
+    <string name="dialog_soil_texture1">Please select a soil texture first</string>
 
     <!--=================================================================-->
 

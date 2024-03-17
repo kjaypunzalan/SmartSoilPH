@@ -124,7 +124,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginBottom="20dp"
                 android:maxWidth="150dp"
-                android:text="Soil Texture: Clay"
+                android:text="Clay"
                 android:textAppearance="@style/soil_name"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"/>
