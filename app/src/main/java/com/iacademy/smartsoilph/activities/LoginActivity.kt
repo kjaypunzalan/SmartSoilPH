@@ -7,6 +7,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.core.widget.ImageViewCompat
@@ -15,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.iacademy.smartsoilph.R
 import com.iacademy.smartsoilph.models.FirebaseModel
 import com.iacademy.smartsoilph.models.SQLiteModel
+import com.iacademy.smartsoilph.utils.CheckInternet
 
 class LoginActivity : BaseActivity() {
 
@@ -104,18 +106,30 @@ class LoginActivity : BaseActivity() {
             return
         }
 
-        // Proceed with Firebase authentication
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    // Login success, update UI with the signed-in user's information
-                    checkIfEmailVerified()
-                } else {
-                    // If login fails, display a message to the user.
-                    Toast.makeText(baseContext, "Login failed: ${task.exception?.message}",
-                        Toast.LENGTH_SHORT).show()
+        // Check if connected to the internet
+        if (CheckInternet(this).isInternetAvailable()) {
+            // Proceed with Login if all validations pass
+            auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        // Login success, update UI with the signed-in user's information
+                        checkIfEmailVerified()
+                    } else {
+                        // If login fails, display a message to the user.
+                        Toast.makeText(baseContext, "Login failed: ${task.exception?.message}",
+                            Toast.LENGTH_SHORT).show()
+                    }
                 }
-            }
+        } else {
+            AlertDialog.Builder(this, R.style.RoundedAlertDialog)
+                .setTitle("You are not connected to the internet.")
+                .setMessage("Please connect to the internet before logging in. Thank you!")
+                .setPositiveButton("OK") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .create()
+                .show()
+        }
     }
 
     private fun setupRegisterTextView() {

@@ -338,9 +338,6 @@ class SoilActivity : BaseActivity() {
                 requiredN.toFloat(),requiredP.toFloat(),requiredK.toFloat(),nitrogen
             )
 
-            // Calculate Bags of Fertilizer Recommendation
-
-
             /******************************
              * Pass values to Soil DataModel
              * ---------------------------*/
@@ -369,7 +366,7 @@ class SoilActivity : BaseActivity() {
 
             // Get Date
             val calendar = Calendar.getInstance()
-            val formatter = SimpleDateFormat("MMMM dd, yyyy (EEE) '@'hh:mma", Locale.getDefault())
+            val formatter = SimpleDateFormat("MM-dd-yyyy '@'hh:mma", Locale.getDefault())
             val dateOfRecommendation = formatter.format(calendar.time)
 
             /********************************************

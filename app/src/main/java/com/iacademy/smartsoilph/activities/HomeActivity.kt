@@ -152,6 +152,12 @@ class HomeActivity : BaseActivity() {
             showSettingsMenu(view)
         }
 
+        val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+
+        if (bluetoothAdapter.isEnabled) {
+            btnSwitch.isChecked = !btnSwitch.isChecked
+        }
+
         //bluetooth connect
         btnBtConnect.setOnClickListener {
 
@@ -167,8 +173,6 @@ class HomeActivity : BaseActivity() {
                     showAlertToTurnOnBluetooth()
                 }
             } else {
-                val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
-
                 if (!bluetoothAdapter.isEnabled) {
                     btnSwitch.isChecked = !btnSwitch.isChecked
                 } else {
@@ -414,7 +418,7 @@ class HomeActivity : BaseActivity() {
     /**----------------------------
      * E.4 Alerts for Bluetooth  */
     private fun showAlertAskingForBluetoothPermission() {
-        AlertDialog.Builder(this)
+        AlertDialog.Builder(this, R.style.RoundedAlertDialog)
             .setTitle("Bluetooth Permission Required")
             .setMessage("We need your permission to allow us to connect to Bluetooth devices. Please accept the permission to connect. Thank you!")
             .setPositiveButton("I UNDERSTAND") { dialog, _ ->
@@ -426,7 +430,7 @@ class HomeActivity : BaseActivity() {
     }
 
     private fun showAlertForDenyingBluetoothPermission() {
-        AlertDialog.Builder(this)
+        AlertDialog.Builder(this, R.style.RoundedAlertDialog)
             .setTitle("You have Denied the Permission")
             .setMessage("It seems you have denied the permission. You won't be able to connect to the SmartSoilPH device.")
             .setPositiveButton("OK") { dialog, _ ->
@@ -441,7 +445,7 @@ class HomeActivity : BaseActivity() {
     }
 
     private fun showAlertToTurnOnBluetooth() {
-        AlertDialog.Builder(this)
+        AlertDialog.Builder(this, R.style.RoundedAlertDialog)
             .setTitle("Your Bluetooth is Turned Off")
             .setMessage("Please turn on your device's Bluetooth. Thank you!")
             .setPositiveButton("OK") { dialog, _ ->
@@ -459,7 +463,7 @@ class HomeActivity : BaseActivity() {
     }
 
     private fun showAlertThatInternetIsNotAvailable() {
-        AlertDialog.Builder(this)
+        AlertDialog.Builder(this, R.style.RoundedAlertDialog)
             .setTitle("You are not connected to the internet.")
             .setMessage("Please connect to the internet before proceeding. Thank you!")
             .setPositiveButton("OK") { dialog, _ ->

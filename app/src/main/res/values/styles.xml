@@ -322,4 +322,24 @@
 	</style>
 	<!--=================================================================-->
 
+	<style name="RoundedAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+		<item name="android:windowBackground">@drawable/shape_rounded_circle_dialog</item>
+		<item name="android:textColor">@color/main_blue</item>
+		<item name="colorAccent">@color/black</item>
+		<item name="android:textColorAlertDialogListItem">@color/black</item>
+		<item name="android:buttonBarButtonStyle">@style/AlertDialogCustomButton</item>
+		<item name="buttonBarPositiveButtonStyle">@style/AlertDialogCustomButton</item>
+		<item name="buttonBarNegativeButtonStyle">@style/AlertDialogCustomButton</item>
+		<item name="buttonBarNeutralButtonStyle">@style/AlertDialogCustomButton</item>
+	</style>
+
+	<style name="AlertDialogButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+		<item name="android:textColor">@color/main_blue</item>
+		<item name="android:background">@color/main_blue</item>
+	</style>
+
+	<style name="AlertDialogCustomButton" parent="Widget.AppCompat.Button.Borderless">
+		<item name="android:textColor">@color/main_blue</item>
+	</style>
+
 </resources>

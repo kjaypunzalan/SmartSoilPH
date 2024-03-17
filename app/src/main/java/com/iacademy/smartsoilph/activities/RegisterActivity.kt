@@ -8,6 +8,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.core.widget.ImageViewCompat
@@ -16,6 +17,7 @@ import com.iacademy.smartsoilph.R
 import com.iacademy.smartsoilph.datamodels.UserData
 import com.iacademy.smartsoilph.models.FirebaseModel
 import com.iacademy.smartsoilph.models.SQLiteModel
+import com.iacademy.smartsoilph.utils.CheckInternet
 
 class RegisterActivity : BaseActivity() {
 
@@ -202,8 +204,20 @@ class RegisterActivity : BaseActivity() {
             return
         }
 
-        // Proceed with registration if all validations pass
-        registerUser(name, number.toDouble(), email, password)
+        // Check if connected to the internet
+        if (CheckInternet(this).isInternetAvailable()) {
+            // Proceed with registration if all validations pass
+            registerUser(name, number.toDouble(), email, password)
+        } else {
+            AlertDialog.Builder(this, R.style.RoundedAlertDialog)
+                .setTitle("You are not connected to the internet.")
+                .setMessage("Please connect to the internet before registering. Thank you!")
+                .setPositiveButton("OK") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .create()
+                .show()
+        }
     }
 
     private fun registerUser(name: String, number: Double, email: String, password: String) {
@@ -214,40 +228,39 @@ class RegisterActivity : BaseActivity() {
                     // Send verification email
                     val user = auth.currentUser
                     val userID = user?.uid ?: ""    // Generate a unique userID
-                    user?.sendEmailVerification()
-                        ?.addOnCompleteListener { verificationTask ->
-                            if (verificationTask.isSuccessful) {
-                                Toast.makeText(baseContext, "Verification email sent to $email", Toast.LENGTH_SHORT).show()
-                                // You might want to check if the email was verified before proceeding
-                                checkIfEmailVerified()
-                            }
-                        }
 
                     //Add to Database
                     val userData = UserData(userID, name, email, number)
                     SQLiteModel(this).addUserData(userData)  // Save to SQLite
                     FirebaseModel().writeNewUser(userData, auth)    // Save to Firebase
+
+                    // Sign out after registration to prevent auto-login
+                    auth.signOut()
+                    user?.sendEmailVerification()
+                        ?.addOnCompleteListener { verificationTask ->
+                            if (verificationTask.isSuccessful) {
+                                Toast.makeText(baseContext, "Verification email sent to $email", Toast.LENGTH_SHORT).show()
+
+                                AlertDialog.Builder(this, R.style.RoundedAlertDialog)
+                                    .setTitle("Verification Sent to Your Email!")
+                                    .setMessage("We have sent a verification email to your email address: $email. Please verify to login! :)")
+                                    .setPositiveButton("OK") { dialog, _ ->
+                                        dialog.dismiss()
+
+                                        //Go to LoginActivity
+                                        val intent = Intent(this, LoginActivity::class.java)
+                                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                                        startActivity(intent)
+                                        finish()
+                                    }
+                                    .create()
+                                    .show()
+                            }
+                        }
                 } else {
                     Toast.makeText(baseContext, "Authentication failed.", Toast.LENGTH_SHORT).show()
                 }
             }
-    }
-
-    private fun checkIfEmailVerified() {
-        val user = auth.currentUser
-
-        user?.let {
-            if (user.isEmailVerified) {
-                // Email is verified, proceed to the next activity
-                val intent = Intent(this, LoadScreenActivity::class.java)
-                intent.putExtra(LoadScreenActivity.EXTRA_TARGET_ACTIVITY, HomeActivity::class.java.name) // loads loading screen before targetActivity
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-                startActivity(intent)
-                finish()
-            } else {
-                Toast.makeText(baseContext, "Please verify your email first.", Toast.LENGTH_SHORT).show()
-            }
-        }
     }
 
     @SuppressLint("MissingSuperCall")
