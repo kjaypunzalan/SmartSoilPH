@@ -141,6 +141,7 @@ class WeatherActivity : BaseActivity() {
     private fun updateUIWithWeatherData(weatherData: WeatherResponse, dailyForecast: DailyForecast, latitude: Double, longitude: Double) {
         weatherData.current?.let {
 
+            // For the Weather Variables
             val temperature = it.temperature.toInt() // Convert to Int
             val humidity = it.humidity.toInt()       // Convert to Int
             val windSpeed = it.windSpeed.toInt()     // Convert to Int
@@ -156,18 +157,26 @@ class WeatherActivity : BaseActivity() {
             binding.tvLocation.text = "$location"
         }
 
+        // For the Weather Icon and Description
         weatherData.current?.weatherCode?.let {
             val weatherCondition = interpretWeatherCode(it)
             binding.tvWeather.text = weatherCondition
             binding.ivWeatherIcon.setImageResource(getWeatherIcon(it))
+        }
 
-            val forecasts = dailyForecast.time.zip(dailyForecast.maxTemperature).map { (time, temp) ->
-                    DailyWeather(time, temp, it)
-                }
+        // For the Weather Forecast
+        weatherData.daily?.let { dailyForecast ->
+            val forecasts = dailyForecast.time.zip(dailyForecast.maxTemperature.zip(dailyForecast.weatherCode)) { time, tempAndCode ->
+                val (temp, code) = tempAndCode
+                Log.e("WeatherActivity", "WEATHER CODE: $code")
+                DailyWeather(time, temp, code)
+            }
 
-            forecastAdapter = WeatherForecastAdapter(forecasts)
-            rvWeatherForecast.adapter = forecastAdapter
-            rvWeatherForecast.layoutManager = LinearLayoutManager(this)
+            runOnUiThread {
+                forecastAdapter = WeatherForecastAdapter(forecasts)
+                rvWeatherForecast.adapter = forecastAdapter
+                rvWeatherForecast.layoutManager = LinearLayoutManager(this)
+            }
         }
     }
 
