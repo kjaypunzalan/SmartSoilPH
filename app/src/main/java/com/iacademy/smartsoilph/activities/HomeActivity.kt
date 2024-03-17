@@ -121,6 +121,7 @@ class HomeActivity : BaseActivity() {
         button.setOnClickListener {
             val intent = Intent(this, LoadScreenActivity::class.java)
             intent.putExtra(LoadScreenActivity.EXTRA_TARGET_ACTIVITY, activityClass.name) // loads loading screen before targetActivity
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
             finish()
         }
@@ -138,6 +139,7 @@ class HomeActivity : BaseActivity() {
             if (CheckInternet(this).isInternetAvailable()) {
                 val intent = Intent(this, LoadScreenActivity::class.java)
                 intent.putExtra(LoadScreenActivity.EXTRA_TARGET_ACTIVITY, WeatherActivity::class.java.name) // loads loading screen before targetActivity
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                 startActivity(intent)
                 finish()
             } else {
@@ -171,7 +173,9 @@ class HomeActivity : BaseActivity() {
                     btnSwitch.isChecked = !btnSwitch.isChecked
                 } else {
                     val intent = Intent(this, SoilActivityTest::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                     startActivity(intent)
+                    finish()
                 }
             }
         }
@@ -303,6 +307,7 @@ class HomeActivity : BaseActivity() {
     private fun logoutUser() {
         auth.signOut()
         val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
         startActivity(intent)
         finish()
     }
@@ -354,7 +359,9 @@ class HomeActivity : BaseActivity() {
             // User agreed to enable Bluetooth, start the activity and toggle the switch
             btnSwitch.isChecked = true
             val intent = Intent(this, SoilActivityTest::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
+            finish()
         } else if (requestCode == REQUEST_ENABLE_BT && resultCode == RESULT_CANCELED) {
             // User refused to enable Bluetooth, toggle the switch back to off
             btnSwitch.isChecked = false

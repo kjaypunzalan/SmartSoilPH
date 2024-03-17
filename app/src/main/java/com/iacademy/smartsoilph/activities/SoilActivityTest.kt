@@ -468,7 +468,9 @@ class SoilActivityTest : BaseActivity() {
                 putExtra("labelP", labelP)
                 putExtra("labelK", labelK)
             }
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
+            finish()
         }
 
     }

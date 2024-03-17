@@ -46,6 +46,7 @@ class ResetPasswordActivity : BaseActivity() {
         tvSignIn.setOnClickListener {
             // Intent to start new Activity
             val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
             finish() // Close the current activity
         }
@@ -96,6 +97,7 @@ class ResetPasswordActivity : BaseActivity() {
                     Handler(Looper.getMainLooper()).postDelayed({
                         // Intent to start new Activity
                         val intent = Intent(this, LoginActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                         startActivity(intent)
                         finish() // Close the current activity
                     }, 3000)

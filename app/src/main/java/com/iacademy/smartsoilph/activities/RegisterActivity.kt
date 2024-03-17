@@ -67,6 +67,7 @@ class RegisterActivity : BaseActivity() {
         // Sign In Button
         loginButton.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java) // Replace with your next activity
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
             finish()
         }
