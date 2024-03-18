@@ -102,7 +102,7 @@
     <string name="potassium" translatable="false">Potassium</string>
     <string name="ph_level" translatable="false">pH Level</string>
     <string name="ec_level" translatable="false">EC Level</string>
-    <string name="humidity_soil" translatable="false">Humidity</string>
+    <string name="humidity_soil" translatable="false">Moisture</string>
     <string name="temp_soil" translatable="false">Temperature</string>
 
     <string name="sign1" translatable="false">%</string>

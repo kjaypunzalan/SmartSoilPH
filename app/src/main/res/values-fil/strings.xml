@@ -19,7 +19,6 @@
     <string name="reports_button">Ulat</string>
     <string name="bluetooth_button">"Kumonekta sa Bluetooth"</string>
     <string name="manual_button">Tulong</string>
-    <string name="logout_button">Mag Logout</string>
     <string name="title_recommend">Rekomendasyon</string>
     <string name="return_soil">Bumalik sa Data ng Lupa</string>
     <string name="previous_data">Mga Nakaraang Rekomendasyon</string>
@@ -98,8 +97,9 @@
     <string name="phlevel_desc">Laki ng ph Level na nakita sa Lupa</string>
 
     <!--Setting options-->
-    <string name="sync_button">I-sync ang Database</string>
-    <string name="language_button">Palitan ang Lengwahe</string>
+    <string name="sync_button">🔄 I-sync ang Database</string>
+    <string name="language_button">🌏 Palitan ang Lengwahe</string>
+    <string name="logout_button">🚪 Mag Logout</string>
 
     <!--Soil name-->
     <string name="soil_name">Tekstura ng Lupa: </string>
