@@ -288,14 +288,14 @@ class FertilizerNutrientModel {
          * CORN CROPS
          *------------------------*/
         "Corn: Hybrid" to CropNutrientRequirements(
-            nitrogenRequirements = zipCornNitrogenRequirements(listOf(120, 100, 80, 60, 60), RiceRanges.nitrogenLabels),
-            phosphorusRequirements = zipCornPhosphorusRequirements(listOf(60, 50, 20, 7, 0), RiceRanges.phosphorusLabels),
-            potassiumRequirements = zipCornPotassiumRequirements(listOf(60, 45, 30, 7, 0), RiceRanges.potassiumLabels)
+            nitrogenRequirements = zipCornNitrogenRequirements(listOf(120, 100, 80, 60, 60), CornRanges.nitrogenLabels),
+            phosphorusRequirements = zipCornPhosphorusRequirements(listOf(60, 50, 20, 7, 0), CornRanges.phosphorusLabels),
+            potassiumRequirements = zipCornPotassiumRequirements(listOf(60, 45, 30, 7, 0), CornRanges.potassiumLabels)
         ),
         "Corn: OPV (High Yielding Variety)" to CropNutrientRequirements(
-            nitrogenRequirements = zipCornNitrogenRequirements(listOf(80, 60, 40, 20, 20), RiceRanges.nitrogenLabels),
-            phosphorusRequirements = zipCornPhosphorusRequirements(listOf(60, 40, 20, 7, 0), RiceRanges.phosphorusLabels),
-            potassiumRequirements = zipCornPotassiumRequirements(listOf(60, 45, 30, 7, 0), RiceRanges.potassiumLabels)
+            nitrogenRequirements = zipCornNitrogenRequirements(listOf(80, 60, 40, 20, 20), CornRanges.nitrogenLabels),
+            phosphorusRequirements = zipCornPhosphorusRequirements(listOf(60, 40, 20, 7, 0), CornRanges.phosphorusLabels),
+            potassiumRequirements = zipCornPotassiumRequirements(listOf(60, 45, 30, 7, 0), CornRanges.potassiumLabels)
         )
     )
     // Utility function to zip the nutrient requirements with their labels

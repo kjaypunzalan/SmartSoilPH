@@ -68,7 +68,7 @@ class SoilActivityTest : BaseActivity() {
 
     //declare btcontroller
     private lateinit var bluetoothController: BluetoothController
-
+    private var commandSent = false
     //broadcast receiver btcontroller
     private val updateReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -93,6 +93,21 @@ class SoilActivityTest : BaseActivity() {
                 etECLevel.setText(val5)
                 etHumidity.setText(val6)
                 etTemperature.setText(val7)
+
+
+
+                val list = listOf(etNitrogen.text.toString(), etPhosphorus.text.toString(), etPotassium.text.toString(), etPHLevel.text.toString(), etECLevel.text.toString(), etHumidity.text.toString(), etTemperature.text.toString())
+                Log.e("LIST", "LIST: $list")
+                // Check if any TextView contains "N/A" or is null
+                val containsNA = listOf(etNitrogen, etPhosphorus, etPotassium, etPHLevel, etECLevel, etHumidity, etTemperature)
+                    .any { it.text.toString().equals("N/A", ignoreCase = true) }
+
+                if (containsNA && !commandSent) {
+                    bluetoothController.sendCommand("1")
+                    commandSent = true
+                } else if (!containsNA && commandSent) {
+                    commandSent = false // Reset the flag to allow re-sending the command if conditions meet again
+                }
 
             }
         }
