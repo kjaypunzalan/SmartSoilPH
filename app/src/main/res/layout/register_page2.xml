@@ -185,7 +185,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/custom_input"
                     android:hint="Email Address"
-                    android:inputType="textPassword"
+                    android:inputType="textEmailAddress"
                     android:padding="10dp"
                     android:paddingStart="15dp"
                     android:textAppearance="@style/login_input"

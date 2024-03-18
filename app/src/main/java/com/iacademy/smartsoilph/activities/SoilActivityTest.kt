@@ -247,7 +247,7 @@ class SoilActivityTest : BaseActivity() {
             if (isSoilTextureSelected) {
                 recommendation()
             } else {
-                Toast.makeText(this, "Please select a grade first", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.dialog_soil_texture1, Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -338,7 +338,7 @@ class SoilActivityTest : BaseActivity() {
                 tvSoilTexture.text = "$selectedTexture"
                 dialog.dismiss()
             } else {
-                Toast.makeText(this, "Please select a soil texture", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.dialog_soil_texture1, Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -420,7 +420,7 @@ class SoilActivityTest : BaseActivity() {
 
             // Get Date
             val calendar = Calendar.getInstance()
-            val formatter = SimpleDateFormat("MMMM dd, yyyy (EEE) '@'hh:mma", Locale.getDefault())
+            val formatter = SimpleDateFormat("MM-dd-yyyy '@'hh:mma", Locale.getDefault())
             val dateOfRecommendation = formatter.format(calendar.time)
 
             /********************************************
@@ -468,7 +468,9 @@ class SoilActivityTest : BaseActivity() {
                 putExtra("labelP", labelP)
                 putExtra("labelK", labelK)
             }
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
+            finish()
         }
 
     }

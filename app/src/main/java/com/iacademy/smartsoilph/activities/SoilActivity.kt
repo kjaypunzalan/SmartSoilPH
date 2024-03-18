@@ -186,10 +186,11 @@ class SoilActivity : BaseActivity() {
         //fab view recommendation
         fabViewRecommend.setOnClickListener {
             Log.d("STATE", "VIEW RECOMMENDATION CLICKEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED ")
+            isSoilTextureSelected = true
             if (isSoilTextureSelected) {
                 recommendation()
             } else {
-                Toast.makeText(this, "Please select a grade first", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Please select a soil texture first", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -246,7 +247,7 @@ class SoilActivity : BaseActivity() {
     }
 
     /*****************************
-     * A. Show Grade Dialog
+     * A. Show Soil Texture
      ***************************/
     private fun showGradeDialog() {
         val dialog = Dialog(this)
@@ -276,6 +277,11 @@ class SoilActivity : BaseActivity() {
             }
         }
 
+        // Auto select "Clay" or "gs_9"
+        val clayRadioButton = dialog.findViewById<RadioButton>(R.id.gs_9)
+        clayRadioButton.isChecked = true
+        selectedRadioButton = clayRadioButton
+
         // Initialize Apply button
         val btnApply = dialog.findViewById<CardView>(R.id.btn_apply)
         btnApply.setOnClickListener {
@@ -287,7 +293,7 @@ class SoilActivity : BaseActivity() {
                 tvSoilTexture.text = "$selectedTexture"
                 dialog.dismiss()
             } else {
-                Toast.makeText(this, "Please select a soil texture", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.dialog_soil_texture1, Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -338,9 +344,6 @@ class SoilActivity : BaseActivity() {
                 requiredN.toFloat(),requiredP.toFloat(),requiredK.toFloat(),nitrogen
             )
 
-            // Calculate Bags of Fertilizer Recommendation
-
-
             /******************************
              * Pass values to Soil DataModel
              * ---------------------------*/
@@ -369,7 +372,7 @@ class SoilActivity : BaseActivity() {
 
             // Get Date
             val calendar = Calendar.getInstance()
-            val formatter = SimpleDateFormat("MMMM dd, yyyy (EEE) '@'hh:mma", Locale.getDefault())
+            val formatter = SimpleDateFormat("MM-dd-yyyy '@'hh:mma", Locale.getDefault())
             val dateOfRecommendation = formatter.format(calendar.time)
 
             /********************************************
@@ -417,7 +420,9 @@ class SoilActivity : BaseActivity() {
                 putExtra("labelP", labelP)
                 putExtra("labelK", labelK)
             }
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
+            finish()
         }
 
     }

@@ -7,6 +7,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.core.widget.ImageViewCompat
@@ -15,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.iacademy.smartsoilph.R
 import com.iacademy.smartsoilph.models.FirebaseModel
 import com.iacademy.smartsoilph.models.SQLiteModel
+import com.iacademy.smartsoilph.utils.CheckInternet
 
 class LoginActivity : BaseActivity() {
 
@@ -104,24 +106,37 @@ class LoginActivity : BaseActivity() {
             return
         }
 
-        // Proceed with Firebase authentication
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    // Login success, update UI with the signed-in user's information
-                    checkIfEmailVerified()
-                } else {
-                    // If login fails, display a message to the user.
-                    Toast.makeText(baseContext, "Login failed: ${task.exception?.message}",
-                        Toast.LENGTH_SHORT).show()
+        // Check if connected to the internet
+        if (CheckInternet(this).isInternetAvailable()) {
+            // Proceed with Login if all validations pass
+            auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        // Login success, update UI with the signed-in user's information
+                        checkIfEmailVerified()
+                    } else {
+                        // If login fails, display a message to the user.
+                        Toast.makeText(baseContext, "Login failed: ${task.exception?.message}",
+                            Toast.LENGTH_SHORT).show()
+                    }
                 }
-            }
+        } else {
+            AlertDialog.Builder(this, R.style.RoundedAlertDialog)
+                .setTitle(R.string.dialog_internet_connection_title)
+                .setMessage(R.string.dialog_internet_connection_content)
+                .setPositiveButton(R.string.dialog_ok_button) { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .create()
+                .show()
+        }
     }
 
     private fun setupRegisterTextView() {
         val registerTextView = findViewById<TextView>(R.id.tv_sign)
         registerTextView.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
             finish()
         }
@@ -131,6 +146,7 @@ class LoginActivity : BaseActivity() {
         val registerTextView = findViewById<TextView>(R.id.tv_forgot)
         registerTextView.setOnClickListener {
             val intent = Intent(this, ResetPasswordActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
             finish()
         }
@@ -139,6 +155,7 @@ class LoginActivity : BaseActivity() {
     private fun navigateToMainActivity() {
         // Navigate to Main Activity
         val intent = Intent(this, HomeActivity::class.java)  // Replace MainActivity with your main activity class
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
         startActivity(intent)
         finish()
     }
@@ -155,10 +172,9 @@ class LoginActivity : BaseActivity() {
             intent.putExtra(LoadScreenActivity.EXTRA_TARGET_ACTIVITY, HomeActivity::class.java.name) // loads loading screen before targetActivity
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
-
             finish()
         } else {
-            Toast.makeText(baseContext, "Please verify your email first.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(baseContext, R.string.dialog_login_verification_failed, Toast.LENGTH_SHORT).show()
         }
     }
 
