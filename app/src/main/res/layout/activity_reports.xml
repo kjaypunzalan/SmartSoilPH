@@ -79,8 +79,9 @@
                     app:layout_constraintStart_toStartOf="@id/cl_1"
                     app:layout_constraintTop_toTopOf="@id/cl_1" />
 
-                <!-- Download Button -->
+                <!-- PDF Button -->
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_pdf"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginTop="30dp"
@@ -91,18 +92,44 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
-                        android:id="@+id/btnDownload"
+                        android:id="@+id/btnPDF"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_gravity="center"
-                        android:padding="3dp"
-                        android:src="@drawable/icon_download"
-                        app:tint="@color/black_50"
+                        android:padding="2dp"
+                        android:src="@drawable/icon_pdf"
                         android:clickable="true"
                         android:focusable="true"
                         android:background="@drawable/ripple_effect"/>
 
                 </androidx.cardview.widget.CardView>
+
+                <!-- JPG Button -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_jpg"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="10dp"
+                    app:cardBackgroundColor="@color/sub_blue"
+                    app:cardCornerRadius="5dp"
+                    app:layout_constraintEnd_toStartOf="@+id/cv_pdf"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/btnJPG"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center"
+                        android:padding="2dp"
+                        android:src="@drawable/icon_jpg"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:background="@drawable/ripple_effect"/>
+
+                </androidx.cardview.widget.CardView>
+
+
 
                 <!-- Horizontal Divider -->
                 <View

@@ -46,9 +46,14 @@ class WeatherForecastAdapter(private val forecasts: List<DailyWeather>) : Recycl
 
         private fun getWeatherIcon(weatherCode: Int): Int {
             return when (weatherCode) {
-                0 -> R.drawable.img_sun
-                1, 2, 3 -> R.drawable.img_partly_cloudy
-                61, 63, 65 -> R.drawable.img_rain
+                0 -> R.drawable.img_clearsky
+                1, 2, 3 -> R.drawable.img_overcast
+                45, 48 -> R.drawable.img_fog
+                51, 53, 55 -> R.drawable.img_drizzle
+                56, 57 -> R.drawable.img_icedrizzle
+                61, 63, 65 -> R.drawable.img_rainy
+                66, 67 -> R.drawable.img_freezerain
+                80, 81, 82 -> R.drawable.img_rainshowers
                 95, 96, 99 -> R.drawable.img_thunderstorm
                 else -> R.drawable.img_weather
             }
