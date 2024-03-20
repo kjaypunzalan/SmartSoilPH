@@ -11,7 +11,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
-import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.iacademy.smartsoilph.R
 
@@ -20,7 +19,7 @@ class ResetPasswordActivity : BaseActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var emailEditText: EditText
     private lateinit var tvSignIn: TextView
-    private lateinit var sendVerificationButton: CardView
+    private lateinit var btnSendVerification: CardView
     private lateinit var btnReturn: ImageView
 
     private lateinit var ivEmail: ImageView
@@ -34,12 +33,12 @@ class ResetPasswordActivity : BaseActivity() {
 
         // Initialize UI components
         emailEditText = findViewById(R.id.et_email)
-        sendVerificationButton = findViewById(R.id.btn_submit)
+        btnSendVerification = findViewById(R.id.btn_submit)
         tvSignIn = findViewById(R.id.tv_sign_in)
         btnReturn = findViewById(R.id.toolbar_back_icon)
         ivEmail = findViewById(R.id.iv_email)
 
-        sendVerificationButton.setOnClickListener {
+        btnSendVerification.setOnClickListener {
             validateInput()
         }
 

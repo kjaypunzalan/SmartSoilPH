@@ -36,11 +36,13 @@ class HomeActivity : BaseActivity() {
     private lateinit var btnWeather: CardView
     private lateinit var btnReports: CardView
     private lateinit var btnManual: CardView
-    private lateinit var tvUsername: TextView
-    private lateinit var tvDateToday: TextView
     private lateinit var btnBtConnect: CardView
     private lateinit var btnSettings: CardView
     private lateinit var btnRecommendationHistory: CardView
+
+    private lateinit var tvUsername: TextView
+    private lateinit var tvDateToday: TextView
+
     private lateinit var ivBGHome: ImageView
     private lateinit var btnSwitch: Switch
     private lateinit var nestedScrollView: NestedScrollView
@@ -245,7 +247,7 @@ class HomeActivity : BaseActivity() {
      * D.1 Settings - Sync Database
      *-------------------------------*/
     private fun showSyncDatabaseDialog() {
-        val dialogBuilder = AlertDialog.Builder(this)
+        val dialogBuilder = AlertDialog.Builder(this, R.style.RoundedAlertDialog)
         dialogBuilder.setMessage(R.string.dialog_sync_database)
             .setCancelable(false)
             .setPositiveButton(R.string.dialog_sync_database_button) { dialog, id ->
@@ -276,7 +278,7 @@ class HomeActivity : BaseActivity() {
         editor.apply()
     }
     private fun showLanguageDialog() {
-        val dialogBuilder = AlertDialog.Builder(this)
+        val dialogBuilder = AlertDialog.Builder(this, R.style.RoundedAlertDialog)
         val languages = arrayOf("English", "Tagalog")
         var chosenLanguage = 0 // 0 for English, 1 for Tagalog
 

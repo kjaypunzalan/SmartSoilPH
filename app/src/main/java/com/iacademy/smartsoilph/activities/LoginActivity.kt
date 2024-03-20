@@ -52,6 +52,7 @@ class LoginActivity : BaseActivity() {
         emailEditText = findViewById(R.id.editTextMobileNumber)  // Replace with your actual EditText ID for email
         passwordEditText = findViewById(R.id.editTextPassword)  // Replace with your actual EditText ID for password
         val loginButton = findViewById<CardView>(R.id.buttonSignIn)  // Replace with your actual Button ID
+        showLanguageDialog()
 
         loginButton.setOnClickListener {
             loginUser()
@@ -176,6 +177,45 @@ class LoginActivity : BaseActivity() {
         } else {
             Toast.makeText(baseContext, R.string.dialog_login_verification_failed, Toast.LENGTH_SHORT).show()
         }
+    }
+
+    /*********************************
+     * Change Language
+     *-------------------------------*/
+    private fun setLocale(languageCode: String) {
+        // Save the chosen language in SharedPreferences or any persistent storage
+        // so you can load it on app start next time.
+        val sharedPreferences = getSharedPreferences("Settings", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("My_Lang", languageCode)
+        editor.apply()
+    }
+    private fun showLanguageDialog() {
+        val dialogBuilder = AlertDialog.Builder(this, R.style.RoundedAlertDialog)
+        val languages = arrayOf("English", "Tagalog")
+        var chosenLanguage = 0 // 0 for English, 1 for Tagalog
+
+        dialogBuilder.setSingleChoiceItems(languages, chosenLanguage) { dialog, which ->
+            chosenLanguage = which
+        }
+
+        dialogBuilder.setCancelable(false)
+            .setPositiveButton(R.string.dialog_ok_button) { dialog, id ->
+                if (chosenLanguage == 1) {
+                    setLocale("fil") // Tagalog
+                    recreate() // Recreate the activity to apply the language change
+                } else {
+                    setLocale("en") // English or default language
+                    recreate()
+                }
+            }
+            .setNegativeButton(R.string.dialog_cancel_button) { dialog, id ->
+                dialog.dismiss()
+            }
+
+        val alert = dialogBuilder.create()
+        alert.setTitle(R.string.dialog_set_language)
+        alert.show()
     }
 
     private fun resetDatabase() {
