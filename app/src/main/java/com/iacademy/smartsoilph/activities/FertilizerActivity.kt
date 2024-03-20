@@ -1,8 +1,10 @@
 package com.iacademy.smartsoilph.activities
 
+import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
@@ -27,6 +29,10 @@ class FertilizerActivity : BaseActivity() {
     private lateinit var btnPreviousRecommendations: CardView
     private lateinit var btnReturnSoil: CardView
 
+    // Inside FertilizerActivity class
+    private lateinit var ivSlider: ImageView // Declare this with your other views
+
+
     //declare Firebase variables
     private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +52,23 @@ class FertilizerActivity : BaseActivity() {
         fetchFromSQLite()
     }
 
+    // The method to animate the slider
+    private fun animateSliderToPH(pH: Float) {
+        // Calculate the position of the slider based on the pH value
+        ivSlider.post {
+            val scaleWidth = ivSlider.width - ivSlider.paddingLeft - ivSlider.paddingRight
+            val position = (pH / 14.0f) * scaleWidth
+
+            // Adjust for the width of the slider image
+            val adjustedPosition = position - (ivSlider.width / 2.0f)
+
+            ObjectAnimator.ofFloat(ivSlider, "translationX", adjustedPosition).apply {
+                duration = 1000 // Duration in milliseconds
+                start()
+            }
+        }
+    }
+
     private fun initializeLayout() {
         tvFertilizerRecommendation = findViewById<TextView>(R.id.complete_value)
         tvNitrogen = findViewById<TextView>(R.id.npk_value1)
@@ -59,6 +82,7 @@ class FertilizerActivity : BaseActivity() {
         tvPHLevelDescription = findViewById<TextView>(R.id.ph_recommend)
         btnPreviousRecommendations = findViewById<CardView>(R.id.btn_previous);
         btnReturnSoil = findViewById<CardView>(R.id.btn_return_soil);
+        ivSlider = findViewById<ImageView>(R.id.iv_slider)
     }
 
     private fun setupButtonNavigation() {
@@ -125,6 +149,9 @@ class FertilizerActivity : BaseActivity() {
             val phLevelValue = latestSoilData.soilData.phLevel
             val phLevelString = String.format("%.1f", phLevelValue)
             tvPHLevel.text = phLevelString
+
+            // Call the function to animate the slider to the pH level
+            animateSliderToPH(phLevelValue)
 
             // Display pH Level Label
             val phLevelLabelText: String = when {
