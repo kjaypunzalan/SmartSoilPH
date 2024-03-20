@@ -55,7 +55,8 @@ class ReportsActivity : BaseActivity() {
     private lateinit var tvLCSummary1: TextView
     private lateinit var tvLCSummary2: TextView
     private lateinit var tvBCSummary1: TextView
-    private lateinit var btnDownload: ImageView
+    private lateinit var btnPDF: ImageView
+    private lateinit var btnJPG: ImageView
     private lateinit var btnReturn: ImageView
     private lateinit var scrollView: NestedScrollView
 
@@ -105,7 +106,8 @@ class ReportsActivity : BaseActivity() {
         tvLCSummary2 = findViewById<TextView>(R.id.tv_lc_sum2);
         tvBCSummary1 = findViewById<TextView>(R.id.tv_bc_sum);
         scrollView = findViewById<NestedScrollView>(R.id.sv_scrollview)
-        btnDownload = findViewById<ImageView>(R.id.btnDownload);
+        btnPDF = findViewById<ImageView>(R.id.btnPDF);
+        btnJPG = findViewById<ImageView>(R.id.btnJPG);
         btnReturn = findViewById<ImageView>(R.id.toolbar_back_icon)
     }
 
@@ -119,8 +121,11 @@ class ReportsActivity : BaseActivity() {
             startActivity(intent)
             finish()
         }
-        btnDownload.setOnClickListener {
+        btnJPG.setOnClickListener {
             captureScrollView(scrollView)
+        }
+
+        btnPDF.setOnClickListener {
             captureScrollViewAndSaveAsPdf(scrollView)
         }
     }
