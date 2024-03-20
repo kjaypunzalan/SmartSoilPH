@@ -36,11 +36,13 @@ class HomeActivity : BaseActivity() {
     private lateinit var btnWeather: CardView
     private lateinit var btnReports: CardView
     private lateinit var btnManual: CardView
-    private lateinit var tvUsername: TextView
-    private lateinit var tvDateToday: TextView
     private lateinit var btnBtConnect: CardView
     private lateinit var btnSettings: CardView
     private lateinit var btnRecommendationHistory: CardView
+
+    private lateinit var tvUsername: TextView
+    private lateinit var tvDateToday: TextView
+
     private lateinit var ivBGHome: ImageView
     private lateinit var btnSwitch: Switch
     private lateinit var nestedScrollView: NestedScrollView

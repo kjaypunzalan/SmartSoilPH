@@ -14,7 +14,6 @@ import com.iacademy.smartsoilph.models.FertilizerNutrientModel
 class FertilizerActivity : BaseActivity() {
 
     //declare layout variables
-    private lateinit var tvUserName: TextView
     private lateinit var tvFertilizerRecommendation: TextView
     private lateinit var tvNitrogen: TextView
     private lateinit var tvPhosphorus: TextView
@@ -30,10 +29,6 @@ class FertilizerActivity : BaseActivity() {
 
     //declare Firebase variables
     private lateinit var auth: FirebaseAuth
-
-    //declare and initialize the model
-    private val fertilizerNutrientModel = FertilizerNutrientModel()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fertilizer)
@@ -48,7 +43,7 @@ class FertilizerActivity : BaseActivity() {
         setupButtonNavigation()
 
         //Initialize Content
-        initializeContent()
+        fetchFromSQLite()
     }
 
     private fun initializeLayout() {
@@ -89,12 +84,6 @@ class FertilizerActivity : BaseActivity() {
         finish()
     }
 
-    /******************************************************
-     * A. Initialize Content from Firebase or from SQLite
-     *----------------------------------------------------*/
-    private fun initializeContent() {
-        fetchFromSQLite()
-    }
 
     /***********************************
      * B. Fetch content from SQLite
@@ -164,7 +153,7 @@ class FertilizerActivity : BaseActivity() {
         val convertedFertilizerBag = String.format("%.1f", fertilizerBag)
         return when (fertilizerName) {
             "Complete" -> { "$convertedFertilizerAmount kg of $fertilizerName (14-14-14). ($convertedFertilizerBag bag)" }
-            "Ammonium Phosphate" -> { "$convertedFertilizerAmount kg of $fertilizerName (16-20-14) ($convertedFertilizerBag bag)" }
+            "Ammonium Phosphate" -> { "$convertedFertilizerAmount kg of $fertilizerName (16-20-0) ($convertedFertilizerBag bag)" }
             "Ammonium Sulfate" -> { "$convertedFertilizerAmount kg of $fertilizerName (21-0-0) ($convertedFertilizerBag bag)" }
             "Urea" -> { "$convertedFertilizerAmount kg of $fertilizerName (46-0-0) ($convertedFertilizerBag bag)" }
             "Duophos" -> { "$convertedFertilizerAmount kg of $fertilizerName (0-22-0) ($convertedFertilizerBag bag)" }

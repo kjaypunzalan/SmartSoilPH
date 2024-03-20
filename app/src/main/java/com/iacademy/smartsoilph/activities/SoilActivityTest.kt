@@ -253,7 +253,7 @@ class SoilActivityTest : BaseActivity() {
         // Button Logistics
         btnFilter.setOnClickListener {
             Log.d("STATE", "FILTER CLICKEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED")
-            showGradeDialog()
+            showSoilTextureDialog()
         }
 
         //fab view recommendation
@@ -314,7 +314,7 @@ class SoilActivityTest : BaseActivity() {
     /*****************************
      * A. Show Grade Dialog
      ***************************/
-    private fun showGradeDialog() {
+    private fun showSoilTextureDialog() {
         val dialog = Dialog(this)
         dialog.setContentView(R.layout.dialog_choose_grade)
 

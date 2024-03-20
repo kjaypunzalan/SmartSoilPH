@@ -3,7 +3,6 @@ package com.iacademy.smartsoilph.activities
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -11,7 +10,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
-import androidx.core.widget.ImageViewCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.iacademy.smartsoilph.R
 import com.iacademy.smartsoilph.datamodels.UserData
@@ -27,8 +25,8 @@ class RegisterActivity : BaseActivity() {
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
     private lateinit var confirmPasswordEditText: EditText
-    private lateinit var registerButton: CardView // Assuming there is a register button
-    private lateinit var loginButton: TextView
+    private lateinit var btnRegister: CardView // Assuming there is a register button
+    private lateinit var btnLogin: TextView
     private lateinit var btnReturn: ImageView
 
     private lateinit var ivName: ImageView
@@ -50,8 +48,8 @@ class RegisterActivity : BaseActivity() {
         emailEditText = findViewById(R.id.editTextEmail) // Update ID as per your layout
         passwordEditText = findViewById(R.id.editTextPassword) // Update ID as per your layout
         confirmPasswordEditText = findViewById(R.id.editTextConfirmPassword) // Update ID as per your layout
-        registerButton = findViewById(R.id.buttonSignUp) // Update ID as per your layout
-        loginButton = findViewById(R.id.textViewSignIn)
+        btnRegister = findViewById(R.id.buttonSignUp) // Update ID as per your layout
+        btnLogin = findViewById(R.id.textViewSignIn)
         btnReturn = findViewById(R.id.toolbar_back_icon)
 
         ivName = findViewById(R.id.iv_name)
@@ -62,12 +60,12 @@ class RegisterActivity : BaseActivity() {
 
 
         // Register User
-        registerButton.setOnClickListener {
+        btnRegister.setOnClickListener {
             validateInput()
         }
 
         // Sign In Button
-        loginButton.setOnClickListener {
+        btnLogin.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java) // Replace with your next activity
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
