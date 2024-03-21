@@ -9,6 +9,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
@@ -68,12 +70,23 @@ class SoilActivityTest : BaseActivity() {
 
     //declare btcontroller
     private lateinit var bluetoothController: ArduinoBluetoothController
+
     private var commandSent = false
+    private val handler = Handler(Looper.getMainLooper())
+    private val sendCommandRunnable = object : Runnable {
+        override fun run() {
+            bluetoothController.sendCommand("1")
+            handler.postDelayed(this, 20000)  // Schedule the next execution after 20 seconds
+        }
+    }
+
 
     //broadcast receiver btcontroller
     private val updateReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             if (intent?.action == "com.iacademy.smartsoilph.arduino.ACTION_UPDATE_DATA") {
+
+                //get parameter values
                 val val1 = intent.getStringExtra("val1") ?: ""
                 val val2 = intent.getStringExtra("val2") ?: ""
                 val val3 = intent.getStringExtra("val3") ?: ""
@@ -82,29 +95,40 @@ class SoilActivityTest : BaseActivity() {
                 val val6 = intent.getStringExtra("val6") ?: ""
                 val val7 = intent.getStringExtra("val7") ?: ""
 
+                //set initial text
                 etNitrogen.setText(val1)
-                val nitrogenPPM = etNitrogen.text.toString().toFloatOrNull() ?: 0.0F
-                val nitrogen = (nitrogenPPM / 14)
-                val nitrogenString = nitrogen.toString()
-                etNitrogen.setText(nitrogenString)
-
                 etPhosphorus.setText(val2)
-                val phosphorusPPM = etPhosphorus.text.toString().toFloatOrNull() ?: 0.0F
-                val phosphorus = (phosphorusPPM / 100) * 4
-                val phosphorusString = phosphorus.toString()
-                etPhosphorus.setText(phosphorusString)
-
                 etPotassium.setText(val3)
-                val potassiumPPM = etPotassium.text.toString().toFloatOrNull() ?: 0.0F
-                val potassium = (potassiumPPM * 2)
-                val potassiumString = potassium.toString()
-                etPotassium.setText(potassiumString)
-
                 etPHLevel.setText(val4)
                 etECLevel.setText(val5)
                 etHumidity.setText(val6)
                 etTemperature.setText(val7)
 
+                // nitrogen error correction
+                val nitrogenPPM = etNitrogen.text.toString().toFloatOrNull() ?: 0.0F
+                val nitrogen = (nitrogenPPM / 14)
+                val nitrogenString = nitrogen.toString()
+                etNitrogen.setText(nitrogenString)
+
+                // phosphorus error correction
+                val phosphorusPPM = etPhosphorus.text.toString().toFloatOrNull() ?: 0.0F
+                val phosphorus = (phosphorusPPM / 100) * 4
+                val phosphorusString = phosphorus.toString()
+                etPhosphorus.setText(phosphorusString)
+
+                // potassium error correction
+                val potassiumPPM = etPotassium.text.toString().toFloatOrNull() ?: 0.0F
+                val potassium = (potassiumPPM * 2)
+                val potassiumString = potassium.toString()
+                etPotassium.setText(potassiumString)
+
+                // ec level us/cm to ms/cm conversion (this is not error correction)
+                val ecPercent = etECLevel.text.toString().toFloatOrNull() ?: 0.0F
+                val ecLevel = (ecPercent / 1000)
+                val ecLevelString = potassium.toString()
+                etECLevel.setText(ecLevelString)
+
+                // retrieve data again if it contains N/A
                 val list = listOf(etNitrogen.text.toString(), etPhosphorus.text.toString(), etPotassium.text.toString(), etPHLevel.text.toString(), etECLevel.text.toString(), etHumidity.text.toString(), etTemperature.text.toString())
                 Log.e("LIST", "LIST: $list")
                 // Check if any TextView contains "N/A" or is null
@@ -114,8 +138,10 @@ class SoilActivityTest : BaseActivity() {
                 if (containsNA && !commandSent) {
                     bluetoothController.sendCommand("1")
                     commandSent = true
+                    handler.removeCallbacks(sendCommandRunnable) // Stop the periodic execution
                 } else if (!containsNA && commandSent) {
                     commandSent = false // Reset the flag to allow re-sending the command if conditions meet again
+                    handler.postDelayed(sendCommandRunnable, 20000) // Schedule the first execution
                 }
             }
         }
