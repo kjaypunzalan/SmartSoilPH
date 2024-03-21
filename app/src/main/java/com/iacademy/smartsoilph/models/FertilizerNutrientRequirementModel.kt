@@ -2,9 +2,9 @@ package com.iacademy.smartsoilph.models
 
 // Define nutrient requirement ranges as constants
 object VegetableRanges {
-    val nitrogenRanges = listOf(0.0f..2f, 2.1f..3.5f, 3.6f..4.5f, 4.5f..Float.MAX_VALUE)
-    val phosphorusRanges = listOf(0f..6f, 7f..10f, 11f..15f, 16f..20f, 21f..Float.MAX_VALUE)
-    val potassiumRanges = listOf(0f..75f, 76f..113f, 114f..150f, 151f..Float.MAX_VALUE)
+    val nitrogenRanges = listOf(0.00f..2.09f, 2.10f..3.59f, 3.60f..4.50f, 4.51f..Float.MAX_VALUE)
+    val phosphorusRanges = listOf(0.00f..6.99f, 7.00f..10.99f, 11.00f..15.99f, 16.00f..20.99f, 21.00f..Float.MAX_VALUE)
+    val potassiumRanges = listOf(0.00f..75.99f, 76.00f..113.99f, 114.00f..150.99f, 151.00f..Float.MAX_VALUE)
 
     // Specific labels for each nutrient type
     val nitrogenLabels = listOf("Low", "Medium", "High", "Very High")
@@ -13,9 +13,9 @@ object VegetableRanges {
 }
 
 object RiceRanges {
-    val nitrogenRanges = listOf(0.0f..2.0f, 2.1f..3.5f, 3.6f..4.5f, 4.6f..5.5f, 5.6f..Float.MAX_VALUE)
-    val phosphorusRanges = listOf(0f..2f, 2.1f..6f, 6.1f..10f, 10.1f..15f, 15.1f..Float.MAX_VALUE)
-    val potassiumRanges = listOf(0f..25f, 25f..50f, 51f..75f, 76f..100f, 100f..Float.MAX_VALUE)
+    val nitrogenRanges = listOf(0.00f..2.00f, 2.01f..3.59f, 3.60f..4.59f, 4.60f..5.59f, 5.60f..Float.MAX_VALUE)
+    val phosphorusRanges = listOf(0.00f..2.00f, 2.01f..6.00f, 6.01f..10.00f, 10.01f..15.00f, 15.01f..Float.MAX_VALUE)
+    val potassiumRanges = listOf(0.00f..25.00f, 25.01f..50.99f, 51.00f..75.99f, 76.01f..100.00f, 100.01f..Float.MAX_VALUE)
 
     // Specific labels for each nutrient type
     val nitrogenLabels = listOf("Low", "Moderately Low", "Moderately High", "High", "Very High")
@@ -24,9 +24,9 @@ object RiceRanges {
 }
 
 object CornRanges {
-    val nitrogenRanges = listOf(0.0f..2.0f, 2.1f..3.5f, 3.6f..4.5f, 4.6f..5.5f, 5.6f..Float.MAX_VALUE)
-    val phosphorusRanges = listOf(0f..2f, 2.1f..6f, 6.1f..10f, 10.1f..15f, 15.1f..Float.MAX_VALUE)
-    val potassiumRanges = listOf(0f..25f, 25f..50f, 51f..75f, 76f..100f, 100f..Float.MAX_VALUE)
+    val nitrogenRanges = listOf(0.00f..2.00f, 2.01f..3.59f, 3.60f..4.59f, 4.60f..5.59f, 5.60f..Float.MAX_VALUE)
+    val phosphorusRanges = listOf(0.00f..2.00f, 2.01f..6.00f, 6.01f..10.00f, 10.01f..15.00f, 15.01f..Float.MAX_VALUE)
+    val potassiumRanges = listOf(0.00f..25.00f, 25.01f..50.99f, 51.00f..75.99f, 76.01f..100.00f, 100.01f..Float.MAX_VALUE)
 
     // Specific labels for each nutrient type
     val nitrogenLabels = listOf("Low", "Moderately Low", "Moderately High", "High", "Very High")
@@ -289,12 +289,12 @@ class FertilizerNutrientModel {
          *------------------------*/
         "Corn: Hybrid" to CropNutrientRequirements(
             nitrogenRequirements = zipCornNitrogenRequirements(listOf(120, 100, 80, 60, 60), CornRanges.nitrogenLabels),
-            phosphorusRequirements = zipCornPhosphorusRequirements(listOf(60, 40, 20, 7, 0), CornRanges.phosphorusLabels),
+            phosphorusRequirements = zipCornPhosphorusRequirements(listOf(60, 50, 40, 7, 0), CornRanges.phosphorusLabels),
             potassiumRequirements = zipCornPotassiumRequirements(listOf(60, 45, 30, 7, 0), CornRanges.potassiumLabels)
         ),
         "Corn: OPV (High Yielding Variety)" to CropNutrientRequirements(
             nitrogenRequirements = zipCornNitrogenRequirements(listOf(80, 60, 40, 20, 20), CornRanges.nitrogenLabels),
-            phosphorusRequirements = zipCornPhosphorusRequirements(listOf(60, 40, 20, 7, 0), CornRanges.phosphorusLabels),
+            phosphorusRequirements = zipCornPhosphorusRequirements(listOf(60, 50, 40, 7, 0), CornRanges.phosphorusLabels),
             potassiumRequirements = zipCornPotassiumRequirements(listOf(60, 45, 30, 7, 0), CornRanges.potassiumLabels)
         )
     )

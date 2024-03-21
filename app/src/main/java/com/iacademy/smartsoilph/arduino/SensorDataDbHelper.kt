@@ -20,7 +20,7 @@ class SensorDataDbHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
         onCreate(db)
     }
 
-    fun insertSensorData(moisture: Int, temperature: Float, /* ... other parameters ... */) {
+    fun insertSensorData(moisture: Int, temperature: Float) {
         val db = this.writableDatabase
         val contentValues = ContentValues().apply {
             put(COLUMN_MOISTURE, moisture)

@@ -22,8 +22,8 @@ class WeatherForecastAdapter(private val forecasts: List<DailyWeather>) : Recycl
 
         //bind data
         fun bind(forecast: DailyWeather) {
-            tvDay.text = getDayOfWeek(forecast.time)
-            tvDate.text = formatDate(forecast.time)
+            tvDay.text = formatDate(forecast.time)
+            tvDate.text = interpretWeatherCode(forecast.weatherCode)
             tvMaxTemp.text = "${forecast.maxTemperature}"
             ivWeather.setImageResource(getWeatherIcon(forecast.weatherCode))
         }
@@ -42,7 +42,23 @@ class WeatherForecastAdapter(private val forecasts: List<DailyWeather>) : Recycl
             return outputFormat.format(date)
         }
 
-
+        private fun interpretWeatherCode(weatherCode: Int): String {
+            return when (weatherCode) {
+                0 -> "Clear sky"
+                1, 2, 3 -> "Partly cloudy"
+                45, 48 -> "Fog"
+                51, 53, 55 -> "Drizzle"
+                56, 57 -> "Freezing Drizzle"
+                61, 63, 65 -> "Rain"
+                66, 67 -> "Freezing Rain"
+                71, 73, 75 -> "Snow"
+                77 -> "Snow Grains"
+                80, 81, 82 -> "Rain Showers"
+                85, 86 -> "Snow Showers"
+                95, 96, 99 -> "Thunderstorm"
+                else -> "Unknown"
+            }
+        }
 
         private fun getWeatherIcon(weatherCode: Int): Int {
             return when (weatherCode) {
