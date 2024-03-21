@@ -69,6 +69,7 @@ class SoilActivityTest : BaseActivity() {
     //declare btcontroller
     private lateinit var bluetoothController: ArduinoBluetoothController
     private var commandSent = false
+
     //broadcast receiver btcontroller
     private val updateReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -82,19 +83,27 @@ class SoilActivityTest : BaseActivity() {
                 val val7 = intent.getStringExtra("val7") ?: ""
 
                 etNitrogen.setText(val1)
-//                val nitrogenPPM = etNitrogen.text.toString().toFloatOrNull() ?: 0.0F
-//                val nitrogen = nitrogenPPM * 0.0001F
-//                val nitrogenString = nitrogen.toString()
-//                etNitrogen.setText(nitrogenString)
+                val nitrogenPPM = etNitrogen.text.toString().toFloatOrNull() ?: 0.0F
+                val nitrogen = (nitrogenPPM / 14)
+                val nitrogenString = nitrogen.toString()
+                etNitrogen.setText(nitrogenString)
 
                 etPhosphorus.setText(val2)
+                val phosphorusPPM = etPhosphorus.text.toString().toFloatOrNull() ?: 0.0F
+                val phosphorus = (phosphorusPPM / 100) * 4
+                val phosphorusString = phosphorus.toString()
+                etPhosphorus.setText(phosphorusString)
+
                 etPotassium.setText(val3)
+                val potassiumPPM = etPotassium.text.toString().toFloatOrNull() ?: 0.0F
+                val potassium = (potassiumPPM * 2)
+                val potassiumString = potassium.toString()
+                etPotassium.setText(potassiumString)
+
                 etPHLevel.setText(val4)
                 etECLevel.setText(val5)
                 etHumidity.setText(val6)
                 etTemperature.setText(val7)
-
-
 
                 val list = listOf(etNitrogen.text.toString(), etPhosphorus.text.toString(), etPotassium.text.toString(), etPHLevel.text.toString(), etECLevel.text.toString(), etHumidity.text.toString(), etTemperature.text.toString())
                 Log.e("LIST", "LIST: $list")
@@ -108,7 +117,6 @@ class SoilActivityTest : BaseActivity() {
                 } else if (!containsNA && commandSent) {
                     commandSent = false // Reset the flag to allow re-sending the command if conditions meet again
                 }
-
             }
         }
     }
@@ -470,6 +478,9 @@ class SoilActivityTest : BaseActivity() {
                 // Save in cloud
                 FirebaseModel().saveSoilData(soilData, auth)
                 FirebaseModel().saveRecommendation(recommendationData, auth)
+                //Sync Database
+                dbHelper.syncDataWithFirebase(auth)
+                Toast.makeText(this, R.string.dialog_sync_database_result, Toast.LENGTH_SHORT).show()
             } else {
                 // Internet is NOT available - add to SQLite
                 dbHelper.addSoilData(recommendationData)  // Save the soil data to the SQLite database
