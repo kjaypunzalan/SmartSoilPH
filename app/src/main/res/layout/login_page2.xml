@@ -47,6 +47,55 @@
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+    <ImageView
+        android:id="@+id/iv_web"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/icon_web"
+        android:elevation="4dp"
+        app:tint="@color/black_50"
+        app:layout_constraintTop_toTopOf="@id/editTextMobileNumber"
+        app:layout_constraintBottom_toBottomOf="@id/editTextMobileNumber"
+        app:layout_constraintStart_toEndOf="@id/editTextMobileNumber"
+        android:layout_marginStart="-65dp">
+    </ImageView>
+    <androidx.cardview.widget.CardView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="11dp"
+        app:cardElevation="3dp"
+        app:layout_constraintTop_toTopOf="@id/editTextMobileNumber"
+        app:layout_constraintBottom_toBottomOf="@id/editTextMobileNumber"
+        app:layout_constraintStart_toEndOf="@id/editTextMobileNumber"
+        android:layout_marginStart="-65dp">
+
+    </androidx.cardview.widget.CardView>
+    <ImageView
+        android:id="@+id/iv_email"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/icon_email2"
+        android:elevation="4dp"
+        app:tint="@color/black_50"
+        app:layout_constraintTop_toTopOf="@id/editTextMobileNumber"
+        app:layout_constraintBottom_toBottomOf="@id/editTextMobileNumber"
+        app:layout_constraintStart_toEndOf="@id/editTextMobileNumber"
+        android:layout_marginStart="-65dp">
+    </ImageView>
+    <androidx.cardview.widget.CardView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="11dp"
+        app:cardElevation="3dp"
+        app:layout_constraintTop_toTopOf="@id/editTextMobileNumber"
+        app:layout_constraintBottom_toBottomOf="@id/editTextMobileNumber"
+        app:layout_constraintStart_toEndOf="@id/editTextMobileNumber"
+        android:layout_marginStart="-65dp">
+    </androidx.cardview.widget.CardView>
+
     <ImageView
         android:id="@+id/bg_blue"
         android:layout_width="match_parent"
