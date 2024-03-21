@@ -265,6 +265,9 @@
 
     <!--Activity Manual===================================================-->
     <string name="manu_title">A guide made for you...</string>
+    <string name="manu_desc">Both made in English and Tagalog. Click either of the buttons bellow to download it in PDF format.</string>
+    <string name="manu_us">English Manual</string>
+    <string name="manu_ph">Tagalog Manual</string>
     <!--=================================================================-->
 
     <!--Screen Fragments===================================================-->
@@ -305,5 +308,7 @@
     <string name="dialog_soil_texture1">Please select a soil texture first</string>
 
     <!--=================================================================-->
+
+
 
 </resources>

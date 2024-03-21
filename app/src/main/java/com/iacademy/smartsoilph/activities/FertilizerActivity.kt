@@ -54,20 +54,28 @@ class FertilizerActivity : BaseActivity() {
 
     // The method to animate the slider
     private fun animateSliderToPH(pH: Float) {
-        // Calculate the position of the slider based on the pH value
+        val ivphScale: ImageView = findViewById(R.id.iv_phScale) // replace with your actual pH scale ImageView ID
+        // Ensure the ImageView has been laid out before attempting to get its width
         ivSlider.post {
-            val scaleWidth = ivSlider.width - ivSlider.paddingLeft - ivSlider.paddingRight
-            val position = (pH / 14.0f) * scaleWidth
+            val scaleWidth = ivphScale.width // Full width of the pH scale
+            val scaleStartX = ivphScale.x // Starting X position of the pH scale
 
-            // Adjust for the width of the slider image
-            val adjustedPosition = position - (ivSlider.width / 2.0f)
+            // Calculate the position for the slider based on the pH value.
+            // This ratio will need to be adjusted if your scale doesn't start exactly at the edge of the ImageView.
+            val positionRatio = pH / 14.0f
+            val targetPositionX = scaleStartX + positionRatio * scaleWidth
 
-            ObjectAnimator.ofFloat(ivSlider, "translationX", adjustedPosition).apply {
-                duration = 1000 // Duration in milliseconds
+            // Adjust for the width of the slider so the arrow points exactly at the pH value.
+            val sliderWidth = ivSlider.width
+            val adjustedPositionX = targetPositionX - sliderWidth / 2.0f
+
+            ObjectAnimator.ofFloat(ivSlider, "translationX", adjustedPositionX).apply {
+                duration = 1000 // Set this to how long you want the animation to take
                 start()
             }
         }
     }
+
 
     private fun initializeLayout() {
         tvFertilizerRecommendation = findViewById<TextView>(R.id.complete_value)
