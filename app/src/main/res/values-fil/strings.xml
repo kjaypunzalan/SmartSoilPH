@@ -47,7 +47,6 @@
     <string name="sub_summary4">Sa kabuuan, ang iyong kamakailang antas ng pH ng lupa ay ang kalusugan ay %.0f.</string>
     <string name="sub_summary44">Your recent soil pH level health is %.0f.</string>
     <string name="sub_summary5">Kamakailan, ang NPK nutrient na kinakailangan ng iyong lupa ay %1$s.</string>
-    <string name="manu_title">Isang gabay na ginawa para sa iyo...</string>
 
     <string name="home_txt1">Anong gusto mong gawin?</string>
     <string name="history_button">Nakaraang Datos ng Pataba</string>
@@ -123,5 +122,12 @@
     <string name="dialog_verification_email_sent_content">"Nagpadala kami ng email ng pagpapatunay sa iyong email address: %1$s. Paki-verify para makapag-log in! :) "</string>
     <string name="dialog_verification_email_sent_content2">"Ipinadala ang email ng pagpapatunay sa: %1$s "</string>
     <string name="dialog_soil_texture1">"Mangyaring pumili muna ng texture ng lupa "</string>
+
+    <!--Activity Manual===================================================-->
+    <string name="manu_title">Isang gabay na ginawa para sa iyo...</string>
+    <string name="manu_desc">Parehas na nakasulat sa Ingles at Tagalog. Pindutin alin man sa dalawang pagpipilitan sa ibaba para mai-download ito sa pormat ng PDF.</string>
+    <string name="manu_us">Ingles na Manual</string>
+    <string name="manu_ph">Tagalog na Manual</string>
+    <!--=================================================================-->
 
 </resources>
