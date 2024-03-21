@@ -8,7 +8,7 @@
     import androidx.localbroadcastmanager.content.LocalBroadcastManager
     import java.util.*
 
-    class BluetoothController(private val context: Context) {
+    class ArduinoBluetoothController(private val context: Context) {
 
         interface BluetoothDataListener {
             fun onDataReceived(data: String)
@@ -110,8 +110,10 @@
 
 
                 // Log or use the values as needed
-                Log.d("BluetoothController", "Values - val1: $val1, val2: $val2, val3: $val3, val4: $val4, val5: $val5, val6: $val6, val7: $val7")
+                Log.d("BluetoothController",
+                    "Values - val1: $val1, val2: $val2, val3: $val3, val4: $val4, val5: $val5, val6: $val6, val7: $val7")
 
+                // Map data
                 val dataMap = mapOf(
                     "val1" to val1,
                     "val2" to val2,
@@ -121,6 +123,7 @@
                     "val6" to val6,
                     "val7" to val7,
                 )
+
                 // Broadcast the data
                 broadcastUpdate("com.iacademy.smartsoilph.arduino.ACTION_UPDATE_DATA", dataMap)
                 dataListener?.onDataReceived(data)

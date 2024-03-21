@@ -6,7 +6,7 @@ import com.iacademy.smartsoilph.datamodels.RequiredFertilizerData
 
 data class Fertilizer(val name: String, val nitrogen: Float, val phosphorus: Float, val potassium: Float)
 
-class FertilizerCalculatorModel {
+class FertilizerRecommendationModel {
     private val fertilizers = mapOf(
         "Complete" to Fertilizer("Complete", 14f, 14f, 14f),
         "Ammonium Phosphate" to Fertilizer("Ammonium Phosphate", 16f, 20f, 0f),
@@ -16,7 +16,8 @@ class FertilizerCalculatorModel {
         "Muriate of Potash" to Fertilizer("Muriate of Potash", 0f, 0f, 60f)
     )
 
-    fun calculateFertilizerRequirements(nRequirement: Float, pRequirement: Float, kRequirement: Float, initialN: Float) : RequiredFertilizerData {
+    fun calculateFertilizerRequirements(nRequirement: Float, pRequirement: Float, kRequirement: Float, initialN: Float)
+        : RequiredFertilizerData {
         val datamodel = RequiredFertilizerData()
 
         // Apply "Complete" if all nutrients have requirements and none are zero (Pattern 1)
@@ -40,24 +41,30 @@ class FertilizerCalculatorModel {
             n, p, k, initialN, completeAmount)
     }
 
-    private fun subtractNutrientsProvidedByComplete(datamodel: RequiredFertilizerData, n: Float, p: Float, k: Float, initialN: Float, amount: Float) : RequiredFertilizerData {
+    private fun subtractNutrientsProvidedByComplete
+                (datamodel: RequiredFertilizerData, n: Float, p: Float, k: Float, initialN: Float, amount: Float)
+        : RequiredFertilizerData {
+
+        // Subtracting nutrients provided by complete
         val complete = fertilizers["Complete"]!!
         val nAfterComplete = maxOf(0f, n - (amount * complete.nitrogen / 100))
         val pAfterComplete = maxOf(0f, p - (amount * complete.phosphorus / 100))
         val kAfterComplete = maxOf(0f, k - (amount * complete.potassium / 100))
 
         // Reapply specific fertilizers for remaining requirements
-        return applySpecificFertilizers(datamodel, nAfterComplete, pAfterComplete, kAfterComplete, initialN) // Assuming initialN not needed here
+        return applySpecificFertilizers(datamodel, nAfterComplete, pAfterComplete, kAfterComplete, initialN)
     }
 
-    private fun applySpecificFertilizers(datamodel: RequiredFertilizerData, n: Float, p: Float, k: Float, initialN: Float) : RequiredFertilizerData {
+    private fun applySpecificFertilizers(datamodel: RequiredFertilizerData, n: Float, p: Float, k: Float, initialN: Float)
+        : RequiredFertilizerData {
+        // for (1-1-0 pattern)
         if (n > 0 && p > 0 && k==0f) {
             chooseFertilizerForNutrient(datamodel, n,p,k, "NP", initialN)
         }
         else {
-            if (n > 0) chooseFertilizerForNutrient(datamodel, n,p,k, "N", initialN)
-            if (p > 0) chooseFertilizerForNutrient(datamodel, n,p,k, "P", initialN)
-            if (k > 0) chooseFertilizerForNutrient(datamodel, n,p,k, "K", initialN)
+            if (n > 0) chooseFertilizerForNutrient(datamodel, n,p,k, "N", initialN) // for (1-0-0)
+            if (p > 0) chooseFertilizerForNutrient(datamodel, n,p,k, "P", initialN) // for (0-1-0)
+            if (k > 0) chooseFertilizerForNutrient(datamodel, n,p,k, "K", initialN) // for (0-0-1)
         }
 
         return datamodel
@@ -69,7 +76,7 @@ class FertilizerCalculatorModel {
         when (type) {
             "N" -> {
                 // Choose Urea or Ammonium Sulfate based on initialN level
-                val fertilizerName = if (initialN < 6.6) "Urea" else "Ammonium Sulfate"
+                val fertilizerName = if (initialN < 6.6) "Ammonium Sulfate" else "Urea"
                 val fertilizer = fertilizers[fertilizerName]!!
                 val amountNeeded = nRequirement / (fertilizer.nitrogen / 100)
                 val bagOfFertilizer = (amountNeeded / 50)
@@ -93,9 +100,7 @@ class FertilizerCalculatorModel {
                 assignValue(datamodel, "Muriate of Potash", amountNeeded, bagOfFertilizer)
             }
             "NP" -> {
-                //TODO: CALCULATION FOR AMMONIUM SULFATE
-                // Handle the 1-1-0 pattern specifically where Ammonium Phosphate can cover both N and P
-                // Check if Ammonium Phosphate is a better option
+                // Ammonium Phosphate for (1-1-0) pattern
                 val ammoniumPhosphate = fertilizers["Ammonium Phosphate"]!!
                 var nCoveredByAmp = 0f
                 var pCoveredByAmp = 0f
@@ -126,11 +131,6 @@ class FertilizerCalculatorModel {
                     val bagOfFertilizerN = (amountNeeded / 50)
                     assignValue(datamodel, fertilizerName, amountNeeded, bagOfFertilizerN)
                 }
-
-                // Use Ammonium Phosphate instead of separate N and P fertilizers
-                //result["Ammonium Phosphate"] = maxOf(nRequirement / (ammoniumPhosphate.nitrogen / 100), pRequirement / (ammoniumPhosphate.phosphorus / 100)) //TODO: Remove
-                //val amountNeeded = maxOf(nRequirement / (ammoniumPhosphate.nitrogen / 100), pRequirement / (ammoniumPhosphate.phosphorus / 100))
-
             }
         }
 

@@ -9,7 +9,7 @@ import com.iacademy.smartsoilph.R
 
 class ArduinoController : AppCompatActivity() {
 
-    private lateinit var bluetoothController: BluetoothController
+    private lateinit var bluetoothController: ArduinoBluetoothController
     private lateinit var receivedDataTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,8 +18,8 @@ class ArduinoController : AppCompatActivity() {
 
         receivedDataTextView = findViewById(R.id.received_data_text_view)
 
-        bluetoothController = BluetoothController(this).apply {
-            setDataListener(object : BluetoothController.BluetoothDataListener {
+        bluetoothController = ArduinoBluetoothController(this).apply {
+            setDataListener(object : ArduinoBluetoothController.BluetoothDataListener {
                 override fun onDataReceived(data: String) {
                     runOnUiThread {
                         appendReceivedData(data)
