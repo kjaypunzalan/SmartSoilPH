@@ -8,7 +8,7 @@
     import androidx.localbroadcastmanager.content.LocalBroadcastManager
     import java.util.*
 
-    class BluetoothController(private val context: Context) {
+    class ArduinoBluetoothController(private val context: Context) {
 
         interface BluetoothDataListener {
             fun onDataReceived(data: String)

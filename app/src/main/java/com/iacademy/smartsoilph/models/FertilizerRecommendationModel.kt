@@ -6,7 +6,7 @@ import com.iacademy.smartsoilph.datamodels.RequiredFertilizerData
 
 data class Fertilizer(val name: String, val nitrogen: Float, val phosphorus: Float, val potassium: Float)
 
-class FertilizerCalculatorModel {
+class FertilizerRecommendationModel {
     private val fertilizers = mapOf(
         "Complete" to Fertilizer("Complete", 14f, 14f, 14f),
         "Ammonium Phosphate" to Fertilizer("Ammonium Phosphate", 16f, 20f, 0f),

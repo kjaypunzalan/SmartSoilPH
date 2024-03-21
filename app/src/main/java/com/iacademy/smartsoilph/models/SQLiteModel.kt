@@ -151,42 +151,6 @@ class SQLiteModel(private val context: Context) : SQLiteOpenHelper(context, DATA
         db.close()
     }
 
-    /**
-     * Fetch user data
-     */
-    fun getUserData(userID: String): UserData? {
-        val db = this.readableDatabase
-        var userData: UserData? = null
-
-        val cursor = db.query(
-            TABLE_USER,
-            arrayOf(KEY_USER_ID, KEY_NAME, KEY_EMAIL, KEY_NUMBER), // Specify columns to avoid "SELECT *"
-            "$KEY_USER_ID=?",
-            arrayOf(userID),
-            null,
-            null,
-            null
-        )
-
-        if (cursor.moveToFirst()) {
-            val nameIndex = cursor.getColumnIndex(KEY_NAME)
-            val emailIndex = cursor.getColumnIndex(KEY_EMAIL)
-            val numberIndex = cursor.getColumnIndex(KEY_NUMBER)
-
-            // Check if indexes are valid
-            if (nameIndex != -1 && emailIndex != -1 && numberIndex != -1) {
-                val name = cursor.getString(nameIndex)
-                val email = cursor.getString(emailIndex)
-                val number = cursor.getString(numberIndex).toDouble() // Assuming number is stored as TEXT
-
-                userData = UserData(userID, name, email, number)
-            }
-        }
-        cursor.close()
-        db.close()
-        return userData
-    }
-
     fun getCurrentUserUID(): String? {
         val db = this.readableDatabase
         val selectQuery = "SELECT userID FROM UserTable ORDER BY ROWID DESC LIMIT 1" // Ensure 'userID' matches your column name exactly

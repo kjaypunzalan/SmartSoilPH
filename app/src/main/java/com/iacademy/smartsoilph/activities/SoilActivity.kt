@@ -23,7 +23,7 @@ import com.iacademy.smartsoilph.models.FertilizerNutrientModel
 import com.iacademy.smartsoilph.datamodels.SoilData
 import com.iacademy.smartsoilph.datamodels.RecommendationData
 import com.iacademy.smartsoilph.datamodels.RequiredFertilizerData
-import com.iacademy.smartsoilph.models.FertilizerCalculatorModel
+import com.iacademy.smartsoilph.models.FertilizerRecommendationModel
 import com.iacademy.smartsoilph.models.SQLiteModel
 import com.iacademy.smartsoilph.models.FirebaseModel
 import com.iacademy.smartsoilph.utils.CheckInternet
@@ -339,7 +339,7 @@ class SoilActivity : BaseActivity() {
             val (requiredK, labelK) = calculateRequiredFertilizer(potassium, it.potassiumRequirements)
 
             // Calculate Amount of Fertilizer Recommendation
-            val calculator = FertilizerCalculatorModel()
+            val calculator = FertilizerRecommendationModel()
             val data  = calculator.calculateFertilizerRequirements(
                 requiredN.toFloat(),requiredP.toFloat(),requiredK.toFloat(),nitrogen
             )

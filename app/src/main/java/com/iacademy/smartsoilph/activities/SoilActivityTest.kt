@@ -23,12 +23,12 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.iacademy.smartsoilph.R
-import com.iacademy.smartsoilph.arduino.BluetoothController
+import com.iacademy.smartsoilph.arduino.ArduinoBluetoothController
 import com.iacademy.smartsoilph.models.FertilizerNutrientModel
 import com.iacademy.smartsoilph.datamodels.SoilData
 import com.iacademy.smartsoilph.datamodels.RecommendationData
 import com.iacademy.smartsoilph.datamodels.RequiredFertilizerData
-import com.iacademy.smartsoilph.models.FertilizerCalculatorModel
+import com.iacademy.smartsoilph.models.FertilizerRecommendationModel
 import com.iacademy.smartsoilph.models.SQLiteModel
 import com.iacademy.smartsoilph.models.FirebaseModel
 import com.iacademy.smartsoilph.utils.CheckInternet
@@ -67,7 +67,7 @@ class SoilActivityTest : BaseActivity() {
     private lateinit var auth: FirebaseAuth
 
     //declare btcontroller
-    private lateinit var bluetoothController: BluetoothController
+    private lateinit var bluetoothController: ArduinoBluetoothController
     private var commandSent = false
     //broadcast receiver btcontroller
     private val updateReceiver = object : BroadcastReceiver() {
@@ -141,8 +141,8 @@ class SoilActivityTest : BaseActivity() {
         initializeLayout()
         setupButtonNavigation()
 
-        bluetoothController = BluetoothController(this).apply {
-            setDataListener(object : BluetoothController.BluetoothDataListener {
+        bluetoothController = ArduinoBluetoothController(this).apply {
+            setDataListener(object : ArduinoBluetoothController.BluetoothDataListener {
                 override fun onDataReceived(data: String) {
                     runOnUiThread {
                     }
@@ -399,7 +399,7 @@ class SoilActivityTest : BaseActivity() {
             val (requiredK, labelK) = calculateRequiredFertilizer(potassium, it.potassiumRequirements)
 
             // Calculate Amount of Fertilizer Recommendation
-            val calculator = FertilizerCalculatorModel()
+            val calculator = FertilizerRecommendationModel()
             val data  = calculator.calculateFertilizerRequirements(
                 requiredN.toFloat(),requiredP.toFloat(),requiredK.toFloat(),nitrogen
             )
