@@ -181,15 +181,39 @@ class FertilizerActivity : BaseActivity() {
         val remainingKg = ((fertilizerAmount / 50) - convertedFertilizerBag) * 50
         val adjustedRemainingKg = Math.ceil(remainingKg.toDouble()).toInt()
 
-        return when (fertilizerName) {
-            "Complete" -> { "$convertedFertilizerAmount kg of $fertilizerName (14-14-14). ($convertedFertilizerBag bags + $adjustedRemainingKg kg/ha)" }
-            "Ammonium Phosphate" -> { "$convertedFertilizerAmount kg of $fertilizerName (16-20-0) ($convertedFertilizerBag bags + $adjustedRemainingKg kg/ha)" }
-            "Ammonium Sulfate" -> { "$convertedFertilizerAmount kg of $fertilizerName (21-0-0) ($convertedFertilizerBag bags + $adjustedRemainingKg kg/ha)" }
-            "Urea" -> { "$convertedFertilizerAmount kg of $fertilizerName (46-0-0) ($convertedFertilizerBag bags + $adjustedRemainingKg kg/ha)" }
-            "Duophos" -> { "$convertedFertilizerAmount kg of $fertilizerName (0-22-0) ($convertedFertilizerBag bags + $adjustedRemainingKg kg/ha)" }
-            "Muriate of Potash" -> { "$convertedFertilizerAmount kg of $fertilizerName (0-0-60) ($convertedFertilizerBag bags + $adjustedRemainingKg kg/ha)" }
-            else -> ""
+        if (remainingKg.toInt() == 0) {
+            return when (fertilizerName) {
+                "Complete" -> { "$convertedFertilizerAmount kg of $fertilizerName (14-14-14). ($convertedFertilizerBag bags/ha)" }
+                "Ammonium Phosphate" -> { "$convertedFertilizerAmount kg of $fertilizerName (16-20-0) ($convertedFertilizerBag bags/ha)" }
+                "Ammonium Sulfate" -> { "$convertedFertilizerAmount kg of $fertilizerName (21-0-0) ($convertedFertilizerBag bags/ha)" }
+                "Urea" -> { "$convertedFertilizerAmount kg of $fertilizerName (46-0-0) ($convertedFertilizerBag bags/ha)" }
+                "Duophos" -> { "$convertedFertilizerAmount kg of $fertilizerName (0-22-0) ($convertedFertilizerBag bags/ha)" }
+                "Muriate of Potash" -> { "$convertedFertilizerAmount kg of $fertilizerName (0-0-60) ($convertedFertilizerBag bags/ha)" }
+                else -> ""
+            }
         }
+        else if (convertedFertilizerBag == 0) {
+            return when (fertilizerName) {
+                "Complete" -> { "$convertedFertilizerAmount kg of $fertilizerName (14-14-14). ($adjustedRemainingKg kg/ha)" }
+                "Ammonium Phosphate" -> { "$convertedFertilizerAmount kg of $fertilizerName (16-20-0) ($adjustedRemainingKg kg/ha)" }
+                "Ammonium Sulfate" -> { "$convertedFertilizerAmount kg of $fertilizerName (21-0-0) ($adjustedRemainingKg kg/ha)" }
+                "Urea" -> { "$convertedFertilizerAmount kg of $fertilizerName (46-0-0) ($adjustedRemainingKg kg/ha)" }
+                "Duophos" -> { "$convertedFertilizerAmount kg of $fertilizerName (0-22-0) ($adjustedRemainingKg kg/ha)" }
+                "Muriate of Potash" -> { "$convertedFertilizerAmount kg of $fertilizerName (0-0-60) ($adjustedRemainingKg kg/ha)" }
+                else -> ""
+            }
+        } else {
+            return when (fertilizerName) {
+                "Complete" -> { "$convertedFertilizerAmount kg of $fertilizerName (14-14-14). ($convertedFertilizerBag bags + $adjustedRemainingKg kg/ha)" }
+                "Ammonium Phosphate" -> { "$convertedFertilizerAmount kg of $fertilizerName (16-20-0) ($convertedFertilizerBag bags + $adjustedRemainingKg kg/ha)" }
+                "Ammonium Sulfate" -> { "$convertedFertilizerAmount kg of $fertilizerName (21-0-0) ($convertedFertilizerBag bags + $adjustedRemainingKg kg/ha)" }
+                "Urea" -> { "$convertedFertilizerAmount kg of $fertilizerName (46-0-0) ($convertedFertilizerBag bags + $adjustedRemainingKg kg/ha)" }
+                "Duophos" -> { "$convertedFertilizerAmount kg of $fertilizerName (0-22-0) ($convertedFertilizerBag bags + $adjustedRemainingKg kg/ha)" }
+                "Muriate of Potash" -> { "$convertedFertilizerAmount kg of $fertilizerName (0-0-60) ($convertedFertilizerBag bags + $adjustedRemainingKg kg/ha)" }
+                else -> ""
+            }
+        }
+
     }
 
 
