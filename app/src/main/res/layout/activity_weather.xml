@@ -293,7 +293,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/value_wind"
-                    android:maxWidth="150dp"
+                    android:maxWidth="160dp"
                     android:gravity="center"
                     android:textAppearance="@style/value_wind"/>
 
