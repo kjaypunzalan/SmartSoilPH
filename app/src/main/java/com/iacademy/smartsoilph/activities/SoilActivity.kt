@@ -4,8 +4,13 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
@@ -16,9 +21,11 @@ import android.widget.RadioButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.iacademy.smartsoilph.R
+import com.iacademy.smartsoilph.arduino.ArduinoBluetoothController
 import com.iacademy.smartsoilph.models.FertilizerNutrientModel
 import com.iacademy.smartsoilph.datamodels.SoilData
 import com.iacademy.smartsoilph.datamodels.RecommendationData
@@ -35,13 +42,13 @@ class SoilActivity : BaseActivity() {
 
     //declare layout variables
     private lateinit var actvCropType: AutoCompleteTextView
-    private lateinit var etNitrogen: EditText
-    private lateinit var etPhosphorus: EditText
-    private lateinit var etPotassium: EditText
-    private lateinit var etPHLevel: EditText
-    private lateinit var etECLevel: EditText
-    private lateinit var etHumidity: EditText
-    private lateinit var etTemperature: EditText
+    private lateinit var etNitrogen: TextView
+    private lateinit var etPhosphorus: TextView
+    private lateinit var etPotassium: TextView
+    private lateinit var etPHLevel: TextView
+    private lateinit var etECLevel: TextView
+    private lateinit var etHumidity: TextView
+    private lateinit var etTemperature: TextView
     private lateinit var btnFilter: ImageView
     private lateinit var btnViewRecommendation: CardView
     private lateinit var btnRetrieveData: CardView
@@ -61,8 +68,88 @@ class SoilActivity : BaseActivity() {
     //declare Firebase variables
     private lateinit var auth: FirebaseAuth
 
+    //declare btcontroller
+    private lateinit var bluetoothController: ArduinoBluetoothController
+
+    private var commandSent = false
+    private val handler = Handler(Looper.getMainLooper())
+    private val sendCommandRunnable = object : Runnable {
+        override fun run() {
+            bluetoothController.sendCommand("1")
+            handler.postDelayed(this, 20000)  // Schedule the next execution after 20 seconds
+        }
+    }
+
+
+    //broadcast receiver btcontroller
+    private val updateReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (intent?.action == "com.iacademy.smartsoilph.arduino.ACTION_UPDATE_DATA") {
+
+                //get parameter values
+                val val1 = intent.getStringExtra("val1") ?: ""
+                val val2 = intent.getStringExtra("val2") ?: ""
+                val val3 = intent.getStringExtra("val3") ?: ""
+                val val4 = intent.getStringExtra("val4") ?: ""
+                val val5 = intent.getStringExtra("val5") ?: ""
+                val val6 = intent.getStringExtra("val6") ?: ""
+                val val7 = intent.getStringExtra("val7") ?: ""
+
+                //set initial text
+                etNitrogen.setText(val1)
+                etPhosphorus.setText(val2)
+                etPotassium.setText(val3)
+                etPHLevel.setText(val4)
+                etECLevel.setText(val5)
+                etHumidity.setText(val6)
+                etTemperature.setText(val7)
+
+                // nitrogen error correction
+                val nitrogenPPM = etNitrogen.text.toString().toFloatOrNull() ?: 0.0F
+                val nitrogen = (nitrogenPPM / 14)
+                val nitrogenString = nitrogen.toString()
+                etNitrogen.setText(nitrogenString)
+
+                // phosphorus error correction
+                val phosphorusPPM = etPhosphorus.text.toString().toFloatOrNull() ?: 0.0F
+                val phosphorus = (phosphorusPPM / 100) * 4
+                val phosphorusString = phosphorus.toString()
+                etPhosphorus.setText(phosphorusString)
+
+                // potassium error correction
+                val potassiumPPM = etPotassium.text.toString().toFloatOrNull() ?: 0.0F
+                val potassium = (potassiumPPM * 2)
+                val potassiumString = potassium.toString()
+                etPotassium.setText(potassiumString)
+
+                // ec level us/cm to ms/cm conversion (this is not error correction)
+                val ecPercent = etECLevel.text.toString().toFloatOrNull() ?: 0.0F
+                val ecLevel = (ecPercent / 1000)
+                val ecLevelString = potassium.toString()
+                etECLevel.setText(ecLevelString)
+
+                // retrieve data again if it contains N/A
+                val list = listOf(etNitrogen.text.toString(), etPhosphorus.text.toString(), etPotassium.text.toString(), etPHLevel.text.toString(), etECLevel.text.toString(), etHumidity.text.toString(), etTemperature.text.toString())
+                Log.e("LIST", "LIST: $list")
+                // Check if any TextView contains "N/A" or is null
+                val containsNA = listOf(etNitrogen, etPhosphorus, etPotassium, etPHLevel, etECLevel, etHumidity, etTemperature)
+                    .any { it.text.toString().equals("N/A", ignoreCase = true) }
+
+                if (containsNA && !commandSent) {
+                    bluetoothController.sendCommand("1")
+                    commandSent = true
+                    handler.removeCallbacks(sendCommandRunnable) // Stop the periodic execution
+                } else if (!containsNA && commandSent) {
+                    commandSent = false // Reset the flag to allow re-sending the command if conditions meet again
+                    handler.postDelayed(sendCommandRunnable, 20000) // Schedule the first execution
+                }
+            }
+        }
+    }
+
     override fun onResume() {
         super.onResume()
+        LocalBroadcastManager.getInstance(this).registerReceiver(updateReceiver, IntentFilter("com.iacademy.smartsoilph.arduino.ACTION_UPDATE_DATA"))
 
         //dropdown
         val crops = resources.getStringArray(R.array.crops)
@@ -74,11 +161,12 @@ class SoilActivity : BaseActivity() {
 
     override fun onPause() {
         super.onPause()
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(updateReceiver)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_soil)
+        setContentView(R.layout.activity_soil_test)
 
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
@@ -86,6 +174,25 @@ class SoilActivity : BaseActivity() {
         // initialize layout and button navigations
         initializeLayout()
         setupButtonNavigation()
+
+        bluetoothController = ArduinoBluetoothController(this).apply {
+            setDataListener(object : ArduinoBluetoothController.BluetoothDataListener {
+                override fun onDataReceived(data: String) {
+                    runOnUiThread {
+                    }
+                }
+            })
+        }
+
+        if (!bluetoothController.connect()) {
+            // Show a message if failed to connect
+        }
+
+        //sensor retrieve button
+        val fabRetrieveData = findViewById<FloatingActionButton>(R.id.fab_retrieveData)
+        fabRetrieveData.setOnClickListener {
+            bluetoothController.sendCommand("1")
+        }
     }
 
     //show overlay
@@ -180,17 +287,16 @@ class SoilActivity : BaseActivity() {
         // Button Logistics
         btnFilter.setOnClickListener {
             Log.d("STATE", "FILTER CLICKEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED")
-            showGradeDialog()
+            showSoilTextureDialog()
         }
 
         //fab view recommendation
         fabViewRecommend.setOnClickListener {
             Log.d("STATE", "VIEW RECOMMENDATION CLICKEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED ")
-            isSoilTextureSelected = true
             if (isSoilTextureSelected) {
                 recommendation()
             } else {
-                Toast.makeText(this, "Please select a soil texture first", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.dialog_soil_texture1, Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -222,6 +328,11 @@ class SoilActivity : BaseActivity() {
             }
         }
 
+        //cardview retrieve data
+        btnRetrieveData.setOnClickListener {
+            bluetoothController.sendCommand("1")
+        }
+
 
         btnReturn.setOnClickListener{
             val intent = Intent(this, HomeActivity::class.java)
@@ -247,9 +358,9 @@ class SoilActivity : BaseActivity() {
     }
 
     /*****************************
-     * A. Show Soil Texture
+     * A. Show Grade Dialog
      ***************************/
-    private fun showGradeDialog() {
+    private fun showSoilTextureDialog() {
         val dialog = Dialog(this)
         dialog.setContentView(R.layout.dialog_choose_grade)
 
@@ -276,11 +387,6 @@ class SoilActivity : BaseActivity() {
                 }
             }
         }
-
-        // Auto select "Clay" or "gs_9"
-        val clayRadioButton = dialog.findViewById<RadioButton>(R.id.gs_9)
-        clayRadioButton.isChecked = true
-        selectedRadioButton = clayRadioButton
 
         // Initialize Apply button
         val btnApply = dialog.findViewById<CardView>(R.id.btn_apply)
@@ -343,6 +449,9 @@ class SoilActivity : BaseActivity() {
             val data  = calculator.calculateFertilizerRequirements(
                 requiredN.toFloat(),requiredP.toFloat(),requiredK.toFloat(),nitrogen
             )
+
+            // Calculate Bags of Fertilizer Recommendation
+
 
             /******************************
              * Pass values to Soil DataModel
@@ -407,6 +516,9 @@ class SoilActivity : BaseActivity() {
                 // Save in cloud
                 FirebaseModel().saveSoilData(soilData, auth)
                 FirebaseModel().saveRecommendation(recommendationData, auth)
+                //Sync Database
+                dbHelper.syncDataWithFirebase(auth)
+                Toast.makeText(this, R.string.dialog_sync_database_result, Toast.LENGTH_SHORT).show()
             } else {
                 // Internet is NOT available - add to SQLite
                 dbHelper.addSoilData(recommendationData)  // Save the soil data to the SQLite database
@@ -433,4 +545,11 @@ class SoilActivity : BaseActivity() {
         // Return the corresponding fertilizer amount and label
         return requirementEntry?.value ?: Pair(0, "Unknown")
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        bluetoothController.disconnect()
+    }
+
+
 }
