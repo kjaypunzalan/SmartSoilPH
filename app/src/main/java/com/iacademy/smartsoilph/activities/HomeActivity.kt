@@ -415,7 +415,7 @@ class HomeActivity : BaseActivity() {
         }
 
         //TODO: Add MAC Address if possible. Remove if not.
-        val deviceAddress = "00:11:22:33:AA:BB" // MAC address of the Bluetooth device
+        val deviceAddress = "88:4A:EA:98:22:E7" // MAC address of the Bluetooth device
         val device = bluetoothAdapter.getRemoteDevice(deviceAddress)
 
         try {
@@ -430,7 +430,7 @@ class HomeActivity : BaseActivity() {
 
             // Here you would actually connect to the device. This could involve creating a socket, for example.
             // For simplicity, we're just showing a message.
-            Toast.makeText(this, "Connecting to device: $deviceAddress", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Connecting to IoT device", Toast.LENGTH_SHORT).show()
 
             // Assuming you have a method to connect to the device
             // connectToDevice(device)
