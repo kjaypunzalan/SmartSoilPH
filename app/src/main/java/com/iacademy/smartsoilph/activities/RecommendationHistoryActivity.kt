@@ -51,15 +51,17 @@ class RecommendationHistoryActivity : BaseActivity(), RecyclerOnItemClickListene
             rvRecommendationHistory.scrollToPosition(0)
         }
 
-        //shows fab when user scrolls downs & hides when view is at top
         rvRecommendationHistory.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                if (dy > 0) {
-                    // User is scrolling down
+                // Check if the RecyclerView is close to the top
+                val isCloseToTop = !recyclerView.canScrollVertically(-1)
+
+                if (dy > 0 || !isCloseToTop) {
+                    // User is scrolling down or not close to the top, show the FAB
                     fabScrollToTop.show()
-                } else if (dy < 0) {
-                    // User is scrolling up
+                } else if (isCloseToTop) {
+                    // User is close to the top, hide the FAB
                     fabScrollToTop.hide()
                 }
             }

@@ -28,6 +28,10 @@ class LoginActivity : BaseActivity() {
     private lateinit var ivLock: ImageView
     private lateinit var ivEmail: ImageView
 
+    private lateinit var cvQuestion: CardView
+    private lateinit var cvWeb: CardView
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_page2)
@@ -47,15 +51,21 @@ class LoginActivity : BaseActivity() {
         }
 
         // Initialize views
+        cvWeb = findViewById(R.id.cv_web)
+
         ivLock = findViewById(R.id.iv_lock)
         ivEmail = findViewById(R.id.iv_email)
         emailEditText = findViewById(R.id.editTextMobileNumber)  // Replace with your actual EditText ID for email
         passwordEditText = findViewById(R.id.editTextPassword)  // Replace with your actual EditText ID for password
         val loginButton = findViewById<CardView>(R.id.buttonSignIn)  // Replace with your actual Button ID
-        showLanguageDialog()
 
         loginButton.setOnClickListener {
             loginUser()
+        }
+
+        cvWeb.setOnClickListener {
+            showLanguageDialog()
+
         }
 
 

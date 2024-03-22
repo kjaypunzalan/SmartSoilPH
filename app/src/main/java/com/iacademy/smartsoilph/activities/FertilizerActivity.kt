@@ -60,9 +60,9 @@ class FertilizerActivity : BaseActivity() {
             val scaleWidth = ivphScale.width // Full width of the pH scale
             val scaleStartX = ivphScale.x // Starting X position of the pH scale
 
-            // Calculate the position for the slider based on the pH value.
-            // This ratio will need to be adjusted if your scale doesn't start exactly at the edge of the ImageView.
-            val positionRatio = pH / 14.0f
+            // If the pH is greater than 14, use 14 as the value to calculate the position
+            val effectivePH = pH.coerceAtMost(14.0f)
+            val positionRatio = effectivePH / 14.0f
             val targetPositionX = scaleStartX + positionRatio * scaleWidth
 
             // Adjust for the width of the slider so the arrow points exactly at the pH value.

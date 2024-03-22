@@ -314,6 +314,18 @@ class SoilActivityTest : BaseActivity() {
 
         overlayView.setOnClickListener {
             overlayView.visibility = View.GONE
+            if (overlayView.visibility == View.GONE){
+                rotate = rotateFab(fabSettings, false) // Rotate the fab back to its original position
+                showOut(fabViewRecommend)
+                showOut(fabRetrieveData)
+                showOut(btnViewRecommendation)
+                showOut(btnRetrieveData)
+            }else{
+                showIn(fabViewRecommend)
+                showIn(fabRetrieveData)
+                showIn(btnViewRecommendation)
+                showIn(btnRetrieveData)
+            }
         }
 
         //cardview retrieve data
