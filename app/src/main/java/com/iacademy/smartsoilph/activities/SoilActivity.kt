@@ -107,25 +107,25 @@ class SoilActivity : BaseActivity() {
                 // nitrogen error correction
                 val nitrogenPPM = etNitrogen.text.toString().toFloatOrNull() ?: 0.0F
                 val nitrogen = (nitrogenPPM / 14)
-                val nitrogenString = nitrogen.toString()
+                val nitrogenString = String.format("%.2f", nitrogen)
                 etNitrogen.setText(nitrogenString)
 
                 // phosphorus error correction
                 val phosphorusPPM = etPhosphorus.text.toString().toFloatOrNull() ?: 0.0F
                 val phosphorus = (phosphorusPPM / 100) * 4
-                val phosphorusString = phosphorus.toString()
+                val phosphorusString = String.format("%.2f", phosphorus)
                 etPhosphorus.setText(phosphorusString)
 
                 // potassium error correction
                 val potassiumPPM = etPotassium.text.toString().toFloatOrNull() ?: 0.0F
                 val potassium = (potassiumPPM * 2)
-                val potassiumString = potassium.toString()
+                val potassiumString = String.format("%.2f", potassium)
                 etPotassium.setText(potassiumString)
 
                 // ec level us/cm to ms/cm conversion (this is not error correction)
                 val ecPercent = etECLevel.text.toString().toFloatOrNull() ?: 0.0F
                 val ecLevel = (ecPercent / 1000)
-                val ecLevelString = potassium.toString()
+                val ecLevelString = String.format("%.2f", ecLevel)
                 etECLevel.setText(ecLevelString)
 
                 // retrieve data again if it contains N/A
