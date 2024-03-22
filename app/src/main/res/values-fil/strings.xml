@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="feature_title">Datos ng Lupa</string>
-    <string name="feature_title2">Pagtaya ng Weather</string>
+    <string name="feature_title2">Pagtaya ng Panahon</string>
     <string name="feature_title3">Mga Ulat at Istatistika</string>
     <string name="feature_title4">Nakaraang Rekomendasyon</string>
     <string name="feature_title5">Rekomendasyon ng Pataba</string>
-    <string name="feature_title6">Tulong o Manwal</string>
+    <string name="feature_title6">Manwal sa Paggamit</string>
     <string name="location_info">Kasalukuyang panahon sa...</string>
     <string name="humidity">Kahalumigmigan</string>
-    <string name="temperature2">Temperature</string>
+    <string name="temperature2">Pag-Ulan</string>
     <string name="wind">Bilis ng Hangin</string>
     <string name="soil_title">Kasalukuyang lupa...</string>
     <string name="soil_info">Pananim</string>
@@ -18,7 +18,7 @@
     <string name="weather_button">Panahon</string>
     <string name="reports_button">Ulat</string>
     <string name="bluetooth_button">"Kumonekta sa Bluetooth"</string>
-    <string name="manual_button">Tulong</string>
+    <string name="manual_button">Manwal sa Paggamit</string>
     <string name="title_recommend">Rekomendasyon</string>
     <string name="return_soil">Bumalik sa Data ng Lupa</string>
     <string name="previous_data">Mga Nakaraang Rekomendasyon</string>
@@ -47,7 +47,6 @@
     <string name="sub_summary4">Sa kabuuan, ang iyong kamakailang antas ng pH ng lupa ay ang kalusugan ay %.0f.</string>
     <string name="sub_summary44">Your recent soil pH level health is %.0f.</string>
     <string name="sub_summary5">Kamakailan, ang NPK nutrient na kinakailangan ng iyong lupa ay %1$s.</string>
-    <string name="manu_title">Isang gabay na ginawa para sa iyo...</string>
 
     <string name="home_txt1">Anong gusto mong gawin?</string>
     <string name="history_button">Nakaraang Datos ng Pataba</string>
@@ -124,4 +123,27 @@
     <string name="dialog_verification_email_sent_content2">"Ipinadala ang email ng pagpapatunay sa: %1$s "</string>
     <string name="dialog_soil_texture1">"Mangyaring pumili muna ng texture ng lupa "</string>
 
+    <!--Activity Manual===================================================-->
+    <string name="manu_title">Isang gabay na ginawa para sa iyo...</string>
+    <string name="manu_desc">Parehas na nakasulat sa Ingles at Tagalog. Pindutin alin man sa dalawang pagpipilitan sa ibaba para mai-download ito sa pormat ng PDF.</string>
+    <string name="manu_us">Ingles na Manual</string>
+    <string name="manu_ph">Tagalog na Manual</string>
+    <!--=================================================================-->
+
+    <!--Activity Login===================================================-->
+    <string name="welcome_tag">Maligayang Pagbalik!</string>
+    <string name="login_tag">Mag-Login In</string>
+    <string name="login_desc_tag">Pakilagay ng iyong mga detalye</string>
+    <string name="forgotpass_tag">Nalimutan ang iyong password?</string>
+    <string name="click_tag">Pindutin ito</string>
+    <string name="signin_tag">Mag-Sign In</string>
+    <string name="acc_tag">Wala ka pang account?</string>
+    <string name="signup_here_tag">Mag-Sign Up</string>
+    <string name="signup_desc_tag">Pakilagay ng iyong mga detalye</string>
+    <string name="acc_have_tag">May account ka na?</string>
+
+    <string name="forgotpass_desc_tag">Pakilagay ang iyong nakarehistrong email address</string>
+    <string name="forgotpass_submit_tag">I-Submit</string>
+
+    <!--=================================================================-->
 </resources>

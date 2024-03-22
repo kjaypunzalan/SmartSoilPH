@@ -1,13 +1,18 @@
 package com.iacademy.smartsoilph.activities
 
 import android.annotation.SuppressLint
+import android.content.ContentValues
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.pdf.PdfDocument
+import android.media.MediaScannerConnection
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -492,9 +497,14 @@ class ReportsActivity : BaseActivity() {
     }
 
     private fun notifyMediaScanner(file: File) {
-        val intent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
-        intent.data = Uri.fromFile(file)
-        sendBroadcast(intent)
+        MediaScannerConnection.scanFile(
+            this,
+            arrayOf(file.absolutePath),
+            null
+        ) { path, uri ->
+            Log.d("MediaScanner", "Scanned $path:")
+            Log.d("MediaScanner", "-> uri=$uri")
+        }
     }
 
     /***********************************
@@ -524,22 +534,46 @@ class ReportsActivity : BaseActivity() {
     }
 
     private fun savePdfToStorage(pdfDocument: PdfDocument) {
-        val path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString()
         val fileName = "Reports_${System.currentTimeMillis()}.pdf"
-        val file = File(path, fileName)
 
         try {
-            val outputStream = FileOutputStream(file)
-            pdfDocument.writeTo(outputStream)
-            pdfDocument.close()
-            outputStream.close()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                val values = ContentValues().apply {
+                    put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
+                    put(MediaStore.MediaColumns.MIME_TYPE, "application/pdf")
+                    put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS)
+                }
 
-            // Notify the user or update UI
-            Toast.makeText(this, "PDF Report saved to Downloads folder as $fileName", Toast.LENGTH_LONG).show()
+                val resolver = contentResolver
+                val uri = resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, values)
+                resolver.openOutputStream(uri ?: return).use { outputStream ->
+                    pdfDocument.writeTo(outputStream ?: return)
+                    pdfDocument.close()
+                    outputStream?.close()
+                }
+
+                Toast.makeText(this, "PDF Report saved to Downloads folder as $fileName", Toast.LENGTH_LONG).show()
+            } else {
+                // Check and request for permission in pre-Android 10 devices
+                // This part remains unchanged in your code
+                // Remember to handle onRequestPermissionsResult for the permission result
+                val path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString()
+                val file = File(path, fileName)
+                val outputStream = FileOutputStream(file)
+                pdfDocument.writeTo(outputStream)
+                pdfDocument.close()
+                outputStream.close()
+
+                // Notify media scanner
+                MediaScannerConnection.scanFile(this, arrayOf(file.toString()), null, null)
+
+                Toast.makeText(this, "PDF Report saved to Downloads folder as $fileName", Toast.LENGTH_LONG).show()
+            }
         } catch (e: IOException) {
             e.printStackTrace()
             Toast.makeText(this, "Failed to save PDF report", Toast.LENGTH_LONG).show()
         }
     }
+
 
 }

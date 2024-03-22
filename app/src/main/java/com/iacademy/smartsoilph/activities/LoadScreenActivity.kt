@@ -28,11 +28,5 @@ class LoadScreenActivity : BaseActivity() {
                 }
             }, 2500) // Delay for the load screen, here set to 2 seconds
 
-//        val randomDelay = Random().nextInt(1000) + 1500
-//        Handler(Looper.getMainLooper()).postDelayed({
-//            startActivity(Intent(this, HomeActivity::class.java))
-//            finish()
-//        }, randomDelay.toLong())
-
     }
 }
