@@ -340,7 +340,61 @@
 
                 <!-- Horizontal Divider -->
                 <View
-                    android:id="@+id/hd_5"
+                    android:id="@+id/hd_7"
+                    android:layout_width="300dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="150dp"
+                    android:background="@drawable/custom_scroll_bar_divider"
+                    app:layout_constraintEnd_toEndOf="@id/cl_1"
+                    app:layout_constraintStart_toStartOf="@id/cl_1"
+                    app:layout_constraintTop_toBottomOf="@id/tv_lc_sum2" />
+
+                <!-- Bar Chart Title-->
+                <TextView
+                    android:id="@+id/tv_bar_chart2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/stat_sub_title6"
+                    android:textAppearance="@style/sub_title"
+                    android:textColor="@color/black_50"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/hd_7" />
+
+                <!-- Bar Chart -->
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/barChart2"
+                    android:layout_width="0dp"
+                    android:layout_height="200dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="30dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_bar_chart2" />
+
+                <!-- Bar Chart Summary-->
+                <TextView
+                    android:id="@+id/tv_bc_sum2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="30dp"
+                    android:gravity="center"
+                    android:maxWidth="350dp"
+                    android:text="@string/sub_summary6"
+                    android:textAppearance="@style/sub_summary"
+                    android:textColor="@color/black_50"
+                    app:layout_constraintEnd_toEndOf="@id/cl_1"
+                    app:layout_constraintStart_toStartOf="@id/cl_1"
+                    app:layout_constraintTop_toBottomOf="@id/barChart2" />
+
+                <!-- Horizontal Divider -->
+                <View
+                    android:id="@+id/hd_8"
                     android:layout_width="300dp"
                     android:layout_height="1dp"
                     android:layout_marginTop="15dp"
@@ -348,7 +402,61 @@
                     android:background="@drawable/custom_scroll_bar_divider"
                     app:layout_constraintEnd_toEndOf="@id/cl_1"
                     app:layout_constraintStart_toStartOf="@id/cl_1"
-                    app:layout_constraintTop_toBottomOf="@id/tv_lc_sum2" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_bc_sum2" />
+
+                <!-- Line Chart Title-->
+                <TextView
+                    android:id="@+id/tv_line_chart3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/stat_sub_title7"
+                    android:textAppearance="@style/sub_title"
+                    android:textColor="@color/black_50"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/hd_8" />
+
+                <!-- Line Chart 2-->
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/lineChart3"
+                    android:layout_width="0dp"
+                    android:layout_height="200dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="30dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_line_chart3" />
+
+                <!-- Line Chart Summary-->
+                <TextView
+                    android:id="@+id/tv_lc_sum3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="30dp"
+                    android:gravity="center"
+                    android:maxWidth="350dp"
+                    android:text="@string/sub_summary7"
+                    android:textAppearance="@style/sub_summary"
+                    android:textColor="@color/black_50"
+                    app:layout_constraintEnd_toEndOf="@id/cl_1"
+                    app:layout_constraintStart_toStartOf="@id/cl_1"
+                    app:layout_constraintTop_toBottomOf="@id/lineChart3" />
+
+                <!-- Horizontal Divider -->
+                <View
+                    android:id="@+id/hd_5"
+                    android:layout_width="300dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="150dp"
+                    android:background="@drawable/custom_scroll_bar_divider"
+                    app:layout_constraintEnd_toEndOf="@id/cl_1"
+                    app:layout_constraintStart_toStartOf="@id/cl_1"
+                    app:layout_constraintTop_toBottomOf="@id/tv_lc_sum3" />
 
                 <!-- Bar Chart Title-->
                 <TextView
@@ -375,24 +483,11 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_bar_chart" />
 
-                <!-- Horizontal Divider -->
-                <View
-                    android:id="@+id/hd_6"
-                    android:layout_width="300dp"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:background="@drawable/custom_scroll_bar_divider"
-                    app:layout_constraintEnd_toEndOf="@id/cl_1"
-                    app:layout_constraintStart_toStartOf="@id/cl_1"
-                    app:layout_constraintTop_toBottomOf="@id/barChart1" />
-
                 <!-- Bar Chart Summary-->
                 <TextView
                     android:id="@+id/tv_bc_sum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="30dp"
                     android:layout_marginStart="30dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="30dp"
@@ -401,10 +496,22 @@
                     android:text="@string/sub_summary5"
                     android:textAppearance="@style/sub_summary"
                     android:textColor="@color/black_50"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/cl_1"
                     app:layout_constraintStart_toStartOf="@id/cl_1"
                     app:layout_constraintTop_toBottomOf="@id/barChart1" />
+
+                <!-- Horizontal Divider -->
+                <View
+                    android:id="@+id/hd_6"
+                    android:layout_width="300dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="30dp"
+                    android:background="@drawable/custom_scroll_bar_divider"
+                    app:layout_constraintEnd_toEndOf="@id/cl_1"
+                    app:layout_constraintStart_toStartOf="@id/cl_1"
+                    app:layout_constraintTop_toBottomOf="@id/tv_bc_sum"
+                    app:layout_constraintBottom_toBottomOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </FrameLayout>

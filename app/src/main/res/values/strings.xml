@@ -255,12 +255,18 @@
     <string name="stat_sub_title3">Cumulative Fertilizer Usage</string>
     <string name="stat_sub_title4">Soil pH Trend</string>
     <string name="stat_sub_title5">Monthly Average Soil NPK</string>
+    <string name="stat_sub_title6">Soil Sample Entry</string>
+    <string name="stat_sub_title7">Weekly Soil Enrty</string>
+
     <string name="sub_summary1">There are a total of %1$d Firebase saves, %2$d SQLite saves, and %3$d total saves within the last 7 days.</string>
     <string name="sub_summary2">You have %.0f acidic soils, %.0f neutral soils, and %.0f alkaline soils within the last 7 days.</string>
     <string name="sub_summary3">In total, you have accumulated %.0f fertilizer usage during your lifetime.</string>
     <string name="sub_summary4">Your recent soil pH level health is %.0f, indicating Alkaline. It\'s not bad for your soil but you might want to aim for an average 5.5-6.5.</string>
     <string name="sub_summary44">Your recent soil pH level health is %.0f, indicating Acidity. It\'s bad for your soil and you might want to consult on how to get it to average 5.5-6.5.</string>
     <string name="sub_summary5">Recently, your soil\'s NPK nutrient requirement is %1$s.</string>
+    <string name="sub_summary6">Soil sample entry</string>
+    <string name="sub_summary7">Soil sample entry</string>
+
     <!--=================================================================-->
 
     <!--Activity Manual===================================================-->
