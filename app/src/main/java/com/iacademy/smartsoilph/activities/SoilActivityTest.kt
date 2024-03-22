@@ -308,7 +308,7 @@ class SoilActivityTest : BaseActivity() {
                 overlayView.visibility = View.GONE
             } else {
                 overlayView.visibility = View.VISIBLE
-            }
+
             toggleFabMode(it)
         }
 
