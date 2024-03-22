@@ -342,4 +342,12 @@
 		<item name="android:textColor">@color/main_blue</item>
 	</style>
 
+	<style name="CustomDropdownStyle" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
+		<item name="colorControlActivated">@color/white</item>
+		<item name="colorControlHighlight">@color/white</item>
+		<item name="android:textColorSecondary">@color/white</item>
+		<item name="boxStrokeColor">@color/white</item>
+		<!-- other style properties -->
+	</style>
+
 </resources>

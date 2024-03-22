@@ -309,6 +309,20 @@
 
     <!--=================================================================-->
 
+    <!--Activity Manual===================================================-->
+    <string name="welcome_tag">Welcome Back!</string>
+    <string name="login_tag">Log In</string>
+    <string name="login_desc_tag">Please login your credentials</string>
+    <string name="forgotpass_tag">Forgot your password?</string>
+    <string name="click_tag">Click here</string>
+    <string name="signin_tag">Sign In</string>
+    <string name="acc_tag">Don\'t have an account?</string>
+    <string name="signup_here_tag">Sign Up</string>
+    <string name="signup_desc_tag">Please register your information</string>
+    <string name="acc_have_tag">Already have an account?</string>
 
+    <string name="forgotpass_desc_tag">Enter registered email address</string>
+    <string name="forgotpass_submit_tag">Submit</string>
+    <!--=================================================================-->
 
 </resources>

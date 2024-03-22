@@ -77,7 +77,8 @@
                     android:text="@string/manu_title"
                     android:textAppearance="@style/act_title"
                     app:layout_constraintStart_toStartOf="@id/cl_1"
-                    app:layout_constraintTop_toTopOf="@id/cl_1"/>
+                    app:layout_constraintTop_toTopOf="@id/cl_1"
+                    android:maxWidth="350dp"/>
 
                 <!-- Horizontal Divider -->
                 <View
@@ -127,7 +128,7 @@
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
                         android:padding="10dp"
-                        android:background="@color/semi_light_red">
+                        android:background="@color/light_red">
 
                         <ImageView
                             android:layout_width="60dp"
@@ -173,7 +174,7 @@
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
                         android:padding="10dp"
-                        android:background="@color/semi_light_blue">
+                        android:background="@color/light_blue">
 
                         <ImageView
                             android:layout_width="60dp"

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="feature_title">Datos ng Lupa</string>
-    <string name="feature_title2">Pagtaya ng Weather</string>
+    <string name="feature_title2">Pagtaya ng Panahon</string>
     <string name="feature_title3">Mga Ulat at Istatistika</string>
     <string name="feature_title4">Nakaraang Rekomendasyon</string>
     <string name="feature_title5">Rekomendasyon ng Pataba</string>
-    <string name="feature_title6">Tulong o Manwal</string>
+    <string name="feature_title6">Manwal sa Paggamit</string>
     <string name="location_info">Kasalukuyang panahon sa...</string>
     <string name="humidity">Kahalumigmigan</string>
     <string name="temperature2">Temperature</string>
@@ -18,7 +18,7 @@
     <string name="weather_button">Panahon</string>
     <string name="reports_button">Ulat</string>
     <string name="bluetooth_button">"Kumonekta sa Bluetooth"</string>
-    <string name="manual_button">Tulong</string>
+    <string name="manual_button">Manwal sa Paggamit</string>
     <string name="title_recommend">Rekomendasyon</string>
     <string name="return_soil">Bumalik sa Data ng Lupa</string>
     <string name="previous_data">Mga Nakaraang Rekomendasyon</string>
@@ -130,4 +130,20 @@
     <string name="manu_ph">Tagalog na Manual</string>
     <!--=================================================================-->
 
+    <!--Activity Login===================================================-->
+    <string name="welcome_tag">Maligayang Pagbalik!</string>
+    <string name="login_tag">Mag-Login In</string>
+    <string name="login_desc_tag">Pakilagay ng iyong mga detalye</string>
+    <string name="forgotpass_tag">Nalimutan ang iyong password?</string>
+    <string name="click_tag">Pindutin ito</string>
+    <string name="signin_tag">Mag-Sign In</string>
+    <string name="acc_tag">Wala ka pang account?</string>
+    <string name="signup_here_tag">Mag-Sign Up</string>
+    <string name="signup_desc_tag">Pakilagay ng iyong mga detalye</string>
+    <string name="acc_have_tag">May account ka na?</string>
+
+    <string name="forgotpass_desc_tag">Pakilagay ang iyong nakarehistrong email address</string>
+    <string name="forgotpass_submit_tag">I-Submit</string>
+
+    <!--=================================================================-->
 </resources>
