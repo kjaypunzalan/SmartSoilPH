@@ -407,6 +407,9 @@ class SoilActivity : BaseActivity() {
                 // Save in cloud
                 FirebaseModel().saveSoilData(soilData, auth)
                 FirebaseModel().saveRecommendation(recommendationData, auth)
+                //Sync Database
+                dbHelper.syncDataWithFirebase(auth)
+                Toast.makeText(this, R.string.dialog_sync_database_result, Toast.LENGTH_SHORT).show()
             } else {
                 // Internet is NOT available - add to SQLite
                 dbHelper.addSoilData(recommendationData)  // Save the soil data to the SQLite database
