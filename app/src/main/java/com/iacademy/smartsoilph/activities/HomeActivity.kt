@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -131,7 +130,6 @@ class HomeActivity : BaseActivity() {
 
     private fun setupButtonNavigation() {
         // set click listeners for buttons
-        setButtonClickListener(btnSoil, SoilActivity::class.java)
         setButtonClickListener(btnReports, ReportsActivity::class.java)
         setButtonClickListener(btnRecommendationHistory, RecommendationHistoryActivity::class.java)
         setButtonClickListener(btnManual, ManualActivity::class.java)
@@ -160,6 +158,31 @@ class HomeActivity : BaseActivity() {
             btnSwitch.isChecked = !btnSwitch.isChecked
         }
 
+        btnSoil.setOnClickListener {
+            // Perform actions based on the new state of the switch
+            if (!btnSwitch.isChecked) {
+                // Code to execute when the switch is turned ON
+                try {
+                    // Your Bluetooth connection code here...
+                    requestBluetoothPermissions()
+                } catch (e: RuntimeException) {
+                    showAlertToTurnOnBluetooth()
+                } catch (e: SecurityException) {
+                    showAlertToTurnOnBluetooth()
+                }
+            } else {
+                if (!bluetoothAdapter.isEnabled) {
+                    btnSwitch.isChecked = !btnSwitch.isChecked
+                } else {
+                    val intent = Intent(this, SoilActivity::class.java)
+                    intent.putExtra(LoadScreenActivity.EXTRA_TARGET_ACTIVITY, SoilActivity::class.java.name) // loads loading screen before targetActivity
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                    startActivity(intent)
+                    finish()
+                }
+            }
+        }
+
         //bluetooth connect
         btnBtConnect.setOnClickListener {
 
@@ -178,7 +201,8 @@ class HomeActivity : BaseActivity() {
                 if (!bluetoothAdapter.isEnabled) {
                     btnSwitch.isChecked = !btnSwitch.isChecked
                 } else {
-                    val intent = Intent(this, SoilActivityTest::class.java)
+                    val intent = Intent(this, SoilActivity::class.java)
+                    intent.putExtra(LoadScreenActivity.EXTRA_TARGET_ACTIVITY, SoilActivity::class.java.name) // loads loading screen before targetActivity
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                     startActivity(intent)
                     finish()
@@ -362,7 +386,7 @@ class HomeActivity : BaseActivity() {
         if (requestCode == REQUEST_ENABLE_BT && resultCode == RESULT_OK) {
             // User agreed to enable Bluetooth, start the activity and toggle the switch
             btnSwitch.isChecked = true
-            val intent = Intent(this, SoilActivityTest::class.java)
+            val intent = Intent(this, SoilActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
             finish()

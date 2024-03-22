@@ -12,12 +12,9 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.database
-import com.iacademy.smartsoilph.activities.SoilActivityTest
 import com.iacademy.smartsoilph.datamodels.RequiredFertilizerData
-import java.util.Calendar
 
 class FirebaseModel {
 

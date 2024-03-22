@@ -293,9 +293,6 @@ class ReportsActivity : BaseActivity() {
 
             // Refresh the chart
             lineChart1.invalidate()
-
-
-
     }
 
     /***********************************
@@ -360,7 +357,17 @@ class ReportsActivity : BaseActivity() {
     }
 
     /***********************************
-     * G. Monthly Soil Statistics
+     * G. Soil Entry Statistics
+     *---------------------------------*/
+    
+
+    /***********************************
+     * H. Weekly Soil Statistics
+     *---------------------------------*/
+
+
+    /***********************************
+     * I. Monthly Soil Statistics
      *---------------------------------*/
     private fun fetchAndDisplayMonthlySoilHealth() {
         val sqliteModel = SQLiteModel(this)
