@@ -129,10 +129,26 @@ class SoilActivityTest : BaseActivity() {
                 etECLevel.setText(ecLevelString)
 
                 // retrieve data again if it contains N/A
-                val list = listOf(etNitrogen.text.toString(), etPhosphorus.text.toString(), etPotassium.text.toString(), etPHLevel.text.toString(), etECLevel.text.toString(), etHumidity.text.toString(), etTemperature.text.toString())
+                val list = listOf(
+                    etNitrogen.text.toString(),
+                    etPhosphorus.text.toString(),
+                    etPotassium.text.toString(),
+                    etPHLevel.text.toString(),
+                    etECLevel.text.toString(),
+                    etHumidity.text.toString(),
+                    etTemperature.text.toString()
+                )
                 Log.e("LIST", "LIST: $list")
                 // Check if any TextView contains "N/A" or is null
-                val containsNA = listOf(etNitrogen, etPhosphorus, etPotassium, etPHLevel, etECLevel, etHumidity, etTemperature)
+                val containsNA = listOf(
+                    etNitrogen,
+                    etPhosphorus,
+                    etPotassium,
+                    etPHLevel,
+                    etECLevel,
+                    etHumidity,
+                    etTemperature
+                )
                     .any { it.text.toString().equals("N/A", ignoreCase = true) }
 
                 if (containsNA && !commandSent) {
@@ -140,7 +156,8 @@ class SoilActivityTest : BaseActivity() {
                     commandSent = true
                     handler.removeCallbacks(sendCommandRunnable) // Stop the periodic execution
                 } else if (!containsNA && commandSent) {
-                    commandSent = false // Reset the flag to allow re-sending the command if conditions meet again
+                    commandSent =
+                        false // Reset the flag to allow re-sending the command if conditions meet again
                     handler.postDelayed(sendCommandRunnable, 20000) // Schedule the first execution
                 }
             }
@@ -149,7 +166,10 @@ class SoilActivityTest : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        LocalBroadcastManager.getInstance(this).registerReceiver(updateReceiver, IntentFilter("com.iacademy.smartsoilph.arduino.ACTION_UPDATE_DATA"))
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+            updateReceiver,
+            IntentFilter("com.iacademy.smartsoilph.arduino.ACTION_UPDATE_DATA")
+        )
 
         //dropdown
         val crops = resources.getStringArray(R.array.crops)
@@ -196,7 +216,7 @@ class SoilActivityTest : BaseActivity() {
     }
 
     //show overlay
-    private fun initShowOut(v: View){
+    private fun initShowOut(v: View) {
         v.apply {
             visibility = View.GONE
             translationY = height.toFloat()
@@ -206,13 +226,13 @@ class SoilActivityTest : BaseActivity() {
 
     //shows other fabs
     private fun toggleFabMode(v: View) {
-        rotate = rotateFab(v,!rotate)
-        if (rotate){
+        rotate = rotateFab(v, !rotate)
+        if (rotate) {
             showIn(fabViewRecommend)
             showIn(fabRetrieveData)
             showIn(btnViewRecommendation)
             showIn(btnRetrieveData)
-        }else{
+        } else {
             showOut(fabViewRecommend)
             showOut(fabRetrieveData)
             showOut(btnViewRecommendation)
@@ -309,247 +329,283 @@ class SoilActivityTest : BaseActivity() {
             } else {
                 overlayView.visibility = View.VISIBLE
 
-            toggleFabMode(it)
-        }
-
-        overlayView.setOnClickListener {
-            overlayView.visibility = View.GONE
-            if (overlayView.visibility == View.GONE){
-                rotate = rotateFab(fabSettings, false) // Rotate the fab back to its original position
-                showOut(fabViewRecommend)
-                showOut(fabRetrieveData)
-                showOut(btnViewRecommendation)
-                showOut(btnRetrieveData)
-            }else{
-                showIn(fabViewRecommend)
-                showIn(fabRetrieveData)
-                showIn(btnViewRecommendation)
-                showIn(btnRetrieveData)
+                toggleFabMode(it)
             }
+
+            overlayView.setOnClickListener {
+                overlayView.visibility = View.GONE
+                if (overlayView.visibility == View.GONE) {
+                    rotate = rotateFab(
+                        fabSettings,
+                        false
+                    ) // Rotate the fab back to its original position
+                    showOut(fabViewRecommend)
+                    showOut(fabRetrieveData)
+                    showOut(btnViewRecommendation)
+                    showOut(btnRetrieveData)
+                } else {
+                    showIn(fabViewRecommend)
+                    showIn(fabRetrieveData)
+                    showIn(btnViewRecommendation)
+                    showIn(btnRetrieveData)
+                }
+            }
+
+            //cardview retrieve data
+            btnRetrieveData.setOnClickListener {
+                bluetoothController.sendCommand("1")
+            }
+
+
+            btnReturn.setOnClickListener {
+                val intent = Intent(this, HomeActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                startActivity(intent)
+                finish()
+            }
+
+            //dropdown
+            val crops = resources.getStringArray(R.array.crops)
+            // Specify the custom layout and the ID of the TextView within that layout
+            val arrayAdapter = ArrayAdapter(this, R.layout.dropdown_item, R.id.tv_1, crops)
+            actvCropType = findViewById<AutoCompleteTextView>(R.id.actv_crop_type)
+            actvCropType.setAdapter(arrayAdapter)
         }
 
-        //cardview retrieve data
-        btnRetrieveData.setOnClickListener {
-            bluetoothController.sendCommand("1")
-        }
-
-
-        btnReturn.setOnClickListener{
+        @SuppressLint("MissingSuperCall")
+        override fun onBackPressed() {
             val intent = Intent(this, HomeActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
             finish()
         }
 
-        //dropdown
-        val crops = resources.getStringArray(R.array.crops)
-        // Specify the custom layout and the ID of the TextView within that layout
-        val arrayAdapter = ArrayAdapter(this, R.layout.dropdown_item, R.id.tv_1, crops)
-        actvCropType = findViewById<AutoCompleteTextView>(R.id.actv_crop_type)
-        actvCropType.setAdapter(arrayAdapter)
-    }
+        /*****************************
+         * A. Show Grade Dialog
+         ***************************/
+        private fun showSoilTextureDialog() {
+            val dialog = Dialog(this)
+            dialog.setContentView(R.layout.dialog_choose_grade)
 
-    @SuppressLint("MissingSuperCall")
-    override fun onBackPressed() {
-        val intent = Intent(this, HomeActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-        startActivity(intent)
-        finish()
-    }
+            // Initialize RadioButtons using Loop
+            val radioButtons = mutableListOf<RadioButton>()
+            for (i in 1..9) {
+                val resId = resources.getIdentifier("gs_$i", "id", packageName)
+                radioButtons.add(dialog.findViewById(resId))
+            }
 
-    /*****************************
-     * A. Show Grade Dialog
-     ***************************/
-    private fun showSoilTextureDialog() {
-        val dialog = Dialog(this)
-        dialog.setContentView(R.layout.dialog_choose_grade)
-
-        // Initialize RadioButtons using Loop
-        val radioButtons = mutableListOf<RadioButton>()
-        for (i in 1..9) {
-            val resId = resources.getIdentifier("gs_$i", "id", packageName)
-            radioButtons.add(dialog.findViewById(resId))
-        }
-
-        // Keep track of the currently selected RadioButton
-        var selectedRadioButton: RadioButton? = null
-        radioButtons.forEach { radioButton ->
-            radioButton.setOnClickListener {
-                if (selectedRadioButton == it) {
-                    // Uncheck if the same button is clicked again
-                    selectedRadioButton?.isChecked = false
-                    selectedRadioButton = null
-                } else {
-                    // Check new RadioButton and uncheck previous
-                    selectedRadioButton?.isChecked = false
-                    radioButton.isChecked = true
-                    selectedRadioButton = radioButton
+            // Keep track of the currently selected RadioButton
+            var selectedRadioButton: RadioButton? = null
+            radioButtons.forEach { radioButton ->
+                radioButton.setOnClickListener {
+                    if (selectedRadioButton == it) {
+                        // Uncheck if the same button is clicked again
+                        selectedRadioButton?.isChecked = false
+                        selectedRadioButton = null
+                    } else {
+                        // Check new RadioButton and uncheck previous
+                        selectedRadioButton?.isChecked = false
+                        radioButton.isChecked = true
+                        selectedRadioButton = radioButton
+                    }
                 }
             }
-        }
 
-        // Initialize Apply button
-        val btnApply = dialog.findViewById<CardView>(R.id.btn_apply)
-        btnApply.setOnClickListener {
-            val selectedRadioButton = radioButtons.find { it.isChecked }
-            if (selectedRadioButton != null) {
-                // Mark true that a grade has been selected
-                isSoilTextureSelected = true
-                val selectedTexture = selectedRadioButton.text.toString()
-                tvSoilTexture.text = "$selectedTexture"
+            // Initialize Apply button
+            val btnApply = dialog.findViewById<CardView>(R.id.btn_apply)
+            btnApply.setOnClickListener {
+                val selectedRadioButton = radioButtons.find { it.isChecked }
+                if (selectedRadioButton != null) {
+                    // Mark true that a grade has been selected
+                    isSoilTextureSelected = true
+                    val selectedTexture = selectedRadioButton.text.toString()
+                    tvSoilTexture.text = "$selectedTexture"
+                    dialog.dismiss()
+                } else {
+                    Toast.makeText(this, R.string.dialog_soil_texture1, Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            // Close Button
+            val closeButton = dialog.findViewById<ImageView>(R.id.iv_close)
+            closeButton.setOnClickListener {
                 dialog.dismiss()
-            } else {
-                Toast.makeText(this, R.string.dialog_soil_texture1, Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        // Close Button
-        val closeButton = dialog.findViewById<ImageView>(R.id.iv_close)
-        closeButton.setOnClickListener {
-            dialog.dismiss()
-        }
-
-        dialog.show()
-    }
-
-    /*****************************
-     * B. View Recommendation Button
-     ***************************/
-    private fun recommendation() {
-        Log.d("STATE", "1 INSIDE")
-        // Get values from EditText fields
-        val cropType = actvCropType.text.toString()
-        val nitrogen = etNitrogen.text.toString().toFloatOrNull() ?: 0.0F
-        val phosphorus = etPhosphorus.text.toString().toFloatOrNull() ?: 0.0F
-        val potassium = etPotassium.text.toString().toFloatOrNull() ?: 0.0F
-        val phLevel = etPHLevel.text.toString().toFloatOrNull() ?: 0.0F
-        val ecLevel = etECLevel.text.toString().toFloatOrNull() ?: 0.0F
-        val humidity = etHumidity.text.toString().toFloatOrNull() ?: 0.0F
-        val temperature = etTemperature.text.toString().toFloatOrNull() ?: 0.0F
-        val soilTexture = tvSoilTexture.text.toString()
-
-        /******************************
-         * Computations
-         * ---------------------------*/
-        // Retrieve selected crop and detected NPK values from the intent
-        val selectedCrop = cropType
-        // Fetch the nutrient requirements for the selected crop
-        val fertilizerNutrientModel = FertilizerNutrientModel()
-        val requirements = fertilizerNutrientModel.getNutrientRequirements(selectedCrop)
-
-        // Compute required fertilizers
-        requirements?.let {
-            // Calculate Crop Nutrient Requirement
-            val (requiredN, labelN) = calculateRequiredFertilizer(nitrogen, it.nitrogenRequirements)
-            val (requiredP, labelP) = calculateRequiredFertilizer(phosphorus, it.phosphorusRequirements)
-            val (requiredK, labelK) = calculateRequiredFertilizer(potassium, it.potassiumRequirements)
-
-            // Calculate Amount of Fertilizer Recommendation
-            val calculator = FertilizerRecommendationModel()
-            val data  = calculator.calculateFertilizerRequirements(
-                requiredN.toFloat(),requiredP.toFloat(),requiredK.toFloat(),nitrogen
-            )
-
-            // Calculate Bags of Fertilizer Recommendation
-
-
-            /******************************
-             * Pass values to Soil DataModel
-             * ---------------------------*/
-            val soilData = SoilData(cropType, nitrogen, phosphorus, potassium, phLevel, ecLevel, humidity, temperature, soilTexture)
-            Log.d("", "5. SOIL DATA: $soilData")
-
-            /******************************************************
-             * Pass computed values to RequiredFertilizer DataModel
-             * --------------------------------------------------*/
-            val requiredFertilizerData = RequiredFertilizerData(
-                requiredN.toFloat(), requiredP.toFloat(), requiredK.toFloat(),
-                data.fertilizer1, data.fertilizer2, data.fertilizer3,
-                data.kgFertilizer1, data.kgFertilizer2, data.kgFertilizer3,
-                data.bagFertilizer1, data.bagFertilizer2, data.bagFertilizer3
-            )
-
-            /******************************
-             * Pass values to Datamodel
-             * ---------------------------*/
-            //Create SQLite instance
-            val dbHelper = SQLiteModel(this)
-            // Get the current user's UID
-            val currentUserUID = dbHelper.getCurrentUserUID() ?: return // Add appropriate error handling or fallback
-            // Generate a unique recommendationID
-            val recommendationID = dbHelper.generateRecommendationID()
-
-            // Get Date
-            val calendar = Calendar.getInstance()
-            val formatter = SimpleDateFormat("MM-dd-yyyy '@'hh:mma", Locale.getDefault())
-            val dateOfRecommendation = formatter.format(calendar.time)
-
-            /********************************************
-             * Pass values to Recommendation DataModel
-             * ------------------------------------------*/
-            Log.d("", "11. Passing to Recommendation DataModel")
-            val storageType = "Local SQLite"
-            val isSavedOnline = false
-            val recommendationData = RecommendationData(recommendationID, currentUserUID, soilData, requiredFertilizerData, dateOfRecommendation, storageType, isSavedOnline)
-
-            Log.d("", "12. RECOMMENDATION DATA")
-            Log.d("", "recommendationID: $recommendationID")
-            Log.d("", "currentUserUID: $currentUserUID")
-            Log.d("", "cropType: $cropType")
-            Log.d("", "soilData: $soilData")
-            Log.d("", "soilTexture: $soilTexture")
-            Log.d("", "requiredFertilizerData: $requiredFertilizerData")
-            Log.d("", "dateOfRecommendation: $dateOfRecommendation")
-            Log.d("", "storageType: $storageType")
-            Log.d("", "savedOnline: $isSavedOnline")
-
-            /******************************
-             * Check Internet Connectivity
-             * ---------------------------*/
-            val checkInternet = CheckInternet(this)
-            if (checkInternet.isInternetAvailable()) {
-                // Internet is available - save locally then add to Firebase Database
-                // Save locally first
-                recommendationData.initialStorageType = "Cloud Firebase"
-                recommendationData.isSavedOnline = true
-                dbHelper.addSoilData(recommendationData)
-                // Save in cloud
-                FirebaseModel().saveSoilData(soilData, auth)
-                FirebaseModel().saveRecommendation(recommendationData, auth)
-                //Sync Database
-                dbHelper.syncDataWithFirebase(auth)
-                Toast.makeText(this, R.string.dialog_sync_database_result, Toast.LENGTH_SHORT).show()
-            } else {
-                // Internet is NOT available - add to SQLite
-                dbHelper.addSoilData(recommendationData)  // Save the soil data to the SQLite database
             }
 
-            /***************************
-             * Go to FertilizerActivity
-             * ---------------------------*/
-            val intent = Intent(this, FertilizerActivity::class.java).apply {
-                putExtra("labelN", labelN)
-                putExtra("labelP", labelP)
-                putExtra("labelK", labelK)
-            }
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-            startActivity(intent)
-            finish()
+            dialog.show()
         }
 
+        /*****************************
+         * B. View Recommendation Button
+         ***************************/
+        private fun recommendation() {
+            Log.d("STATE", "1 INSIDE")
+            // Get values from EditText fields
+            val cropType = actvCropType.text.toString()
+            val nitrogen = etNitrogen.text.toString().toFloatOrNull() ?: 0.0F
+            val phosphorus = etPhosphorus.text.toString().toFloatOrNull() ?: 0.0F
+            val potassium = etPotassium.text.toString().toFloatOrNull() ?: 0.0F
+            val phLevel = etPHLevel.text.toString().toFloatOrNull() ?: 0.0F
+            val ecLevel = etECLevel.text.toString().toFloatOrNull() ?: 0.0F
+            val humidity = etHumidity.text.toString().toFloatOrNull() ?: 0.0F
+            val temperature = etTemperature.text.toString().toFloatOrNull() ?: 0.0F
+            val soilTexture = tvSoilTexture.text.toString()
+
+            /******************************
+             * Computations
+             * ---------------------------*/
+            // Retrieve selected crop and detected NPK values from the intent
+            val selectedCrop = cropType
+            // Fetch the nutrient requirements for the selected crop
+            val fertilizerNutrientModel = FertilizerNutrientModel()
+            val requirements = fertilizerNutrientModel.getNutrientRequirements(selectedCrop)
+
+            // Compute required fertilizers
+            requirements?.let {
+                // Calculate Crop Nutrient Requirement
+                val (requiredN, labelN) = calculateRequiredFertilizer(
+                    nitrogen,
+                    it.nitrogenRequirements
+                )
+                val (requiredP, labelP) = calculateRequiredFertilizer(
+                    phosphorus,
+                    it.phosphorusRequirements
+                )
+                val (requiredK, labelK) = calculateRequiredFertilizer(
+                    potassium,
+                    it.potassiumRequirements
+                )
+
+                // Calculate Amount of Fertilizer Recommendation
+                val calculator = FertilizerRecommendationModel()
+                val data = calculator.calculateFertilizerRequirements(
+                    requiredN.toFloat(), requiredP.toFloat(), requiredK.toFloat(), nitrogen
+                )
+
+                // Calculate Bags of Fertilizer Recommendation
+
+
+                /******************************
+                 * Pass values to Soil DataModel
+                 * ---------------------------*/
+                val soilData = SoilData(
+                    cropType,
+                    nitrogen,
+                    phosphorus,
+                    potassium,
+                    phLevel,
+                    ecLevel,
+                    humidity,
+                    temperature,
+                    soilTexture
+                )
+                Log.d("", "5. SOIL DATA: $soilData")
+
+                /******************************************************
+                 * Pass computed values to RequiredFertilizer DataModel
+                 * --------------------------------------------------*/
+                val requiredFertilizerData = RequiredFertilizerData(
+                    requiredN.toFloat(), requiredP.toFloat(), requiredK.toFloat(),
+                    data.fertilizer1, data.fertilizer2, data.fertilizer3,
+                    data.kgFertilizer1, data.kgFertilizer2, data.kgFertilizer3,
+                    data.bagFertilizer1, data.bagFertilizer2, data.bagFertilizer3
+                )
+
+                /******************************
+                 * Pass values to Datamodel
+                 * ---------------------------*/
+                //Create SQLite instance
+                val dbHelper = SQLiteModel(this)
+                // Get the current user's UID
+                val currentUserUID = dbHelper.getCurrentUserUID()
+                    ?: return // Add appropriate error handling or fallback
+                // Generate a unique recommendationID
+                val recommendationID = dbHelper.generateRecommendationID()
+
+                // Get Date
+                val calendar = Calendar.getInstance()
+                val formatter = SimpleDateFormat("MM-dd-yyyy '@'hh:mma", Locale.getDefault())
+                val dateOfRecommendation = formatter.format(calendar.time)
+
+                /********************************************
+                 * Pass values to Recommendation DataModel
+                 * ------------------------------------------*/
+                Log.d("", "11. Passing to Recommendation DataModel")
+                val storageType = "Local SQLite"
+                val isSavedOnline = false
+                val recommendationData = RecommendationData(
+                    recommendationID,
+                    currentUserUID,
+                    soilData,
+                    requiredFertilizerData,
+                    dateOfRecommendation,
+                    storageType,
+                    isSavedOnline
+                )
+
+                Log.d("", "12. RECOMMENDATION DATA")
+                Log.d("", "recommendationID: $recommendationID")
+                Log.d("", "currentUserUID: $currentUserUID")
+                Log.d("", "cropType: $cropType")
+                Log.d("", "soilData: $soilData")
+                Log.d("", "soilTexture: $soilTexture")
+                Log.d("", "requiredFertilizerData: $requiredFertilizerData")
+                Log.d("", "dateOfRecommendation: $dateOfRecommendation")
+                Log.d("", "storageType: $storageType")
+                Log.d("", "savedOnline: $isSavedOnline")
+
+                /******************************
+                 * Check Internet Connectivity
+                 * ---------------------------*/
+                val checkInternet = CheckInternet(this)
+                if (checkInternet.isInternetAvailable()) {
+                    // Internet is available - save locally then add to Firebase Database
+                    // Save locally first
+                    recommendationData.initialStorageType = "Cloud Firebase"
+                    recommendationData.isSavedOnline = true
+                    dbHelper.addSoilData(recommendationData)
+                    // Save in cloud
+                    FirebaseModel().saveSoilData(soilData, auth)
+                    FirebaseModel().saveRecommendation(recommendationData, auth)
+                    //Sync Database
+                    dbHelper.syncDataWithFirebase(auth)
+                    Toast.makeText(this, R.string.dialog_sync_database_result, Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    // Internet is NOT available - add to SQLite
+                    dbHelper.addSoilData(recommendationData)  // Save the soil data to the SQLite database
+                }
+
+                /***************************
+                 * Go to FertilizerActivity
+                 * ---------------------------*/
+                val intent = Intent(this, FertilizerActivity::class.java).apply {
+                    putExtra("labelN", labelN)
+                    putExtra("labelP", labelP)
+                    putExtra("labelK", labelK)
+                }
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                startActivity(intent)
+                finish()
+            }
+
+        }
+
+        private fun calculateRequiredFertilizer(
+            detectedValue: Float,
+            requirements: Map<ClosedFloatingPointRange<Float>, Pair<Int, String>>
+        ): Pair<Int, String> {
+            // Find the range that the detected value falls into
+            val requirementEntry = requirements.entries.find { detectedValue in it.key }
+            // Return the corresponding fertilizer amount and label
+            return requirementEntry?.value ?: Pair(0, "Unknown")
+        }
+
+        override fun onDestroy() {
+            super.onDestroy()
+            bluetoothController.disconnect()
+        }
+
+
     }
-
-    private fun calculateRequiredFertilizer(detectedValue: Float, requirements: Map<ClosedFloatingPointRange<Float>, Pair<Int, String>>): Pair<Int, String> {
-        // Find the range that the detected value falls into
-        val requirementEntry = requirements.entries.find { detectedValue in it.key }
-        // Return the corresponding fertilizer amount and label
-        return requirementEntry?.value ?: Pair(0, "Unknown")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        bluetoothController.disconnect()
-    }
-
-
 }
