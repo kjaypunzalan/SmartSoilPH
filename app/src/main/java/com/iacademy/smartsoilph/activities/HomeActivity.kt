@@ -90,6 +90,15 @@ class HomeActivity : BaseActivity() {
             val scrollY = nestedScrollView.scrollY // For ScrollView
             ivBGHome.translationY = scrollY * 0.5f // Adjust parallax effect speed here
         }
+
+        try {
+            // Your Bluetooth connection code here...
+            requestInitialBluetoothPermissions()
+        } catch (e: RuntimeException) {
+            showAlertToTurnOnBluetooth()
+        } catch (e: SecurityException) {
+            showAlertToTurnOnBluetooth()
+        }
     }
 
     /*********************************
@@ -350,6 +359,20 @@ class HomeActivity : BaseActivity() {
 
     /**-----------------------------------
      * E.1 Request Bluetooth Permission */
+    private fun requestInitialBluetoothPermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            // Check if the BLUETOOTH_CONNECT permission is already granted
+            if (checkSelfPermission(android.Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                // Request the BLUETOOTH_CONNECT permission
+                showAlertAskingForBluetoothPermission()
+            } else {
+
+            }
+        } else {
+
+        }
+    }
+
     private fun requestBluetoothPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             // Check if the BLUETOOTH_CONNECT permission is already granted
@@ -459,10 +482,6 @@ class HomeActivity : BaseActivity() {
             .setMessage(R.string.dialog_bluetooth_denied_content)
             .setPositiveButton(R.string.dialog_ok_button) { dialog, _ ->
                 dialog.dismiss()
-            }
-            .setNegativeButton(R.string.dialog_cancel_button) { dialog, _ ->
-                dialog.dismiss()
-                // Optional: handle cancellation.
             }
             .create()
             .show()

@@ -1,13 +1,17 @@
 package com.iacademy.smartsoilph.activities
 
+import android.Manifest
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.bluetooth.BluetoothAdapter
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -20,7 +24,9 @@ import android.widget.ImageView
 import android.widget.RadioButton
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
+import androidx.core.app.ActivityCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
@@ -34,6 +40,7 @@ import com.iacademy.smartsoilph.models.FertilizerRecommendationModel
 import com.iacademy.smartsoilph.models.SQLiteModel
 import com.iacademy.smartsoilph.models.FirebaseModel
 import com.iacademy.smartsoilph.utils.CheckInternet
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -72,6 +79,7 @@ class SoilActivity : BaseActivity() {
     private lateinit var bluetoothController: ArduinoBluetoothController
 
     private var commandSent = false
+
     private val handler = Handler(Looper.getMainLooper())
     private val sendCommandRunnable = object : Runnable {
         override fun run() {
@@ -151,6 +159,7 @@ class SoilActivity : BaseActivity() {
         super.onResume()
         LocalBroadcastManager.getInstance(this).registerReceiver(updateReceiver, IntentFilter("com.iacademy.smartsoilph.arduino.ACTION_UPDATE_DATA"))
 
+
         //dropdown
         val crops = resources.getStringArray(R.array.crops)
         // Specify the custom layout and the ID of the TextView within that layout
@@ -167,7 +176,7 @@ class SoilActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_soil_test)
-
+        
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
 
@@ -185,13 +194,18 @@ class SoilActivity : BaseActivity() {
         }
 
         if (!bluetoothController.connect()) {
-            // Show a message if failed to connect
         }
 
         //sensor retrieve button
         val fabRetrieveData = findViewById<FloatingActionButton>(R.id.fab_retrieveData)
         fabRetrieveData.setOnClickListener {
-            bluetoothController.sendCommand("1")
+            val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+            // Perform actions based on the new state of the switch
+            if (!bluetoothAdapter.isEnabled) {
+                showAlertToTurnOnBluetooth()
+            } else {
+                bluetoothController.sendCommand("1")
+            }
         }
     }
 
@@ -327,6 +341,7 @@ class SoilActivity : BaseActivity() {
                 showIn(btnRetrieveData)
             }
         }
+
 
         //cardview retrieve data
         btnRetrieveData.setOnClickListener {
@@ -549,6 +564,145 @@ class SoilActivity : BaseActivity() {
     override fun onDestroy() {
         super.onDestroy()
         bluetoothController.disconnect()
+    }
+
+    /*********************************
+     * E. BLUETOOTH LOGISTICS
+     *-------------------------------*/
+    companion object {
+        private const val REQUEST_BLUETOOTH_PERMISSION = 101
+        private const val REQUEST_ENABLE_BT = 1
+    }
+
+    /**-----------------------------------
+     * E.1 Request Bluetooth Permission */
+    private fun requestBluetoothPermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            // Check if the BLUETOOTH_CONNECT permission is already granted
+            if (checkSelfPermission(android.Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                // Request the BLUETOOTH_CONNECT permission
+                showAlertAskingForBluetoothPermission()
+            } else {
+                // Permission is granted, you can initiate Bluetooth operations here
+                connectToBluetoothDevice()
+            }
+        } else {
+            // For older versions, you can directly initiate Bluetooth operations as BLUETOOTH_CONNECT permission is not required
+            connectToBluetoothDevice()
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_BLUETOOTH_PERMISSION) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission was granted, initiate Bluetooth operations
+                connectToBluetoothDevice()
+            } else {
+                // Permission was denied, show an AlertDialog
+                showAlertForDenyingBluetoothPermission()
+            }
+        }
+    }
+
+    /**-----------------------------------
+     * E.2 Turn On Bluetooth Permission */
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_ENABLE_BT && resultCode == RESULT_OK) {
+            // User agreed to enable Bluetooth, start the activity and toggle the switch
+
+        } else if (requestCode == REQUEST_ENABLE_BT && resultCode == RESULT_CANCELED) {
+            // User refused to enable Bluetooth, toggle the switch back to off
+        }
+    }
+
+
+    /**-----------------------------------
+     * E.3 Connect to Bluetooth Device  */
+    private fun connectToBluetoothDevice() {
+        val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+
+        if (bluetoothAdapter == null) {
+            Toast.makeText(this, R.string.dialog_bluetooth_not_supported, Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (!bluetoothAdapter.isEnabled) {
+            showAlertToTurnOnBluetooth()
+            return
+        }
+
+        //TODO: Add MAC Address if possible. Remove if not.
+        val deviceAddress = "88:4A:EA:98:22:E7" // MAC address of the Bluetooth device
+        val device = bluetoothAdapter.getRemoteDevice(deviceAddress)
+
+        try {
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.BLUETOOTH_CONNECT
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                // Consider calling ActivityCompat#requestPermissions to request the missing permissions.
+                return
+            }
+
+            // Here you would actually connect to the device. This could involve creating a socket, for example.
+            // For simplicity, we're just showing a message.
+            Toast.makeText(this, "Connecting to IoT device", Toast.LENGTH_SHORT).show()
+
+            // Assuming you have a method to connect to the device
+            // connectToDevice(device)
+        } catch (e: IOException) {
+            Toast.makeText(this, "Error connecting to device: $e", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    /**----------------------------
+     * E.4 Alerts for Bluetooth  */
+    private fun showAlertAskingForBluetoothPermission() {
+        AlertDialog.Builder(this, R.style.RoundedAlertDialog)
+            .setTitle(R.string.dialog_bluetooth_permission_title)
+            .setMessage(R.string.dialog_bluetooth_permission_content)
+            .setPositiveButton(R.string.dialog_i_understand) { dialog, _ ->
+                requestPermissions(arrayOf(android.Manifest.permission.BLUETOOTH_CONNECT), REQUEST_BLUETOOTH_PERMISSION)
+                dialog.dismiss()
+            }
+            .create()
+            .show()
+    }
+
+    private fun showAlertForDenyingBluetoothPermission() {
+        AlertDialog.Builder(this, R.style.RoundedAlertDialog)
+            .setTitle(R.string.dialog_bluetooth_denied_title)
+            .setMessage(R.string.dialog_bluetooth_denied_content)
+            .setPositiveButton(R.string.dialog_ok_button) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setNegativeButton(R.string.dialog_cancel_button) { dialog, _ ->
+                dialog.dismiss()
+                // Optional: handle cancellation.
+            }
+            .create()
+            .show()
+    }
+
+    private fun showAlertToTurnOnBluetooth() {
+        AlertDialog.Builder(this, R.style.RoundedAlertDialog)
+            .setTitle(R.string.dialog_bluetooth_off_title)
+            .setMessage(R.string.dialog_bluetooth_off_content)
+            .setPositiveButton(R.string.dialog_ok_button) { dialog, _ ->
+                dialog.dismiss()
+                val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                    // Request the Bluetooth connect permission
+                    requestPermissions(arrayOf(Manifest.permission.BLUETOOTH_CONNECT), REQUEST_ENABLE_BT)
+                } else {
+                    startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT)
+                }
+            }
+            .create()
+            .show()
     }
 
 

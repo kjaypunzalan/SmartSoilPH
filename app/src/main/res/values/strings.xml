@@ -298,10 +298,10 @@
     <string name="dialog_set_language">Set SmartSoilPH Language</string>
     <string name="dialog_bluetooth_not_supported">Bluetooth is not supported on this device</string>
     <string name="dialog_bluetooth_permission_title">Bluetooth Permission Required</string>
-    <string name="dialog_bluetooth_permission_content">We need your permission to allow us to connect to Bluetooth devices. Please accept the permission to connect. Thank you!</string>
+    <string name="dialog_bluetooth_permission_content">We need your permission to allow us to connect to the Bluetooth IoT  device. Please accept the permission to connect. Thank you!</string>
     <string name="dialog_i_understand">I UNDERSTAND</string>
     <string name="dialog_bluetooth_denied_title">You have Denied the Permission</string>
-    <string name="dialog_bluetooth_denied_content">It seems you have denied the permission. You won\'t be able to connect to the SmartSoilPH device.</string>
+    <string name="dialog_bluetooth_denied_content">It seems you have denied the permission. You won\'t be able to connect to the SmartSoilPH device. Please manually add permission in the Android app settings itself, or you can clear the data of the app then open the application again. </string>
     <string name="dialog_bluetooth_off_title">Your Bluetooth is Turned Off</string>
     <string name="dialog_bluetooth_off_content">Please turn on your device\'s Bluetooth. Thank you!</string>
     <string name="dialog_internet_connection_title">You are not connected to the internet.</string>
