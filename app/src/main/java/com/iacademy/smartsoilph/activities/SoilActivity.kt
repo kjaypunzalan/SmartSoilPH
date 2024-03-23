@@ -149,7 +149,7 @@ class SoilActivity : BaseActivity() {
                     handler.removeCallbacks(sendCommandRunnable) // Stop the periodic execution
                 } else if (!containsNA && commandSent) {
                     commandSent = false // Reset the flag to allow re-sending the command if conditions meet again
-                    handler.postDelayed(sendCommandRunnable, 20000) // Schedule the first execution
+                    handler.postDelayed(sendCommandRunnable, 10000) // Schedule the first execution
                 }
             }
         }
