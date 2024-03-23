@@ -75,10 +75,6 @@
             android:exported="true"
             android:theme="@style/Theme.SmartSoilPH" />
         <activity
-            android:name=".activities.VerifyCodeActivity"
-            android:exported="true"
-            android:theme="@style/Theme.SmartSoilPH" />
-        <activity
             android:name=".activities.RecommendationHistoryActivity"
             android:exported="true" />
         <activity
@@ -88,12 +84,6 @@
             android:name=".activities.LoadScreenActivity"
             android:exported="true" />
         <activity android:name=".activities.ResetPasswordActivity"
-            android:exported="true"
-            android:theme="@style/Theme.SmartSoilPH" />
-        <activity android:name=".arduino.ArduinoController"
-            android:exported="true"
-            android:theme="@style/Theme.SmartSoilPH" />
-        <activity android:name=".activities.SoilActivityTest"
             android:exported="true"
             android:theme="@style/Theme.SmartSoilPH" />
         <activity android:name=".activities.ManualActivity"
