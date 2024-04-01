@@ -172,8 +172,8 @@ class ReportsActivity : BaseActivity() {
 
         val total = sqliteCount + firebaseCount
         val entries = ArrayList<PieEntry>().apply {
-            add(PieEntry(sqliteCount.toFloat(), "SQLite"))
-            add(PieEntry(firebaseCount.toFloat(), "Firebase"))
+            add(PieEntry(sqliteCount.toFloat(), "Offline"))
+            add(PieEntry(firebaseCount.toFloat(), "Online"))
             add(PieEntry(total.toFloat(), "Total"))
         }
 
@@ -489,92 +489,84 @@ class ReportsActivity : BaseActivity() {
         val sqliteModel = SQLiteModel(this)
         val recommendationDataList = sqliteModel.getAllSoilData()
 
-        val monthlyNPK = mutableMapOf<String, MutableList<SoilData>>()
         val dateFormat = SimpleDateFormat("MM-dd-yyyy '@'hh:mma", Locale.US)
+        val monthYearFormat = SimpleDateFormat("MMMM", Locale.US) // For displaying month names
 
+        val monthlyNPK = mutableMapOf<String, MutableList<SoilData>>()
         recommendationDataList.forEach { recommendationData ->
-            val dateStr = recommendationData.dateOfRecommendation
-            val date = dateFormat.parse(dateStr)
+            val date = dateFormat.parse(recommendationData.dateOfRecommendation)
             val calendar = Calendar.getInstance()
             date?.let { calendar.time = it }
             val monthYearKey = "${calendar.get(Calendar.MONTH) + 1}-${calendar.get(Calendar.YEAR)}"
 
-            // Extracting NPK values directly from the RecommendationData's SoilData object
-            val cropType = recommendationData.soilData.cropType
-            val nitrogen = recommendationData.soilData.nitrogen
-            val phosphorus = recommendationData.soilData.phosphorus
-            val potassium = recommendationData.soilData.potassium
-
-            // Assuming SoilData constructor matches the required structure
-            //TODO: FIX
             val soilData = SoilData(
-                cropType, nitrogen, phosphorus, potassium,
+                recommendationData.soilData.cropType,
+                recommendationData.soilData.nitrogen,
+                recommendationData.soilData.phosphorus,
+                recommendationData.soilData.potassium,
                 0f, 0f, 0f, 0f,
-                "clay")
-
-            // Accumulating data by month and year
+                "clay"
+            )
             monthlyNPK.getOrPut(monthYearKey) { mutableListOf() }.add(soilData)
         }
 
-        // Now, 'monthlyNPK' contains a map of month-year keys to lists of SoilData, similar to the Firebase approach.
-
-        var npkString = ""
         val entries = ArrayList<BarEntry>()
-            val npkLabelsMap = mutableMapOf<String, String>()
-            var index = 0f
+        val monthLabels = ArrayList<String>()
+        val npkStrings = ArrayList<String>()
+        var index = 0f
 
-            monthlyNPK.keys.sorted().forEach { month ->
-                val soils = monthlyNPK[month]!!
-                val avgNitrogen = soils.map { it.nitrogen }.average().toFloat()
-                val avgPhosphorus = soils.map { it.phosphorus }.average().toFloat()
-                val avgPotassium = soils.map { it.potassium }.average().toFloat()
+        monthlyNPK.keys.sorted().forEach { monthYearKey ->
+            val soils = monthlyNPK[monthYearKey]!!
+            val avgNitrogen = soils.map { it.nitrogen }.average().toFloat()
+            val avgPhosphorus = soils.map { it.phosphorus }.average().toFloat()
+            val avgPotassium = soils.map { it.potassium }.average().toFloat()
 
-                npkString = "${avgNitrogen.toInt()}-${avgPhosphorus.toInt()}-${avgPotassium.toInt()}"
-                entries.add(BarEntry(index++, 1f)) // Dummy height for the bar
-                npkLabelsMap[month] = npkString
+            val npkString = "${avgNitrogen.toInt()}-${avgPhosphorus.toInt()}-${avgPotassium.toInt()}"
+            npkStrings.add(npkString)
+            entries.add(BarEntry(index, avgNitrogen + avgPhosphorus + avgPotassium, npkString))
+
+            val dateParts = monthYearKey.split("-")
+            val calendar = Calendar.getInstance()
+            calendar.set(Calendar.MONTH, dateParts[0].toInt() - 1)
+            calendar.set(Calendar.YEAR, dateParts[1].toInt())
+            monthLabels.add(monthYearFormat.format(calendar.time))
+
+            index++
+        }
+
+        val barDataSet = BarDataSet(entries, "Average NPK per month")
+        barDataSet.valueFormatter = object : ValueFormatter() {
+            override fun getBarLabel(barEntry: BarEntry): String {
+                return barEntry.data.toString()
             }
+        }
 
-        // Getting the formatted string from resources and inserting the variable values
-        val summaryText = getString(R.string.sub_summary5, npkString)
-        tvBCSummary1.text = summaryText
+        val barData = BarData(barDataSet)
+        barChart1.data = barData
 
-            // Set Description
-            val description = Description()
-            description.text = "Monthly soil statistics"
-            barChart1.description = description
+        barChart1.xAxis.valueFormatter = IndexAxisValueFormatter(monthLabels)
+        barChart1.xAxis.setDrawLabels(true)
+        barChart1.xAxis.setDrawAxisLine(true)
+        barChart1.xAxis.setLabelRotationAngle(-45f)
+        barChart1.xAxis.granularity = 1f
 
-            // Hide X Axis
-            barChart1.xAxis.setDrawLabels(false)
-            barChart1.xAxis.setDrawAxisLine(false)
-            barChart1.axisLeft.setDrawGridLines(false)
-            barChart1.axisRight.setDrawGridLines(false)
-            barChart1.xAxis.setDrawGridLines(false)
+        val description = Description()
+        description.text = "Monthly soil statistics"
+        barChart1.description = description
 
-            // Animate Chart
-            barChart1.animateXY(3000, 1000)
-
-            val barDataSet = BarDataSet(entries, "March")
-            barDataSet.valueFormatter = NpkValueFormatter(npkLabelsMap)
-
-            val barData = BarData(barDataSet)
-            barChart1.data = barData
-
-            barChart1.invalidate() // Refresh the chart
-
+        barChart1.animateXY(3000, 1000)
+        barChart1.invalidate() // Refresh the chart
     }
 
-    /***********************************
-     * H. NpkValueFormatter
-     *---------------------------------*/
+
     class NpkValueFormatter(private val npkDataMap: Map<String, String>) : ValueFormatter() {
         override fun getBarLabel(barEntry: BarEntry): String {
-            // Assuming barEntry.x is the index for month
             val monthIndex = barEntry.x.toInt()
             val monthKey = npkDataMap.keys.sorted()[monthIndex]
-            // Return the NPK string for this month
             return npkDataMap[monthKey] ?: ""
         }
     }
+
 
     /***********************************
      * I. Save as JPG

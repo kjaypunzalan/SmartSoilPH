@@ -37,7 +37,7 @@ class RegisterActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.register_page2)
+        setContentView(R.layout.activity_register)
 
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
