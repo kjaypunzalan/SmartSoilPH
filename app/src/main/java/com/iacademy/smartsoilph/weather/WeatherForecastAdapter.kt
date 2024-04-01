@@ -10,7 +10,7 @@ import com.iacademy.smartsoilph.R
 import java.text.SimpleDateFormat
 import java.util.*
 
-class WeatherForecastAdapter(private val forecasts: List<DailyWeather>) : RecyclerView.Adapter<WeatherForecastAdapter.ForecastViewHolder>() {
+class WeatherForecastAdapter(private val forecasts: List<DailyWeatherResponse>) : RecyclerView.Adapter<WeatherForecastAdapter.ForecastViewHolder>() {
 
     class ForecastViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -21,7 +21,7 @@ class WeatherForecastAdapter(private val forecasts: List<DailyWeather>) : Recycl
         private val ivWeather: ImageView = itemView.findViewById(R.id.iv_weather_rv)
 
         //bind data
-        fun bind(forecast: DailyWeather) {
+        fun bind(forecast: DailyWeatherResponse) {
             tvDay.text = formatDate(forecast.time)
             tvDate.text = interpretWeatherCode(forecast.weatherCode)
             tvMaxTemp.text = "${forecast.maxTemperature}"

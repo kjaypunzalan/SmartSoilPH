@@ -1,6 +1,6 @@
 package com.iacademy.smartsoilph.weather
 
-data class DailyWeather(
+data class DailyWeatherResponse(
     val time: String,
     val maxTemperature: Double,
     val weatherCode: Int

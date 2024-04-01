@@ -17,7 +17,7 @@ import com.google.android.gms.location.LocationServices
 import com.iacademy.smartsoilph.R
 import com.iacademy.smartsoilph.databinding.ActivityWeatherBinding
 import com.iacademy.smartsoilph.weather.DailyForecast
-import com.iacademy.smartsoilph.weather.DailyWeather
+import com.iacademy.smartsoilph.weather.DailyWeatherResponse
 import com.iacademy.smartsoilph.weather.WeatherResponse
 import com.iacademy.smartsoilph.weather.OpenMeteoAPIService
 import com.iacademy.smartsoilph.weather.RetrofitClient
@@ -169,7 +169,7 @@ class WeatherActivity : BaseActivity() {
             val forecasts = dailyForecast.time.zip(dailyForecast.maxTemperature.zip(dailyForecast.weatherCode)) { time, tempAndCode ->
                 val (temp, code) = tempAndCode
                 Log.e("WeatherActivity", "WEATHER CODE: $code")
-                DailyWeather(time, temp, code)
+                DailyWeatherResponse(time, temp, code)
             }
             forecastAdapter = WeatherForecastAdapter(forecasts)
             rvWeatherForecast.adapter = forecastAdapter
